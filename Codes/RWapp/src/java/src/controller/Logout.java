@@ -5,23 +5,19 @@
  */
 package src.controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import src.model.Person;
-import src.model.PersonDAO;
 
 /**
  *
  * @author admin
  */
-public class ValidateUser extends HttpServlet {
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,33 +33,11 @@ public class ValidateUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
             HttpSession session = request.getSession();
-            
-            Person person = PersonDAO.retrieveUser(username);
-            
-            if(person != null && person.getPassword().equals(password)){
-                //redirect to webpage
-                if (person.getType().equals("c")){
-                    session.setAttribute("loggedInDev", person);
-                    response.sendRedirect("index.jsp");
-                } else if (person.getType().equals("p")) {
-                    session.setAttribute("loggedInPm", person);
-                    response.sendRedirect("index.jsp");
-                } else {
-                    session.setAttribute("loggedInDesg", person);
-                    response.sendRedirect("index.jsp");
-                }
-                
-            } else {
-                //send error message
-                request.setAttribute("errorMsg", "Wrong username/password");
-          
-                RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-                view.forward(request, response);
-            }
+            session.invalidate();
+            response.sendRedirect("index.jsp");
+            return;
+           
         } finally {
             out.close();
         }

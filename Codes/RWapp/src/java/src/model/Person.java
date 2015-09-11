@@ -10,21 +10,17 @@ package src.model;
  * @author admin
  */
 public class Person {
-    private String name;
+    private String type;
     private String username;
     private String password;
-    private int yearsWorked;
+    //private int yearsWorked;
 
-    public Person(String name, String username, String password, int yearsWorked) {
-        this.name = name;
+    public Person(String username, String password, String type) {
         this.username = username;
         this.password = password;
-        this.yearsWorked = yearsWorked;
+        this.type = type;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public String getUsername() {
         return username;
@@ -34,8 +30,8 @@ public class Person {
         return password;
     }
 
-    public int getYearsWorked() {
-        return yearsWorked;
+    public String getType() {
+        return type;
     }
     
 }
