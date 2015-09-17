@@ -13,12 +13,13 @@ public class Person {
     private String type;
     private String username;
     private String password;
-    //private int yearsWorked;
+    private int yearsWorked;
 
     public Person(String username, String password, String type) {
         this.username = username;
         this.password = password;
         this.type = type;
+        this.yearWorked = 10;
     }
 
 
@@ -33,5 +34,10 @@ public class Person {
     public String getType() {
         return type;
     }
+    
+    public String getYearsWorked() {
+        return yearsWorked;
+    }
+
     
 }
