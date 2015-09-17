@@ -10,18 +10,36 @@ package src.model;
  * @author admin
  */
 public class Person {
+
     private String type;
     private String username;
     private String password;
-    private int yearsWorked;
+    private String dateStarted;
+    private String skills;
 
-    public Person(String username, String password, String type) {
+    public Person(String username, String password, String type, String dateStarted,String skills) {
         this.username = username;
         this.password = password;
         this.type = type;
-        this.yearWorked = 10;
+        this.dateStarted = dateStarted;
+        this.skills = skills;
+    }
+    
+    public void setPassword(String password){
+        this.password = password;
+    }
+    
+    public void setSkills(String skills){
+        this.skills = skills;
+    }
+    
+    public String getSkills(){
+        return skills;
     }
 
+    public String getDateStarted() {
+        return dateStarted;
+    }
 
     public String getUsername() {
         return username;
@@ -34,10 +52,5 @@ public class Person {
     public String getType() {
         return type;
     }
-    
-    public String getYearsWorked() {
-        return yearsWorked;
-    }
 
-    
 }
