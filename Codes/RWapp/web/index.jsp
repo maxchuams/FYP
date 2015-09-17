@@ -16,7 +16,7 @@
         
         <h2>LOG IN SUCCESS YAY!</h2>
         
-        
+        <a href="manageProfile.jsp">Manage your Profile</a>
         <a href="Logout">Log Out</a>
     </body>
 </html>

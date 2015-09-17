@@ -38,7 +38,8 @@ public class PersonDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3));
+                
+                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,4 +47,31 @@ public class PersonDAO {
         return user;
      
     }
+    
+    public static void updateUser(Person toUpdate){
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
+
+            String sql = "UPDATE user set password = ?, skills = ? where username=? ";
+
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, toUpdate.getPassword());
+            pstmt.setString(2, toUpdate.getSkills());
+            pstmt.setString(3, toUpdate.getUsername());
+            
+            //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManager.close(conn, pstmt);
+        }
+    }
+   
 }
