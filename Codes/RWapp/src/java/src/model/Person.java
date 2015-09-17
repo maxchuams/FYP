@@ -5,8 +5,6 @@
  */
 package src.model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author admin
@@ -36,7 +34,7 @@ public class Person {
     }
     
     public String getSkills(){
-    return skills;
+        return skills;
     }
 
     public String getDateStarted() {
