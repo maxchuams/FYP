@@ -1,6 +1,6 @@
 
-create schema if not exists rwapp;
-use rwapp;
+create schema if not exists recco;
+use recco;
 
 create table user(
             username varchar(100) not null,
