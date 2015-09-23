@@ -14,7 +14,7 @@
     <body>
         <h1>Manage your profile!</h1>
         <%            
-           if(p!= null){
+           if(dev!= null){
                response.sendRedirect("manageDevProfile.jsp");
            } else if (desg!=null){
                response.sendRedirect("manageDesgProfile.jsp");
