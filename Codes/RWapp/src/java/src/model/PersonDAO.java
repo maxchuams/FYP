@@ -20,11 +20,7 @@ import java.util.logging.Logger;
 public class PersonDAO {
     static ArrayList<Person> plist;
     
-    public static boolean authenticate(String username, String password){
         
-        return false;
-    }
-    
     public static Person retrieveUser(String username){
         
         Connection conn = null;
@@ -39,12 +35,15 @@ public class PersonDAO {
 
             while (rs.next()) {
                 
-                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            ConnectionManager.close(conn, pstmt, rs);
+            return user;
         }
-        return user;
+        
      
     }
     
@@ -55,13 +54,12 @@ public class PersonDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            String sql = "UPDATE user set password = ?, skills = ? where username=? ";
+            String sql = "UPDATE user set password = ? where username=? ";
 
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, toUpdate.getPassword());
-            pstmt.setString(2, toUpdate.getSkills());
-            pstmt.setString(3, toUpdate.getUsername());
+            pstmt.setString(2, toUpdate.getUsername());
             
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
 

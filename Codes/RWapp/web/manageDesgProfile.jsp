@@ -39,9 +39,7 @@
         </br>
         Current profile details: </br>
         Username: <%= desg.getUsername()%> </br>
-        Date started: <%= desg.getDateStarted()%> </br>
-        Skills: <%=desg.getSkills()%> </br>
-
+       
         </br>
 
         <h2>Edit</h2>
@@ -50,7 +48,7 @@
         <form action="ManageProfile" method="POST">
             Password: <input type="password" name="password1" /> </br>
             Confirm password again: <input type="password" name="password2" /> </br>
-            Add skills (seperate entries by comma): <input type="text" name="skills" placeholder="eg. css,photoshop,..."/></br>
+            
             </br>
             <button type="submit">submit!</button>
         </form>

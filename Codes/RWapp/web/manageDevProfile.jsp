@@ -3,6 +3,10 @@
     Created on : Sep 14, 2015, 12:29:13 PM
     Author     : admin
 --%>
+<%@page import="src.model.Skill"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Arrays"%>
+<%@page import="src.model.SkillDAO"%>
 <%@include file="protectDev.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -37,8 +41,19 @@
          </br>
         Current profile details: </br>
         Username: <%= dev.getUsername()%> </br>
-        Date started: <%= dev.getDateStarted()%> </br>
-        Skills: <%=dev.getSkills()%> </br>
+        Date started: to be completed </br>
+        Skills: 
+        <%
+            ArrayList<Skill> sList = SkillDAO.retrieveDevSkill(dev.getUsername());
+            for(int i = 0; i < sList.size(); i++){
+                Skill s = sList.get(i);
+                out.print(s.getSkill());
+                if(i != sList.size() -1){
+                    out.print(", " );
+                }
+            }
+        %>
+        </br>
 
         </br>
 
@@ -48,7 +63,8 @@
         <form action="ManageProfile" method="POST">
             Password: <input type="password" name="password1" /> </br>
             Confirm password again: <input type="password" name="password2" /> </br>
-            Add skills (seperate entries by comma): <input type="text" name="skills" placeholder="eg. java,mysql,php,..."/></br>
+            Add skills: <input type="text" name="skills" placeholder="eg. java,mysql,php,..."/></br>
+            
              </br>
             <button type="submit">submit</button>
         </form>

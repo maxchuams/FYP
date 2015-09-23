@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import src.model.Person;
 import src.model.PersonDAO;
+import src.model.SkillDAO;
 
 /**
  *
@@ -56,10 +57,10 @@ public class ManageProfile extends HttpServlet {
             }
             String password1 = request.getParameter("password1");
             String password2 = request.getParameter("password2");
-            String skills = request.getParameter("skills");
+            String skill = request.getParameter("skills");
 
-            if ((password1 == null && password2 == null && skills == null)
-                    || ((password1.length() == 0) || password2.length() == 0) && skills.length() == 0) {
+            if ((password1 == null && password2 == null && skill == null)
+                    || ((password1.length() == 0) || password2.length() == 0) && skill.length() == 0) {
                 RequestDispatcher rd = null;
                 if (type.equals("dev")) {
                     rd = request.getRequestDispatcher("manageDevProfile.jsp");
@@ -93,34 +94,17 @@ public class ManageProfile extends HttpServlet {
                     }
                 }
 
-                if (skills != null && skills.length() > 0) {
-                    String[] skillsArr = skills.split(",");
-
-                    String currentSkills = currUser.getSkills();
-                    String[] currentSkillsArr = currentSkills.split(",");
-
-                    String toUpdate = "";
-                    for (int i = 0; i < currentSkillsArr.length; i++) {
-                        String s = currentSkillsArr[i].trim();
-
-                        toUpdate += s + ",";
+                if (skill != null && skill.length() > 0) {
+                    //need to do, validation for duplicate skill
+                    
+                    boolean added = SkillDAO.addDevSkill(currUser.getUsername(), skill);
+                    
+                    if (!added){
+                        RequestDispatcher rd = request.getRequestDispatcher("manageDevProfile.jsp");
+                        request.setAttribute("err", "You already have that skill added!");
+                        rd.forward(request, response);
 
                     }
-
-                    //System.out.println("currentSkillsArr: " + Arrays.toString(currentSkillsArr) + " TO UPDATE : " + toUpdate);
-
-                    for (int i = 0; i < skillsArr.length; i++) {
-                        String s = skillsArr[i].trim();
-
-                        if (i == skillsArr.length - 1) {
-                            toUpdate += s;
-                        } else {
-                            toUpdate += s + ",";
-                        }
-
-                    }
-                    //System.out.println("SkillsARr: " + Arrays.toString(skillsArr));
-                    currUser.setSkills(toUpdate);
 
                 }
                 
