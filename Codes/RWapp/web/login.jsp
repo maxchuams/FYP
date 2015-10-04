@@ -25,9 +25,13 @@
     Person dev = (Person) session.getAttribute("loggedInUser");
     Person desg = (Person) session.getAttribute("loggedInDesg");
     Person pm = (Person) session.getAttribute("loggedInPm");
+    Person sudo = (Person) session.getAttribute("loggedInSudo");
     
     if (pm != null || dev != null || desg != null) {
         response.sendRedirect("index.jsp");
+        return;
+    }else if(sudo !=null){
+        response.sendRedirect("sudo.jsp");
         return;
     }
 

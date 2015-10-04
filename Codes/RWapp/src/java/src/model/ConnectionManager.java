@@ -49,7 +49,7 @@ public class ConnectionManager {
                  String dbName = props.getProperty("db.name").trim();*/
                 dbUser = props.getProperty("db.user").trim();
                 dbPassword = props.getProperty("db.password").trim();
-                dbURL = "jdbc:mysql://localhost:8889/rwapp?rewriteBatchedStatements=true";
+                dbURL = "jdbc:mysql://localhost:3306/recco?rewriteBatchedStatements=true";
             } catch (Exception ex) {
                 // unable to load properties file
                 String message = "Unable to load '" + PROPS_FILENAME + "'.";

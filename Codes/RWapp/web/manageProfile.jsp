@@ -18,8 +18,10 @@
                response.sendRedirect("manageDevProfile.jsp");
            } else if (desg!=null){
                response.sendRedirect("manageDesgProfile.jsp");
-           } else {
+           } else if (pm!=null){
                response.sendRedirect("managePmProfile.jsp");
+           } else if (sudo!=null){
+               response.sendRedirect("manageUser.jsp");
            }
         %>
     </body>
