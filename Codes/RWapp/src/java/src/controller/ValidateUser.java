@@ -52,11 +52,13 @@ public class ValidateUser extends HttpServlet {
                 } else if (person.getType().equals("p")) {
                     session.setAttribute("loggedInPm", person);
                     response.sendRedirect("index.jsp");
-                } else {
+                 } else if (person.getType().equals("d")) {
                     session.setAttribute("loggedInDesg", person);
                     response.sendRedirect("index.jsp");
-                }
-                
+                }else if (person.getType().equals("s")) {
+                    session.setAttribute("loggedInSudo", person);
+                    response.sendRedirect("sudo.jsp");
+                }             
             } else {
                 //send error message
                 request.setAttribute("errorMsg", "Wrong username/password");
