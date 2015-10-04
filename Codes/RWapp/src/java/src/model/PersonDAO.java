@@ -40,12 +40,36 @@ public class PersonDAO {
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
-            ConnectionManager.close(conn, pstmt, rs);
-            return user;
+            ConnectionManager.close(conn, pstmt, rs); 
         }
-        
+        return user;
      
     }
+    
+        public static ArrayList<Person> retrieveUsers(){
+        ArrayList<Person> users = new ArrayList<Person>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select * from user");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                users.add(new Person(rs.getString(1), rs.getString(2), rs.getString(3)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+        return users;
+    }
+    
+    
+    
     
     public static void updateUser(Person toUpdate){
         Connection conn = null;

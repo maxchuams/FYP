@@ -12,6 +12,10 @@
         <servlet-name>ManageProfile</servlet-name>
         <servlet-class>src.controller.ManageProfile</servlet-class>
     </servlet>
+     <servlet>
+        <servlet-name>ManageUser</servlet-name>
+        <servlet-class>src.controller.ManageUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>ManageProfile</servlet-name>
         <url-pattern>/ManageProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageUser</servlet-name>
+        <url-pattern>/ManageUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
