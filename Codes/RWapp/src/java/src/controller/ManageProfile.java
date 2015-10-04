@@ -43,18 +43,26 @@ public class ManageProfile extends HttpServlet {
             Person p1 = (Person) sess.getAttribute("loggedInDev");
             Person p2 = (Person) sess.getAttribute("loggedInDesg");
             Person p3 = (Person) sess.getAttribute("loggedInPm");
+
+            Person sudo = (Person) sess.getAttribute("loggedInSudo");
+
             String type = null;
             Person currUser = null;
+
             if (p1 != null) {
                 currUser = p1;
                 type = "dev";
             } else if (p2 != null) {
                 currUser = p2;
                 type = "desg";
-            } else {
+            } else if (p3 != null) {
                 currUser = p3;
                 type = "pm";
+            } else if (sudo != null) {
+                currUser = sudo;
+                type = "sudo";
             }
+
             String password1 = request.getParameter("password1");
             String password2 = request.getParameter("password2");
             String skill = request.getParameter("skills");
@@ -67,8 +75,10 @@ public class ManageProfile extends HttpServlet {
 
                 } else if (type.equals("pm")) {
                     rd = request.getRequestDispatcher("managePmProfile.jsp");
-                } else {
+                } else if (type.equals("desg")) {
                     rd = request.getRequestDispatcher("manageDesgProfile.jsp");
+                } else if (type.equals("sudo")) {
+                    rd = request.getRequestDispatcher("manageUser.jsp");
                 }
 
                 request.setAttribute("err", "Fields are empty");
@@ -86,8 +96,10 @@ public class ManageProfile extends HttpServlet {
 
                         } else if (type.equals("pm")) {
                             rd = request.getRequestDispatcher("managePmProfile.jsp");
-                        } else {
+                        } else if (type.equals("desg")) {
                             rd = request.getRequestDispatcher("manageDesgProfile.jsp");
+                        } else if (type.equals("sudo")) {
+                            rd = request.getRequestDispatcher("manageUser.jsp");
                         }
                         request.setAttribute("err", "Passwords do not match");
                         rd.forward(request, response);
@@ -96,10 +108,10 @@ public class ManageProfile extends HttpServlet {
 
                 if (skill != null && skill.length() > 0) {
                     //need to do, validation for duplicate skill
-                    
+
                     boolean added = SkillDAO.addDevSkill(currUser.getUsername(), skill);
-                    
-                    if (!added){
+
+                    if (!added) {
                         RequestDispatcher rd = request.getRequestDispatcher("manageDevProfile.jsp");
                         request.setAttribute("err", "You already have that skill added!");
                         rd.forward(request, response);
@@ -107,7 +119,7 @@ public class ManageProfile extends HttpServlet {
                     }
 
                 }
-                
+
                 PersonDAO.updateUser(currUser);
 
                 RequestDispatcher rd = null;
@@ -117,8 +129,10 @@ public class ManageProfile extends HttpServlet {
 
                 } else if (type.equals("pm")) {
                     rd = request.getRequestDispatcher("managePmProfile.jsp");
-                } else {
+                } else if (type.equals("desg")) {
                     rd = request.getRequestDispatcher("manageDesgProfile.jsp");
+                } else if (type.equals("sudo")) {
+                    rd = request.getRequestDispatcher("manageUser.jsp");
                 }
                 request.setAttribute("sucess", "Changes sucessfully updated!");
                 rd.forward(request, response);
