@@ -51,7 +51,7 @@ public class ManageProfile extends HttpServlet {
             } else if (p2 != null) {
                 currUser = p2;
                 type = "desg";
-            } else {
+            } else if(p3 != null){
                 currUser = p3;
                 type = "pm";
             }
