@@ -17,18 +17,14 @@ public class TrelloCard {
     private String name;
     private String due;
     private String desc;
-    private String idList;
-    private String idBoard;
-    private ArrayList<String> mList;
 
-    public TrelloCard(String id, String name, String due, String desc, String idList, String idBoard, ArrayList<String> mList) {
+
+    public TrelloCard(String id, String name, String due, String desc) {
         this.id = id;
         this.name = name;
         this.due = due;
         this.desc = desc;
-        this.idList = idList;
-        this.idBoard = idBoard;
-        this.mList = mList;
+
     }
 
     public String getId() {
@@ -63,31 +59,11 @@ public class TrelloCard {
         this.desc = desc;
     }
 
-    public String getIdList() {
-        return idList;
+    @Override
+    public String toString() {
+        return "TrelloCard{" + "id=" + id + ", name=" + name + ", due=" + due + ", desc=" + desc + '}';
     }
 
-    public void setIdList(String idList) {
-        this.idList = idList;
-    }
-
-    public String getIdBoard() {
-        return idBoard;
-    }
-
-    public void setIdBoard(String idBoard) {
-        this.idBoard = idBoard;
-    }
-
-    public ArrayList<String> getmList() {
-        return mList;
-    }
-
-    public void setmList(ArrayList<String> mList) {
-        this.mList = mList;
-    }
-  
-    
     
     
 }

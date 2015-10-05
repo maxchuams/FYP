@@ -4,6 +4,8 @@
     Author     : admin
 --%>
 
+<%@page import="src.model.TrelloCard"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="src.model.TrelloBoard"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,11 +18,13 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <% TrelloBoard tb = (TrelloBoard) request.getAttribute("trelloBoard"); 
+        <% ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) request.getAttribute("tc"); 
+           
            if (tb != null){
-               out.println(tb.toString());
+               out.println(tb);
            }
             
+         
         %>
         
         Trello Board data:

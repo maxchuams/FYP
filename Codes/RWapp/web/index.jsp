@@ -18,5 +18,6 @@
         
         <a href="manageProfile.jsp">Manage your Profile</a>
         <a href="Logout">Log Out</a>
+        <a href="getTrelloData">View Trello Card</a>
     </body>
 </html>

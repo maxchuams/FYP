@@ -23,6 +23,24 @@ public class TrelloBoard {
         this.mList = mList;
     }
 
+    public TrelloBoard(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setmList(ArrayList<TrelloMember> mList) {
+        this.mList = mList;
+    }
+
     public String getName() {
         return name;
     }
@@ -36,10 +54,7 @@ public class TrelloBoard {
     }
     
     public String toString(){
-        String tms = "";
-        for (TrelloMember tm : mList){
-            tms += tm.getId();
-        }
-        return "Name : " + name + " Board ID : " + id + " Members : " + tms;
+       
+        return "Name : " + name + " Board ID : " + id;
     }
 }
