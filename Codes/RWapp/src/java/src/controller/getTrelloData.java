@@ -149,7 +149,10 @@ public class getTrelloData extends HttpServlet {
             String idBoard = tempCard.getString("idBoard");
             String idList = tempCard.getString("idList");
             if(idList.equals(listId)){
-                String desc = tempCard.getString("desc").replace("**","").substring(0,100);
+                String desc = tempCard.getString("desc").replace("**","");
+                if(desc.length() >= 100){
+                    desc= desc.substring(0,100);
+                }
                 String due = tempCard.getString("due").substring(0,19);
                 String cardId = tempCard.getString("id");
                 String name = tempCard.getString("name");
