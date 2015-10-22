@@ -35,13 +35,14 @@ public class PersonDAO {
 
             while (rs.next()) {
                 
-                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3));
+                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
             ConnectionManager.close(conn, pstmt, rs); 
         }
+       
         return user;
      
     }
@@ -58,7 +59,8 @@ public class PersonDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                users.add(new Person(rs.getString(1), rs.getString(2), rs.getString(3)));
+                users.add(new Person(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5)));
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,29 +73,34 @@ public class PersonDAO {
     
     
     
-    public static void updateUser(Person toUpdate){
+    public static boolean updateUser(Person toUpdate){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = ConnectionManager.getConnection();
 
-            String sql = "UPDATE user set password = ? where username=? ";
+            String sql = "UPDATE user set password = ?, trellokey=?, trellotoken=? where username=? ";
 
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, toUpdate.getPassword());
-            pstmt.setString(2, toUpdate.getUsername());
+            pstmt.setString(2, toUpdate.getTrelloKey());
+            pstmt.setString(3, toUpdate.getToken());
+            pstmt.setString(4, toUpdate.getUsername());
             
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
 
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
+            
             e.printStackTrace();
+            return false;
         } finally {
             ConnectionManager.close(conn, pstmt);
         }
+        return true;
     }
    
 }

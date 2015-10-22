@@ -5,7 +5,6 @@
  */
 package src.controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -13,15 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import src.model.Person;
 import src.model.PersonDAO;
 
 /**
  *
- * @author admin
+ * @author maxchua
  */
-public class ValidateUser extends HttpServlet {
+public class updateTrelloDetails extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,40 +32,27 @@ public class ValidateUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            HttpSession session = request.getSession();
-            
-            Person person = PersonDAO.retrieveUser(username);
-           
-            if(person != null && person.getPassword().equals(password)){
-                //redirect to webpage
-                if (person.getType().equals("c")){
-                    session.setAttribute("loggedInDev", person);
-                    response.sendRedirect("index.jsp");
-                } else if (person.getType().equals("p")) {
-                    session.setAttribute("loggedInPm", person);
-                    response.sendRedirect("index.jsp");
-                 } else if (person.getType().equals("d")) {
-                    session.setAttribute("loggedInDesg", person);
-                    response.sendRedirect("index.jsp");
-                }else if (person.getType().equals("s")) {
-                    session.setAttribute("loggedInSudo", person);
-                    response.sendRedirect("sudo.jsp");
-                }             
-            } else {
-                //send error message
-                request.setAttribute("errorMsg", "Wrong username/password");
+        String username= request.getParameter("user");
+        String trelloKey= request.getParameter("key");
+        String token = request.getParameter("token");
+        
+        //in future, need to auth the trello key and token?
+        System.out.println(username);
+        Person toUpdate= PersonDAO.retrieveUser(username);
+        
+        toUpdate.setToken(token);
+        toUpdate.setTrelloKey(trelloKey);
+        
+        boolean update = PersonDAO.updateUser(toUpdate);
+        RequestDispatcher view = request.getRequestDispatcher("manageUser.jsp");
+        if(update){
+            request.setAttribute("sucess", "Changes sucessfully updated!");
+             view.forward(request, response);
+        }else {
+            request.setAttribute("err", "Trello details could not be updated, please contact team Pjs :)");
           
-                RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-                view.forward(request, response);
-            }
-        } finally {
-            out.close();
+            
+            view.forward(request, response);
         }
     }
 

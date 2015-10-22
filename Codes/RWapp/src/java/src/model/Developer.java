@@ -15,7 +15,7 @@ public class Developer extends Person {
  
     
     public Developer(String username, String password, String employmentDate, String nationality){
-        super(username, password, "d");
+        super(username, password, "d","","");
         this.employmentDate = employmentDate;
         this.nationality = nationality;
     }

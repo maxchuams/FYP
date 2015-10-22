@@ -106,19 +106,6 @@ public class ManageProfile extends HttpServlet {
                     }
                 }
 
-                if (skill != null && skill.length() > 0) {
-                    //need to do, validation for duplicate skill
-
-                    boolean added = SkillDAO.addDevSkill(currUser.getUsername(), skill);
-
-                    if (!added) {
-                        RequestDispatcher rd = request.getRequestDispatcher("manageDevProfile.jsp");
-                        request.setAttribute("err", "You already have that skill added!");
-                        rd.forward(request, response);
-
-                    }
-
-                }
 
                 PersonDAO.updateUser(currUser);
 

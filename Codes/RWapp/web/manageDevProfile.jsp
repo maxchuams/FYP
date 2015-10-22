@@ -63,7 +63,6 @@
         <form action="ManageProfile" method="POST">
             Password: <input type="password" name="password1" /> </br>
             Confirm password again: <input type="password" name="password2" /> </br>
-            Add skills: <input type="text" name="skills" placeholder="eg. java,mysql,php,..."/></br>
             
              </br>
             <button type="submit">submit</button>

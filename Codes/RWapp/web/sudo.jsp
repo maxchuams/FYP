@@ -15,9 +15,16 @@
         <h1>SUPER ADMIN PAGE</h1>
         
         <h2>LOG IN SUCCESS & I CAN DO ANYTHING!</h2>
-        
-        <a href="manageProfile.jsp">Manage users</a>
-        <a href="addUsers.jsp">Add Users</a>
         <a href="Logout">Log Out</a>
+        <ul>
+            <li>
+                <a href="manageProfile.jsp">Manage users</a>
+            </li>
+            <li>
+                 <a href="addUsers.jsp">Add Users</a>
+            </li>
+        </ul>
+       
+        
     </body>
 </html>

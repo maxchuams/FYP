@@ -15,9 +15,18 @@
         <h1>Hello World!</h1>
         
         <h2>LOG IN SUCCESS YAY!</h2>
-        
-        <a href="manageProfile.jsp">Manage your Profile</a>
         <a href="Logout">Log Out</a>
-        <a href="getTrelloData">View Trello Card</a>
+        
+        <ul>
+            <li><a href="manageProfile.jsp">Manage your Profile</a></li>
+            <li><a href="getTrelloData">View Trello Card</a></li>
+            <li><a href="addNewProject.jsp">Add New Project</a></li>
+            
+        </ul>
+           
+        
+        
+        
+        
     </body>
 </html>

@@ -52,7 +52,7 @@ public class TrelloDetailsDAO {
         String toReturn = null;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select token from user where username like ?");
+            pstmt = conn.prepareStatement("select trellotoken from user where username like ?");
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
 

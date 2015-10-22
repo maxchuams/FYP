@@ -5,7 +5,6 @@
  */
 package src.controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -13,15 +12,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import src.model.Person;
 import src.model.PersonDAO;
+import src.model.SkillDAO;
 
 /**
  *
- * @author admin
+ * @author maxchua
  */
-public class ValidateUser extends HttpServlet {
+public class updateDevSkill extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,40 +33,25 @@ public class ValidateUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            HttpSession session = request.getSession();
-            
-            Person person = PersonDAO.retrieveUser(username);
-           
-            if(person != null && person.getPassword().equals(password)){
-                //redirect to webpage
-                if (person.getType().equals("c")){
-                    session.setAttribute("loggedInDev", person);
-                    response.sendRedirect("index.jsp");
-                } else if (person.getType().equals("p")) {
-                    session.setAttribute("loggedInPm", person);
-                    response.sendRedirect("index.jsp");
-                 } else if (person.getType().equals("d")) {
-                    session.setAttribute("loggedInDesg", person);
-                    response.sendRedirect("index.jsp");
-                }else if (person.getType().equals("s")) {
-                    session.setAttribute("loggedInSudo", person);
-                    response.sendRedirect("sudo.jsp");
-                }             
+        String user = request.getParameter("user");
+        String skill = request.getParameter("skills");
+
+        Person p = PersonDAO.retrieveUser(user);
+        if (skill != null && skill.length() > 0) {
+            //need to do, validation for duplicate skill
+
+            boolean added = SkillDAO.addDevSkill(p.getUsername(), skill);
+            RequestDispatcher rd = request.getRequestDispatcher("manageUser.jsp");
+            if (!added) {
+                
+                request.setAttribute("err", "You already have that skill added!");
+                rd.forward(request, response);
+
             } else {
-                //send error message
-                request.setAttribute("errorMsg", "Wrong username/password");
-          
-                RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-                view.forward(request, response);
+                request.setAttribute("sucess", "New skill Added for " + user + "!");
+                rd.forward(request, response);
             }
-        } finally {
-            out.close();
+
         }
     }
 
