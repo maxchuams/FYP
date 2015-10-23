@@ -28,6 +28,10 @@
         <servlet-name>updateDevSkill</servlet-name>
         <servlet-class>src.controller.updateDevSkill</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addNewUser</servlet-name>
+        <servlet-class>src.controller.addNewUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>updateDevSkill</servlet-name>
         <url-pattern>/updateDevSkill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addNewUser</servlet-name>
+        <url-pattern>/addNewUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

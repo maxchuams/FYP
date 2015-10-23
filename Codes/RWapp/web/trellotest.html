@@ -1,0 +1,19 @@
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="https://api.trello.com/1/client.js?key=f44ba45fa92dd5b68d1b85398850d545"></script>
+<script>
+            function x(){
+            Trello.authorize({
+            type: "popup",
+                    name: "Trello Auth",
+                    scope: {
+                    read: true,
+                            write: true },
+                    expiration: "never",
+                    authenticationSuccess,
+                    authenticationFailure
+                    });
+                    }
+    var authenticationSuccess = function() { alert(Trello.token()) };
+            var authenticationFailure = function() { console.log("Failed authentication"); };</script>
+
+<input type="button" value="click here to login" id="1" onClick=x()>

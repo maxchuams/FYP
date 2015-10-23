@@ -14,8 +14,8 @@ public class Developer extends Person {
     private String nationality;
  
     
-    public Developer(String username, String password, String employmentDate, String nationality){
-        super(username, password, "d","","");
+    public Developer(String username, String password,String type, String trellokey, String trellotoken, String employmentDate, String nationality){
+        super(username, password, type, trellokey, trellotoken);
         this.employmentDate = employmentDate;
         this.nationality = nationality;
     }

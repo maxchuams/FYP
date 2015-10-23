@@ -42,8 +42,30 @@ public class TrelloCardDAO {
             ConnectionManager.close(conn, pstmt, rs);
 
         }
+    }
+
+    public static void clearData() {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("truncate project");
+           
+            pstmt.executeUpdate();
+
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
 
     }
 
- 
 }

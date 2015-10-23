@@ -102,5 +102,32 @@ public class PersonDAO {
         }
         return true;
     }
-   
+    public static boolean addPerson(Person p) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Person user = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("insert into user (username, password, type, trellokey, trellotoken) values (?,?,?,?,?)");
+            pstmt.setString(1, p.getUsername());
+            pstmt.setString(2, p.getPassword());
+            pstmt.setString(3, p.getType());
+            pstmt.setString(4, p.getTrelloKey());
+            pstmt.setString(5, p.getToken());
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+
+    }
 }
