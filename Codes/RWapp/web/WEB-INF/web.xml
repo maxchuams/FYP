@@ -32,6 +32,14 @@
         <servlet-name>addNewUser</servlet-name>
         <servlet-class>src.controller.addNewUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>src.controller.ImageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>uploadServlet</servlet-name>
+        <servlet-class>src.controller.UploadFileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>addNewUser</servlet-name>
         <url-pattern>/addNewUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/ImageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadServlet</servlet-name>
+        <url-pattern>/uploadServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
