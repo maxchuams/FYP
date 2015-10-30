@@ -33,6 +33,10 @@
         <servlet-class>src.controller.addNewUser</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>src.controller.ImageServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>assignProject</servlet-name>
         <servlet-class>src.controller.assignProject</servlet-class>
     </servlet>
@@ -43,6 +47,10 @@
     <servlet>
         <servlet-name>editPriority</servlet-name>
         <servlet-class>src.controller.editPriority</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>uploadServlet</servlet-name>
+        <servlet-class>src.controller.UploadFileController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
@@ -77,6 +85,14 @@
         <url-pattern>/addNewUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/ImageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadServlet</servlet-name>
+        <url-pattern>/uploadServlet</url-pattern>
+    </servlet-mapping>
+        <servlet-mapping>
         <servlet-name>assignProject</servlet-name>
         <url-pattern>/assignProject</url-pattern>
     </servlet-mapping>
