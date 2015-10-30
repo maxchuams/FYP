@@ -66,10 +66,12 @@ public class getTrelloData extends HttpServlet {
         }
         //get the trello details
         System.out.println(currUser);
+        //truncate trello data
+        //TrelloCardDAO.clearData();
         String username = currUser.getUsername();
         String key = TrelloDetailsDAO.retrieveTrelloKey(username);
         String token = TrelloDetailsDAO.retrieveTrelloToken(username);
-        //System.out.println("KEY:  " + key + " TOKEN : " + token);
+        System.out.println("KEY:  " + key + " TOKEN : " + token);
         //first url to call the user's boards
 
         URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + key + "&token=" + token);
@@ -153,6 +155,7 @@ public class getTrelloData extends HttpServlet {
                 if(desc.length() >= 100){
                     desc= desc.substring(0,100);
                 }
+            
                 String due = tempCard.getString("due").substring(0,19);
                 String cardId = tempCard.getString("id");
                 String name = tempCard.getString("name");
@@ -186,7 +189,7 @@ public class getTrelloData extends HttpServlet {
 //            }
 //        }
         RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp");
-        request.setAttribute("tc", tcList);
+        //request.setAttribute("tc", tcList);
 
         rd.forward(request, response);
 

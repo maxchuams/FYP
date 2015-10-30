@@ -19,8 +19,15 @@
         
         <ul>
             <li><a href="manageProfile.jsp">Manage your Profile</a></li>
-            <li><a href="getTrelloData">View Trello Card</a></li>
+            <li><a href="viewTrelloCards.jsp">View Trello Cards</a></li>
             <li><a href="addNewProject.jsp">Add New Project</a></li>
+            <%
+            if (pm!= null){
+                %>
+            <li><a href="assignProject">View Unassigned Cards</a></li>
+            <%
+            }
+            %>
             
         </ul>
            

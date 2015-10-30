@@ -13,16 +13,17 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author admin
  */
 public class PersonDAO {
+
     static ArrayList<Person> plist;
-    
-        
-    public static Person retrieveUser(String username){
-        
+
+    public static Person retrieveUser(String username) {
+
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -34,20 +35,20 @@ public class PersonDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                
-                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5));
+
+                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            ConnectionManager.close(conn, pstmt, rs); 
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
         }
-       
+
         return user;
-     
+
     }
-    
-        public static ArrayList<Person> retrieveUsers(){
+
+    public static ArrayList<Person> retrieveUsers() {
         ArrayList<Person> users = new ArrayList<Person>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -59,21 +60,18 @@ public class PersonDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                users.add(new Person(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4),rs.getString(5)));
-                
+                users.add(new Person(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             ConnectionManager.close(conn, pstmt, rs);
         }
         return users;
     }
-    
-    
-    
-    
-    public static boolean updateUser(Person toUpdate){
+
+    public static boolean updateUser(Person toUpdate) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -88,13 +86,12 @@ public class PersonDAO {
             pstmt.setString(2, toUpdate.getTrelloKey());
             pstmt.setString(3, toUpdate.getToken());
             pstmt.setString(4, toUpdate.getUsername());
-            
-            //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
 
+            //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            
+
             e.printStackTrace();
             return false;
         } finally {
@@ -102,6 +99,7 @@ public class PersonDAO {
         }
         return true;
     }
+
     public static boolean addPerson(Person p) {
 
         Connection conn = null;
@@ -130,4 +128,29 @@ public class PersonDAO {
         }
 
     }
+    
+    public static ArrayList<Person> retrievAllDev() {
+        ArrayList<Person> users = new ArrayList<Person>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select * from user where type='c'");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                if(rs.getString(3)!=null){
+                    users.add(new Person(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+        return users;
+    }
+
 }

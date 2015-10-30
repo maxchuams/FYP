@@ -152,10 +152,43 @@
                              }
                          }%>
                 </select>
-                Add skills: <input type="text" name="skills" placeholder="eg. java,mysql,php,..." required/>
+                Add skills: 
+                <select name="skills">
+                    <option value="Wordpress">Wordpress</option>
+                    <option value="eCommerce">eCommerce</option>
+                    <option value="Custom">Custom</option>
+                </select>
+               
                 </br>
                 <input type='submit' value='Add Skillz'/>
+            </form>
         </div>
+                
+                </br>
+                <div>
+            <h1>Change User Password</h1>
+            </br>
+            Select User: 
+            <form action="changeUserPassword" method="POST">
+                <select name="user">
+                    <%
+                        for (Person p : pList) {
+                            if (!p.getUsername().equals("admin")) {
+                    %>
+                    <option value="<%=p.getUsername()%>"><%=p.getUsername()%></option>
 
+
+
+                    <%
+                             }
+                         }%>
+                </select>
+                </br>
+                 Password: <input type="password" name="password1" required/> </br>
+                 Confirm password again: <input type="password" name="password2" required/> </br>
+                <button type="submit">submit!</button>
+                
+            </form>
+             </div>
     </body>
 </html>
