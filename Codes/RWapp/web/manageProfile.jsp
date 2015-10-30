@@ -4,6 +4,7 @@
     Author     : admin
 --%>
 <%@include file="protect.jsp" %>
+<%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,8 @@
         <title>Edit Profile</title>
     </head>
     <body>
+        <section id="main-content">
+        <section class="wrapper">
         <h1>Manage your profile!</h1>
         <%            
            if(dev!= null){
@@ -24,5 +27,7 @@
                response.sendRedirect("manageUser.jsp");
            }
         %>
+        </section>
+        </section>
     </body>
 </html>

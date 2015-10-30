@@ -4,6 +4,7 @@
     Author     : admin
 --%>
 <%@include file="protectDesg.jsp" %>
+<%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,8 @@
         <title>Edit your profile</title>
     </head>
     <body>
+        <section id="main-content">
+        <section class="wrapper">
         <h1>Profile Management Page for Designers</h1>
 
         </br>
@@ -52,6 +55,7 @@
             </br>
             <button type="submit">submit!</button>
         </form>
-
+        </section>
+        </section>
     </body>
 </html>

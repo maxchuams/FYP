@@ -8,6 +8,7 @@
 <%@page import="src.model.PersonDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectSudo.jsp" %>
+<%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,9 @@
         <title>Manage Users Page</title>
     </head>
     <body>
+        <section id="main-content">
+        <section class="wrapper">
+        
         <h1>The user management page</h1>
 
         <a href="sudo.jsp">home(sudo)</a>
@@ -70,12 +74,7 @@
 
             <button type="submit">update</button>
         </form>
-        <h2>Edit Sudo Password</h2>
-        <form action="ManageProfile" method="POST">
-            Password: <input type="password" name="password1" required/> </br>
-            Confirm password again: <input type="password" name="password2" required/> </br>
-            <button type="submit">submit!</button>
-        </form>
+        
         <div id="trelloForm">
             <%
                 ArrayList<Person> pList = PersonDAO.retrieveUsers();
@@ -190,5 +189,7 @@
                 
             </form>
              </div>
+    </section>
+</section>
     </body>
 </html>

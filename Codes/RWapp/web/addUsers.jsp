@@ -5,6 +5,7 @@
 --%>
 
 <%@include file="protect.jsp" %>
+<%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,6 +33,8 @@
         </script>
     </head>
     <body>
+        <section id="main-content">
+        <section class="wrapper">
 
         <a href='sudo.jsp'>home</a>
         <h1>Add a new user to the system</h1>
@@ -325,5 +328,8 @@
         %>
         <b style="color:blue;"><%=sucess%></b><b style="color:red;"><%=errorMsg%></b>
          </br>
+         
+        </section>
+        </section>
     </body>
 </html>

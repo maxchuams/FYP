@@ -8,6 +8,7 @@
 <%@page import="java.util.Arrays"%>
 <%@page import="src.model.SkillDAO"%>
 <%@include file="protectDev.jsp" %>
+<%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,8 @@
         <title>Manage Profile</title>
     </head>
     <body>
+        <section id="main-content">
+        <section class="wrapper">
         <h1>The developer's profile management page</h1>
         
          
@@ -67,5 +70,7 @@
              </br>
             <button type="submit">submit</button>
         </form>
+        </section>
+        </section>
     </body>
 </html>

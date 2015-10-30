@@ -1,22 +1,31 @@
 <%-- 
     Document   : login
-    Created on : Sep 9, 2015, 9:09:03 AM
-    Author     : admin
+    Created on : Oct 30, 2015, 1:56:50 AM
+    Author     : calvin
 --%>
-    
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
- <%@page import="src.model.Person"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Page</title>
-    </head>
-    <body>
-        <h1>Log in!</h1>
-        
-   
 
+<%@page import="src.model.Person"%>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <title>Login</title>
+
+    <!--Core CSS -->
+    <link href="bootstrap/html/bs3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/html/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="bootstrap/html/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="bootstrap/html/css/style.css" rel="stylesheet">
+    <link href="bootstrap/html/css/style-responsive.css" rel="stylesheet" />
+
+</head>
 <%
     
     
@@ -42,15 +51,30 @@
 
   
 %>
-        
-        <form method="POST" action="ValidateUser">
-            Username: <input type="text" placeholder="username" name="username" required> </br>
-         
-            Password: <input type="password" placeholder="password" name="password" required>
-            
-            <button type="submit">Sign in</button>
-        </form>
+  <body class="login-body">
 
-        <b style="color:red;"><%=errorMsg%></b>
-    </body>
+    <div class="container">
+
+      <form class="form-signin" action="ValidateUser">
+        <h2 class="form-signin-heading"><img src="bootstrap/html/images/Recco.png" alt=""></h2>
+        <div class="login-wrap">
+            <div class="user-login-info">
+                <input type="text" name="username" class="form-control" placeholder="User ID" autofocus required>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <b style="color:red;"><%=errorMsg%></b>
+            </div>
+            <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
+        </div>
+      </form>
+    </div>
+
+
+
+    <!-- Placed js at the end of the document so the pages load faster -->
+
+    <!--Core js-->
+    <script src="bootstrap/html/js/jquery.js"></script>
+    <script src="bootstrap/html/bs3/js/bootstrap.min.js"></script>
+
+  </body>
 </html>

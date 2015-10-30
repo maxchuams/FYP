@@ -4,6 +4,7 @@
     Author     : admin
 --%>
 <%@include file="protectPM.jsp" %>
+<%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,8 @@
         <title>Manage Profile</title>
     </head>
     <body>
+        <section id="main-content">
+        <section class="wrapper">
         <h1>The PM profile management page</h1>
         
         <a href="index.jsp">home</a>
@@ -49,6 +52,7 @@
          
             <button type="submit">submit!</button>
         </form>
-
+        </section>
+        </section>
     </body>
 </html>
