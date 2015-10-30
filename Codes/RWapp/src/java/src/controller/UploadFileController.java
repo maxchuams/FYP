@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import java.io.PrintWriter;
-import java.util.Random;
+
 import javax.servlet.RequestDispatcher;
 import src.model.ConnectionManager;
 /**
@@ -39,12 +39,9 @@ public class UploadFileController extends HttpServlet
         
                 InputStream inputStream = null;
 
-                Random rand = new Random();
-                int  n = rand.nextInt(9999) + 1;
-                String idTemp=(String.valueOf(n));
-
                 
-                String title=(request.getParameter("title"));
+                
+                String username=(request.getParameter("username"));
                 Part filePart = request.getPart("file_uploaded");
                 
                 if (filePart != null) 
@@ -61,8 +58,11 @@ public class UploadFileController extends HttpServlet
                     
                     conn = ConnectionManager.getConnection();
                     
-                    String sql = "Update user set photo = ?";
+                    String sql = "Update user set photo = ? where username = ?";
                     PreparedStatement statement = conn.prepareStatement(sql);
+                    
+                    statement.setString(2, username);
+                    
                     if (inputStream != null) 
                     {
                         statement.setBinaryStream(1, inputStream, (int) filePart.getSize());

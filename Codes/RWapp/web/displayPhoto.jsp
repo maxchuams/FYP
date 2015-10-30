@@ -30,7 +30,7 @@
            
            
         %>
-        <img src="ImageServlet?imageid=dev" align="center"/>
+        <img src="ImageServlet?imageid=recom1" align="center"/>
         
         
         
@@ -49,7 +49,7 @@
                     <tbody>
                         <tr>    
                             <td>Name : </td>
-                            <td><input type="text" name="title" size="30"></td>
+                            <td><input type="text" name="username" size="30"></td>
                         </tr>
                         <tr>
                             <td>Choose File : </td>
