@@ -52,6 +52,11 @@
         <servlet-name>uploadServlet</servlet-name>
         <servlet-class>src.controller.UploadFileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>assignRecommendation</servlet-name>
+        <servlet-class>src.controller.assignRecommendation</servlet-class>
+
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -103,6 +108,10 @@
     <servlet-mapping>
         <servlet-name>editPriority</servlet-name>
         <url-pattern>/editPriority</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>assignRecommendation</servlet-name>
+        <url-pattern>/assignRecommendation</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
