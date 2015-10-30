@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Date;
@@ -23,7 +24,7 @@ public class RecommedationDAO {
 
     public static ArrayList<Recommendation> getRecommendation(String projectType,
             String projectDueDate, String projectAllocatedDate, int priority) {
-
+        System.out.println("RECCO STARTS!");
         ArrayList<Recommendation> recommendations = new ArrayList<Recommendation>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -36,6 +37,7 @@ public class RecommedationDAO {
             dDate = formatter.parse(projectDueDate);
             aDate = formatter.parse(projectAllocatedDate);
         } catch (Exception e) {
+            System.out.println("error");
         }
 
         String ph = "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as defectscore, ifnull(experiencecount,0)  as experience, (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem"
@@ -63,14 +65,16 @@ public class RecommedationDAO {
             pstmt.setString(5, projectType);
             pstmt.setDate(6, new java.sql.Date(aDate.getTime()));
             pstmt.setString(7, projectType);
-
+    System.out.println("1");
+    System.out.println(pstmt);
             rs = pstmt.executeQuery();
+            System.out.println("2");
             while (rs.next()) {
                 Recommendation toAdd = new Recommendation(rs.getString(1), rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getInt(5));
                 //Recommendation(String username, int workloadScore, int defectScore, int experienceScore, int pointSystemScore)
                 recommendations.add(toAdd);
             }
-
+            System.out.println(recommendations);
             return recommendations;
         } catch (SQLException ex) {
             //Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -175,9 +175,9 @@ public class assignProject extends HttpServlet {
         ArrayList<TrelloCard> tcList = new ArrayList<TrelloCard>();
         for(int i = 0; i < cardsArr.length(); i++){
             JSONObject tempCard = cardsArr.getJSONObject(i);
-            System.out.println(tempCard);
+            //System.out.println(tempCard);
             String idList = tempCard.getString("idList");
-            System.out.println(idList);
+            //System.out.println(idList);
             JSONArray members = tempCard.getJSONArray("idMembers");
             boolean unassigned = true;
             for (Object memid : members ){
