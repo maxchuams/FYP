@@ -31,6 +31,7 @@
            
         %>
         <img src="ImageServlet?imageid=recom1" align="center"/>
+        <!--recom1 = username-->
         
         
         

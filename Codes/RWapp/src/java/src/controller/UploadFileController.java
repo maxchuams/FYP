@@ -71,20 +71,22 @@ public class UploadFileController extends HttpServlet
                     int row = statement.executeUpdate();
                     if (row > 0) 
                     {
-                        out.println("File uploaded!!!");
+                        //out.println("File uploaded!!!");
                         
                         conn.close();
                         
-                        RequestDispatcher rs = request.getRequestDispatcher("displayPhoto.jsp");
+                        RequestDispatcher rs = request.getRequestDispatcher("profilePage.jsp");
+                        //request.setAttribute("xx", "File Uploaded!!");
                         rs.include(request, response);
                     }
                     else
                     {
-                        out.println("Couldn't upload your file!!!");
+                        //out.println("Couldn't upload your file!!!");
                         
                         conn.close();
                         
-                        RequestDispatcher rs = request.getRequestDispatcher("displayPhoto.jsp");
+                        RequestDispatcher rs = request.getRequestDispatcher("profilePage.jsp");
+                        //request.setAttribute("xx", "File Not Uploaded Please Try Again!!");
                         rs.include(request, response);
                     }    
 
