@@ -27,11 +27,13 @@ public class TrelloCardDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description, duedate) values (?, ?, ? ,?)");
+            pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description, duedate, priority, type) values (?, ?, ? ,?, ?,?)");
             pstmt.setString(1, tc.getName());
             pstmt.setString(2, tc.getId());
             pstmt.setString(3, tc.getDesc());
             pstmt.setString(4, tc.getDue());
+            pstmt.setInt(5, tc.getPriority());
+            pstmt.setString(6, tc.getType());
             pstmt.executeUpdate();
             System.out.println("Trello card : " + tc);
             return true;
@@ -105,7 +107,7 @@ public class TrelloCardDAO {
 
             while (rs.next()) {
                 if(rs.getString(3)!=null){
-                    cards.add(new TrelloCard(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                    cards.add(new TrelloCard(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4), rs.getInt(5), rs.getString(6)));
                 }
             }
         } catch (SQLException ex) {

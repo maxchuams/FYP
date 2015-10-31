@@ -18,25 +18,28 @@ public class TrelloCard {
     private String due;
     private String desc;
     private ArrayList<Person> members;
-    private String priority;
+    private int priority;
+    private String type;
 
-    public TrelloCard(String id, String name, String due, String desc, ArrayList<Person> members, String priority) {
+    public TrelloCard(String id, String name, String due, String desc, ArrayList<Person> members, int priority, String type) {
         this.id = id;
         this.name = name;
         this.due = due;
         this.desc = desc;
         this.members = members;
         this.priority=priority;
+        this.type=type;
 
     }
 
-    public TrelloCard(String name, String id, String desc,String due, String priority) {
+    public TrelloCard(String name, String id, String desc,String due, int priority, String type) {
         this.id = id;
         this.name = name;
         this.due = due;
         this.desc = desc;
         this.priority = priority;
         this.members = new ArrayList<Person>();
+        this.type = type;
     }
     
     
@@ -47,14 +50,22 @@ public class TrelloCard {
         this.due = due;
         this.desc = desc;
         this.members = new ArrayList<Person>();
-        this.priority = "";
+        this.priority = -1;
     }
 
-    public String getPriority() {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String Type) {
+        this.type = Type;
+    }
+
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
     

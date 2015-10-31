@@ -100,7 +100,7 @@
                     <ul class="sub">
                         <li><a href="viewTrelloCards.jsp">View Cards</a></li>
                         <li><a href="addNewProject.jsp">Create</a></li>
-                        <li><a href="viewUnassignedCards.jsp">View Unassigned Cards</a></li>
+                        <li><a href="assignProject">View Unassigned Cards</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
