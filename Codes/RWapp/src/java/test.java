@@ -16,7 +16,14 @@ import src.model.Recommendation;
 public class test {
     public static void main(String[] args){
         System.out.println("hello world");
-        ArrayList<Recommendation> rs = RecommedationDAO.getRecommendation("ecommerce","2015-06-29","2015-07-30",3);
-        System.out.println(rs);
+        ArrayList<Recommendation> rs = RecommedationDAO.getRecommendation("ecommerce","2015-09-29","2015-10-30",3);
+        for(Recommendation r: rs){
+            System.out.println( r.getUsername());
+            System.out.println( r.getDefectScore());
+            System.out.println( r.getExperienceScore());
+            System.out.println( r.getPointSystemScore());
+            System.out.println( r.getWorkloadScore());
+        }
+            
     }
 }
