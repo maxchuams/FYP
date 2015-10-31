@@ -35,13 +35,18 @@
         <form action='processRecommendation' method='GET'>
             <%
             //System.out.println(rlist.size());
+            int count = 1;
             for(Recommendation r: rlist){
                 
               
                 %>
-                <input type="checkbox" name="dev" value='<%=r.getUsername()%>'/> <%=r.getUsername()%></br>
+                <input type="checkbox" name="dev" value='<%=r.getUsername()%>'/> <%=count%>. <%=r.getUsername()%>, Workload Score: <%=r.getWorkloadScore()%>,
+                Defects Score: <%=r.getDefectScore()%>, Experience Rating: <%=r.getExperienceScore()%>, Overall Score: <%=r.getPointSystemScore()%>
+                
+                </br>
                 
                 <%
+                count++;
             }
             
             %>
