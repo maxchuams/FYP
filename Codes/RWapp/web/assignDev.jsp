@@ -47,7 +47,7 @@
             %>
             <input type='hidden' name='projName' value='<%=toAssign.getName()%>'/>
             <input type='hidden' name='type' value='<%=toAssign.getType()%>'/>
-            <input type='hidden' name='priortiy' value='<%=toAssign.getPriority()%>'/>
+            <input type='hidden' name='priority' value='<%=toAssign.getPriority()%>'/>
             <input type='hidden' name='due' value='<%=toAssign.getDue()%>'/>
             <input type='hidden' name='desc' value='<%=toAssign.getDesc()%>'/>
             <input type='hidden' name='id' value='<%=toAssign.getId()%>'/>

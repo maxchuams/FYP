@@ -68,6 +68,9 @@
                 %>
             </select>
             </br>
+            Select start date: 
+            <input type="date" name="sDate"/>
+            </br>
             Priority:
             <select name='priority'>
                 <option value='1'>1 - Low</option>

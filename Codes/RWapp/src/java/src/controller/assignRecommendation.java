@@ -54,13 +54,16 @@ public class assignRecommendation extends HttpServlet {
         int priority = Integer.parseInt(intensity);
         String type = request.getParameter("type");
        //get todays date
-        String today = null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        try {
-            today = formatter.format(new Date());
-            
-        } catch (Exception e) {
-        }
+        String today = request.getParameter("sDate");
+        //System.out.println(today);
+//        Date start = null;
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+//        try {
+//            start = formatter.parse(today);
+//            System.out.println(start.toString());
+//        } catch (Exception e) {
+//        }
+//        
         
          HttpSession sess = request.getSession();
         Person p1 = (Person) sess.getAttribute("loggedInDev");
@@ -208,7 +211,7 @@ public class assignRecommendation extends HttpServlet {
             }
         }
         String  dateToFormat = toAssign.getDue();
-        dateToFormat.replace("-","/");
+        //dateToFormat.replace("-","/");
 //        Date toFormat = new Date();
 //          SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy/MM/dd");
 //        try {
