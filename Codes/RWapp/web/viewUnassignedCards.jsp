@@ -69,7 +69,7 @@
             </select>
             </br>
             Select start date: 
-            <input type="date" name="sDate"/>
+            <input type="date" name="sDate" required/>
             </br>
             Priority:
             <select name='priority'>

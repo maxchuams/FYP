@@ -180,11 +180,12 @@ public class assignProject extends HttpServlet {
             //System.out.println(idList);
             JSONArray members = tempCard.getJSONArray("idMembers");
             boolean unassigned = true;
-            for (Object memid : members ){
-                String cardmem= (String) memid;
+            for(int j = 0; j< members.length(); j++){
+          
+                String cardmem = members.getString(j);
                 for (String dev : mTList){
                    
-                    if(memid.equals(dev)){
+                    if(cardmem.equals(dev)){
                         unassigned = false;
                     }
                 }
