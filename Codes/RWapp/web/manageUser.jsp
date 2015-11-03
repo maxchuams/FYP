@@ -44,7 +44,7 @@
 
         </br>
 
-
+        
         <h2>List of Users</h2>
         <form action="ManageUser" method="POST">
             <%
@@ -73,15 +73,34 @@
                 <tr></table>
 
             <button type="submit">update</button>
-        </form>
-                
-        
-        <div id="trelloForm">
             <%
                 ArrayList<Person> pList = PersonDAO.retrieveUsers();
 
 
             %>
+        </form>
+                
+                <h2>Remove user</h2>
+                <form action="removeUser">
+                    Username: 
+                     <select name="user">
+                    <%                         for (Person p : pList) {
+                            if (!p.getUsername().equals("admin")) {
+                    %>
+                    <option value="<%=p.getUsername()%>"><%=p.getUsername()%></option>
+
+
+
+                    <%
+                             }
+                         } %>
+                </select>
+                </br>
+                <input type="submit" value="Remove"/>
+                </form>
+                </br>
+        <div id="trelloForm">
+            
             </br>
             <h2>Update Trello Details</h2>
             <form action="updateTrelloDetails" method="POST">
@@ -163,6 +182,31 @@
                 <input type='submit' value='Add Skillz'/>
             </form>
         </div>
+                <h2>Remove developer's skill</h2>
+                <form action='removeDevSkill'>
+                     Username:
+                <select name="user">
+                    <%
+                        for (Person p : pList) {
+                            if (!p.getUsername().equals("admin") && p.getType().equals("c")) {
+                    %>
+                    <option value="<%=p.getUsername()%>"><%=p.getUsername()%></option>
+
+
+
+                    <%
+                             }
+                         }%>
+                </select>
+                </br>
+                Skill to remove:
+                <select name="skill">
+                    <option value="Wordpress">Wordpress</option>
+                    <option value="eCommerce">eCommerce</option>
+                    <option value="Custom">Custom</option>
+                </select>
+                <input type='submit' value='Remove Skill!'/>
+                </form>
                 
                 </br>
                 <div>

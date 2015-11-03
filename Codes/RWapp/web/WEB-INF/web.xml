@@ -60,6 +60,14 @@
         <servlet-name>processRecommendation</servlet-name>
         <servlet-class>src.controller.processRecommendation</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>removeUser</servlet-name>
+        <servlet-class>src.controller.removeUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>removeDevSkill</servlet-name>
+        <servlet-class>src.controller.removeDevSkill</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -119,6 +127,14 @@
     <servlet-mapping>
         <servlet-name>processRecommendation</servlet-name>
         <url-pattern>/processRecommendation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>removeUser</servlet-name>
+        <url-pattern>/removeUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>removeDevSkill</servlet-name>
+        <url-pattern>/removeDevSkill</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

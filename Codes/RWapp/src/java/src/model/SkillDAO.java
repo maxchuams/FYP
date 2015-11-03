@@ -75,5 +75,29 @@ public class SkillDAO {
         
 
     }
+     public static boolean deleteSkill(String username, String skill){
+         Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
+
+            String sql = "DELETE FROM developerskill where "
+                    + "username=?   and skill =?";
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, skill);
+            
+
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionManager.close(conn, pstmt);
+        }
+     }
 
 }
