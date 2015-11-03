@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +37,7 @@ import src.model.TrelloDetailsDAO;
  * @author maxchua
  */
 public class assignRecommendation extends HttpServlet {
+
     private Object RecommendationDAO;
 
     /**
@@ -49,14 +51,38 @@ public class assignRecommendation extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{ 
-        String projName = request.getParameter("card");
-        String intensity = request.getParameter("priority");
-        int priority = Integer.parseInt(intensity);
-        String type = request.getParameter("type");
-       //get todays date
-        String today = request.getParameter("sDate");
-        String eDate = request.getParameter("eDate");
+        try {
+            String projName = request.getParameter("card");
+            String intensity = request.getParameter("priority");
+            int priority = Integer.parseInt(intensity);
+            String type = request.getParameter("type");
+            //get todays date
+            String today = request.getParameter("sDate");
+            String eDate = request.getParameter("eDate");
+            RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
+            try {
+                boolean valid = validDate(today);
+                if (!valid) {
+                    request.setAttribute("err", "Please set a date that is after today");
+                    view.forward(request, response);
+                }
+            } catch (ParseException w) {
+
+                request.setAttribute("err", "invalid date");
+                view.forward(request, response);
+            }
+            try {
+                boolean valid = validDate(eDate);
+                boolean valid2 = validDate2(eDate, today);
+                if (!valid || !valid2) {
+                    request.setAttribute("err", "Please set the end date after the start date");
+                    view.forward(request, response);
+                }
+            } catch (ParseException w) {
+
+                request.setAttribute("err", "invalid date");
+                view.forward(request, response);
+            }
         //System.out.println(today);
 //        Date start = null;
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -66,153 +92,165 @@ public class assignRecommendation extends HttpServlet {
 //        } catch (Exception e) {
 //        }
 //        
-        
-         HttpSession sess = request.getSession();
-        Person p1 = (Person) sess.getAttribute("loggedInDev");
-        Person p2 = (Person) sess.getAttribute("loggedInDesg");
-        Person p3 = (Person) sess.getAttribute("loggedInPm");
 
-        Person currUser = null;
+            HttpSession sess = request.getSession();
+            Person p1 = (Person) sess.getAttribute("loggedInDev");
+            Person p2 = (Person) sess.getAttribute("loggedInDesg");
+            Person p3 = (Person) sess.getAttribute("loggedInPm");
 
-        if (p1 != null) {
-            currUser = p1;
+            Person currUser = null;
 
-        } else if (p2 != null) {
-            currUser = p2;
+            if (p1 != null) {
+                currUser = p1;
 
-        } else if (p3 != null) {
-            currUser = p3;
+            } else if (p2 != null) {
+                currUser = p2;
 
-        } else {
-            response.sendRedirect("login.jsp");
-        }
+            } else if (p3 != null) {
+                currUser = p3;
+
+            } else {
+                response.sendRedirect("login.jsp");
+            }
         //truncate trello data
 //        TrelloCardDAO.clearData();
-        //get the trello details
-        //System.out.println(currUser);
-        String username = currUser.getUsername();
-        String key = TrelloDetailsDAO.retrieveTrelloKey(username);
-        String token = TrelloDetailsDAO.retrieveTrelloToken(username);
+            //get the trello details
+            //System.out.println(currUser);
+            String username = currUser.getUsername();
+            String key = TrelloDetailsDAO.retrieveTrelloKey(username);
+            String token = TrelloDetailsDAO.retrieveTrelloToken(username);
         //System.out.println("KEY:  " + key + " TOKEN : " + token);
-        //first url to call the user's boards
+            //first url to call the user's boards
 
-        URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + key + "&token=" + token);
-        //System.out.println(memberUrl);
+            URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + key + "&token=" + token);
+            //System.out.println(memberUrl);
 
-        URLConnection con = memberUrl.openConnection();
-        InputStream is = con.getInputStream();
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            URLConnection con = memberUrl.openConnection();
+            InputStream is = con.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-        String line = null;
-        String jsonOutput = "";
-        TrelloBoard tb = null;
-        // read each line and throw string into JSONObject
-        while ((line = br.readLine()) != null) {
-            jsonOutput += line;
+            String line = null;
+            String jsonOutput = "";
+            TrelloBoard tb = null;
+            // read each line and throw string into JSONObject
+            while ((line = br.readLine()) != null) {
+                jsonOutput += line;
 
-        }
+            }
 
-        JSONObject obj = new JSONObject(jsonOutput);
-        JSONArray boardArr = obj.getJSONArray("boards");
+            JSONObject obj = new JSONObject(jsonOutput);
+            JSONArray boardArr = obj.getJSONArray("boards");
         //iterate through the user's boards and store into an arraylist first
 
-        //masterboardID - id for masterboard need this for the URL
-        String masterboardID = "";
-        for (int i = 0; i < boardArr.length(); i++) {
-            JSONObject board = boardArr.getJSONObject(i);
-            String name = board.getString("name");
-            if (name.equals("Projects Master Board")) {
-                masterboardID = board.getString("id");
+            //masterboardID - id for masterboard need this for the URL
+            String masterboardID = "";
+            for (int i = 0; i < boardArr.length(); i++) {
+                JSONObject board = boardArr.getJSONObject(i);
+                String name = board.getString("name");
+                if (name.equals("Projects Master Board")) {
+                    masterboardID = board.getString("id");
+                }
+
             }
 
-        }
+            //now we will call the api to get the boards and check for projects master board
+            URL listUrl = new URL("https://api.trello.com/1/boards/" + masterboardID + "/lists?key=" + key + "&token=" + token);
+            con = listUrl.openConnection();
+            is = con.getInputStream();
+            br = new BufferedReader(new InputStreamReader(is));
 
-        //now we will call the api to get the boards and check for projects master board
-        URL listUrl = new URL("https://api.trello.com/1/boards/" + masterboardID + "/lists?key=" + key + "&token=" + token);
-        con = listUrl.openConnection();
-        is = con.getInputStream();
-        br = new BufferedReader(new InputStreamReader(is));
-
-        line = null;
-        jsonOutput = "";
-        while ((line = br.readLine()) != null) {
-            jsonOutput += line;
-        }
-        //store the id of the List
-        String listId = "";
-
-        JSONArray boardList = new JSONArray(jsonOutput);
-        for (int i = 0; i < boardList.length(); i++) {
-            JSONObject list = boardList.getJSONObject(i);
-
-            String listName = list.getString("name");
-            if (listName.equals("Development")) {
-                listId = list.getString("id");
+            line = null;
+            jsonOutput = "";
+            while ((line = br.readLine()) != null) {
+                jsonOutput += line;
             }
-        }
-        
+            //store the id of the List
+            String listId = "";
+
+            JSONArray boardList = new JSONArray(jsonOutput);
+            for (int i = 0; i < boardList.length(); i++) {
+                JSONObject list = boardList.getJSONObject(i);
+
+                String listName = list.getString("name");
+                if (listName.equals("Development")) {
+                    listId = list.getString("id");
+                }
+            }
+
         //now we will get all cards related to the user
-        //and with the masterboardid as well as the listid, we will be able to identify all 
-        //cards related to the development list
-        URL cardUrl = new URL("https://api.trello.com/1/boards/" + masterboardID + "/cards?key=" + key + "&token=" + token);
-        con = cardUrl.openConnection();
-        is = con.getInputStream();
-        br = new BufferedReader(new InputStreamReader(is));
+            //and with the masterboardid as well as the listid, we will be able to identify all 
+            //cards related to the development list
+            URL cardUrl = new URL("https://api.trello.com/1/boards/" + masterboardID + "/cards?key=" + key + "&token=" + token);
+            con = cardUrl.openConnection();
+            is = con.getInputStream();
+            br = new BufferedReader(new InputStreamReader(is));
 
-        line = null;
-        jsonOutput = "";
-        while ((line = br.readLine()) != null) {
-            jsonOutput += line;
-        }
-        
-        //get all developers in RW
-        ArrayList<Person> devList = PersonDAO.retrievAllDev();
-               
-        //get all members in Trello
-        ArrayList<String> mTList=new ArrayList<String>();
-        URL membersUrl = new URL("https://api.trello.com/1/boards/"+masterboardID+"/members?key="+key +"&token="+token);
-        con = membersUrl.openConnection();
-        is = con.getInputStream();
-        br = new BufferedReader(new InputStreamReader(is));
+            line = null;
+            jsonOutput = "";
+            while ((line = br.readLine()) != null) {
+                jsonOutput += line;
+            }
 
-        line = null;
-        String jsonOutput1 = "";
-        while ((line = br.readLine()) != null) {
-            jsonOutput1 += line;
-        }
-        JSONArray membArr = new JSONArray(jsonOutput1);
-        for(int i =0; i<membArr.length();i++){
-            JSONObject member = membArr.getJSONObject(i);
-            String memUsername= member.getString("username");
-            String memID=member.getString("id");
-            for(Person toCheck : devList){
-                if(toCheck.getUsername().contains(memUsername)){
-                    mTList.add(memID);
+            //get all developers in RW
+            ArrayList<Person> devList = PersonDAO.retrievAllDev();
+
+            //get all members in Trello
+            ArrayList<String> mTList = new ArrayList<String>();
+            URL membersUrl = new URL("https://api.trello.com/1/boards/" + masterboardID + "/members?key=" + key + "&token=" + token);
+            con = membersUrl.openConnection();
+            is = con.getInputStream();
+            br = new BufferedReader(new InputStreamReader(is));
+
+            line = null;
+            String jsonOutput1 = "";
+            while ((line = br.readLine()) != null) {
+                jsonOutput1 += line;
+            }
+            JSONArray membArr = new JSONArray(jsonOutput1);
+            for (int i = 0; i < membArr.length(); i++) {
+                JSONObject member = membArr.getJSONObject(i);
+                String memUsername = member.getString("username");
+                String memID = member.getString("id");
+                for (Person toCheck : devList) {
+                    if (toCheck.getUsername().contains(memUsername)) {
+                        mTList.add(memID);
+                    }
                 }
             }
-        }
-        
-        //get the card, add to arraylist
-        JSONArray cardsArr = new JSONArray(jsonOutput);
-        TrelloCard toAssign = null;
-        for(int i = 0; i < cardsArr.length(); i++){
-            JSONObject tempCard = cardsArr.getJSONObject(i);
-            //System.out.println(tempCard);
-            String idList = tempCard.getString("idList");
-            //System.out.println(idList);
-            String cardId = tempCard.getString("id");
-            if(idList.equals(listId)&& cardId.equals(projName)){
-                String name= tempCard.getString("name");
-                String due = tempCard.getString("due").substring(0,10);
-                String desc = tempCard.getString("desc").replace("**","");
-                if(desc.length() >= 100){
-                    desc= desc.substring(0,100);
+
+            //get the card, add to arraylist
+            JSONArray cardsArr = new JSONArray(jsonOutput);
+            TrelloCard toAssign = null;
+            for (int i = 0; i < cardsArr.length(); i++) {
+                JSONObject tempCard = cardsArr.getJSONObject(i);
+                //System.out.println(tempCard);
+                String idList = tempCard.getString("idList");
+                //System.out.println(idList);
+                String cardId = tempCard.getString("id");
+                if (idList.equals(listId) && cardId.equals(projName)) {
+                    String name = tempCard.getString("name");
+                    String due = tempCard.getString("due").substring(0, 10);
+                    String desc = tempCard.getString("desc").replace("**", "");
+                    if (desc.length() >= 100) {
+                        desc = desc.substring(0, 100);
+                    }
+                    toAssign = new TrelloCard(name, projName, desc, due, priority, type);
+
                 }
-                toAssign = new TrelloCard(name, projName, desc, due, priority, type);
-                
             }
-        }
-        String  dateToFormat = toAssign.getDue();
+            String dateToFormat = toAssign.getDue();
+            
+            try{
+                boolean valid= validDate3(dateToFormat, eDate);
+                if(!valid){
+                    request.setAttribute("err", "Please set a date that is before Project Completion date");
+                    view.forward(request, response);
+                }
+            } catch (ParseException e){
+                request.setAttribute("err", "Invalid date input");
+                    view.forward(request, response);
+            }
+
         //dateToFormat.replace("-","/");
 //        Date toFormat = new Date();
 //          SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy/MM/dd");
@@ -222,19 +260,16 @@ public class assignRecommendation extends HttpServlet {
 //        } catch (Exception e) {
 //            System.out.println("error");
 //        }
-        
-        ArrayList<Recommendation> rList = RecommedationDAO.getRecommendation(type, eDate, today,  priority);
-        
-     
+            ArrayList<Recommendation> rList = RecommedationDAO.getRecommendation(type, eDate, today, priority);
+
         //add to dao, return true if added, return false if not
 //        for(TrelloCard tCard : tcList){
 //            TrelloCardDAO.addCard(tCard);
 //        }
-        
         //array of cards:
-        //https://api.trello.com/1/boards/560e321c27db2ef9d08873ec/cards?key=7e35111227918de8a37f8c20844ed555&token=65095ea4469fc51399471d010e58e2f6a95b2f15c83b9ddea167940939534b0f
-        //array of lists:
-        //https://api.trello.com/1/boards/560e321c27db2ef9d08873ec/lists?key=7e35111227918de8a37f8c20844ed555&token=65095ea4469fc51399471d010e58e2f6a95b2f15c83b9ddea167940939534b0f
+            //https://api.trello.com/1/boards/560e321c27db2ef9d08873ec/cards?key=7e35111227918de8a37f8c20844ed555&token=65095ea4469fc51399471d010e58e2f6a95b2f15c83b9ddea167940939534b0f
+            //array of lists:
+            //https://api.trello.com/1/boards/560e321c27db2ef9d08873ec/lists?key=7e35111227918de8a37f8c20844ed555&token=65095ea4469fc51399471d010e58e2f6a95b2f15c83b9ddea167940939534b0f
 //        
 //        for(int i = 0; i < arr.length() ; i++){
 //            JSONObject main = arr.getJSONObject(i);
@@ -251,22 +286,51 @@ public class assignRecommendation extends HttpServlet {
 //                tb = new TrelloBoard(boardName, id, tmList);
 //            }
 //        }
-        RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp");
-        request.setAttribute("rList", rList);
-        request.setAttribute("project", toAssign);
+            RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp");
+            request.setAttribute("rList", rList);
+            request.setAttribute("project", toAssign);
 
-        rd.forward(request, response);
+            rd.forward(request, response);
 
-        } catch (IOException e){
+        } catch (IOException e) {
             RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
             request.setAttribute("err", "Invalid Trello Key and Token");
             view.forward(request, response);
         }
-        
-        
+
     }
 
+    private boolean validDate(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+
+        Date validate = sdf.parse(date);
+
+        return !validate.before(new Date());
+
+    }
+
+    private boolean validDate2(String date, String sDate) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+
+        Date validate = sdf.parse(date);
+        Date start= sdf.parse(sDate);
+        return validate.after(start);
+
+    }
+    
+    private boolean validDate3(String cDate, String eDate) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+
+        Date validate = sdf.parse(cDate);
+        Date start= sdf.parse(eDate);
+        return validate.after(start);
+
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BucketAdmin</title>
+    <title>Recco</title>
     <!--Core CSS -->
     <link href="bootstrap/html/bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap/html/js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
@@ -101,7 +101,7 @@
                     <ul class="sub">
                         <li><a href="viewTrelloCards.jsp">View Cards</a></li>
                         <li><a href="addNewProject.jsp">Create</a></li>
-                        <%if(dev!=null){%>
+                        <%if(pm!=null){%>
                         <li><a href="assignProject">View Unassigned Cards</a></li>
                                 <%}%>
                     </ul>

@@ -7,11 +7,13 @@ package src.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import src.model.Skill;
 import src.model.SkillDAO;
 
 /**
@@ -34,9 +36,18 @@ public class removeDevSkill extends HttpServlet {
       String username = request.getParameter("user");
       String skill = request.getParameter("skill");
       
-      boolean sucess = SkillDAO.deleteSkill(username,skill);
+     boolean skillThere = checkSkill(username, skill);
+             
+      
+      
       
        RequestDispatcher rd = request.getRequestDispatcher("manageUser.jsp");
+       if(!skillThere){
+           request.setAttribute("err", "No such skill");
+            rd.forward(request, response);
+       }
+       
+       boolean sucess = SkillDAO.deleteSkill(username,skill);
       if (sucess){
            request.setAttribute("sucess","Skill for " + username + " sucessfully removed");
            rd.forward(request,response);
@@ -45,6 +56,16 @@ public class removeDevSkill extends HttpServlet {
             rd.forward(request, response);
             
         }
+    }
+    private boolean checkSkill(String username, String skill){
+        ArrayList<Skill> slist = SkillDAO.retrieveDevSkill(username);
+        for(Skill s : slist){
+            String sname = s.getSkill();
+            if (sname.equals(skill)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
