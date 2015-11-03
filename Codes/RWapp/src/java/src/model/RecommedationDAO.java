@@ -105,11 +105,11 @@ public class RecommedationDAO {
             pstmt = conn.prepareStatement(pLow);
             pstmt.setString(1, projectType);
             pstmt.setDate(2, new java.sql.Date(dDate.getTime()));
-            pstmt.setDate(3, new java.sql.Date(aDate.getTime()));
-            pstmt.setDate(4, new java.sql.Date(dDate.getTime()));
+            pstmt.setDate(3, new java.sql.Date(dDate.getTime()));
+            pstmt.setDate(4, new java.sql.Date(aDate.getTime()));
             pstmt.setDate(5, new java.sql.Date(aDate.getTime()));
             pstmt.setString(6, projectType);
-            pstmt.setDate(7, new java.sql.Date(aDate.getTime()));
+            pstmt.setDate(7, new java.sql.Date(dDate.getTime()));
             pstmt.setString(8, projectType);
 
            // System.out.println("1");

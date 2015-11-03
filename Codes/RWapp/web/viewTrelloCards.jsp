@@ -11,7 +11,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="protect.jsp"%>
-
+<%@include file="navbar.jsp"%>
 
 <html>
     <head>
@@ -19,6 +19,8 @@
         <title>Trello</title>
     </head>
     <body>
+        <section id="main-content">
+        <section class="wrapper">
         <h1>Hello World!</h1>
         <a href="index.jsp">home</a> </br>
         
@@ -112,7 +114,8 @@
         
        
         
-        
+        </section>
+        </section>
         
     </body>
 </html>

@@ -70,6 +70,9 @@
             </br>
             Select start date: 
             <input type="date" name="sDate" required/>
+             </br>
+            Select end date: 
+            <input type="date" name="eDate" required/>
             </br>
             Priority:
             <select name='priority'>

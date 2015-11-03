@@ -55,6 +55,7 @@ public class assignRecommendation extends HttpServlet {
         String type = request.getParameter("type");
        //get todays date
         String today = request.getParameter("sDate");
+        String eDate = request.getParameter("eDate");
         //System.out.println(today);
 //        Date start = null;
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -221,7 +222,7 @@ public class assignRecommendation extends HttpServlet {
 //            System.out.println("error");
 //        }
         
-        ArrayList<Recommendation> rList = RecommedationDAO.getRecommendation(type, dateToFormat, today,  priority);
+        ArrayList<Recommendation> rList = RecommedationDAO.getRecommendation(type, eDate, today,  priority);
         
      
         //add to dao, return true if added, return false if not
