@@ -45,6 +45,7 @@ public class updateTrelloDetails extends HttpServlet {
         System.out.println(username);
         Person toUpdate = PersonDAO.retrieveUser(username);
         RequestDispatcher view = request.getRequestDispatcher("manageUser.jsp");
+        boolean auth = false;
         try {
             URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + trellokey + "&token=" + trellotoken);
             //System.out.println(memberUrl);
@@ -53,24 +54,26 @@ public class updateTrelloDetails extends HttpServlet {
 
             InputStream is = con.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            auth = true;
         } catch (IOException e) {
             request.setAttribute("err", "Invalid trello key and/or token");
 
             view.forward(request, response);
         }
+        if (auth) {
+            toUpdate.setToken(trellotoken);
+            toUpdate.setTrelloKey(trellokey);
 
-        toUpdate.setToken(trellotoken);
-        toUpdate.setTrelloKey(trellokey);
+            boolean update = PersonDAO.updateUser(toUpdate);
 
-        boolean update = PersonDAO.updateUser(toUpdate);
+            if (update) {
+                request.setAttribute("sucess", "Changes sucessfully updated!");
+                view.forward(request, response);
+            } else {
+                request.setAttribute("err", "Trello details could not be updated, please contact team Pjs :)");
 
-        if (update) {
-            request.setAttribute("sucess", "Changes sucessfully updated!");
-            view.forward(request, response);
-        } else {
-            request.setAttribute("err", "Trello details could not be updated, please contact team Pjs :)");
-
-            view.forward(request, response);
+                view.forward(request, response);
+            }
         }
     }
 
