@@ -65,11 +65,13 @@ public class assignRecommendation extends HttpServlet {
                 if (!valid) {
                     request.setAttribute("err", "Please set a date that is after today");
                     view.forward(request, response);
+                    return;
                 }
             } catch (ParseException w) {
 
                 request.setAttribute("err", "invalid date");
                 view.forward(request, response);
+                return;
             }
             try {
                 boolean valid = validDate(eDate);
@@ -77,11 +79,13 @@ public class assignRecommendation extends HttpServlet {
                 if (!valid || !valid2) {
                     request.setAttribute("err", "Please set the end date after the start date");
                     view.forward(request, response);
+                    return;
                 }
             } catch (ParseException w) {
 
                 request.setAttribute("err", "invalid date");
                 view.forward(request, response);
+                return;
             }
         //System.out.println(today);
 //        Date start = null;
@@ -245,10 +249,12 @@ public class assignRecommendation extends HttpServlet {
                 if(!valid){
                     request.setAttribute("err", "Please set a date that is before Project Completion date");
                     view.forward(request, response);
+                    return;
                 }
             } catch (ParseException e){
                 request.setAttribute("err", "Invalid date input");
                     view.forward(request, response);
+                    return;
             }
 
         //dateToFormat.replace("-","/");
@@ -291,11 +297,13 @@ public class assignRecommendation extends HttpServlet {
             request.setAttribute("project", toAssign);
 
             rd.forward(request, response);
+            return;
 
         } catch (IOException e) {
             RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
             request.setAttribute("err", "Invalid Trello Key and Token");
             view.forward(request, response);
+            return;
         }
 
     }
