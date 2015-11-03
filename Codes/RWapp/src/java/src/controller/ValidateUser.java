@@ -39,7 +39,7 @@ public class ValidateUser extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             String username = request.getParameter("username");
-            username.trim();
+            username= username.trim();
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
             
