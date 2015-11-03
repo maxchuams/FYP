@@ -65,11 +65,11 @@ public class ManageProfile extends HttpServlet {
 
             String password1 = request.getParameter("password1");
             String password2 = request.getParameter("password2");
-            String skill = request.getParameter("skills");
+            //String skill = request.getParameter("skills");
+            RequestDispatcher rd = null;
+            if ((password1 == null || password2 == null)
+                    || password1.length() == 0 || password2.length() == 0) {
 
-            if ((password1 == null && password2 == null && skill == null)
-                    || ((password1.length() == 0) || password2.length() == 0) && skill.length() == 0) {
-                RequestDispatcher rd = null;
                 if (type.equals("dev")) {
                     rd = request.getRequestDispatcher("manageDevProfile.jsp");
 
@@ -88,8 +88,21 @@ public class ManageProfile extends HttpServlet {
                 if (password1 != null && password2 != null && password1.length() > 0) {
                     if (password1.equals(password2)) {
                         currUser.setPassword(password1);
+                        PersonDAO.updateUser(currUser);
+
+                        if (type.equals("dev")) {
+                            rd = request.getRequestDispatcher("manageDevProfile.jsp");
+
+                        } else if (type.equals("pm")) {
+                            rd = request.getRequestDispatcher("managePmProfile.jsp");
+                        } else if (type.equals("desg")) {
+                            rd = request.getRequestDispatcher("manageDesgProfile.jsp");
+                        } else if (type.equals("sudo")) {
+                            rd = request.getRequestDispatcher("manageUser.jsp");
+                        }
+                        request.setAttribute("sucess", "Changes sucessfully updated!");
+                        rd.forward(request, response);
                     } else {
-                        RequestDispatcher rd = null;
 
                         if (type.equals("dev")) {
                             rd = request.getRequestDispatcher("manageDevProfile.jsp");
@@ -105,24 +118,6 @@ public class ManageProfile extends HttpServlet {
                         rd.forward(request, response);
                     }
                 }
-
-
-                PersonDAO.updateUser(currUser);
-
-                RequestDispatcher rd = null;
-
-                if (type.equals("dev")) {
-                    rd = request.getRequestDispatcher("manageDevProfile.jsp");
-
-                } else if (type.equals("pm")) {
-                    rd = request.getRequestDispatcher("managePmProfile.jsp");
-                } else if (type.equals("desg")) {
-                    rd = request.getRequestDispatcher("manageDesgProfile.jsp");
-                } else if (type.equals("sudo")) {
-                    rd = request.getRequestDispatcher("manageUser.jsp");
-                }
-                request.setAttribute("sucess", "Changes sucessfully updated!");
-                rd.forward(request, response);
 
             }
 

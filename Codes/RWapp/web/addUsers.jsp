@@ -38,6 +38,7 @@
 
         <a href='sudo.jsp'>home</a>
         <h1>Add a new user to the system</h1>
+        
         <form action='addNewUser' method='POST'id='main'>
             Username: <input type='text' name='username' required/></br>
             Password: <input type='password' name='password' required/></br>

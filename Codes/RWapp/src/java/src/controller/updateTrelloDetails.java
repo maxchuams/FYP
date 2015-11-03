@@ -5,8 +5,13 @@
  */
 package src.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,26 +37,39 @@ public class updateTrelloDetails extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username= request.getParameter("user");
-        String trelloKey= request.getParameter("key");
-        String token = request.getParameter("token");
-        
+        String username = request.getParameter("user");
+        String trellokey = request.getParameter("key");
+        String trellotoken = request.getParameter("token");
+
         //in future, need to auth the trello key and token?
         System.out.println(username);
-        Person toUpdate= PersonDAO.retrieveUser(username);
-        
-        toUpdate.setToken(token);
-        toUpdate.setTrelloKey(trelloKey);
-        
-        boolean update = PersonDAO.updateUser(toUpdate);
+        Person toUpdate = PersonDAO.retrieveUser(username);
         RequestDispatcher view = request.getRequestDispatcher("manageUser.jsp");
-        if(update){
+        try {
+            URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + trellokey + "&token=" + trellotoken);
+            //System.out.println(memberUrl);
+
+            URLConnection con = memberUrl.openConnection();
+
+            InputStream is = con.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        } catch (IOException e) {
+            request.setAttribute("err", "Invalid trello key and/or token");
+
+            view.forward(request, response);
+        }
+
+        toUpdate.setToken(trellotoken);
+        toUpdate.setTrelloKey(trellokey);
+
+        boolean update = PersonDAO.updateUser(toUpdate);
+
+        if (update) {
             request.setAttribute("sucess", "Changes sucessfully updated!");
-             view.forward(request, response);
-        }else {
+            view.forward(request, response);
+        } else {
             request.setAttribute("err", "Trello details could not be updated, please contact team Pjs :)");
-          
-            
+
             view.forward(request, response);
         }
     }

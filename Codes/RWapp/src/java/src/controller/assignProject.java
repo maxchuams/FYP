@@ -45,6 +45,7 @@ public class assignProject extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{
         HttpSession sess = request.getSession();
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
@@ -234,7 +235,11 @@ public class assignProject extends HttpServlet {
         request.setAttribute("tc", tcList);
 
         rd.forward(request, response);
-
+        }catch(IOException ioe){
+            RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
+            request.setAttribute("err", "Invalid Trello Key and Token");
+            view.forward(request, response);
+        }
         
     }
 

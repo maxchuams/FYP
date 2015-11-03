@@ -18,81 +18,90 @@
     </head>
     <body>
         <section id="main-content">
-        <section class="wrapper">
-        <h1>Hello World!</h1>
-        <% ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) request.getAttribute("tc"); 
-           
-       
-         
-        %>
-        
-        Trello Board data:
-        </br>
-         <table>
-            <thead>
-                <tr>
-                    <th>Project Name</th>
-                    <th>Due Date</th>
-                   
-                </tr>
-            </thead>
-            <%
-            for (TrelloCard t : tb){
-               %> 
-               <tr>
-                   <td><%=t.getName()%></td>
-                   <td><%=t.getDue()%></td>
-                  
-               </tr>
-               <% 
-            }
-            
-            
-            
-            %>
-        </table>
-       
-        <form action="assignRecommendation" method="GET">
-            Select Project:
-            
-            <select name="card">
-                <%
-                for(TrelloCard t : tb){
-                    %>
-                    <option value='<%=t.getId()%>'><%=t.getName()%></option>
-                    
-                    <%
-                    
-                }
-                
+            <section class="wrapper">
+                <h1>Hello World!</h1>
+                <% ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) request.getAttribute("tc");
+
+                    String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
+                    if (errorMsg == null) {
+                        errorMsg = "";
+                    }
+
+                    if (sucess == null) {
+                        sucess = "";
+                    }
+
+
                 %>
-            </select>
-            </br>
-            Select start date: 
-            <input type="date" name="sDate" required/>
-             </br>
-            Select end date: 
-            <input type="date" name="eDate" required/>
-            </br>
-            Priority:
-            <select name='priority'>
-                <option value='1'>1 - Low</option>
-                <option value='2'>2 - Medium</option>
-                <option value='3'>3 - High</option>
-            </select>
-            </br>
-            
-            Project Type:
-            <select name='type'>
-                <option value='Wordpress'>Wordpress</option>
-                <option value='eCommerce'>eCommerce</option>
-                <option value='Custom'>Custom</option>
-            </select>
-            <input type='submit' value='Get Recommendation!'/>
-            
-        </form>
-        
-    </section>
-</section>
+                <b style="color:blue;"><%=sucess%></b><b style="color:red;"><%=errorMsg%></b>
+                </br>
+
+                Trello Board data:
+                </br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Due Date</th>
+
+                        </tr>
+                    </thead>
+                    <%
+                        for (TrelloCard t : tb) {
+                    %> 
+                    <tr>
+                        <td><%=t.getName()%></td>
+                        <td><%=t.getDue()%></td>
+
+                    </tr>
+                    <%
+                        }
+
+
+                    %>
+                </table>
+
+                <form action="assignRecommendation" method="GET">
+                    Select Project:
+
+                    <select name="card">
+                        <%                    for (TrelloCard t : tb) {
+                        %>
+                        <option value='<%=t.getId()%>'><%=t.getName()%></option>
+
+                        <%
+
+                            }
+
+                        %>
+                    </select>
+                    </br>
+                    Select start date: 
+                    <input type="date" name="sDate" required/>
+                    </br>
+                    Select end date: 
+                    <input type="date" name="eDate" required/>
+                    </br>
+                    Priority:
+                    <select name='priority'>
+                        <option value='1'>1 - Low</option>
+                        <option value='2'>2 - Medium</option>
+                        <option value='3'>3 - High</option>
+                    </select>
+                    </br>
+
+                    Project Type:
+                    <select name='type'>
+                        <option value='Wordpress'>Wordpress</option>
+                        <option value='eCommerce'>eCommerce</option>
+                        <option value='Custom'>Custom</option>
+                    </select>
+                    <input type='submit' value='Get Recommendation!'/>
+
+                </form>
+
+            </section>
+        </section>
     </body>
 </html>

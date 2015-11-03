@@ -85,19 +85,19 @@
 
         %>
         
-        <h2>Edit Priority</h2>
+<!--        <h2>Edit Priority</h2>
         <form action="editPriority" method="GET">
             Select Project:
             <select name="projectTitle">
             <%
            
-            for(TrelloCard card: tList){
-                String projectName = card.getName();
+//            for(TrelloCard card: tList){
+//                String projectName = card.getName();
                 //System.out.println(projectName);
                 %>
-                <option value='<%=projectName%>'><%=projectName%></option>
+                <option value='projectName%>'>projectName%></option>
                 <%
-            }
+//            }
            
            
            
@@ -110,7 +110,7 @@
             <option value="High">High</option>
         </select>
         <input type="submit" value="Set Priority!">
-        </form>
+        </form>-->
         
        
         

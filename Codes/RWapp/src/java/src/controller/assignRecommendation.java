@@ -49,6 +49,7 @@ public class assignRecommendation extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{ 
         String projName = request.getParameter("card");
         String intensity = request.getParameter("priority");
         int priority = Integer.parseInt(intensity);
@@ -256,7 +257,11 @@ public class assignRecommendation extends HttpServlet {
 
         rd.forward(request, response);
 
-
+        } catch (IOException e){
+            RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
+            request.setAttribute("err", "Invalid Trello Key and Token");
+            view.forward(request, response);
+        }
         
         
     }
