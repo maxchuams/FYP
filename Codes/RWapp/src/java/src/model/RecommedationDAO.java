@@ -75,7 +75,7 @@ public class RecommedationDAO {
                 + " (select developerusername, count(*) as experiencecount from project, projectallocation where project.projectname = projectallocation.projectname and type = ? and priority = 2 group by developerusername) as totalSimilarProjects on temp1.username = totalSimilarProjects.developerusername order by PointSystem desc, workload desc"
                 + ";";
 
-        String pLow = "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as defectscore, ifnull(experiencecount,0)  as experience, (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem\n"
+        String pLow = "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as defectscore, ifnull(experiencecount,0)  as experience, (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem"
                 + " from"
                 + " (select username from developerskill where skill = ? ) as temp1 left outer join"
                 + " (select developerusername, count(*) as numberofprojectsinperiod from project,"
@@ -104,12 +104,12 @@ public class RecommedationDAO {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement(pLow);
             pstmt.setString(1, projectType);
-            pstmt.setDate(2, new java.sql.Date(dDate.getTime()));
-            pstmt.setDate(3, new java.sql.Date(dDate.getTime()));
-            pstmt.setDate(4, new java.sql.Date(aDate.getTime()));
-            pstmt.setDate(5, new java.sql.Date(aDate.getTime()));
+            pstmt.setDate(2, new java.sql.Date(aDate.getTime()));
+            pstmt.setDate(3, new java.sql.Date(aDate.getTime()));
+            pstmt.setDate(4, new java.sql.Date(dDate.getTime()));
+            pstmt.setDate(5, new java.sql.Date(dDate.getTime()));
             pstmt.setString(6, projectType);
-            pstmt.setDate(7, new java.sql.Date(dDate.getTime()));
+            pstmt.setDate(7, new java.sql.Date(aDate.getTime()));
             pstmt.setString(8, projectType);
 
            // System.out.println("1");
