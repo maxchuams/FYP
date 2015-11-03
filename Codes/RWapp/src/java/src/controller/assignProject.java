@@ -47,6 +47,11 @@ public class assignProject extends HttpServlet {
             throws ServletException, IOException {
         try{
         HttpSession sess = request.getSession();
+        ArrayList<TrelloCard> checkSess = (ArrayList<TrelloCard>) sess.getAttribute("tc");
+        if(checkSess != null){
+            sess.removeAttribute("tc");
+        }
+        
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -232,7 +237,7 @@ public class assignProject extends HttpServlet {
 //            }
 //        }
         RequestDispatcher rd = request.getRequestDispatcher("viewUnassignedCards.jsp");
-        request.setAttribute("tc", tcList);
+        sess.setAttribute("tc", tcList);
 
         rd.forward(request, response);
         }catch(IOException ioe){

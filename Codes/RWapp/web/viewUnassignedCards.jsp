@@ -19,8 +19,8 @@
     <body>
         <section id="main-content">
             <section class="wrapper">
-                <h1>Hello World!</h1>
-                <% ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) request.getAttribute("tc");
+                <h1>View Unassigned Cards</h1>
+                <% ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) session.getAttribute("tc");
 
                     String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
@@ -36,7 +36,10 @@
                 %>
                 <b style="color:blue;"><%=sucess%></b><b style="color:red;"><%=errorMsg%></b>
                 </br>
-
+                
+                <%if(tb != null){
+                    
+                %>
                 Trello Board data:
                 </br>
                 <table>
@@ -48,6 +51,7 @@
                         </tr>
                     </thead>
                     <%
+                    if(tb != null){
                         for (TrelloCard t : tb) {
                     %> 
                     <tr>
@@ -58,22 +62,35 @@
                     <%
                         }
 
-
+                    }
                     %>
                 </table>
-
+                
+                <%}%>
+                
+                <%if(tb!=null){%>
+                        
+                <form action='assignProject'>
+                    <input type='submit' value='update!'/>
+                </form>
+                <%}%>
+    <%      
+                    if(tb!=null){
+                        
+                    %>
                 <form action="assignRecommendation" method="GET">
                     Select Project:
 
                     <select name="card">
-                        <%                    for (TrelloCard t : tb) {
+                    <%
+                    for (TrelloCard t : tb) {
                         %>
                         <option value='<%=t.getId()%>'><%=t.getName()%></option>
 
                         <%
 
                             }
-
+                    
                         %>
                     </select>
                     </br>
@@ -100,7 +117,7 @@
                     <input type='submit' value='Get Recommendation!'/>
 
                 </form>
-
+                    <%}%>
             </section>
         </section>
     </body>
