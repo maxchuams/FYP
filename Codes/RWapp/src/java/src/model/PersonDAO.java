@@ -152,5 +152,29 @@ public class PersonDAO {
         }
         return users;
     }
+     public static boolean delete(String username) {
+          Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
+
+            String sql = "DELETE FROM user where "
+                    + "username=?  ";
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, username);
+            
+
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionManager.close(conn, pstmt);
+        }
+    }
+     
 
 }
