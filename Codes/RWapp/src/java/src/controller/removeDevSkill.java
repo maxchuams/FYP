@@ -45,16 +45,18 @@ public class removeDevSkill extends HttpServlet {
        if(!skillThere){
            request.setAttribute("err", "No such skill");
             rd.forward(request, response);
+            return;
        }
        
        boolean sucess = SkillDAO.deleteSkill(username,skill);
       if (sucess){
            request.setAttribute("sucess","Skill for " + username + " sucessfully removed");
            rd.forward(request,response);
+           return;
         } else {
             request.setAttribute("err", "Failed to delete skill, please try again later");
             rd.forward(request, response);
-            
+            return;
         }
     }
     private boolean checkSkill(String username, String skill){
