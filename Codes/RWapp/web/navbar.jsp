@@ -92,6 +92,7 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <%if(sudo==null){%>
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-laptop"></i>
@@ -100,9 +101,12 @@
                     <ul class="sub">
                         <li><a href="viewTrelloCards.jsp">View Cards</a></li>
                         <li><a href="addNewProject.jsp">Create</a></li>
+                        <%if(dev!=null){%>
                         <li><a href="assignProject">View Unassigned Cards</a></li>
+                                <%}%>
                     </ul>
                 </li>
+                <%}%>
                 <li class="sub-menu">
                     <a href="aboutus.jsp">
                         <i class="fa fa-book"></i>

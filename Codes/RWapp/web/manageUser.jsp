@@ -19,11 +19,9 @@
     <body>
         <section id="main-content">
         <section class="wrapper">
-        
+            <section class="header">
         <h1>The user management page</h1>
-
-        <a href="sudo.jsp">home(sudo)</a>
-        </br>
+            </section>
 
         <%             String errorMsg = (String) request.getAttribute("err");
             String sucess = (String) request.getAttribute("sucess");
@@ -39,12 +37,8 @@
         %>
         <b style="color:blue;"><%=sucess%></b><b style="color:red;"><%=errorMsg%></b>
         </br>
-        Current profile details: </br>
-        Username: <%= sudo.getUsername()%> </br>
 
-        </br>
-
-        
+        <section class="panel">
         <h2>List of Users</h2>
         <form action="ManageUser" method="POST">
             <%
@@ -55,13 +49,14 @@
 
                   }
                   if (users != null) {%>
-            <table border="1"><tr> 
+            <table class="table table-hover"><tr> 
                     <td> Username </td>
                     <td> Password </td>
-                    <td> Type </td>
+                    <td> Key </td>
+                    <td> Token </td>
                     <%for (Person p : users) {%>
                 <tr>
-                    <td> <%=p.getUsername()%></td>
+                    <td class="JustifyCenter"> <%=p.getUsername()%></td>
                     <td><%=p.getPassword()%> </td>
                     <td> <%=p.getTrelloKey()%></td>
                     <td><%=p.getToken()%></td>
@@ -72,14 +67,15 @@
 
                 <tr></table>
 
-            <button type="submit">update</button>
+            <button class="btn btn-default" type="submit">update</button>
             <%
                 ArrayList<Person> pList = PersonDAO.retrieveUsers();
 
 
             %>
         </form>
-                
+        </section>
+        <section class="panel">
                 <h2>Remove user</h2>
                 <form action="removeUser">
                     Username: 
@@ -95,10 +91,12 @@
                              }
                          } %>
                 </select>
-                </br>
-                <input type="submit" value="Remove"/>
+                <p></p>
+                <input class="btn btn-info" type="submit" value="Remove"/>
                 </form>
                 </br>
+        </section>
+        <section class="panel">
         <div id="trelloForm">
             
             </br>
@@ -122,10 +120,11 @@
                 </br>
                 Trello Token: <input type="text" name="token" required/>
                 </br>
-                <input type="submit" value="Update!"/>
+                <input class="btn btn-danger" type="submit" value="Update!"/>
             </form>
         </div>
-
+        </section>
+                <section class="panel">
         <div>
             <h2>Update Developer's Skillz</h2>
             <table border='1'>
@@ -177,11 +176,13 @@
                     <option value="eCommerce">eCommerce</option>
                     <option value="Custom">Custom</option>
                 </select>
-               
+                
                 </br>
-                <input type='submit' value='Add Skillz'/>
+                <input class="btn btn-warning" type='submit' value='Add Skillz'/>
             </form>
         </div>
+                </section>
+                <section class="panel">
                 <h2>Remove developer's skill</h2>
                 <form action='removeDevSkill'>
                      Username:
@@ -205,11 +206,13 @@
                     <option value="eCommerce">eCommerce</option>
                     <option value="Custom">Custom</option>
                 </select>
-                <input type='submit' value='Remove Skill!'/>
+                <input class="btn btn-success" type='submit' value='Remove Skill!'/>
                 </form>
                 
                 </br>
-                <div>
+                
+                </section>
+                <section class="panel">
             <h1>Change User Password</h1>
             </br>
             Select User: 
@@ -230,10 +233,11 @@
                 </br>
                  Password: <input type="password" name="password1" required/> </br>
                  Confirm password again: <input type="password" name="password2" required/> </br>
-                <button type="submit">submit!</button>
+                <button class="btn-primary" type="submit">submit!</button>
                 
             </form>
              </div>
+                </section>
     </section>
 </section>
     </body>

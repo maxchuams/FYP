@@ -71,6 +71,8 @@
         </section>
     </section>
     <!--main content end-->
+    <script src="bootstrap/html/js/fullcalendar/fullcalendar.min.js"></script>
+    <script src="bootstrap/html/js/external-dragging-calendar.js"></script>
         
     </body>
 </html>

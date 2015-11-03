@@ -36,7 +36,6 @@
         <section id="main-content">
         <section class="wrapper">
 
-        <a href='sudo.jsp'>home</a>
         <h1>Add a new user to the system</h1>
         
         <form action='addNewUser' method='POST'id='main'>
