@@ -41,87 +41,84 @@ public class RecommedationDAO {
             System.out.println("error1");
         }
 
-        String pHigh = //"select * from developerskill a, projectallocation b where skill = ? and a.username = b.developerusername and dateallocated=?;";
-                "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as defectscore, ifnull(experiencecount,0)  as experience,"
-                + " (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem"
-                + " from"
-                + " (select username from developerskill where skill = ?) as temp1 left outer join"
-                + " (select developerusername, count(*) as numberofprojectsinperiod from project, projectallocation where project.projectname = projectallocation.projectname"
-                + " and ((duedate>= ? and dateallocated <= ?)"
-                + " or (duedate>= ? and dateallocated <= ?)) group by developerusername) as temp2"
-                + " on temp1.username = developerusername"
-                + " left outer join"
-                + " (select developerusername, sum(defectscore) as totalscore from("
-                + " select developerusername, (count(defectid) * priority) as defectscore, project.projectname from project left outer join projectallocation"
-                + " on project.projectname = projectallocation.projectname  left outer join defect on defect.projectname = project.projectname "
-                + " where type = ? and dateallocated >= date_add(?, interval -3 month) group by developerusername, projectname) as score group by developerusername)"
-                + " as scores on temp1.username =  scores.developerusername"
-                + " left outer join"
-                + " (select developerusername, count(*) as experiencecount from project, projectallocation where project.projectname = projectallocation.projectname"
-                + " and type = ? and priority = 3 group by developerusername) as totalSimilarProjects on temp1.username = totalSimilarProjects.developerusername order by PointSystem desc, workload desc"
-                + ";";
-        String pMid = "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as defectscore, ifnull(experiencecount,0)  as experience, (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem"
-                + " from"
-                + " (select username from developerskill where skill = ?) as temp1 left outer join"
-                + " (select developerusername, count(*) as numberofprojectsinperiod from project, projectallocation where project.projectname = projectallocation.projectname"
-                + " and ((duedate>= ? and dateallocated <= ?)"
-                + " or (duedate>= ? and dateallocated <= ?)) group by developerusername) as temp2"
-                + " on temp1.username = developerusername"
-                + " left outer join"
-                + " (select developerusername, sum(defectscore) as totalscore from("
-                + " select developerusername, (count(defectid) * priority) as defectscore, project.projectname from project left outer join projectallocation"
-                + " on project.projectname = projectallocation.projectname  left outer join defect on defect.projectname = project.projectname where type = ? and dateallocated >= date_add(?, interval -3 month) group by developerusername, projectname) as score group by developerusername) as scores on temp1.username =  scores.developerusername"
-                + " left outer join"
-                + " (select developerusername, count(*) as experiencecount from project, projectallocation where project.projectname = projectallocation.projectname and type = ? and priority = 2 group by developerusername) as totalSimilarProjects on temp1.username = totalSimilarProjects.developerusername order by PointSystem desc, workload desc"
+        String pHigh = "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as "
+                + "defectscore, ifnull(experiencecount,0) as experience, (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem "
+                + "from "
+                + "(select username from developerskill where skill = ?) as temp1 left outer join "
+                + "(select developerusername, count(*) as numberofprojectsinperiod "
+                + "from project, projectallocation where project.projectname = projectallocation.projectname "
+                + "and ((duedate>= ? and dateallocated <= ?) "
+                + "or (duedate>= ? and dateallocated <= ?)) group by developerusername) as temp2 "
+                + "on temp1.username = developerusername "
+                + "left outer join "
+                + "(select developerusername, sum(defectscore) as totalscore from( "
+                + "select developerusername, (count(defectid) * priority) as "
+                + "defectscore, project.projectname from project left outer join projectallocation "
+                + "on project.projectname = projectallocation.projectname left "
+                + "outer join defect on defect.projectname = project.projectname where type = ? and dateallocated >= date_add(?, interval -3 month) "
+                + "group by developerusername, projectname) as score group by developerusername) as scores on temp1.username = scores.developerusername "
+                + "left outer join "
+                + "(select developerusername, count(*) as experiencecount from project, "
+                + "projectallocation where project.projectname = projectallocation.projectname and type = ? and priority = 3 group by developerusername) "
+                + "as totalSimilarProjects on temp1.username = totalSimilarProjects.developerusername order by PointSystem desc, workload asc"
                 + ";";
 
-        String pLow = "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as defectscore, ifnull(experiencecount,0)  as experience, (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem"
-                + " from"
-                + " (select username from developerskill where skill = ? ) as temp1 left outer join"
-                + " (select developerusername, count(*) as numberofprojectsinperiod from project,"
-                + " projectallocation where project.projectname = projectallocation.projectname"
-                + " and ((duedate>= ? and dateallocated <= ?)"
-                + " or (duedate>= ? and dateallocated <= ?)) group by developerusername) as temp2"
-                + " on temp1.username = developerusername"
-                + " left outer join"
-                + " (select developerusername, sum(defectscore) as totalscore from("
-                + " select developerusername, (count(defectid) * priority) as defectscore, project.projectname from project"
-                + " left outer join projectallocation"
-                + " on project.projectname = projectallocation.projectname left outer join defect "
-                + " on defect.projectname = project.projectname where type = ? and dateallocated >= date_add(?, interval -3 month)"
-                + " group by developerusername, projectname) as score group by developerusername) as scores on temp1.username =  scores.developerusername"
-                + " left outer join"
-                + " (select developerusername, count(*) as experiencecount from project, projectallocation where project.projectname = projectallocation.projectname"
-                + " and type = ? and priority = 1 group by developerusername) as totalSimilarProjects on temp1.username = totalSimilarProjects.developerusername order by PointSystem asc, workload desc";
+        String pMid = "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as defectscore, ifnull(experiencecount,0) as experience, (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem "
+                + "from "
+                + "(select username from developerskill where skill = ?) as temp1 left outer join "
+                + "(select developerusername, count(*) as numberofprojectsinperiod from project, projectallocation where project.projectname = projectallocation.projectname "
+                + "and ((duedate>= ? and dateallocated <= ?) "
+                + "or (duedate>= ? and dateallocated <= ?)) group by developerusername) as temp2 "
+                + "on temp1.username = developerusername "
+                + "left outer join "
+                + "(select developerusername, sum(defectscore) as totalscore from( "
+                + "select developerusername, (count(defectid) * priority) as defectscore, project.projectname from project left outer join projectallocation "
+                + "on project.projectname = projectallocation.projectname left outer join defect on defect.projectname = project.projectname where type = ? and dateallocated >= date_add(?, interval -3 month) group by developerusername, projectname) as score group by developerusername) as scores on temp1.username = scores.developerusername "
+                + "left outer join "
+                + "(select developerusername, count(*) as experiencecount from project, projectallocation where project.projectname = projectallocation.projectname and type = ? and priority = 2 group by developerusername) as totalSimilarProjects on temp1.username = totalSimilarProjects.developerusername order by PointSystem desc, workload asc;";
 
-       
-        if(priority==1){queryStr =pHigh;}
-        else if(priority==2){queryStr=pMid;}
-        else if(priority==3){queryStr=pLow;}
-        
-        
+        String pLow = "select username, ifnull(numberofprojectsinperiod,0) as workload, ifnull(totalscore,0) as defectscore, ifnull(experiencecount,0) as experience, (ifnull(experiencecount,0)- ifnull(totalscore,0)) as PointSystem "
+                + "from "
+                + "(select username from developerskill where skill = ?) as temp1 left outer join "
+                + "(select developerusername, count(*) as numberofprojectsinperiod from project, projectallocation where project.projectname = projectallocation.projectname "
+                + "and ((duedate>= ? and dateallocated <= ?) "
+                + "or (duedate>= ? and dateallocated <= ?)) group by developerusername) as temp2 "
+                + "on temp1.username = developerusername "
+                + "left outer join "
+                + "(select developerusername, sum(defectscore) as totalscore from( "
+                + "select developerusername, (count(defectid) * priority) as defectscore, project.projectname from project left outer join projectallocation "
+                + "on project.projectname = projectallocation.projectname left outer join defect on defect.projectname = project.projectname where type = ? and dateallocated >= date_add(?, interval -3 month) group by developerusername, projectname) as score group by developerusername) as scores on temp1.username = scores.developerusername "
+                + "left outer join "
+                + "(select developerusername, count(*) as experiencecount from project, projectallocation where project.projectname = projectallocation.projectname and type = ? and priority = 1 group by developerusername) as totalSimilarProjects on temp1.username = totalSimilarProjects.developerusername order by PointSystem asc, workload asc ";
+
+        if (priority == 3) {
+            queryStr = pHigh;
+        } else if (priority == 2) {
+            queryStr = pMid;
+        } else if (priority == 1) {
+            queryStr = pLow;
+        }
+
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement(pLow);
+            pstmt = conn.prepareStatement(queryStr);
             pstmt.setString(1, projectType);
-            pstmt.setDate(2, new java.sql.Date(aDate.getTime()));
-            pstmt.setDate(3, new java.sql.Date(aDate.getTime()));
-            pstmt.setDate(4, new java.sql.Date(dDate.getTime()));
-            pstmt.setDate(5, new java.sql.Date(dDate.getTime()));
+            pstmt.setDate(2, new java.sql.Date(dDate.getTime()));
+            pstmt.setDate(3, new java.sql.Date(dDate.getTime()));
+            pstmt.setDate(4, new java.sql.Date(aDate.getTime()));
+            pstmt.setDate(5, new java.sql.Date(aDate.getTime()));
             pstmt.setString(6, projectType);
-            pstmt.setDate(7, new java.sql.Date(aDate.getTime()));
+            pstmt.setDate(7, new java.sql.Date(dDate.getTime()));
             pstmt.setString(8, projectType);
 
-           // System.out.println("1");
-            //System.out.println(pstmt);
             rs = pstmt.executeQuery();
-            System.out.println("2");
             while (rs.next()) {
-                Recommendation toAdd = new Recommendation(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+                System.out.println(rs.getInt(5));
+                Recommendation toAdd = new Recommendation(rs.getString("username"), rs.getInt("workload"), rs.getInt("defectscore"), rs.getInt("experience"), rs.getInt("PointSystem"));
                 //Recommendation(String username, int workloadScore, int defectScore, int experienceScore, int pointSystemScore)
                 recommendations.add(toAdd);
             }
-            System.out.println(recommendations);
+
             return recommendations;
         } catch (SQLException ex) {
             //Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,7 +126,7 @@ public class RecommedationDAO {
             //System.out.println("catch");
         } finally {
             ConnectionManager.close(conn, pstmt, rs);
-           //System.out.println("finally");
+            //System.out.println("finally");
             return recommendations;
 
         }
