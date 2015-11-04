@@ -14,14 +14,137 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage Users Page</title>
+        <title>Recco</title>
     </head>
     <body>
         <section id="main-content">
         <section class="wrapper">
-            <section class="header">
-        <h1>The user management page</h1>
-            </section>
+            
+            <!--Kaiwen's Code-->
+            <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        List of users
+                        <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                            
+                         </span>
+                    </header>
+                    <div class="panel-body">
+                        <table class="table  table-hover general-table">
+                            <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Key</th>
+                                <th>Token</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><a href="#">Graphics</a></td>
+                                <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
+                                <td>1320.00$ </td>
+                                <td><span class="label label-info label-mini">Due</span></td>
+                                <td>
+                                    <div class="progress progress-striped progress-xs">
+                                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#">
+                                        ThemeBucket
+                                    </a>
+                                </td>
+                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
+                                <td>556.00$ </td>
+                                <td><span class="label label-warning label-mini">Due</span></td>
+                                <td>
+                                    <div class="progress progress-striped progress-xs">
+                                        <div style="width: 70%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-danger">
+                                            <span class="sr-only">70% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#">
+                                        XYZ
+                                    </a>
+                                </td>
+                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
+                                <td>13240.00$ </td>
+                                <td><span class="label label-success label-mini">Paid</span></td>
+                                <td>
+                                    <div class="progress progress-striped progress-xs">
+                                        <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-warning">
+                                            <span class="sr-only">55% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#">
+                                        BCSE
+                                    </a>
+                                </td>
+                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
+                                <td>3455.50$ </td>
+                                <td><span class="label label-danger label-mini">Paid</span></td>
+                                <td>
+                                    <div class="progress progress-striped progress-xs">
+                                        <div style="width: 90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-info">
+                                            <span class="sr-only">90% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">AVC Ltd</a></td>
+                                <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
+                                <td>110.00$ </td>
+                                <td><span class="label label-primary label-mini">Due</span></td>
+                                <td>
+                                    <div class="progress progress-striped progress-xs">
+                                        <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
+                                            <span class="sr-only">60% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#">
+                                        Themeforest
+                                    </a>
+                                </td>
+                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
+                                <td>456.00$ </td>
+                                <td><span class="label label-warning label-mini">Due</span></td>
+                                <td>
+                                    <div class="progress progress-striped progress-xs">
+                                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-danger">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+            <!--End of KW's code-->
 
         <%             String errorMsg = (String) request.getAttribute("err");
             String sucess = (String) request.getAttribute("sucess");
