@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="protect.jsp"%>
+<%String thisPage = "profilePage"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 <!DOCTYPE html>
 <html>

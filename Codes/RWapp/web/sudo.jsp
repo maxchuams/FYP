@@ -4,6 +4,7 @@
     Author     : sudo
 --%>
 <%@include file="protect.jsp" %>
+<%String thisPage = "sudo"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

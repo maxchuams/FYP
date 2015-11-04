@@ -87,7 +87,9 @@
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a class="active" href="index.jsp">
+                    <% if (thisPage.equals("index") || thisPage.equals("sudo")){ %>
+                    <a class="active" href="index.jsp"> <% } else { %>
+                        <a href="index.jsp"> <% } %>
                         <i class="fa fa-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
@@ -107,15 +109,18 @@
                     </ul>
                 </li>
                 <%}%>
-                <li class="sub-menu">
-                    <a href="aboutus.jsp">
+                <!--<li class="sub-menu">
+                    <a href="#">
                         <i class="fa fa-book"></i>
                         <span>About Us</span>
                     </a>
-                </li>
+                </li>-->
                 <%if(sudo!=null){%>
                 <li>
-                    <a href="manageUser.jsp">
+                    <% if(thisPage.equals("manageUser")){%>
+                    <a class="active" href="manageUser.jsp"> <% } else { %>
+                        <a href="manageUser.jsp"> <% }%>
+                        
                         <i class="fa fa-bullhorn"></i>
                         <span>Manage users</span>
                     </a>

@@ -43,6 +43,8 @@ public class updateTrelloDetails extends HttpServlet {
 
         //in future, need to auth the trello key and token?
         System.out.println(username);
+        System.out.println(trellokey);
+        System.out.println(trellotoken);
         Person toUpdate = PersonDAO.retrieveUser(username);
         RequestDispatcher view = request.getRequestDispatcher("manageUser.jsp");
         boolean auth = false;
