@@ -7,7 +7,8 @@ create table user(
 	password varchar(25) not null,
 	type varchar(1) not null,
 	trellokey varchar(100),
-	trellotoken varchar(100)
+	trellotoken varchar(100),
+	`photo` blob
 );
 
 create table developer(
