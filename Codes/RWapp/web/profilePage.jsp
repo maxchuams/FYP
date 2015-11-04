@@ -460,11 +460,18 @@
                                         <div class="form-group">
                                             <div class="col-lg-offset-2 col-lg-10">
                                                 <button class="btn btn-primary" type="submit">Save</button>
-                                                <button class="btn btn-default" type="submit">Delete</button>
+                                                
                                             </div>
                                         </div>
 
                                     </form>
+                                            <form method="POST" class="form-group" action="uploadServlet" enctype="multipart/form-data" class="form-horizontal">
+                                                <div class="form-group col-lg-offset-2">
+                                                <input type="hidden" name="username" value="<%=username%>">
+                                                <input type="hidden" name="delete" value="delete">
+                                                <button class="btn btn-default" type="submit">Delete</button>
+                                                </div>
+                                            </form>
                                 </div>
 
                             </div>

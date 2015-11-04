@@ -40,10 +40,11 @@ public class UploadFileController extends HttpServlet
                 InputStream inputStream = null;
 
                 
-                
+                Connection conn = null;
                 String username=(request.getParameter("username"));
                 Part filePart = request.getPart("file_uploaded");
-                
+                String delete = request.getParameter("delete");
+                if(delete==null){
                 if (filePart != null) 
                 {
                     System.out.println(filePart.getName());
@@ -52,7 +53,7 @@ public class UploadFileController extends HttpServlet
 
                     inputStream = filePart.getInputStream();
                 }
-                Connection conn = null;
+                
                 try 
                 {
                     
@@ -91,5 +92,27 @@ public class UploadFileController extends HttpServlet
                     }    
 
                 }catch(Exception e){e.printStackTrace();}     
+    
+                }else{
+                
+                    try{
+                    conn = ConnectionManager.getConnection();
+                    
+                    String sql = "UPDATE user SET photo = '' WHERE username = ?";
+                    PreparedStatement statement = conn.prepareStatement(sql);
+                    
+                    statement.setString(1, username);
+                    
+                    statement.executeUpdate();
+                    
+                    conn.close();
+                    }catch(Exception e){e.printStackTrace();}
+                    
+                    
+                        
+                        RequestDispatcher rs = request.getRequestDispatcher("profilePage.jsp");
+                        //request.setAttribute("xx", "File Not Uploaded Please Try Again!!");
+                        rs.include(request, response);
+                }
     }   
 }
