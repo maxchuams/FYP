@@ -41,7 +41,7 @@ public class removeDevSkill extends HttpServlet {
       
       
       
-       RequestDispatcher rd = request.getRequestDispatcher("manageUser.jsp");
+       RequestDispatcher rd = request.getRequestDispatcher("editUser.jsp?username="+username);
        if(!skillThere){
            request.setAttribute("err", "No such skill");
             rd.forward(request, response);

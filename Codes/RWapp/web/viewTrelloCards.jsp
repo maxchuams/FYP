@@ -11,6 +11,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="protect.jsp"%>
+<%String thisPage = "viewTrelloCards"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 
 <html>
@@ -19,55 +20,58 @@
         <title>Trello</title>
     </head>
     <body>
-        <section id="main-content">
-        <section class="wrapper">
-        <h1>Hello World!</h1>
-        <a href="index.jsp">home</a> </br>
-        
-        <h2> Trello Board data:</h2>
-        </br>
         <%
             
             ArrayList<TrelloCard> tList = TrelloCardDAO.retrieveAll();
             
         %>
-        <table>
-            <thead>
-                <tr>
-                    <th>Project Name</th>
-                    <th>Due Date</th>
-                    <th>Priority</th>
-                </tr>
-            </thead>
-            <%
+        <section id="main-content">
+        <section class="wrapper">
+            <!--kw code-->
+            <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        View All Projects
+                        <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                         </span>
+                    </header>
+                    <div class="panel-body">
+                        <table class="table  table-hover general-table">
+                            <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Due Date</th>
+                                <!--<th>Members</th>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%
             for (TrelloCard t : tList){
                %> 
                <tr>
                    <td><%=t.getName()%></td>
                    <td><%=t.getDue()%></td>
-                   <td><%=t.getPriority()%></td>
+                   <!--<td>
+                   <%//ArrayList<Person> memberList = t.getMembers(); 
+                   //for(Person p : memberList){
+                    //   p.getUsername();
+//}%>
+                   </td>-->
                </tr>
                <% 
             }
-            
-            
-            
             %>
-        </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            <!--kw code-->
         
-        
-        
-        
-        <form action="getTrelloData">
-            <input type="submit" value="update"/>
-        </form>
-              
         
         <% 
-        
-       
-            
-         
         %>
         
         </br>

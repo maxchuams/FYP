@@ -64,11 +64,11 @@ public class addNewUser extends HttpServlet {
         }
         //test password
         if (pw1 == null || pw2 == null || pw1.length() == 0 || pw2.length() == 0) {
-            errors.add("Passwords cannot be empty.");
+            errors.add("Passwords cannot be empty");
             valid = false;
         } else if (!pw1.equals(pw2)) {
             valid = false;
-            errors.add("Passwords do not match.");
+            errors.add("Passwords do not match");
         }
         //validate trell0 key and token if not null
         if (trellotoken != null && trellotoken.length() > 0 && trellokey != null && trellokey.length()>0) {
@@ -95,7 +95,7 @@ public class addNewUser extends HttpServlet {
         }
         
 
-        RequestDispatcher rd = request.getRequestDispatcher("addUsers.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("addUsers.jsp?username="+username);
         if (valid) {
             if (type.equals("c")) {
                 Developer toAdd = new Developer(username, pw1, type, trellokey, trellotoken, eDate, nationality);

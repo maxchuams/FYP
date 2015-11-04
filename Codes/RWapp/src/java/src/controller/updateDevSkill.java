@@ -41,14 +41,14 @@ public class updateDevSkill extends HttpServlet {
             //need to do, validation for duplicate skill
 
             boolean added = SkillDAO.addDevSkill(p.getUsername(), skill);
-            RequestDispatcher rd = request.getRequestDispatcher("manageUser.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("editUser.jsp?username="+p.getUsername());
             if (!added) {
                 
                 request.setAttribute("err", "You already have that skill added!");
                 rd.forward(request, response);
 
             } else {
-                request.setAttribute("sucess", "New skill Added for " + user + "!");
+                request.setAttribute("sucess", "New skill added for " + user + "!");
                 rd.forward(request, response);
             }
 

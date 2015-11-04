@@ -18,8 +18,54 @@
         <title>Recco</title>
     </head>
     <body>
+        <%
+            ArrayList<Person> users = (ArrayList<Person>) request.getAttribute("users");
+            String username1 = request.getParameter("username");
+            if (users == null) {
+
+                users = PersonDAO.retrieveUsers();
+
+            }
+            if (users != null) {
+
+                Person p = PersonDAO.retrieveUser(username1);
+        %>
         <section id="main-content">
             <section class="wrapper">
+
+                <!--Error/success display-->
+                <%  String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
+
+                    if (errorMsg != null) {
+                %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=errorMsg%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                    if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                %>
+
+
+                <!--End of error/success display--> 
 
                 <!--Kaiwen's Code-->
                 <div class="row">
@@ -29,25 +75,13 @@
                             <section class="panel">
                                 <div class="user-heading alt terques-bg">
                                     <a href="#">
-                                        <%
-                                            ArrayList<Person> users = (ArrayList<Person>) request.getAttribute("users");
-                                            String username1 = request.getParameter("username");
-                                            if (users == null) {
-
-                                                users = PersonDAO.retrieveUsers();
-
-                                            }
-                                            if (users != null) {
-
-                                                Person p = PersonDAO.retrieveUser(username1);
-                                        %>
                                         <img alt="" src="ImageServlet?imageid=<%=username1%>">
                                     </a>
 
 
                                     <h1><font color="white"><%=p.getUsername()%></font></h1>
                                         <p><font color="white"><% String type = p.getType();
-                                            if (type.equals("p")) {  %>Project Manager <% } else if (type.equals("c")) { %>Developer <% } else if (type.equals("d")) { %>Designer<% }%></font></p>
+                                        if (type.equals("p")) {  %>Project Manager <% } else if (type.equals("c")) { %>Developer <% } else if (type.equals("d")) { %>Designer<% }%></font></p>
                                 </div>
                                 <div class="panel-body">      
                                     <i class="fa fa-pencil-square-o"></i> Update Trello Details

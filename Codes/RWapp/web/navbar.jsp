@@ -96,73 +96,43 @@
                 </li>
                 <%if(sudo==null){%>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <% if (thisPage.equals("viewTrelloCards")){ %>
+                    <a href="javascript:;" class="active"> <% } else { %>
+                        <a href="javascript:;"> <% } %>
                         <i class="fa fa-laptop"></i>
                         <span>Projects</span>
                     </a>
-                    <ul class="sub">
-                        <li><a href="viewTrelloCards.jsp">View Cards</a></li>
+                    <ul class="sub"><% if (thisPage.equals("viewTrelloCards")){ %>
+                        <li class="active"><a href="viewTrelloCards.jsp">View Cards</a></li> <% } else { %>
+                        <li><a href="viewTrelloCards.jsp">View Projects</a></li><% } %>
                         <!--<li><a href="addNewProject.jsp">Create</a></li>-->
                         <%if(pm!=null){%>
-                        <li><a href="assignProject">View Unassigned Cards</a></li>
+                        <li><a href="assignProject">View Unassigned Projects</a></li>
                                 <%}%>
                     </ul>
                 </li>
                 <%}%>
-                <!--<li class="sub-menu">
-                    <a href="#">
-                        <i class="fa fa-book"></i>
-                        <span>About Us</span>
-                    </a>
-                </li>-->
                 <%if(sudo!=null){%>
                 <li>
                     <% if(thisPage.equals("manageUser")){%>
                     <a class="active" href="manageUser.jsp"> <% } else { %>
                         <a href="manageUser.jsp"> <% }%>
                         
-                        <i class="fa fa-bullhorn"></i>
+                        <i class="fa fa-users"></i>
                         <span>Manage users</span>
                     </a>
                 </li>
                 
                 <li class="sub-menu">
-                    <a href="addUsers.jsp">
-                        <i class="fa fa-tasks"></i>
-                        <span>Add user</span>
+                    <% if(thisPage.equals("addUsers")){%>
+                    <a class="active" href="addUsers.jsp"><% } else { %>
+                        <a href="addUsers.jsp"> <% }%>
+                        <i class="fa fa-plus-circle"></i>
+                        <span>Create Account</span>
                     </a>
                 </li>
                 <%}%>
-<!--                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-envelope"></i>
-                        <span>Mail </span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Charts</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Maps</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-glass"></i>
-                        <span>Extra</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="login.html">
-                        <i class="fa fa-user"></i>
-                        <span>Login Page</span>
-                    </a>
-                </li>-->
+
             </ul>            
         </div>
         <!-- sidebar menu end-->

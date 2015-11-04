@@ -5,6 +5,7 @@
 --%>
 
 <%@include file="protect.jsp" %>
+<%String thisPage = "addUsers"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -35,8 +36,97 @@
     <body>
         <section id="main-content">
         <section class="wrapper">
+            
+            <!--Error/success display-->
+                <%  String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
 
-        <h1>Add a new user to the system</h1>
+                    if (errorMsg != null) {
+                %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=errorMsg%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                    if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                %>
+
+
+                <!--End of error/success display--> 
+            
+            <!--kw code-->
+            <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        Create account
+                    </header>
+                    <div class="panel-body">
+                        <form action='addNewUser' method='POST'id='main'>
+                            <div class="form-group">
+                                <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="username" required class="form-control" id="inputEmail1" placeholder="Email">
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword1" class="col-lg-2 control-label">Password</label>
+                                <div class="col-lg-9">
+                                    <input type="password" name="password" required class="form-control" id="inputPassword1" placeholder="Password"><p></p>
+                                </div>
+                                <label for="inputPassword1" class="col-lg-2 control-label">Confirm Password</label>
+                                <div class="col-lg-9">
+                                    <input type="password" name="password2" required class="form-control" id="inputPassword1" placeholder="Password"><p></p>
+                                </div>
+                                <label for="inputType" class="col-lg-2 control-label">User Type</label>
+                                <div class="col-lg-9">
+                                            <select name="type" id="role" class="form-control m-bot15">
+                                                <option value="c">Developer</option>
+                                                <option value="p">Project Manager</option>
+                                                <option value="d">Designer</option>
+                                            </select>
+                                </div>
+                                <label for="inputPassword1" class="col-lg-2 control-label">Trello Key</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="trellokey" required class="form-control" id="inputPassword1" placeholder="Password"><p></p>
+                                </div>
+                                <label for="inputPassword1" class="col-lg-2 control-label">Trello Token</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="trellotoken" required class="form-control" id="inputPassword1" placeholder="Password"><p></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <p></p>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </section>
+            <!--kw code-->
+            
+
+<!--        <h1>Add a new user to the system</h1>
         
         <form action='addNewUser' method='POST'id='main'>
             Username: <input type='text' name='username' required/></br>
@@ -309,25 +399,7 @@
             </div>
 
             <input type='submit' value='Add new User!'/>
-        </form>
-  <%
-            
-         
-
-            String errorMsg = (String) request.getAttribute("err");
-            String sucess = (String) request.getAttribute("sucess");
-            if (errorMsg == null) {
-                errorMsg = "";
-            } 
-            
-            if(sucess == null){
-                sucess = "";
-            }
-
-
-        %>
-        <b style="color:blue;"><%=sucess%></b><b style="color:red;"><%=errorMsg%></b>
-         </br>
+        </form>-->
          
         </section>
         </section>

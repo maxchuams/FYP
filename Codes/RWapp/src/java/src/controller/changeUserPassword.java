@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,21 +37,20 @@ public class changeUserPassword extends HttpServlet {
         String user = request.getParameter("user");
         String pw1 = request.getParameter("password1");
         String pw2 = request.getParameter("password2");
+        Person toChange = PersonDAO.retrieveUser(user);
         boolean changed = false;
         if (pw1 == null || pw2 == null){
             changed = false;
         } else if (pw1.equals(pw2)){
-            Person toChange = PersonDAO.retrieveUser(user);
+            toChange = PersonDAO.retrieveUser(user);
             toChange.setPassword(pw2);
             changed = PersonDAO.updateUser(toChange);
         }
         
-        RequestDispatcher rd = request.getRequestDispatcher("manageUser.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("editUser.jsp?username="+toChange.getUsername());
         if (!changed) {
-
             request.setAttribute("err", "Passwords do not match");
             rd.forward(request, response);
-
         } else {
             request.setAttribute("sucess", "Password has been changed for " + user + "!");
             rd.forward(request, response);
