@@ -63,7 +63,7 @@
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="bootstrap/html/images/avatar1_small.jpg">
+                <img src="ImageServlet?imageid=<%=username%>" align="center"/>
                 <span class="username"><%=username%></span>
                 <b class="caret"></b>
             </a>

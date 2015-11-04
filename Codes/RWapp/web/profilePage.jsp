@@ -25,7 +25,7 @@
                     <div class="panel-body profile-information">
                        <div class="col-md-3">
                            <div class="profile-pic text-center">
-                               <img src="ImageServlet?imageid=<%=username%>" align="center"/>
+                               <img src="ImageServlet?imageid=<%=username%>" alt="Display this text instead" align="center"/>
                            </div>
                        </div>
                        <div class="col-md-6">
