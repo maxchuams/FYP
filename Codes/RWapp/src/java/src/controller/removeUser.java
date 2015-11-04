@@ -33,7 +33,6 @@ public class removeUser extends HttpServlet {
             throws ServletException, IOException {
        
         String username = request.getParameter("user");
-        
         boolean sucess = PersonDAO.delete(username);
         
         RequestDispatcher rd = request.getRequestDispatcher("manageUser.jsp");
@@ -41,6 +40,7 @@ public class removeUser extends HttpServlet {
            request.setAttribute("sucess","User sucessfully removed");
            rd.forward(request,response);
         } else {
+            
             request.setAttribute("err", "Failed to delete user, please try again later");
             rd.forward(request, response);
             

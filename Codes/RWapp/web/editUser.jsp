@@ -47,7 +47,7 @@
 
                                     <h1><font color="white"><%=p.getUsername()%></font></h1>
                                         <p><font color="white"><% String type = p.getType();
-                                        if (type.equals("p")) {  %>Project Manager <% } else if (type.equals("c")) { %>Developer <% } else if (type.equals("d")) { %>Designer<% }%></font></p>
+                                            if (type.equals("p")) {  %>Project Manager <% } else if (type.equals("c")) { %>Developer <% } else if (type.equals("d")) { %>Designer<% }%></font></p>
                                 </div>
                                 <div class="panel-body">      
                                     <i class="fa fa-pencil-square-o"></i> Update Trello Details
@@ -72,43 +72,92 @@
                                             <input type="submit" class="btn btn-primary btn-xs" value="Update"></input>
                                         </div>
                                     </form>
-                                </div><%
-                                    if (p.getType().equals("c")) {
-                                        ArrayList<Skill> sList = SkillDAO.retrieveDevSkill(p.getUsername());
-
-                                    %><div class="panel-body"><form action="updateDevSkill" method="GET"><hr/>
-                                    <i class="fa fa-pencil-square-o"></i> Update Developer Skills
-                                    <div class="form-group"></div>
-                                    <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Developer Current Skills</label>
-                                    <div class="col-lg-9">
-                                        <% for (int i = 0; i < sList.size(); i++) {
-                                                Skill s = sList.get(i);
-                                                out.print(s.getSkill());
-                                                if (i != sList.size() - 1) {
-                                                    out.print(", ");
-                                                }
-                                            }
-
-                                        %></div>
-                                        
-                                        <label for="inputEmail1" class="col-lg-12 col-sm-12 control-label"></label>
-                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Add New Skill</label>
-                                    <div class="col-lg-9">
-                                        <select name="skills" class="form-control m-bot15">
-                                            <option value="Wordpress">Wordpress</option>
-                                            <option value="eCommerce">eCommerce</option>
-                                            <option value="Custom">Custom</option>
-                                        </select>
                                 </div>
+                                <hr/>
+                                <div class="panel-body">
+                                    <i class="fa fa-pencil-square-o"></i> Change Password
+                                    <form action="changeUserPassword" method="POST">
+                                        <div class="form-group">
+                                            <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Password</label>
+                                            <div class="col-lg-9">
+                                                <input type="password" name="password1" class="form-control" id="inputEmail1" placeholder="Password">
+                                                <p class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Confirm Password</label>
+                                            <div class="col-lg-9">
+                                                <input type="password" name="password2" class="form-control" id="inputPassword1" placeholder="Confirm Password">
+                                            </div>
+                                        </div>
                                         <input type="hidden" name="user" value="<%=p.getUsername()%>"/>
                                         <div class="col-lg-offset-11 col-lg-1">
                                             <p></p>
-                                            <input type="submit" class="btn btn-primary btn-xs" value="Update"></input>
+                                            <input type="submit" class="btn btn-primary btn-xs" value="Change"></input>
                                         </div>
-                                        </form>
-                                  
-                                     <%}%>
+                                    </form>
+                                </div>
+                                <%
+                                    if (p.getType().equals("c")) {
+                                        ArrayList<Skill> sList = SkillDAO.retrieveDevSkill(p.getUsername());
 
+                                %><div class="panel-body"><form action="updateDevSkill" method="GET"><hr/>
+                                        <i class="fa fa-pencil-square-o"></i> Update Developer Skills
+                                        <div class="form-group"></div>
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Developer Current Skills</label>
+                                        <div class="col-lg-9">
+                                            <% for (int i = 0; i < sList.size(); i++) {
+                                                    Skill s = sList.get(i);
+                                                    out.print(s.getSkill());
+                                                    if (i != sList.size() - 1) {
+                                                        out.print(", ");
+                                                    }
+                                                }
+
+                                            %></div>
+
+                                        <label for="inputEmail1" class="col-lg-12 col-sm-12 control-label"></label>
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Add New Skill</label>
+                                        <div class="col-lg-9">
+                                            <select name="skills" class="form-control m-bot15">
+                                                <option value="Wordpress">Wordpress</option>
+                                                <option value="eCommerce">eCommerce</option>
+                                                <option value="Custom">Custom</option>
+                                            </select>
+                                        </div>
+
+                                        <input type="hidden" name="user" value="<%=p.getUsername()%>"/>
+                                        <div class="col-lg-offset-11 col-lg-1">
+                                            <input type="submit" class="btn btn-primary btn-xs" value="Add"></input>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="panel-body">
+                                    <p></p>
+                                    <form action='removeDevSkill'>
+                                        <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Delete Skill</label>
+                                        <div class="col-lg-9">
+                                            <select name="skill" class="form-control m-bot15">
+                                                <option value="Wordpress">Wordpress</option>
+                                                <option value="eCommerce">eCommerce</option>
+                                                <option value="Custom">Custom</option>
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="user" value="<%=p.getUsername()%>"/>
+                                        <div class="col-lg-offset-11 col-lg-1">
+                                            <input type="submit" class="btn btn-primary btn-xs" value="Delete"></input>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <%}%>
+                                <hr/>
+                                <div class="panel-body">
+                                    <form action="removeUser">
+                                        <input type="hidden" name="user" value="<%=p.getUsername()%>"/>
+                                        <button type="submit" class="btn btn-danger btn-block">Delete User</button>
+                                    </form>
+                                </div>
 
                             </section>
                             <% }
