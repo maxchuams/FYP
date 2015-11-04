@@ -46,7 +46,7 @@
 <div class="brand">
 
     <a href="index.jsp" class="logo">
-        <img src="bootstrap/html/images/ReccoWhite.png" alt="">
+        <img src="bootstrap/html/images/ReccoWhite.svg" alt="" width="168px" height="32px">
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
@@ -100,7 +100,7 @@
                     </a>
                     <ul class="sub">
                         <li><a href="viewTrelloCards.jsp">View Cards</a></li>
-                        <li><a href="addNewProject.jsp">Create</a></li>
+                        <!--<li><a href="addNewProject.jsp">Create</a></li>-->
                         <%if(pm!=null){%>
                         <li><a href="assignProject">View Unassigned Cards</a></li>
                                 <%}%>
