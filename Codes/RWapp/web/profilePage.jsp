@@ -4,6 +4,7 @@
     Author     : calvin
 --%>
 
+<%@page import="src.model.PersonDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="protect.jsp"%>
 <%String thisPage = "profilePage"; //This is to change the highlight in Navigation Bar%>
@@ -12,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Recco</title>
     </head>
     <body>
          <!--main content start-->
@@ -30,40 +31,20 @@
                            </div>
                        </div>
                        <div class="col-md-6">
-                           <div class="profile-desk">
                                <h1><%=username%></h1>
-                               <span class="text-muted">Product Manager</span>
-                               <p>
-                                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean porttitor vestibulum imperdiet. Ut auctor accumsan erat, a vulputate metus tristique non. Aliquam aliquam vel orci quis sagittis.
-                               </p>
-                               <a href="#" class="btn btn-primary">View Profile</a>
-                           </div>
+                               <span class="text-muted">User Role: <%
+                               Person p = PersonDAO.retrieveUser(username);
+                               if(p.getType().equals("s")){
+                                   out.println("SuperAdmin");%></span><%
+                               }if(p.getType().equals("p")){
+                                   out.println("Project Manager");%></span><%
+                               }if(p.getType().equals("c")){
+                                   out.println("Developer");%></span><%
+                               }
+                               %>
+                               
                        </div>
-                       <div class="col-md-3">
-                           <div class="profile-statistics">
-                               <h1>1240</h1>
-                               <p>This Week Sales</p>
-                               <h1>$5,61,240</h1>
-                               <p>This Week Earn</p>
-                               <ul>
-                                   <li>
-                                       <a href="#">
-                                           <i class="fa fa-facebook"></i>
-                                       </a>
-                                   </li>
-                                   <li class="active">
-                                       <a href="#">
-                                           <i class="fa fa-twitter"></i>
-                                       </a>
-                                   </li>
-                                   <li>
-                                       <a href="#">
-                                           <i class="fa fa-google-plus"></i>
-                                       </a>
-                                   </li>
-                               </ul>
-                           </div>
-                       </div>
+                       
                     </div>
                 </section>
             </div>
@@ -88,7 +69,7 @@
                             </li>
                             <li>
                                 <a data-toggle="tab" href="#settings">
-                                    Settings
+                                    Edit Profile Picture
                                 </a>
                             </li>
                         </ul>
@@ -446,14 +427,15 @@
                                 </div>
                             </div>
                             <div id="settings" class="tab-pane ">
-                                <div class="position-center">
+                                <div class="row">
+                                    <div class="col-md-12">
                                     <div class="prf-contacts sttng">
-                                        <h2>  Personal Information</h2>
+                                        <h2>Edit Profile Picture</h2>
                                     </div>
                                     <form role="form" method="post" action="uploadServlet" enctype="multipart/form-data" class="form-horizontal">
                                         <div class="form-group">
                                             <label class="col-lg-2 control-label"> Profile Page </label>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-10">
                                                 <input type="file" id="exampleInputFile" name="file_uploaded" class="file-pos">
                                                 <input type="hidden" name="username" value="<%=username%>">
                                             </div>
@@ -474,7 +456,7 @@
                                                 </div>
                                             </form>
                                 </div>
-
+                                </div>
                             </div>
                         </div>
                     </div>
