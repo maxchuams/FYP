@@ -108,7 +108,7 @@
                                         <div id='devOnly'>
                                             <label for="inputType" class="col-lg-2 control-label">Employment Date: </label>
                                              <div class="col-lg-9">
-                                                <input type='date' name='eDate'required class="form-control"/><p></p>
+                                                <input type='date' name='eDate' class="form-control"/><p></p>
                                              </div>
                                              <div class="">
                                             <label for="inputType" class="col-lg-2 control-label">Nationality: </label>
