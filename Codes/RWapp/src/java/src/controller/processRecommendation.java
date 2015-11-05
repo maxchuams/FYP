@@ -6,7 +6,6 @@
 package src.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
@@ -14,8 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import src.model.Person;
-import src.model.PersonDAO;
 import src.model.ProjectAllocationDAO;
 import src.model.TrelloCard;
 import src.model.TrelloCardDAO;
