@@ -61,7 +61,7 @@
             <div class="user-login-info">
                 <input type="text" name="username" class="form-control" placeholder="User ID" autofocus required>
                 <input type="password" name="password" class="form-control" placeholder="Password" required>
-                <b style="color:red;"><%=errorMsg%></b>
+                <div class="text-danger"><%=errorMsg%></div>
             </div>
             <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
         </div>

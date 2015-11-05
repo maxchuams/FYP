@@ -25,8 +25,8 @@
             <div class="col-md-12">
                 <section class="panel">
                     <div class="panel-body profile-information">
-                       <div class="col-md-3">
-                           <div class="profile-pic text-center">
+                       <div class="col-md-6">
+                           <div class="profile-pic text-right">
                                <img src="ImageServlet?imageid=<%=username%>" alt="Display this text instead" align="center"/>
                            </div>
                        </div>
@@ -54,7 +54,7 @@
                         <ul class="nav nav-tabs nav-justified ">
                             <li class="active">
                                 <a data-toggle="tab" href="#overview">
-                                    Overview
+                                    Profile Picture
                                 </a>
                             </li>
                             <li>
@@ -69,14 +69,55 @@
                             </li>
                             <li>
                                 <a data-toggle="tab" href="#settings">
-                                    Edit Profile Picture
+                                    Others
                                 </a>
                             </li>
                         </ul>
                     </header>
+                    
                     <div class="panel-body">
                         <div class="tab-content tasi-tab">
-                            <div id="overview" class="tab-pane active">
+                            <div id="overview" class="tab-pane active ">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-0"></div>
+                                    <div class="prf-contacts sttng col-md-12">
+                                        <h2>Edit Profile Picture</h2>
+                                    </div>
+                                    <form role="form" method="post" action="uploadServlet" enctype="multipart/form-data" class="form-horizontal">
+                                        
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Select Image</label>
+                                            <div class="col-lg-10">
+                                                <input type="file" id="exampleInputFile" name="file_uploaded" class="file-pos">
+                                                <input type="hidden" name="username" value="<%=username%>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-2 col-lg-10">
+                                                <button class="btn btn-primary" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                            
+                                    </form>
+                                            <hr/>
+                                            <form method="POST"  action="uploadServlet" enctype="multipart/form-data" class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label">Delete Image</label>
+                                                    <div class="col-lg-10"> 
+                                                        <input type="hidden" name="username" value="<%=username%>">
+                                                <input type="hidden" name="delete" value="delete">
+                                                <button class="btn btn-danger" type="submit">Delete</button>
+                                                        <!--<input type="file" id="exampleInputFile" name="file_uploaded" class="file-pos">-->
+                                                <input type="hidden" name="username" value="<%=username%>"></div>
+                                                </div>
+                                                
+                                                
+                                            </form>
+                                </div>
+                                </div>
+                            </div>
+                            <div id="settings" class="tab-pane">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="recent-act">
@@ -426,38 +467,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="settings" class="tab-pane ">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                    <div class="prf-contacts sttng">
-                                        <h2>Edit Profile Picture</h2>
-                                    </div>
-                                    <form role="form" method="post" action="uploadServlet" enctype="multipart/form-data" class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 control-label"> Profile Page </label>
-                                            <div class="col-lg-10">
-                                                <input type="file" id="exampleInputFile" name="file_uploaded" class="file-pos">
-                                                <input type="hidden" name="username" value="<%=username%>">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-lg-offset-2 col-lg-10">
-                                                <button class="btn btn-primary" type="submit">Save</button>
-                                                
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                            <form method="POST" class="form-group" action="uploadServlet" enctype="multipart/form-data" class="form-horizontal">
-                                                <div class="form-group col-lg-offset-2">
-                                                <input type="hidden" name="username" value="<%=username%>">
-                                                <input type="hidden" name="delete" value="delete">
-                                                <button class="btn btn-default" type="submit">Delete</button>
-                                                </div>
-                                            </form>
-                                </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </section>
