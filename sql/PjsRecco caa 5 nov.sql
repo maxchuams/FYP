@@ -8,7 +8,7 @@ create table user(
 	type varchar(1) not null,
 	trellokey varchar(100),
 	trellotoken varchar(100),
-	`photo` blob
+	`photo` longblob
 );
 
 create table developer(
@@ -64,18 +64,27 @@ INSERT INTO `user` (`username`, `password`, `type`, `trellokey`, `trellotoken`, 
 ('kaiwen12', '1234', 'p', '7e35111227918de8a37f8c20844ed555', '65095ea4469fc51399471d010e58e2f6a95b2f15c83b9ddea167940939534b0f', ''),
 ('kianlam999', '1234', 'c', 'f806c2eb70886448614862e25802b8e6', 'a69f8bdf17d4a09cefde04ea4275b6b5d45005a74ec6cd2f5527932920537439', ''),
 ('maxchuams', '1234', 'c', 'f806c2eb70886448614862e25802b8e6', 'a69f8bdf17d4a09cefde04ea4275b6b5d45005a74ec6cd2f5527932920537439', ''),
-('recom1', 'test', 'c', 'qweqe', 'qwads', ''),
-('recom2', 'test', 'c', '', '', ''),
-('recom3', 'test', 'c', '', '', '');
+('testaccount166','1234','c','f806c2eb70886448614862e25802b8e6','a69f8bdf17d4a09cefde04ea4275b6b5d45005a74ec6cd2f5527932920537439');
 
 INSERT INTO `developer` (`username`, `employmentdate`, `nationality`) VALUES
-('kianlam999', '2015-10-30', 'Singapore'),
+('kianlam999', '2015-10-30', 'Thailand'),
 ('maxchuams', '2015-10-30', 'Singapore'),
-('recom1', '2011-12-12', 'Thai'),
-('recom2', '2012-12-12', 'Thai'),
-('recom3', '2013-12-12', 'Thai');
+('testaccount166', '2015-10-30', 'Singapore');
+
 insert into project values("Fathership","","nil","2015-06-29","3", "Wordpress"), ("Recco", "", "nil", "2015-06-10","3", "eCommerce"), ("Candy", "", "nil", "2015-02-10","3", "eCommerce"),("LowPriority", "", "nil", "2015-02-10","1", "eCommerce");
-insert into projectallocation values("Fathership", "recom1", "2015-06-12"),("Recco", "recom2","2015-05-10"), ("Candy", "recom2", "2015-01-10"), ("LowPriority", "recom3", "2014-03-03");
+insert into projectallocation values
+	("Fathership", "testaccount166", "2015-06-12"),
+	("Recco", "kianlam999","2015-05-10"), 
+	("Candy", "kianlam999", "2015-01-10"), 
+	("LowPriority", "maxchuams", "2014-03-03");
 insert into defect values("1", "Recco", "Login Issues");
 insert into defect values("2", "Recco", "Client complain lag");
-insert into developerskill values("recom1", "Wordpress"), ("recom1", "Custom"), ("recom1", "eCommerce"), ("recom2", "Wordpress"), ("recom2", "Custom"), ("recom2", "eCommerce"), ("recom3", "Wordpress"),("recom3", "eCommerce"); 
+insert into developerskill values
+	("testaccount166", "Wordpress"),
+ ("testaccount166", "Custom"), 
+ ("testaccount166", "eCommerce"), 
+ ("kianlam999", "Wordpress"), 
+ ("kianlam999", "Custom"), 
+ ("kianlam999", "eCommerce"), 
+("maxchuams", "Wordpress"),
+("maxchuams", "eCommerce"); 
