@@ -110,6 +110,14 @@
                                         %>
                                     </tbody>
                                 </table>
+                                    <form action='assignProject' method='POST'id='main'>
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                        <p></p>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
+                                    </form>
                             </div>
                         </section>
                     </div>
