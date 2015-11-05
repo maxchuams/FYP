@@ -78,7 +78,7 @@ public class ManageProfile extends HttpServlet {
                 } else if (type.equals("desg")) {
                     rd = request.getRequestDispatcher("manageDesgProfile.jsp");
                 } else if (type.equals("sudo")) {
-                    rd = request.getRequestDispatcher("manageUser.jsp");
+                    rd = request.getRequestDispatcher("manageSudoProfile.jsp");
                 }
 
                 request.setAttribute("err", "Fields are empty");
@@ -98,7 +98,7 @@ public class ManageProfile extends HttpServlet {
                         } else if (type.equals("desg")) {
                             rd = request.getRequestDispatcher("manageDesgProfile.jsp");
                         } else if (type.equals("sudo")) {
-                            rd = request.getRequestDispatcher("manageUser.jsp");
+                            rd = request.getRequestDispatcher("manageSudoProfile.jsp");
                         }
                         request.setAttribute("sucess", "Changes sucessfully updated!");
                         rd.forward(request, response);
@@ -112,7 +112,7 @@ public class ManageProfile extends HttpServlet {
                         } else if (type.equals("desg")) {
                             rd = request.getRequestDispatcher("manageDesgProfile.jsp");
                         } else if (type.equals("sudo")) {
-                            rd = request.getRequestDispatcher("manageUser.jsp");
+                            rd = request.getRequestDispatcher("manageSudoProfile.jsp");
                         }
                         request.setAttribute("err", "Passwords do not match");
                         rd.forward(request, response);
