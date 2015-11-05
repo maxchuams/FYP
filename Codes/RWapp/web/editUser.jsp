@@ -1,7 +1,7 @@
 <%-- 
     Document   : manageUser
     Created on : Sep 14, 2015, 12:28:56 PM
-    Author     : admin
+    Author     : Kaiwen
 --%>
 <%@page import="src.model.Skill"%>
 <%@page import="src.model.SkillDAO"%>

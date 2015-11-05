@@ -59,6 +59,7 @@ public class assignRecommendation extends HttpServlet {
             //get todays date
             String today = request.getParameter("sDate");
             String eDate = request.getParameter("eDate");
+            
             RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
             try {
                 boolean valid = validDate(today);
@@ -243,6 +244,7 @@ public class assignRecommendation extends HttpServlet {
                 }
             }
             String dateToFormat = toAssign.getDue();
+            System.out.println(toAssign.toString());
             
             try{
                 boolean valid= validDate3(dateToFormat, eDate);
@@ -292,7 +294,7 @@ public class assignRecommendation extends HttpServlet {
 //                tb = new TrelloBoard(boardName, id, tmList);
 //            }
 //        }
-            RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp?name="+toAssign.getName());
             request.setAttribute("rList", rList);
             request.setAttribute("project", toAssign);
 

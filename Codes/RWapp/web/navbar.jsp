@@ -96,25 +96,27 @@
                 </li>
                 <%if(sudo==null){%>
                 <li class="sub-menu">
-                    <% if (thisPage.equals("viewTrelloCards")){ %>
+                    <% if (thisPage.equals("viewTrelloCards") || thisPage.equals("viewUnassignedCards")){ %>
                     <a href="javascript:;" class="active"> <% } else { %>
                         <a href="javascript:;"> <% } %>
                         <i class="fa fa-laptop"></i>
                         <span>Projects</span>
                     </a>
                     <ul class="sub"><% if (thisPage.equals("viewTrelloCards")){ %>
-                        <li class="active"><a href="viewTrelloCards.jsp">View Cards</a></li> <% } else { %>
+                        <li class="active"><a href="viewTrelloCards.jsp">View Projects</a></li> <% } else { %>
                         <li><a href="viewTrelloCards.jsp">View Projects</a></li><% } %>
                         <!--<li><a href="addNewProject.jsp">Create</a></li>-->
                         <%if(pm!=null){%>
-                        <li><a href="assignProject">View Unassigned Projects</a></li>
+                        <% if (thisPage.equals("viewUnassignedCards")){ %>
+                        <li class="active"><a href="assignProject">View Unassigned Projects</a></li><% } else { %>
+                        <li><a href="assignProject">View Unassigned Projects</a></li><% } %>
                                 <%}%>
                     </ul>
                 </li>
                 <%}%>
                 <%if(sudo!=null){%>
                 <li>
-                    <% if(thisPage.equals("manageUser")){%>
+                    <% if(thisPage.equals("manageUser") || thisPage.equals("manageDevProfile")){%>
                     <a class="active" href="manageUser.jsp"> <% } else { %>
                         <a href="manageUser.jsp"> <% }%>
                         

@@ -10,6 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="protect.jsp"%>
+<%String thisPage = "viewUnassignedCards"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 <html>
     <head>
@@ -17,107 +18,103 @@
         <title>Trello</title>
     </head>
     <body>
+        <% ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) session.getAttribute("tc");
+
+            String errorMsg = (String) request.getAttribute("err");
+            String sucess = (String) request.getAttribute("sucess");
+            if (errorMsg == null) {
+                errorMsg = "";
+            }
+
+            if (sucess == null) {
+                sucess = "";
+            }
+
+
+        %>
         <section id="main-content">
             <section class="wrapper">
-                <h1>View Unassigned Cards</h1>
-                <% ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) session.getAttribute("tc");
+                
+                <!--Error/success display-->
+                <%   errorMsg = (String) request.getAttribute("err");
+                     sucess = (String) request.getAttribute("sucess");
 
-                    String errorMsg = (String) request.getAttribute("err");
-                    String sucess = (String) request.getAttribute("sucess");
-                    if (errorMsg == null) {
-                        errorMsg = "";
-                    }
-
-                    if (sucess == null) {
-                        sucess = "";
-                    }
-
-
+                    if (errorMsg != null) {
                 %>
-                <b style="color:blue;"><%=sucess%></b><b style="color:red;"><%=errorMsg%></b>
-                </br>
-                
-                <%if(tb != null){
-                    
-                %>
-                Trello Board data:
-                </br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Project Name</th>
-                            <th>Due Date</th>
-
-                        </tr>
-                    </thead>
-                    <%
-                    if(tb != null){
-                        for (TrelloCard t : tb) {
-                    %> 
-                    <tr>
-                        <td><%=t.getName()%></td>
-                        <td><%=t.getDue()%></td>
-
-                    </tr>
-                    <%
-                        }
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=errorMsg%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
                     }
-                    %>
-                </table>
+                    if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                %>
+
+
+                <!--End of error/success display--> 
                 
-                <%}%>
-                
-                <%if(tb!=null){%>
-                        
-                <form action='assignProject'>
-                    <input type='submit' value='update!'/>
-                </form>
-                <%}%>
-    <%      
-                    if(tb!=null){
-                        
-                    %>
-                <form action="assignRecommendation" method="GET">
-                    Select Project:
-
-                    <select name="card">
-                    <%
-                    for (TrelloCard t : tb) {
-                        %>
-                        <option value='<%=t.getId()%>'><%=t.getName()%></option>
-
-                        <%
-
-                            }
-                    
-                        %>
-                    </select>
-                    </br>
-                    Select start date: 
-                    <input type="date" name="sDate" required/>
-                    </br>
-                    Select end date: 
-                    <input type="date" name="eDate" required/>
-                    </br>
-                    Priority:
-                    <select name='priority'>
-                        <option value='1'>1 - Low</option>
-                        <option value='2'>2 - Medium</option>
-                        <option value='3'>3 - High</option>
-                    </select>
-                    </br>
-
-                    Project Type:
-                    <select name='type'>
-                        <option value='Wordpress'>Wordpress</option>
-                        <option value='eCommerce'>eCommerce</option>
-                        <option value='Custom'>Custom</option>
-                    </select>
-                    <input type='submit' value='Get Recommendation!'/>
-
-                </form>
-                    <%}%>
+                <!--kw code-->
+            <div class="row">
+            <div class="col-sm-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        View All Projects
+                        <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                         </span>
+                    </header>
+                    <div class="panel-body">
+                        <table class="table  table-hover general-table">
+                            <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Due Date</th>
+                                <th>Assign Developer</th>
+                                <!--<th>Members</th>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                                        <%                                            for (TrelloCard t : tb) {
+                                        %> 
+                                        <tr>
+                                            <td><%=t.getName()%></td>
+                                            <td><%=t.getDue()%></td>
+                                            <!--<td>
+                                            <%//ArrayList<Person> memberList = t.getMembers(); 
+                                                //for(Person p : memberList){
+                                                //   p.getUsername();
+                                                //}%>
+                                            </td>-->
+                                                    <td><a href="editTrelloCard.jsp?name=<%=t.getName()%>&id=<%=t.getId()%>"><button type="button" class="btn btn-primary btn-xs">Assign</button></a></td>
+                                                
+                                        </tr>
+                                        <% 
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <!--kw code-->
             </section>
         </section>
     </body>
