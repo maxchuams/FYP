@@ -55,7 +55,7 @@
 
     <div class="container">
 
-      <form class="form-signin" action="ValidateUser">
+      <form class="form-signin" action="ValidateUser" method="POST">
           <h2 class="form-signin-heading"><font face="Brush Script MT" size="8">R</font><span style="text-transform:lowercase"><font face="Brush Script MT" size="8">ecco</font></span></h2>
         <div class="login-wrap">
             <div class="user-login-info">
