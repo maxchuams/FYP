@@ -68,6 +68,10 @@
         <servlet-name>removeDevSkill</servlet-name>
         <servlet-class>src.controller.removeDevSkill</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>modifyCountry</servlet-name>
+        <servlet-class>src.controller.modifyCountry</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>removeDevSkill</servlet-name>
         <url-pattern>/removeDevSkill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modifyCountry</servlet-name>
+        <url-pattern>/modifyCountry</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

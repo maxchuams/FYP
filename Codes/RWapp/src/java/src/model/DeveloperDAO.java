@@ -73,4 +73,29 @@ public class DeveloperDAO {
 
         return toReturn;
     }
+    public static boolean updateCountry(String country, String username){
+          Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Person user = null;
+
+        
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("UPDATE developer set nationality = ? where username=?");
+            pstmt.setString(1, country);
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();
+
+           return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }finally{
+            
+            ConnectionManager.close(conn,pstmt,rs);
+            
+            
+        }
+    }
 }
