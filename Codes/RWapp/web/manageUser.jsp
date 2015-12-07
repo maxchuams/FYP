@@ -69,8 +69,7 @@
                                     <thead>
                                         <tr>
                                             <th>Username</th>
-                                            <th>Key</th>
-                                            <th>Token</th>
+                                            <th>Role</th>
                                             <th>Edit</th>
                                         </tr>
                                     </thead>
@@ -86,8 +85,13 @@
                                                 if (p.getType().equals("p")) {%>
                                         <tr>
                                             <td><a href="#"> <%=p.getUsername()%></a></td>
-                                            <td> <%=p.getTrelloKey()%></td>
-                                            <td><%=p.getToken()%></td>
+                                            <td> <% 
+                                            if (p.getType().equals("p")){
+                                                out.println("Project Manager");
+                                            } else if (p.getType().equals("c")){
+                                                out.println("Developer");
+                                            }
+                                            %></td>
                                             <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
                                         </tr>
                                         <%}%>
@@ -117,7 +121,6 @@
                                         <tr>
                                             <th>Username</th>
                                             <th>Key</th>
-                                            <th>Token</th>
                                             <th>Edit</th>
                                         </tr>
                                     </thead>
@@ -133,8 +136,13 @@
                                                 if (p.getType().equals("c")) {%>
                                         <tr>
                                             <td><a href="#"> <%=p.getUsername()%></a></td>
-                                            <td> <%=p.getTrelloKey()%></td>
-                                            <td><%=p.getToken()%></td>
+                                            <td> <% 
+                                            if (p.getType().equals("p")){
+                                                out.println("Project Manager");
+                                            } else if (p.getType().equals("c")){
+                                                out.println("Developer");
+                                            }
+                                            %></td>
                                             <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
                                         </tr>
                                         <%}%>
