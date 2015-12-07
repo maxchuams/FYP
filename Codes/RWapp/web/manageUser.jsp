@@ -3,6 +3,8 @@
     Created on : Sep 14, 2015, 12:28:56 PM
     Author     : admin
 --%>
+<%@page import="src.model.DeveloperDAO"%>
+<%@page import="src.model.Developer"%>
 <%@page import="src.model.Skill"%>
 <%@page import="src.model.SkillDAO"%>
 <%@page import="src.model.PersonDAO"%>
@@ -120,7 +122,7 @@
                                     <thead>
                                         <tr>
                                             <th>Username</th>
-                                            <th>Key</th>
+                                            <th>Country</th>
                                             <th>Edit</th>
                                         </tr>
                                     </thead>
@@ -137,11 +139,8 @@
                                         <tr>
                                             <td><a href="#"> <%=p.getUsername()%></a></td>
                                             <td> <% 
-                                            if (p.getType().equals("p")){
-                                                out.println("Project Manager");
-                                            } else if (p.getType().equals("c")){
-                                                out.println("Developer");
-                                            }
+                                                String d = DeveloperDAO.retrieveDev(p.getUsername());
+                                                out.println(d);
                                             %></td>
                                             <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
                                         </tr>

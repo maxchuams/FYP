@@ -19,6 +19,12 @@ public class Developer extends Person {
         this.employmentDate = employmentDate;
         this.nationality = nationality;
     }
+    
+    public Developer(Person p, String employmentDate, String nationailty){
+        super(p.getUsername(), p.getPassword(), p.getType(), p.getTrelloKey(), p.getToken());
+        this.employmentDate = employmentDate;
+        this.nationality = nationality;
+    }
 
     public String getEmploymentDate() {
         return employmentDate;
