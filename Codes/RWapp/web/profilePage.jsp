@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="src.model.PersonDAO"%>
+<%@page import="src.model.DeveloperDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="protect.jsp"%>
 <%String thisPage = "profilePage"; //This is to change the highlight in Navigation Bar%>
@@ -442,10 +443,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="prf-contacts">
-                                                    <h2> <span><i class="fa fa-map-marker"></i></span> Country</h2>
+                                                    <%
+                                                            String d = DeveloperDAO.retrieveDev(p.getUsername());
+                                                        %>
+                                                    <h2> <span><i class="fa fa-map-marker"></i></span> Current Country : <%=d%></h2>
                                                     <div class="location-info">
-
-
                                                         
                                                         <form action='modifyCountry' class="form-horizontal">
                                                             <label class="col-lg-3 control-label">Change Country</label>
