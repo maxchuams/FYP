@@ -32,13 +32,13 @@ public class modifyCountry extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String country = request.getParameter("country");
-        String username = request.getParameter("username");
+        String username = request.getParameter("user");
         System.out.println(country + " " + username);
         boolean success = false;
         if (country != null & username != null){
             success = DeveloperDAO.updateCountry(country, username);
         }
-        RequestDispatcher rd = request.getRequestDispatcher("changeCountry.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("profilePage.jsp");
         if(success){
             request.setAttribute("sucess", "Updated Country!");
             rd.forward(request, response);
