@@ -11,9 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.Date;
 
 /**
@@ -24,7 +21,6 @@ public class RecommedationDAO {
 
     public static ArrayList<Recommendation> getRecommendation(String projectType,
             String projectDueDate, String projectAllocatedDate, int priority) {
-        System.out.println("RECCO STARTS!");
         ArrayList<Recommendation> recommendations = new ArrayList<Recommendation>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -113,7 +109,7 @@ public class RecommedationDAO {
 
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                System.out.println(rs.getInt(5));
+                //System.out.println(rs.getInt(5));
                 Recommendation toAdd = new Recommendation(rs.getString("username"), rs.getInt("workload"), rs.getInt("defectscore"), rs.getInt("experience"), rs.getInt("PointSystem"));
                 //Recommendation(String username, int workloadScore, int defectScore, int experienceScore, int pointSystemScore)
                 recommendations.add(toAdd);
