@@ -29,7 +29,7 @@ create table developerskill(
 create table project(
 	projectname varchar(25) not null primary key,
 	trellokey varchar(100) not null,
-	description varchar(100) not null,
+	description varchar(8000) not null,
 	duedate date not null,
 	priority int not null,
 	type varchar(25) not null
@@ -76,7 +76,7 @@ create table defectscreenshot(
 
 INSERT INTO `user` (`username`, `password`, `type`, `trellokey`, `trellotoken`, `photo`) VALUES
 ('admin', 'admin', 's', NULL, NULL, ''),
-('kaiwen12', '1234', 'p', '7e35111227918de8a37f8c20844ed555', '65095ea4469fc51399471d010e58e2f6a95b2f15c83b9ddea167940939534b0f', ''),
+('kaiwen12', '1234', 'p', '7e35111227918de8a37f8c20844ed555', '6c2fb51f5d35f6663a07912efd643cb958ab452aef289620a538c409b7a1ee0b', ''),
 ('kianlam999', '1234', 'c', 'f806c2eb70886448614862e25802b8e6', 'a69f8bdf17d4a09cefde04ea4275b6b5d45005a74ec6cd2f5527932920537439', ''),
 ('maxchuams', '1234', 'c', 'f806c2eb70886448614862e25802b8e6', 'a69f8bdf17d4a09cefde04ea4275b6b5d45005a74ec6cd2f5527932920537439', ''),
 ('testaccount166','1234','c','f806c2eb70886448614862e25802b8e6','a69f8bdf17d4a09cefde04ea4275b6b5d45005a74ec6cd2f5527932920537439', '');
@@ -86,14 +86,17 @@ INSERT INTO `developer` (`username`, `employmentdate`, `nationality`) VALUES
 ('maxchuams', '2015-10-30', 'Singapore'),
 ('testaccount166', '2015-10-30', 'Singapore');
 
-insert into project values("Fathership","","nil","2015-06-29","3", "Wordpress"), ("Recco", "", "nil", "2015-06-10","3", "eCommerce"), ("Candy", "", "nil", "2015-02-10","3", "eCommerce"),("LowPriority", "", "nil", "2015-02-10","1", "eCommerce");
+insert into project values
+	("Fathership","","nil","2015-06-29","3", "Wordpress"), 
+	("Recco", "", "nil", "2015-06-10","3", "eCommerce"), 
+	("Candy", "", "nil", "2015-02-10","3", "eCommerce"),
+	("LowPriority", "", "nil", "2015-02-10","1", "eCommerce");
 insert into projectallocation values
 	("Fathership", "testaccount166", "2015-06-12"),
 	("Recco", "kianlam999","2015-05-10"), 
 	("Candy", "kianlam999", "2015-01-10"), 
 	("LowPriority", "maxchuams", "2014-03-03");
-insert into defect values("1", "Recco", "Login Issues");
-insert into defect values("2", "Recco", "Client complain lag");
+
 insert into developerskill values
 	("testaccount166", "Wordpress"),
  ("testaccount166", "Custom"), 

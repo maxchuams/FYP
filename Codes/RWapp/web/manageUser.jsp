@@ -71,7 +71,7 @@
                                     <thead>
                                         <tr>
                                             <th>Username</th>
-                                            <th>Role</th>
+                                            <th>Number of projects assigned</th>
                                             <th>Edit</th>
                                         </tr>
                                     </thead>
