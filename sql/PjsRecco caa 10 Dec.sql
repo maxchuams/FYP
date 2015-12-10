@@ -44,6 +44,7 @@ create table projectallocation(
 	constraint pallo_fk2 foreign key (developerusername) references developer(username) ON DELETE CASCADE
 );
 
+
 create table projectfunction(
 	projectname varchar(25) not null,
 	function varchar(100) not null,
