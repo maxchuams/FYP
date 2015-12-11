@@ -58,6 +58,7 @@ create table projectfunction(
 create table defect(
 	defectid int NOT NULL AUTO_INCREMENT,
 	projectname varchar(500) not null,
+	defectname varchar(500) not null,
 	description varchar(8000),
     reportby varchar(25) not null,
     updatetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -65,8 +66,7 @@ create table defect(
     severity int NOT NULL DEFAULT 2,
 	constraint defects_pk primary key (defectid),
     constraint defects_fk1 foreign key (projectname) references project (projectname),
-    constraint defects_fk2 foreign key (reportby) references user (username),
-    constraint defects_fk3 foreign key (commitby) references developer (username)
+    constraint defects_fk2 foreign key (reportby) references user (username)
 );
 
 create table defectscreenshot(
@@ -91,10 +91,10 @@ INSERT INTO `developer` (`username`, `employmentdate`, `nationality`) VALUES
 ('testaccount166', '2015-10-30', 'Singapore');
 
 insert into project values
-	("Fathership","","nil","2015-06-29","3", "Wordpress"), 
-	("Recco", "", "nil", "2015-06-10","3", "eCommerce"), 
-	("Candy", "", "nil", "2015-02-10","3", "eCommerce"),
-	("LowPriority", "", "nil", "2015-02-10","1", "eCommerce");
+	("Fathership","","nil","kaiwen12","2015-06-29","3", "Wordpress","1"), 
+	("Recco", "", "nil", "kaiwen12","2015-06-10","3", "eCommerce","1"), 
+	("Candy", "", "nil","kaiwen12", "2015-02-10","3", "eCommerce","1"),
+	("LowPriority", "", "nil","kaiwen12", "2015-02-10","1", "eCommerce","1");
 insert into projectallocation values
 	("Fathership", "testaccount166", "2015-06-12"),
 	("Recco", "kianlam999","2015-05-10"), 

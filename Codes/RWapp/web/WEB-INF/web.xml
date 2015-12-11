@@ -72,6 +72,10 @@
         <servlet-name>modifyCountry</servlet-name>
         <servlet-class>src.controller.modifyCountry</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addNewDefect</servlet-name>
+        <servlet-class>src.controller.addNewDefect</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>modifyCountry</servlet-name>
         <url-pattern>/modifyCountry</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addNewDefect</servlet-name>
+        <url-pattern>/addNewDefect</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
