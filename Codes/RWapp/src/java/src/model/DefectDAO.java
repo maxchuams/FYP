@@ -55,13 +55,15 @@ public class DefectDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            String sql = "UPDATE defect set description = ?, severity=? where defectid=? ";
+            String sql = "UPDATE defect set defectname=?, description = ?,iscomplete=?, severity=? where defectid=? ";
 
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, toUpdate.getDesc());
-            pstmt.setInt(2, toUpdate.getSeverity());
-            pstmt.setInt(3, toUpdate.getId());
+            pstmt.setString(1, toUpdate.getDefectName());
+            pstmt.setString(2, toUpdate.getDesc());
+            pstmt.setInt(3, toUpdate.getIsComplete());
+            pstmt.setInt(4, toUpdate.getSeverity());
+            pstmt.setInt(5, toUpdate.getId());
 
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
             pstmt.executeUpdate();
@@ -233,6 +235,32 @@ public class DefectDAO {
             while (rs.next()) {
 
                 toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+
+    public static Defect retrieveDefect(int id) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Defect toReturn = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,iscomplete,severity from defect where defectid=?");
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn=new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);

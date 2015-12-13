@@ -76,6 +76,10 @@
                             }
                             %> 
                             <tr>
+                                <td>Edit : </td>
+                                <td><a href='editDefect.jsp?id=<%=d.getId()%>'>Yes</a></td>
+                            </tr>
+                            <tr>
                                 <td>Delete :</td>
                                 <td><a href='defectComplete?id=<%=d.getId()%>&case=0'>Yes</a></td>
                             </tr>

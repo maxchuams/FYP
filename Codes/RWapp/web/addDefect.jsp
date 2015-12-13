@@ -46,8 +46,7 @@
             </select></br>
             Name of Defect: <input type='text' name='defname'required/></br>
             Description:</br>
-            <textarea rows="4" cols="50" name='desc' required>
-            </textarea></br>
+            <textarea rows="4" cols="50" name='desc' required></textarea></br>
             Severity: 
             <select name='severity'>
                 <option value='1'>Low</option>

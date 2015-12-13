@@ -80,6 +80,10 @@
         <servlet-name>defectComplete</servlet-name>
         <servlet-class>src.controller.defectComplete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateDefect</servlet-name>
+        <servlet-class>src.controller.updateDefect</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -159,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>defectComplete</servlet-name>
         <url-pattern>/defectComplete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateDefect</servlet-name>
+        <url-pattern>/updateDefect</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
