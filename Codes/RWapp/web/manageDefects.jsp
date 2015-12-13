@@ -20,8 +20,11 @@
         <h1>Defects</h1>
         
         <a href='addDefect.jsp'><h3>Add new defects</h3></a>
+        
+        
         <%
-            ArrayList<Defect> dList = DefectDAO.retrieveAll();
+            //need to change to cater to projects under PM
+        ArrayList<Defect> dList = DefectDAO.retrievePm(pm.getUsername());
         %>
         <table>
             <%
@@ -54,12 +57,27 @@
                         <td><%=d.getReportedBy()%></td>
                     </tr>
                     <%
-                        if(pm != null && d.getIsComplete()==0){
+                        if(pm != null){
+                            if (d.getIsComplete() == 1){
                             %>
                             
                             <tr>
-                                <td>Mark Complete :</td>
-                                <td><a href='defectComplete?projname=<%=d.getProjectName()%>&defectname=<%=d.getDefectName()%>'>Yes</a></td>
+                                <td>Developer has completed, mark Complete?</td>
+                                <td><a href='defectComplete?id=<%=d.getId()%>&case=1'>Yes</a></td>
+                            </tr>
+                            <%
+                            } else if (d.getIsComplete() == 0) {
+                                %>
+                                <tr>
+                                    <td> Developer has not yet completed the defect</td>
+                                </tr>
+                                
+                                <%
+                            }
+                            %> 
+                            <tr>
+                                <td>Delete :</td>
+                                <td><a href='defectComplete?id=<%=d.getId()%>&case=0'>Yes</a></td>
                             </tr>
                             <%
                         }

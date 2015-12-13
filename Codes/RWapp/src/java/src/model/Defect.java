@@ -10,7 +10,7 @@ package src.model;
  * @author maxchua
  */
 public class Defect {
-
+    private int id;
     private String projectName;
     private String defectName;
 
@@ -19,7 +19,8 @@ public class Defect {
     private int isComplete;
     private int severity;
 
-    public Defect(String projectName, String defectName, String desc, String reportedBy, int isComplete, int severity) {
+    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, int isComplete, int severity) {
+        this.id = id;
         this.projectName = projectName;
         this.defectName = defectName;
         this.desc = desc;
@@ -76,9 +77,17 @@ public class Defect {
         this.severity = severity;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return "Defect{" + "projectName=" + projectName + ", defectName=" + defectName + ", desc=" + desc + ", reportedBy=" + reportedBy + ", isComplete=" + isComplete + ", severity=" + severity + '}';
+        return "Defect{" + "id=" + id + ", projectName=" + projectName + ", defectName=" + defectName + ", desc=" + desc + ", reportedBy=" + reportedBy + ", isComplete=" + isComplete + ", severity=" + severity + '}';
     }
     
     

@@ -31,17 +31,38 @@ public class defectComplete extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pname = request.getParameter("projname");
-        String dname = request.getParameter("defectname");
+        String defId = request.getParameter("id");
+        int id = Integer.parseInt(defId);
+        String casenum = request.getParameter("case");
+        String status = "";
+        boolean  success = false;
+        if (casenum.equals("1")){
+            //pm marks complete
+            success = DefectDAO.markComplete(id);
+            status = "marked as complete.";
+        } else if (casenum.equals("0")){
+            //pm deletes defect
+            success = DefectDAO.deleteDefect(id);
+            status = "deleted.";
+        } else if (casenum.equals("2")){
+            //dev marks complete
+            success = DefectDAO.devMarkComplete(id);
+            status = "marked by developer as complete.";
         
-        boolean success = DefectDAO.markComplete(pname, dname);
+        }
         
-        RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
+        
+        RequestDispatcher rd = null;
+        if (casenum.equals("2")){
+            rd = request.getRequestDispatcher("viewDefects.jsp");
+        } else {
+            rd = request.getRequestDispatcher("manageDefects.jsp");
+        }
         
         if(success){
-            request.setAttribute("sucess", dname + " from " + pname + " has been mark as completed.");
+            request.setAttribute("sucess", "Defect has been " + status);
         } else{
-            request.setAttribute("err", "Defect could not be marked as complete");
+            request.setAttribute("err", "Defect could not be " + status);
         }
         
         rd.forward(request,response);

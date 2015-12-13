@@ -19,13 +19,13 @@
         <h1>Add new defects</h1>
         <h3><a href='manageDefects.jsp'>View Defects</a></h3>
         <%  String errorMsg = (String) request.getAttribute("err");
-            Defect sucess = (Defect) request.getAttribute("sucess");
+            String sucess = (String) request.getAttribute("sucess");
             ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
             if (errorMsg != null) {
                 out.println(errorMsg);
             }
             if (sucess != null) {
-                out.println(sucess.getDefectName() + " has been added into the System!");
+                out.println(sucess);
             }
             if(errorArr!=null){
                 out.println(errorArr);

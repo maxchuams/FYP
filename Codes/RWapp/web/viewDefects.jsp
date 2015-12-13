@@ -21,7 +21,8 @@
         
         
         <%
-            ArrayList<Defect> dList = DefectDAO.retrieveAll();
+            //need  to change to cater to projects under dev
+        ArrayList<Defect> dList = DefectDAO.retrieveDev(dev.getUsername());
         %>
         <table>
             <%
@@ -55,12 +56,12 @@
                     </tr>
                     <%
                         
-                        if(dev != null){
+                        if(dev != null && d.getIsComplete()== 0){
                              %>
-                            
-<!--                            <tr>
-                                <td>TEST</td>
-                            </tr>-->
+                            <tr>
+                                <td>Mark Complete :</td>
+                                <td><a href='defectComplete?id=<%=d.getId()%>&case=2'>Yes</a></td>
+                            </tr>
                             <%
                         }
                     %>

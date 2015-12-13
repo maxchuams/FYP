@@ -54,8 +54,8 @@ public class addNewDefect extends HttpServlet {
             errList.add("Please give a severity rating for the defect");
         }
         int severity = Integer.parseInt(sev);
-        Defect toAdd = new Defect(projname, defname, desc, pmname,0, severity);
-        boolean success = DefectDAO.addDefect(toAdd);
+        
+        boolean success = DefectDAO.addDefect(projname, defname, desc, pmname, severity);
         RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
         if (!errList.isEmpty()){
             request.setAttribute("err1", errList );
@@ -66,7 +66,7 @@ public class addNewDefect extends HttpServlet {
               rd.forward(request,response);
               return;
         } else if(success){
-            request.setAttribute("sucess", toAdd);
+            request.setAttribute("sucess", "Defect "+ defname+ "  from Project " + projname + " has been added into the system.");
               rd.forward(request,response);
               return;
         }
