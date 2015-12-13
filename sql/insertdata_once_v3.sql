@@ -1,3 +1,5 @@
+use PjsRecco;
+
 INSERT INTO `user` (`username`, `password`, `type`, `trellokey`, `trellotoken`, `photo`) VALUES
 ('admin', 'admin', 's', NULL, NULL, ''),
 ('kaiwen12', '1234', 'p', '7e35111227918de8a37f8c20844ed555', '6c2fb51f5d35f6663a07912efd643cb958ab452aef289620a538c409b7a1ee0b', ''),

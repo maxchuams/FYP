@@ -1,3 +1,5 @@
+use PjsRecco;
+
 INSERT INTO `projectallocation` (`projectname`, `developerusername`, `planstart`, `planend`, `actualstart`)
 VALUES 
     ("Fathership", "testaccount166", "2015-06-12","2015-07-12","2015-06-12"),
