@@ -1,6 +1,6 @@
-drop schema if exists PjsRecco ;
-create schema PjsRecco;
-use PjsRecco;
+drop schema if exists recco ;
+create schema recco;
+use recco;
 
 create table user(
 	username varchar(25) not null primary key,
@@ -26,7 +26,6 @@ create table developerskill(
 	constraint dskill_fk foreign key(username) references user( username) ON DELETE CASCADE
 );
 
-
 create table project(
 	projectname varchar(25) not null primary key,
 	trellokey varchar(100) not null,
@@ -34,7 +33,6 @@ create table project(
 	assignby varchar(25) not null,
 	duedate date not null,
 	priority int not null,
-    iscomplete int not null default 0,
 	type varchar(25) not null,
 	psize int not null default 1,
 	constraint project_fk foreign key (assignby) references user (username)
@@ -43,11 +41,7 @@ create table project(
 create table projectallocation(
 	projectname varchar(25) not null,
 	developerusername varchar(25) not null,
-    dateallocated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	planstart date,
-    planend date,
-    actualstart date,
-    actualend date,
+	dateallocated date not null,
 	constraint pallo_pk primary key (projectname, developerusername, dateallocated), 
 	constraint pallo_fk foreign key (projectname) references project(projectname) ,
 	constraint pallo_fk2 foreign key (developerusername) references developer(username) ON DELETE CASCADE
@@ -96,21 +90,16 @@ INSERT INTO `developer` (`username`, `employmentdate`, `nationality`) VALUES
 ('maxchuams', '2015-10-30', 'Singapore'),
 ('testaccount166', '2015-10-30', 'Singapore');
 
-
-INSERT INTO `project` (`projectname`, `trellokey`, `description`, `assignby`, `duedate`, `priority`, `iscomplete`, `type`, `psize`) 
-VALUES
-	("Fathership","","nil","kaiwen12","2015-06-29","3",0 ,"Wordpress","1"), 
-	("Recco", "", "nil", "kaiwen12","2015-06-10","3", 0,"eCommerce","1"), 
-	("Candy", "", "nil","kaiwen12", "2015-02-10","3", 0,"eCommerce","1"),
-	("LowPriority", "", "nil","kaiwen12", "2015-02-10","1", 1,"eCommerce","1");
-    
-    
-INSERT INTO `projectallocation` (`projectname`, `developerusername`, `planstart`, `planend`, `actualstart`, `actualend`)
-VALUES 
-	("Fathership", "testaccount166", "2015-06-12","2015-06-12","2015-07-12","2015-08-12"),
-	("Recco", "kianlam999","2015-05-10","2015-05-10","2015-06-10","2015-07-10"), 
-	("Candy", "kianlam999", "2015-01-10", "2015-01-10", "2015-02-21", "2015-02-28"), 
-	("LowPriority", "maxchuams", "2014-03-03", "2014-03-03", "2014-04-03", "2014-04-03");
+insert into project values
+	("Fathership","","nil","kaiwen12","2015-06-29","3", "Wordpress","1"), 
+	("Recco", "", "nil", "kaiwen12","2015-06-10","3", "eCommerce","1"), 
+	("Candy", "", "nil","kaiwen12", "2015-02-10","3", "eCommerce","1"),
+	("LowPriority", "", "nil","kaiwen12", "2015-02-10","1", "eCommerce","1");
+insert into projectallocation values
+	("Fathership", "testaccount166", "2015-06-12"),
+	("Recco", "kianlam999","2015-05-10"), 
+	("Candy", "kianlam999", "2015-01-10"), 
+	("LowPriority", "maxchuams", "2014-03-03");
 
 insert into developerskill values
 	("testaccount166", "Wordpress"),
@@ -121,7 +110,3 @@ insert into developerskill values
  ("kianlam999", "eCommerce"), 
 ("maxchuams", "Wordpress"),
 ("maxchuams", "eCommerce"); 
-
-
-INSERT INTO `defect` (`projectname`, `defectname`, `description`, `reportby`) VALUES 
-('recco', 'nameless', 'No Description', 'kianlam999');

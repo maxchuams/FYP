@@ -30,7 +30,7 @@ public class PersonDAO {
         Person user = null;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select * from user where username like ?");
+            pstmt = conn.prepareStatement("select username,password,type,trellokey,trellotoken from user where username like ?");
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
 
@@ -56,7 +56,7 @@ public class PersonDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select * from user");
+            pstmt = conn.prepareStatement("select username,password,type,trellokey,trellotoken from user");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -137,7 +137,7 @@ public class PersonDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select * from user where type='c'");
+            pstmt = conn.prepareStatement("select username,password,type,trellokey,trellotoken from user where type='c'");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,5 +75,58 @@ public class DefectDAO {
         }
         return true;
     }
+     
+     public static boolean markComplete(String pname, String dname) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
 
+            String sql = "UPDATE defect set iscomplete = 1 where projectname=? and defectname=?";
+
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, pname);
+            pstmt.setString(2, dname);
+            
+            
+
+            //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionManager.close(conn, pstmt);
+        }
+        return true;
+    }
+     public static ArrayList<Defect> retrieveAll() {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Defect> toReturn = new ArrayList<Defect>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select projectname,defectname,description,reportby,iscomplete,severity from defect");
+           
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(new Defect(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
 }

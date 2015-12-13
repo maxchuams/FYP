@@ -139,7 +139,7 @@
                                         <tr>
                                             <td><a href="#"> <%=p.getUsername()%></a></td>
                                             <td> <% 
-                                                String d = DeveloperDAO.retrieveDev(p.getUsername());
+                                                String d = DeveloperDAO.retrieveDevCountry(p.getUsername());
                                                 out.println(d);
                                             %></td>
                                             <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>

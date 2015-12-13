@@ -34,14 +34,14 @@
             }
             if (tb != null) {
 
-            
+
         %>
         <section id="main-content">
             <section class="wrapper">
-                
+
                 <!--Error/success display-->
                 <%   errorMsg = (String) request.getAttribute("err");
-                     sucess = (String) request.getAttribute("sucess");
+                    sucess = (String) request.getAttribute("sucess");
 
                     if (errorMsg != null) {
                 %>
@@ -72,7 +72,7 @@
 
 
                 <!--End of error/success display--> 
-                
+
                 <!--kw code-->
                 <div class="row">
                     <div class="col-md-12">
@@ -92,7 +92,7 @@
                                         <div class="col-lg-10">
                                             <input type="date" name="sDate" required/>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">End Date</label>
@@ -104,20 +104,21 @@
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
                                         <div class="col-lg-10">
                                             <select name='priority' class="form-control m-bot15">
-                        <option value='1'>1 - Low</option>
-                        <option value='2'>2 - Medium</option>
-                        <option value='3'>3 - High</option>
-                    </select>
+                                                <option value='1'>1 - Low</option>
+                                                <option value='2'>2 - Medium</option>
+                                                <option value='3'>3 - High</option>
+                                            </select>
                                         </div>
                                     </div>
+                                    //change the input here to go to DAO and select
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
                                         <div class="col-lg-10">
                                             <select name='type' class="form-control m-bot15">
-                        <option value='Wordpress'>Wordpress</option>
-                        <option value='eCommerce'>eCommerce</option>
-                        <option value='Custom'>Custom</option>
-                    </select>
+                                                <option value='Wordpress'>Wordpress</option>
+                                                <option value='eCommerce'>eCommerce</option>
+                                                <option value='Custom'>Custom</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <input type="hidden" name="card" value='<%=id%>'/>
@@ -140,6 +141,6 @@
                 <%}%>
             </section>
         </section>
-            
+
     </body>
 </html>

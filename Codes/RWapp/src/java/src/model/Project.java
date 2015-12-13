@@ -18,16 +18,18 @@ public class Project {
     private String assignedBy;
     private Date duedate;
     private int priortiy;
+    private int isComplete;
     private String type;
     private int psize;
 
-    public Project(String name, String trelloKey, String desc, String assignedBy, Date duedate, int priortiy, String type, int psize) {
+    public Project(String name, String trelloKey, String desc, String assignedBy, Date duedate, int priortiy, int isComplete, String type, int psize) {
         this.name = name;
         this.trelloKey = trelloKey;
         this.desc = desc;
         this.assignedBy = assignedBy;
         this.duedate = duedate;
         this.priortiy = priortiy;
+        this.isComplete = isComplete;
         this.type = type;
         this.psize = psize;
     }
@@ -96,12 +98,19 @@ public class Project {
         this.psize = psize;
     }
 
-    @Override
-    public String toString() {
-        return "Project{" + "name=" + name + ", trelloKey=" + trelloKey + ", desc=" + desc + ", assignedBy=" + assignedBy + ", duedate=" + duedate + ", priortiy=" + priortiy + ", type=" + type + ", psize=" + psize + '}';
+    public int getIsComplete() {
+        return isComplete;
     }
 
-  
+    public void setIsComplete(int isComplete) {
+        this.isComplete = isComplete;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" + "name=" + name + ", trelloKey=" + trelloKey + ", desc=" + desc + ", assignedBy=" + assignedBy + ", duedate=" + duedate + ", priortiy=" + priortiy + ", isComplete=" + isComplete + ", type=" + type + ", psize=" + psize + '}';
+    }
     
     
+   
 }

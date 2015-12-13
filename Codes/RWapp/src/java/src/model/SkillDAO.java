@@ -29,7 +29,7 @@ public class SkillDAO {
         ArrayList<Skill> toReturn = new ArrayList<Skill>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select * from developerskill where username like ?");
+            pstmt = conn.prepareStatement("select username,skill from developerskill where username like ?");
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
 

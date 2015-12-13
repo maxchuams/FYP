@@ -13,10 +13,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Add new defect</title>
     </head>
     <body>
         <h1>Add new defects</h1>
+        <h3><a href='manageDefects.jsp'>View Defects</a></h3>
         <%  String errorMsg = (String) request.getAttribute("err");
             Defect sucess = (Defect) request.getAttribute("sucess");
             ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
@@ -35,7 +36,7 @@
             Project Name: 
                 <select name="projectname">
             <%
-            ArrayList<Project> pList = ProjectDAO.retrieveAll();
+            ArrayList<Project> pList = ProjectDAO.retrieveInProgress();
             for(Project p : pList){
                 %>
                 <option value='<%=p.getName()%>'><%=p.getName()%></option>

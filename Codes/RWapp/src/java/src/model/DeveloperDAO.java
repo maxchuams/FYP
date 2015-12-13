@@ -48,7 +48,7 @@ public class DeveloperDAO {
 
     }
     
-    public static String retrieveDev(String username){
+    public static String retrieveDevCountry(String username){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -56,14 +56,14 @@ public class DeveloperDAO {
         String toReturn = "";
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select * from developer where username like ?");
+            pstmt = conn.prepareStatement("select nationality from developer where username like ?");
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
             
             while (rs.next()) {
                 //String username, String password,String type, String trellokey, String trellotoken, String employmentDate, String nationality
                 //DAO username, employment date nationality
-                toReturn = rs.getString(3);
+                toReturn = rs.getString(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
