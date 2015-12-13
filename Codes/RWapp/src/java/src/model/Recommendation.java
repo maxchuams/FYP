@@ -10,59 +10,37 @@ package src.model;
  */
 public class Recommendation {
     private String username;
-    private int workloadScore;
-    private int defectScore;
-    private int experienceScore;
-    private int pointSystemScore;
-
-    public Recommendation(String username, int workloadScore, int defectScore, int experienceScore, int pointSystemScore) {
+    private double loadFactor;
+    private double defectScore;
+    private double scheduleScore;
+    private double experienceScore;
+    
+    public Recommendation(String username, double loadFactor, double defectScore, double scheduleScore, double experienceScore) {
         this.username = username;
-        this.workloadScore = workloadScore;
+        this.loadFactor = loadFactor;
         this.defectScore = defectScore;
+        this.scheduleScore = scheduleScore;
         this.experienceScore = experienceScore;
-        this.pointSystemScore = pointSystemScore;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public double getLoadFactor() {
+        return loadFactor;
     }
 
-    public int getWorkloadScore() {
-        return workloadScore;
-    }
-
-    public void setWorkloadScore(int workloadScore) {
-        this.workloadScore = workloadScore;
-    }
-
-    public int getDefectScore() {
+    public double getDefectScore() {
         return defectScore;
     }
 
-    public void setDefectScore(int defectScore) {
-        this.defectScore = defectScore;
+
+    public double getScheduleScore() {
+        return scheduleScore;
     }
 
-    public int getExperienceScore() {
+    public double getExperienceScore() {
         return experienceScore;
-    }
-
-    public void setExperienceScore(int experienceScore) {
-        this.experienceScore = experienceScore;
-    }
-
-    public int getPointSystemScore() {
-        return pointSystemScore;
-    }
-
-    public void setPointSystemScore(int pointSystemScore) {
-        this.pointSystemScore = pointSystemScore;
-    }
-    
-    
-            
+    }  
 }
