@@ -1,4 +1,4 @@
-drop schema if exists PjsRecco ;
+	drop schema if exists PjsRecco ;
 create schema PjsRecco;
 use PjsRecco;
 
@@ -102,7 +102,7 @@ VALUES
 	("Fathership","","nil","kaiwen12","2015-06-29","3",0 ,"Wordpress","1"), 
 	("Recco", "", "nil", "kaiwen12","2015-06-10","3", 0,"eCommerce","1"), 
 	("Candy", "", "nil","kaiwen12", "2015-02-10","3", 0,"eCommerce","1"),
-	("LowPriority", "", "nil","kaiwen12", "2015-02-10","1", 0,"eCommerce","1");
+	("LowPriority", "", "nil","kaiwen12", "2015-02-10","1", 1,"eCommerce","1");
     
     
 INSERT INTO `projectallocation` (`projectname`, `developerusername`, `planstart`, `planend`, `actualstart`, `actualend`)
