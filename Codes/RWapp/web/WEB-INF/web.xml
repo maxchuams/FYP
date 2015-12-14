@@ -84,6 +84,10 @@
         <servlet-name>updateDefect</servlet-name>
         <servlet-class>src.controller.updateDefect</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sortData</servlet-name>
+        <servlet-class>src.controller.sortData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>updateDefect</servlet-name>
         <url-pattern>/updateDefect</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sortData</servlet-name>
+        <url-pattern>/sortData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

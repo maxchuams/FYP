@@ -48,7 +48,7 @@ public class DefectDAO {
 
     }
 
-    public static boolean updateDefect(int id, String dname, String desc, String pm, int isComplete,int sev) {
+    public static boolean updateDefect(int id, String dname, String desc, String pm, int isComplete, int sev) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -144,7 +144,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6),rs.getInt(7), rs.getInt(8)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6), rs.getInt(7), rs.getInt(8)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -201,7 +201,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),  rs.getDate(6),rs.getInt(7), rs.getInt(8)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6), rs.getInt(7), rs.getInt(8)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -234,7 +234,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),  rs.getDate(6),rs.getInt(7), rs.getInt(8)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6), rs.getInt(7), rs.getInt(8)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,7 +260,121 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn=new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),  rs.getDate(6),rs.getInt(7), rs.getInt(8));
+                toReturn = new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6), rs.getInt(7), rs.getInt(8));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+
+    public static ArrayList<Defect> filterSortDefectsPm(String filterby, String filterText, String sortby, String username) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Defect> toReturn = new ArrayList<Defect>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime, iscomplete,severity,filtering, filteringvalue,sorting "
+                    + "from defect d,  "
+                    + "( "
+                    + "select projectname, "
+                    + "@filtering := ? as filtering, "
+                    + "@filteringvalue := ? as filteringvalue, "
+                    + "@inputdeveloperusername := ? as inputdeveloperusername, "
+                    + "@sorting:= ? as sorting "
+                    + "from project group by  "
+                    + "assignby , projectname  "
+                    + "having assignby = inputdeveloperusername "
+                    + ") as p "
+                    + "where d.projectname = p.projectname "
+                    + "AND "
+                    + " CASE filtering "
+                    + "        WHEN 'projectname' THEN d.projectname "
+                    + "        WHEN 'severity' THEN severity "
+                    + "        WHEN 'iscomplete' THEN iscomplete "
+                    + "        ELSE '' END "
+                    + "=filteringvalue "
+                    + "ORDER BY  "
+                    + "    CASE sorting "
+                    + "        WHEN 'updatetime' THEN updatetime  "
+                    + "        ELSE '' END "
+                    + "DESC, "
+                    + "CASE sorting "
+                    + "        WHEN 'defectname' THEN defectname "
+                    + "        WHEN 'projectname' THEN d.projectname "
+                    + "        ELSE  '' END "
+                    + "ASC;");
+            pstmt.setString(1, filterby);
+            pstmt.setString(2, filterText);
+            pstmt.setString(3, username);
+            pstmt.setString(4, sortby);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6), rs.getInt(7), rs.getInt(8)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+
+    public static ArrayList<Defect> filterSortDefectsDev(String filterby, String filterText, String sortby, String username) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Defect> toReturn = new ArrayList<Defect>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime, iscomplete,severity,filtering, filteringvalue,sorting "
+                    + "from defect d,  "
+                    + "( "
+                    + "select projectname, "
+                    + "@filtering := ? as filtering, "
+                    + "@filteringvalue := ? as filteringvalue, "
+                    + "@inputdeveloperusername := ? as inputdeveloperusername, "
+                    + "@sorting:= ? as sorting "
+                    + "from projectallocation group by  "
+                    + "developerusername , projectname  "
+                    + "having developerusername = inputdeveloperusername "
+                    + ") as p "
+                    + "where d.projectname = p.projectname "
+                    + "AND "
+                    + " CASE filtering "
+                    + "        WHEN 'projectname' THEN d.projectname "
+                    + "        WHEN 'severity' THEN severity "
+                    + "        WHEN 'iscomplete' THEN iscomplete "
+                    + "        ELSE '' END "
+                    + "=filteringvalue "
+                    + "ORDER BY  "
+                    + "    CASE sorting "
+                    + "        WHEN 'updatetime' THEN updatetime  "
+                    + "        ELSE '' END "
+                    + "DESC, "
+                    + "CASE sorting "
+                    + "        WHEN 'defectname' THEN defectname "
+                    + "        WHEN 'projectname' THEN d.projectname "
+                    + "        ELSE  '' END "
+                    + "ASC;");
+            pstmt.setString(1, filterby);
+            pstmt.setString(2, filterText);
+            pstmt.setString(3, username);
+            pstmt.setString(4, sortby);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6), rs.getInt(7), rs.getInt(8)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);

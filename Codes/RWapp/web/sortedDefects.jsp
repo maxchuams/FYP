@@ -1,33 +1,36 @@
 <%-- 
-    Document   : viewDefects
-    Created on : Dec 11, 2015, 6:27:02 PM
+    Document   : sortedDefects
+    Created on : Dec 14, 2015, 3:05:42 PM
     Author     : maxchua
 --%>
-
 <%@page import="src.model.Defect"%>
-<%@page import="src.model.DefectDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectPM.jsp" %>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Defects</title>
+        <title>Sort/Filter Defects</title>
     </head>
     <body>
-        <h1>Defects</h1>
         
-        <a href='addDefect.jsp'><h3>Add new defects</h3></a>
+         <%  String errorMsg = (String) request.getAttribute("err");
+                    ArrayList<Defect> sucess = (ArrayList<Defect>) request.getAttribute("sucess");
+
+                    if (errorMsg != null) {
+                        out.println(errorMsg);
+                    } 
+                    
+        %>
         
         <h2>Sort results</h2>
         <form action="sortData">
             <select name="sortby">
                 <option value="projectname">Project Name</option>
                 <option value="defectname">Defect Name</option>
-                <option value="updatetime">Latest Update Time</option>
-                <option value='iscomplete'>Defect Status</option>
+                <option value="updatetime">Update Time</option>
+                 <option value='iscomplete'>Defect Status</option>
             </select>
             <input type="hidden"  name='username' value='<%=pm.getUsername()%>'/>
             <input type='hidden' value='' name='inputText'/>
@@ -49,13 +52,12 @@
             <input type="submit" value="Filter!"/>
             
         </form>
-        
-        <%
-        ArrayList<Defect> dList = DefectDAO.retrievePm(pm.getUsername());
-        %>
-        <table>
             <%
-                for(Defect d: dList){
+            if(sucess!=null){
+               %>
+                <table>
+            <%
+                for(Defect d: sucess){
                     int sev = d.getSeverity();
                     String severity = "";
                     if(sev ==1){
@@ -83,7 +85,7 @@
                         <td>Reported by: </td>
                         <td><%=d.getReportedBy()%></td>
                     </tr>
-                    <tr>
+                     <tr>
                         <td>Last updated time: </td>
                         <td><%=d.getUpdateTime()%></td>
                     </tr>
@@ -127,5 +129,12 @@
             
             %>
         </table>
+               
+               <%
+            }
+            
+            
+            
+            %>
     </body>
 </html>
