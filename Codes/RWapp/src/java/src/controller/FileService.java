@@ -37,9 +37,6 @@ public abstract class FileService{
        output.flush();    
 
      }catch(Exception exp){
-
-             
-
      }finally{
 
          try{
@@ -49,11 +46,7 @@ public abstract class FileService{
            
             if(output != null)
               output.close();  
-
          }catch(Exception ep){
-
-     
-
          }   
 
      }   

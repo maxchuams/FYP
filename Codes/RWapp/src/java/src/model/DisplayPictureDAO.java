@@ -39,7 +39,6 @@ public class DisplayPictureDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-
                 //photo = new ImageDTOBean(rs.getBlob(1));
             }
         } catch (SQLException ex) {
