@@ -42,8 +42,8 @@ public class updateDefect extends HttpServlet {
         String complete = request.getParameter("complete");
         int isComplete = Integer.parseInt(complete);
         String pm = request.getParameter("pmname");
-        Defect toUpdate = new Defect(id,pname,dname,desc,pm,isComplete,sev);
-        boolean success = DefectDAO.updateDefect(toUpdate);
+      
+        boolean success = DefectDAO.updateDefect(id,dname,desc,pm,isComplete,sev);
         
         RequestDispatcher rd = request.getRequestDispatcher("editDefect.jsp");
         if (success){

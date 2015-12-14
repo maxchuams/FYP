@@ -5,6 +5,8 @@
  */
 package src.model;
 
+import java.util.Date;
+
 /**
  *
  * @author maxchua
@@ -13,18 +15,19 @@ public class Defect {
     private int id;
     private String projectName;
     private String defectName;
-
+    private Date updateTime;
     private String desc;
     private String reportedBy;
     private int isComplete;
     private int severity;
 
-    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, int isComplete, int severity) {
+    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, Date updateTime, int isComplete, int severity) {
         this.id = id;
         this.projectName = projectName;
         this.defectName = defectName;
         this.desc = desc;
         this.reportedBy = reportedBy;
+        this.updateTime = updateTime;
         this.isComplete = isComplete;
         this.severity = severity;
     }
@@ -85,12 +88,19 @@ public class Defect {
         this.id = id;
     }
 
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
-        return "Defect{" + "id=" + id + ", projectName=" + projectName + ", defectName=" + defectName + ", desc=" + desc + ", reportedBy=" + reportedBy + ", isComplete=" + isComplete + ", severity=" + severity + '}';
+        return "Defect{" + "id=" + id + ", projectName=" + projectName + ", defectName=" + defectName + ", updateTime=" + updateTime + ", desc=" + desc + ", reportedBy=" + reportedBy + ", isComplete=" + isComplete + ", severity=" + severity + '}';
     }
-    
-    
-    
+
+   
     
 }   

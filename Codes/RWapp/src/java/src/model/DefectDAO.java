@@ -48,7 +48,7 @@ public class DefectDAO {
 
     }
 
-    public static boolean updateDefect(Defect toUpdate) {
+    public static boolean updateDefect(int id, String dname, String desc, String pm, int isComplete,int sev) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -59,11 +59,11 @@ public class DefectDAO {
 
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, toUpdate.getDefectName());
-            pstmt.setString(2, toUpdate.getDesc());
-            pstmt.setInt(3, toUpdate.getIsComplete());
-            pstmt.setInt(4, toUpdate.getSeverity());
-            pstmt.setInt(5, toUpdate.getId());
+            pstmt.setString(1, dname);
+            pstmt.setString(2, desc);
+            pstmt.setInt(3, isComplete);
+            pstmt.setInt(4, sev);
+            pstmt.setInt(5, id);
 
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
             pstmt.executeUpdate();
@@ -138,13 +138,13 @@ public class DefectDAO {
         ArrayList<Defect> toReturn = new ArrayList<Defect>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,iscomplete,severity from defect");
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity from defect");
 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6),rs.getInt(7), rs.getInt(8)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,7 +188,7 @@ public class DefectDAO {
         ArrayList<Defect> toReturn = new ArrayList<Defect>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,iscomplete,severity "
+            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime,iscomplete,severity "
                     + "from defect d, "
                     + "(select projectname "
                     + "from projectallocation group by "
@@ -201,7 +201,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),  rs.getDate(6),rs.getInt(7), rs.getInt(8)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -221,7 +221,7 @@ public class DefectDAO {
         ArrayList<Defect> toReturn = new ArrayList<Defect>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,iscomplete,severity "
+            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime, iscomplete,severity "
                     + "from defect d, "
                     + "(select projectname "
                     + "from project group by "
@@ -234,7 +234,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),  rs.getDate(6),rs.getInt(7), rs.getInt(8)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,13 +254,13 @@ public class DefectDAO {
         Defect toReturn = null;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,iscomplete,severity from defect where defectid=?");
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime, iscomplete,severity from defect where defectid=?");
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                toReturn=new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+                toReturn=new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),  rs.getDate(6),rs.getInt(7), rs.getInt(8));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
