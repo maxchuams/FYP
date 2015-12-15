@@ -15,13 +15,13 @@ public class Defect {
     private int id;
     private String projectName;
     private String defectName;
-    private Date updateTime;
+    private String updateTime;
     private String desc;
     private String reportedBy;
     private int isComplete;
     private int severity;
 
-    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, Date updateTime, int isComplete, int severity) {
+    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, String updateTime, int isComplete, int severity) {
         this.id = id;
         this.projectName = projectName;
         this.defectName = defectName;
@@ -88,11 +88,11 @@ public class Defect {
         this.id = id;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
