@@ -88,6 +88,14 @@
         <servlet-name>sortData</servlet-name>
         <servlet-class>src.controller.sortData</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DefectScreenshotServlet</servlet-name>
+        <servlet-class>src.controller.DefectScreenshotServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DefectScreenshotController</servlet-name>
+        <servlet-class>src.controller.DefectScreenshotController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -175,6 +183,14 @@
     <servlet-mapping>
         <servlet-name>sortData</servlet-name>
         <url-pattern>/sortData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DefectScreenshotServlet</servlet-name>
+        <url-pattern>/DefectScreenshotServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DefectScreenshotController</servlet-name>
+        <url-pattern>/DefectScreenshotController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

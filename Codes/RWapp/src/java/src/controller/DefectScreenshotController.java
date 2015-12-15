@@ -7,30 +7,37 @@ package src.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
-import java.io.PrintWriter;
-
-import javax.servlet.RequestDispatcher;
 import src.model.ConnectionManager;
+
+
+
 /**
  *
  * @author KIANLAM
  */
-@WebServlet(name = "uploadServlet", urlPatterns = {"/uploadServlet"})
 @MultipartConfig(maxFileSize = 16177215)
+public class DefectScreenshotController extends HttpServlet {
 
-public class UploadFileController extends HttpServlet 
-{
-    @Override
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
@@ -39,11 +46,12 @@ public class UploadFileController extends HttpServlet
         
                 InputStream inputStream = null;
 
-                
                 Connection conn = null;
-                String username=(request.getParameter("username"));
+                String defectid=(request.getParameter("defectid"));
+                String updatetime=(request.getParameter("updatetime"));
                 Part filePart = request.getPart("file_uploaded");
                 String delete = request.getParameter("delete");
+                
                 if(delete==null){
                 if (filePart != null) 
                 {
@@ -59,28 +67,29 @@ public class UploadFileController extends HttpServlet
                     
                     conn = ConnectionManager.getConnection();
                     
-                    String sql = "Update user set photo = ? where username = ?";
+                    String sql = "INSERT into defectscreenshot (defectid,photo) value (?,?)";
                     PreparedStatement statement = conn.prepareStatement(sql);
                     
-                    statement.setString(2, username);
+                    statement.setString(1, defectid);
+
                     
                     if (inputStream != null) 
                     {
-                        statement.setBinaryStream(1, inputStream, (int) filePart.getSize());
+                        statement.setBinaryStream(2, inputStream, (int) filePart.getSize());
                     }
                     
                     int row = statement.executeUpdate();
                     if (row > 0) 
                     {
                         conn.close();
-                        RequestDispatcher rs = request.getRequestDispatcher("profilePage.jsp");
+                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp");
                         rs.include(request, response);
                     }
                     else
                     {   
                         conn.close();
                         
-                        RequestDispatcher rs = request.getRequestDispatcher("profilePage.jsp");
+                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp");
 
                         rs.include(request, response);
                     }    
@@ -91,20 +100,20 @@ public class UploadFileController extends HttpServlet
                     try{
                     conn = ConnectionManager.getConnection();
                     
-                    String sql = "UPDATE user SET photo = '' WHERE username = ?";
+                    String sql = "delete from defectscreenshot  WHERE defectid = ? and updatetime = ?";
                     PreparedStatement statement = conn.prepareStatement(sql);
                     
-                    statement.setString(1, username);
-                    
+                    statement.setString(1, defectid);
+                    statement.setString(2, updatetime);
+                    System.out.println(statement.toString());
                     statement.executeUpdate();
-                    
+                    System.out.println(statement.toString());
                     conn.close();
                     }catch(Exception e){e.printStackTrace();}
                     
-                    
-                        
-                        RequestDispatcher rs = request.getRequestDispatcher("profilePage.jsp");
+                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp");
                         rs.include(request, response);
                 }
     }   
+
 }

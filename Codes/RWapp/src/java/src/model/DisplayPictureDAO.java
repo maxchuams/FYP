@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class DisplayPictureDAO {
 
     static ArrayList<Person> plist;
-
+/**
     public static ImageDTOBean retrievePhoto(String username) {
 
         Connection conn = null;
@@ -49,6 +49,7 @@ public class DisplayPictureDAO {
 
         return photo;
     }
+    **/
 
     public static ImageDTOBean getImageData(String imageName) {
 
@@ -119,5 +120,5 @@ public class DisplayPictureDAO {
 
         return idto;
     }
-
+   
 }
