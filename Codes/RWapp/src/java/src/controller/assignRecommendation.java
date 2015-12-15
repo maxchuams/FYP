@@ -56,6 +56,9 @@ public class assignRecommendation extends HttpServlet {
             String intensity = request.getParameter("priority");
             int priority = Integer.parseInt(intensity);
             String type = request.getParameter("type");
+            if(type.equals("Others")){
+                type= request.getParameter("inputType");
+            }
             //get todays date
             String today = request.getParameter("sDate");
             String eDate = request.getParameter("eDate");

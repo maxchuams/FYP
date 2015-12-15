@@ -53,6 +53,7 @@
                 <option value='2'>Medium</option>
                 <option value='3'>High</option>
             </select></br>
+            
             <input type='hidden' name='pmName' value='<%=pm.getUsername()%>'/>
             <input type='submit' value='submit'/>
         </form>

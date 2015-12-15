@@ -16,6 +16,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trello</title>
+         <script type="text/javascript">
+            $(document).ready(function () {
+                $('#devOnly').hide(); //hide field on start
+
+                $('#role').change(function () {
+
+                    var $index = $('#role').index(this);
+                    if ($('#role').val() != 'Others') { //if this value is NOT selected
+                        $('#devOnly').hide(); //this field is hidden
+                    }
+                    else {
+                        $('#devOnly').show();//else it is shown
+
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         <%
@@ -114,11 +131,18 @@
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
                                         <div class="col-lg-10">
-                                            <select name='type' class="form-control m-bot15">
+                                            <select name='type' class="form-control m-bot15" id="role">
                                                 <option value='Wordpress'>Wordpress</option>
                                                 <option value='eCommerce'>eCommerce</option>
                                                 <option value='Custom'>Custom</option>
+                                                <option value="Others">Others</option>
                                             </select>
+                                        </div>
+                                        <div id='devOnly'>
+                                            <label for="inputType" class="col-lg-2 control-label">Project type </label>
+                                             <div class="col-lg-9">
+                                                <input type='text' name='otherType' class="form-control"/><p></p>
+                                             </div>
                                         </div>
                                     </div>
                                     <input type="hidden" name="card" value='<%=id%>'/>

@@ -107,6 +107,10 @@
                             }
                             %> 
                             <tr>
+                                <td>Add Screenshot: </td>
+                                <td><a href='defectscreenshot.jsp?id=<%=d.getId()%>'>Yes</a></td>
+                            </tr>
+                            <tr>
                                 <td>Edit : </td>
                                 <td><a href='editDefect.jsp?id=<%=d.getId()%>'>Yes</a></td>
                             </tr>

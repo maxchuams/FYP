@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import src.model.ConnectionManager;
+import src.model.DefectScreenshotDAO;
 
 
 
@@ -52,6 +54,13 @@ public class DefectScreenshotController extends HttpServlet {
                 Part filePart = request.getPart("file_uploaded");
                 String delete = request.getParameter("delete");
                 
+                ArrayList<String> imgList = DefectScreenshotDAO.getScreenshotTimestamp(defectid);
+                if (imgList.size() == 3){
+                    RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
+                    request.setAttribute("err" , "You can only upload a maximum of 3 images");
+                    rd.forward(request, response);
+                    return;
+                }
                 if(delete==null){
                 if (filePart != null) 
                 {
@@ -82,14 +91,14 @@ public class DefectScreenshotController extends HttpServlet {
                     if (row > 0) 
                     {
                         conn.close();
-                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp");
+                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
                         rs.include(request, response);
                     }
                     else
                     {   
                         conn.close();
                         
-                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp");
+                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
 
                         rs.include(request, response);
                     }    
