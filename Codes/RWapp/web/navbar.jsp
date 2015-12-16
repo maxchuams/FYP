@@ -94,6 +94,14 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li>
+                    <% if (thisPage.equals("defect")){ %>
+                    <a class="active" href="viewDefects.jsp"> <% } else { %>
+                        <a href="viewDefects.jsp"> <% } %>
+                        <i class="fa fa-bug"></i>
+                        <span>Defects</span>
+                    </a>
+                </li>
                 <%if(sudo==null){%>
                 <li class="sub-menu">
                     <% if (thisPage.equals("viewTrelloCards") || thisPage.equals("viewUnassignedCards")){ %>
@@ -134,7 +142,6 @@
                     </a>
                 </li>
                 <%}%>
-
             </ul>            
         </div>
         <!-- sidebar menu end-->
