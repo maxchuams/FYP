@@ -18,7 +18,7 @@
         <%
             String idDef = (String) request.getParameter("id");
             
-            String err = (String) request.getParameter("err");
+            String err = (String) request.getAttribute("err");
             
             if(err!=null){
                 out.println(err);
