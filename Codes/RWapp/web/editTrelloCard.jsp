@@ -4,6 +4,7 @@
     Author     : Kaiwen
 --%>
 
+<%@page import="src.model.ProjectDAO"%>
 <%@page import="src.model.TrelloCard"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="src.model.TrelloBoard"%>
@@ -128,13 +129,21 @@
                                         </div>
                                     </div>
                                     //change the input here to go to DAO and select
+                                    <%
+                                    ArrayList<String> pTypeList = ProjectDAO.retrieveAllTypes();
+                                    %>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
                                         <div class="col-lg-10">
                                             <select name='type' class="form-control m-bot15" id="role">
-                                                <option value='Wordpress'>Wordpress</option>
-                                                <option value='eCommerce'>eCommerce</option>
-                                                <option value='Custom'>Custom</option>
+                                                <%
+                                                for (String s : pTypeList){
+                                                    %>
+                                                    <option value='<%=s%>'><%=s%></option>
+                                                    <%
+                                                }
+                                                %>
+                                               
                                                 <option value="Others">Others</option>
                                             </select>
                                         </div>

@@ -66,5 +66,29 @@ public class ProjectDAO {
 
         return toReturn;
      }
+     public static ArrayList<String> retrieveAllTypes() {
 
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct type from project");
+           
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
 }
