@@ -95,12 +95,23 @@
                     </a>
                 </li>
                 <li>
-                    <% if (thisPage.equals("defect")){ %>
+                    <%if(dev!=null){%>
+                    <% if (thisPage.equals("viewDefects")){ %>
                     <a class="active" href="viewDefects.jsp"> <% } else { %>
                         <a href="viewDefects.jsp"> <% } %>
                         <i class="fa fa-bug"></i>
                         <span>Defects</span>
                     </a>
+                        <%}%>
+                        <%if(pm!=null){%>
+                    <% if (thisPage.equals("manageDefects")){ %>
+                    <a class="active" href="manageDefects.jsp"> <% } else { %>
+                        <a href="manageDefects.jsp"> <% } %>
+                        <i class="fa fa-bug"></i>
+                        <span>Defects</span>
+                    </a>
+                        <%}%>
+                        
                 </li>
                 <%if(sudo==null){%>
                 <li class="sub-menu">
