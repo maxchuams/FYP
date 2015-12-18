@@ -24,11 +24,66 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
-                            <h1>Defects</h1>
+                            <header class="panel-heading tab-bg-dark-navy-blue ">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#home">Sort defects</a>
+                                    </li>
+                                    <li class="">
+                                        <a data-toggle="tab" href="#about">Filter Defects</a>
+                                    </li>
 
-                            <a href='addDefect.jsp'><h3>Add new defects</h3></a>
+                                </ul>
+                            </header>
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div id="home" class="tab-pane active">
+                                        <form action="sortData" class="form-group">
+                                            <label class="control-label col-lg-2" for="inputSuccess">Sort by:</label>
+                                            <div class="col-lg-3">
+                                                <select name="sortby" class="form-control m-bot15">
+                                                    <option value="projectname">Project Name</option>
+                                                    <option value="defectname">Defect Name</option>
+                                                    <option value="updatetime">Latest Update Time</option>
+                                                    <option value='iscomplete'>Defect Status</option>
+                                                </select>
+                                                <input type="hidden"  name='username' value='<%=pm.getUsername()%>'/>
+                                                <input type='hidden' value='' name='inputText'/>
+                                                <input type='hidden' value='' name='filter'/>
+                                                <input type='hidden' value='pm' name='case'/>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-danger">Sort</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="about" class="tab-pane" class="form-control m-bot15">
+                                        <form action="sortData" class="form-group">
+                                            <label class="control-label col-lg-2" for="inputSuccess">Filter by:</label>
+                                            <div class="col-lg-3">
+                                                <select name="filter" class="form-control m-bot15">
+                                                    <option value="projectname">Project Name</option>
+                                                    <option value="defectname">Defect Name</option>
+                                                    <option value="severity">Severity</option>
+                                                </select>
+                                            </div>
+                                            <label class="control-label col-lg-2" for="inputSuccess">Search for:</label>
+                                            <div class="col-lg-3">
+                                                <input type="text" name="inputText" class="form-control"/> </br>
+                                                <input type="hidden" name='username' value='<%=pm.getUsername()%>'/>
+                                                <input type='hidden' name='sortby' value=''/>
+                                                <input type='hidden' value='pm' name='case'/>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <button type="submit" class="btn btn-danger">Filter</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
 
-                            <h2>Sort results</h2>
+<!--                            <h2>Sort results</h2>
                             <form action="sortData">
                                 <select name="sortby">
                                     <option value="projectname">Project Name</option>
@@ -55,12 +110,12 @@
                                 <input type='hidden' value='pm' name='case'/>
                                 <input type="submit" value="Filter!"/>
 
-                            </form>
+                            </form>-->
 
                             <%
                                 ArrayList<Defect> dList = DefectDAO.retrievePm(pm.getUsername());
                             %>
-                            <table>
+                            
                                 <%
                                     for (Defect d : dList) {
                                         int sev = d.getSeverity();
@@ -73,7 +128,11 @@
                                             severity = "High";
                                         }
                                 %>
-                                <th><h4><%=d.getProjectName()%></h4></th>
+                                <section class="panel">
+                            <div class="panel-body">
+                                <table class="table table-bordered">
+                                    <th><b>Project <%=d.getProjectName()%></b></th>
+                                    <td><div align="right"><a href="editDefect.jsp" class="fa fa-picture-o">Add Screenshot </a> | <a href="editDefect.jsp" class="fa fa-pencil-square-o">Edit </a> | <a href="editDefect.jsp" class="fa fa-minus-circle">Delete </a></div></td>
                                 <tr>
                                     <td>Name of Defect: </td>
                                     <td><%=d.getDefectName()%></td>
@@ -100,14 +159,14 @@
                                 %>
 
                                 <tr>
-                                    <td>Developer has completed, mark Complete?</td>
+                                    <td><div class="text-success">Developer has completed, mark Complete?</div></td>
                                     <td><a href='defectComplete?id=<%=d.getId()%>&case=1'>Yes</a></td>
                                 </tr>
                                 <%
                                 } else if (d.getIsComplete() == 0) {
                                 %>
                                 <tr>
-                                    <td> Developer has not yet completed the defect</td>
+                                    <td colspan="2"><div class="text-danger">Developer has not yet completed the defect</div></td>
                                 </tr>
 
                                 <%
@@ -131,6 +190,9 @@
 
                                 %>
 
+                                </table>
+                            </div>
+                                </section>
                                 <%                        }
 
                                 %>
