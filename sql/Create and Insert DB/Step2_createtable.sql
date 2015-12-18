@@ -1,7 +1,3 @@
-drop schema if exists PjsRecco ;
-create schema PjsRecco;
-use PjsRecco;
-
 create table user(
 	username varchar(25) not null primary key,
 	password varchar(25) not null,
@@ -57,6 +53,8 @@ create table projectallocation(
 create table projectfunction(
 	projectname varchar(25) not null,
 	function varchar(100) not null,
+	manday int not null default 1,
+	description varchar(8000),
 	constraint pfunction_pk primary key (projectname, function),
 	constraint pfunction_fk foreign key (projectname) references project(projectname)
 );
@@ -80,5 +78,10 @@ create table defectscreenshot(
 	updatetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	photo longblob,
 	constraint defects_pk primary key (defectid,updatetime),
-    constraint defects_fk foreign key (defectid) references defect (defectid)
+    constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE;
 );
+
+CREATE TABLE `PjsRecco`.`ztable` (
+  `zvalue` DECIMAL(14,2) NOT NULL,
+  `pvalue` DECIMAL(14,4) NULL,
+  PRIMARY KEY (`zvalue`));
