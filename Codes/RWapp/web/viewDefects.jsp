@@ -4,6 +4,7 @@
     Author     : maxchua
 --%>
 
+<%@page import="src.model.DefectScreenshotDAO"%>
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.DefectDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -117,6 +118,10 @@
                                     <tr>
                                         <td>Description: </td>
                                         <td><%=d.getDesc()%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Number of Screenshots: </td>
+                                        <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size()%></a></td>
                                     </tr>
                                     <tr>
                                         <td>Reported by: </td>
