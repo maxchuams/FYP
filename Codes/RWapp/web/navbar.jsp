@@ -94,25 +94,25 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <%if(dev!=null){%>
                 <li>
-                    <%if(dev!=null){%>
-                    <% if (thisPage.equals("viewDefects")){ %>
+                    <% if (thisPage.equals("viewDefects") || thisPage.equals("viewSortedDefects")){ %>
                     <a class="active" href="viewDefects.jsp"> <% } else { %>
                         <a href="viewDefects.jsp"> <% } %>
                         <i class="fa fa-bug"></i>
                         <span>Defects</span>
                     </a>
-                        <%}%>
+                        </li><%}%>
                         <%if(pm!=null){%>
-                    <% if (thisPage.equals("manageDefects")){ %>
+                        <li>
+                    <% if (thisPage.equals("manageDefects") || thisPage.equals("sortedDefects")){ %>
                     <a class="active" href="manageDefects.jsp"> <% } else { %>
                         <a href="manageDefects.jsp"> <% } %>
                         <i class="fa fa-bug"></i>
                         <span>Defects</span>
                     </a>
-                        <%}%>
                         
-                </li>
+                </li><%}%>
                 <%if(sudo==null){%>
                 <li class="sub-menu">
                     <% if (thisPage.equals("viewTrelloCards") || thisPage.equals("viewUnassignedCards")){ %>
@@ -124,7 +124,6 @@
                     <ul class="sub"><% if (thisPage.equals("viewTrelloCards")){ %>
                         <li class="active"><a href="viewTrelloCards.jsp">View Projects</a></li> <% } else { %>
                         <li><a href="viewTrelloCards.jsp">View Projects</a></li><% } %>
-                        <!--<li><a href="addNewProject.jsp">Create</a></li>-->
                         <%if(pm!=null){%>
                         <% if (thisPage.equals("viewUnassignedCards")){ %>
                         <li class="active"><a href="assignProject">View Unassigned Projects</a></li><% } else { %>
@@ -138,7 +137,6 @@
                     <% if(thisPage.equals("manageUser") || thisPage.equals("manageDevProfile")){%>
                     <a class="active" href="manageUser.jsp"> <% } else { %>
                         <a href="manageUser.jsp"> <% }%>
-                        
                         <i class="fa fa-users"></i>
                         <span>Manage users</span>
                     </a>

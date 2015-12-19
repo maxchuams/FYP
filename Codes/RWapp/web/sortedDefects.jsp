@@ -8,13 +8,15 @@
 <%@page import="src.model.Defect"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectPM.jsp" %>
+<%String thisPage = "sortedDefects"; //This is to change the highlight in Navigation Bar%>
+<%@include file="navbar.jsp"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sort/Filter Defects</title>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <title>Defects</title>
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -38,139 +40,186 @@
     <body>
 
         <%  String errorMsg = (String) request.getAttribute("err");
-            ArrayList<Defect> sucess = (ArrayList<Defect>) request.getAttribute("sucess");
+            ArrayList<Defect> sucess = (ArrayList<Defect>) request.getAttribute("sucess"); %>
 
-            if (errorMsg != null) {
-                out.println(errorMsg);
-            }
+        <section id="main-content">
+            <section class="wrapper">
+                <%if (errorMsg!=null){ %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=errorMsg%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                            <%}%>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <header class="panel-heading tab-bg-dark-navy-blue ">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#home">Sort defects</a>
+                                    </li>
+                                    <li class="">
+                                        <a data-toggle="tab" href="#about">Filter Defects</a>
+                                    </li>
 
-        %>
+                                </ul>
+                            </header>
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div id="home" class="tab-pane active">
+                                        <form action="sortData" class="form-group">
+                                            <label class="control-label col-lg-2" for="inputSuccess">Sort by:</label>
+                                            <div class="col-lg-3">
+                                                <select name="sortby" class="form-control m-bot15">
+                                                    <option value="projectname">Project Name</option>
+                                                    <option value="defectname">Defect Name</option>
+                                                    <option value="updatetime">Update Time</option>
+                                                    <option value='iscomplete'>Defect Status</option>
+                                                </select>
+                                                <input type="hidden"  name='username' value='<%=pm.getUsername()%>'/>
+                                                <input type='hidden' value='' name='inputText'/>
+                                                <input type='hidden' value='' name='filter'/>
+                                                <input type='hidden' value='pm' name='case'/>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-primary">Sort</button>
+                                            </div>
+                                        </form>
 
-        <h2>Sort results</h2>
-        <form action="sortData">
-            <select name="sortby">
-                <option value="projectname">Project Name</option>
-                <option value="defectname">Defect Name</option>
-                <option value="updatetime">Update Time</option>
-                <option value='iscomplete'>Defect Status</option>
-            </select>
-            <input type="hidden"  name='username' value='<%=pm.getUsername()%>'/>
-            <input type='hidden' value='' name='inputText'/>
-            <input type='hidden' value='' name='filter'/>
-            <input type='hidden' value='pm' name='case'/>
-            <input type="submit" value="Sort!"/>
-        </form>
-        <h2>Filter results</h2>
-        <form action="sortData">
-            <select name="filter" id="role">
-                <option>Select one..</option>
-                <option value="projectname">Project Name</option>
-                <!--<option value="defectname">Defect Name</option>-->
-                <option value="severity">Severity</option>
-            </select>
+                                    </div>
+                                    <div id="about" class="tab-pane" class="form-control m-bot15">
+                                        <form action="sortData" class="form-group">
+                                            <label class="control-label col-lg-2" for="inputSuccess">Filter by:</label>
+                                            <div class="col-lg-3">
+                                                <select name="filter" id="role" class="form-control m-bot15">
+                                                    <option>Select one..</option>
+                                                    <option value="projectname">Project Name</option>
+                                                    <!--<option value="defectname">Defect Name</option>-->
+                                                    <option value="severity">Severity</option>
+                                                </select>
+                                            </div>
+                                            <div id="pname">
+                                                <%
+                                                    ArrayList<Project> pList = ProjectDAO.retrieveAll();
+                                                %>
+                                                <div class="col-lg-3">
+                                                    <select name="inputP" class="form-control m-bot15">
+                                                        <%for (Project p : pList) {%>
+                                                        <option value='<%=p.getName()%>'><%=p.getName()%></option>
+                                                        <%}%>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div id="severity">
+                                                <div class="col-lg-3">
+                                                    <select name="inputS" class="form-control m-bot15">
+                                                        <option value="1">Low</option>
+                                                        <option value="2">Medium</option>
+                                                        <option value="3">High</option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-            <div id="pname">
-                <%
-                    ArrayList<Project> pList = ProjectDAO.retrieveAll();
-                %>
-                <select name="inputP">
-                    <%for (Project p : pList) {%>
-                    <option value='<%=p.getName()%>'><%=p.getName()%></option>
-                    <%}%>
-                </select>
-            </div>
-            <div id="severity">
-                <select name="inputS">
-                    <option value="1">Low</option>
-                    <option value="2">Medium</option>
-                    <option value="3">High</option>
-                </select>
-            </div>
+                                            <input type="hidden" name='username' value='<%=pm.getUsername()%>'/>
+                                            <input type='hidden' name='sortby' value=''/>
+                                            <input type='hidden' value='pm' name='case'/>
 
-            <input type="hidden" name='username' value='<%=pm.getUsername()%>'/>
-            <input type='hidden' name='sortby' value=''/>
-            <input type='hidden' value='pm' name='case'/>
-            
-            <input type='submit' value='submit'/>
-        </form>
-        <%
-            if (sucess != null) {
-        %>
-        <table>
-            <%
-                for (Defect d : sucess) {
-                    int sev = d.getSeverity();
-                    String severity = "";
-                    if (sev == 1) {
-                        severity = "Low";
-                    } else if (sev == 2) {
-                        severity = "Medium";
-                    } else if (sev == 3) {
-                        severity = "High";
-                    }
-            %>
-            <th><h4><%=d.getProjectName()%></h4></th>
-        <tr>
-            <td>Name of Defect: </td>
-            <td><%=d.getDefectName()%></td>
-        </tr>
-        <tr>
-            <td>Severity: </td>
-            <td><%=severity%></td>
-        </tr>
-        <tr>
-            <td>Description: </td>
-            <td><%=d.getDesc()%></td>
-        </tr>
-        <tr>
-            <td>Reported by: </td>
-            <td><%=d.getReportedBy()%></td>
-        </tr>
-        <tr>
-            <td>Last updated time: </td>
-            <td><%=d.getUpdateTime()%></td>
-        </tr>
-        <%
-            if (pm != null) {
-                if (d.getIsComplete() == 1) {
-        %>
+                                            <div class="col-lg-1">
+                                                <button type="submit" class="btn btn-primary">Filter</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                            
+                        <%
+                            if (sucess != null) {
+                        %>
+                       
+                                    <%
+                                        for (Defect d : sucess) {
+                                            int sev = d.getSeverity();
+                                            String severity = "";
+                                            if (sev == 1) {
+                                                severity = "Low";
+                                            } else if (sev == 2) {
+                                                severity = "Medium";
+                                            } else if (sev == 3) {
+                                                severity = "High";
+                                            }
+                                    %>
+                                    <section class="panel">
+                            <div class="panel-body">
+                                <table class="table  table-hover general-table">
+                                    <thead>
+                                        <tr>
+                                    <th><%=d.getProjectName()%></th>
+                                    <th>
+                                    <div align="right">
+                                        <div align="right"><a href="defectscreenshot.jsp?id=<%=d.getId()%>" class="fa fa-picture-o"> Add Screenshot </a> |
+                                            <a href='editDefect.jsp?id=<%=d.getId()%>' class="fa fa-pencil-square-o"> Edit </a> | 
+                                            <a href='defectComplete?id=<%=d.getId()%>&case=0' class="fa fa-minus-circle"> Delete </a></div></th>
+                                </tr>
+                                </thead>
+                                    <tr>
+                                        <td>Defect name: </td>
+                                        <td><%=d.getDefectName()%></td>
+                                    </tr>
+                                    <%
+                                        if (pm != null) {
+                                            if (d.getIsComplete() == 1) {
+                                    %>
+                                    <tr>
+                                        <td>Defect status:</td>
+                                        <td><a href="defectComplete?id=<%=d.getId()%>&case=1"><span class="label label-success label-mini">Defect completed, click to mark complete</span></a></td>
 
-        <tr>
-            <td>Developer has completed, mark Complete?</td>
-            <td><a href='defectComplete?id=<%=d.getId()%>&case=1'>Yes</a></td>
-        </tr>
-        <%
-        } else if (d.getIsComplete() == 0) {
-        %>
-        <tr>
-            <td> Developer has not yet completed the defect</td>
-        </tr>
+                                    </tr>
+                                    <%
+                                    } else if (d.getIsComplete() == 0) {
+                                    %>
+                                    <tr>
+                                        <td>Defect status:</td>
+                                        <td><span class="label label-danger label-mini">Defect not completed</span></td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
+                                    <%
+                                        }
+                                    %>
+                                    <tr>
+                                        <td>Severity: </td>
+                                        <td><%=severity%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description: </td>
+                                        <td><%=d.getDesc()%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reported by: </td>
+                                        <td><%=d.getReportedBy()%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Last updated time: </td>
+                                        <td><%=d.getUpdateTime()%></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </section>
+                        <%                                }
 
-        <%
-            }
-        %> 
-        <tr>
-            <td>Edit : </td>
-            <td><a href='editDefect.jsp?id=<%=d.getId()%>'>Yes</a></td>
-        </tr>
-        <tr>
-            <td>Delete :</td>
-            <td><a href='defectComplete?id=<%=d.getId()%>&case=0'>Yes</a></td>
-        </tr>
-        <%
-            }
-
-
-        %>
-
-        <%                        }
-
-        %>
-    </table>
-
-    <%                   }
-
-
-    %>
-</body>
+                        %>
+                        <%                            }
+                        %>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </body>
 </html>

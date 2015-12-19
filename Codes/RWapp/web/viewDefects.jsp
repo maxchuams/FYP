@@ -3,7 +3,8 @@
     Created on : Dec 11, 2015, 6:27:02 PM
     Author     : maxchua
 --%>
-
+<%@page import="src.model.Project"%>
+<%@page import="src.model.ProjectDAO"%>
 <%@page import="src.model.DefectScreenshotDAO"%>
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.DefectDAO"%>
@@ -19,6 +20,25 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Defects</title>
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#pname').hide(); //hide field on start
+                $('#severity').hide();
+                $('#role').change(function () {
+
+                    var $index = $('#role').index(this);
+                    if ($('#role').val() == 'projectname') { //if this value is NOT selected
+                        $('#pname').show();
+                        $('#severity').hide();//this field is hidden
+                    }
+                    if ($('#role').val() == 'severity') { //if this value is NOT selected
+                        $('#pname').hide();
+                        $('#severity').show();//this field is hidden
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         <section id="main-content">
@@ -56,7 +76,7 @@
                                                 <input type='hidden' value='dev' name='case'/>
                                             </div>
                                             <div class="col-lg-3">
-                                                <button type="submit" class="btn btn-danger">Sort</button>
+                                                <button type="submit" class="btn btn-primary">Sort</button>
                                             </div>
                                         </form>
                                     </div>
@@ -64,21 +84,41 @@
                                         <form action="sortData" class="form-group">
                                             <label class="control-label col-lg-2" for="inputSuccess">Filter by:</label>
                                             <div class="col-lg-3">
-                                                <select name="filter" class="form-control m-bot15">
+                                                <select name="filter" id="role" class="form-control m-bot15">
+                                                    <option>Select one..</option>
                                                     <option value="projectname">Project Name</option>
-                                                    <option value="defectname">Defect Name</option>
+                                                    <!--<option value="defectname">Defect Name</option>-->
                                                     <option value="severity">Severity</option>
                                                 </select>
                                             </div>
-                                            <label class="control-label col-lg-2" for="inputSuccess">Search for:</label>
-                                            <div class="col-lg-3">
-                                                <input type="text" name="inputText" class="form-control"/> </br>
-                                                <input type="hidden" name='username' value='<%=dev.getUsername()%>'/>
-                                                <input type='hidden' name='sortby' value=''/>
-                                                <input type='hidden' value='dev' name='case'/>
+                                            <div id="pname">
+                                                <%
+                                                    ArrayList<Project> pList = ProjectDAO.retrieveAll();
+                                                %>
+                                                <div class="col-lg-3">
+                                                    <select name="inputP" class="form-control m-bot15">
+                                                        <%for (Project p : pList) {%>
+                                                        <option value='<%=p.getName()%>'><%=p.getName()%></option>
+                                                        <%}%>
+                                                    </select>
+                                                </div>
                                             </div>
+                                            <div id="severity">
+                                                <div class="col-lg-3">
+                                                    <select name="inputS" class="form-control m-bot15">
+                                                        <option value="1">Low</option>
+                                                        <option value="2">Medium</option>
+                                                        <option value="3">High</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" name='username' value='<%=dev.getUsername()%>'/>
+                                            <input type='hidden' name='sortby' value=''/>
+                                            <input type='hidden' value='dev' name='case'/>
+
                                             <div class="col-lg-1">
-                                                <button type="submit" class="btn btn-danger">Filter</button>
+                                                <button type="submit" class="btn btn-primary">Filter</button>
                                             </div>
                                         </form>
                                     </div>
@@ -105,10 +145,14 @@
                         %>
                         <section class="panel">
                             <div class="panel-body">
-                                <table class="table table-bordered">
-                                    <th colspan="2"><b>Project <%=d.getProjectName()%></b></th>
+                                <table class="table  table-hover general-table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Project <%=d.getProjectName()%></th>
+                                        </tr>
+                                    </thead>
                                     <tr>
-                                        <td>Name of Defect: </td>
+                                        <td>Defect name: </td>
                                         <td><%=d.getDefectName()%></td>
                                     </tr>
                                     <tr>
@@ -120,7 +164,7 @@
                                         <td><%=d.getDesc()%></td>
                                     </tr>
                                     <tr>
-                                        <td>Number of Screenshots: </td>
+                                        <td>Screenshots uploaded: </td>
                                         <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size()%></a></td>
                                     </tr>
                                     <tr>
@@ -136,8 +180,9 @@
                                         if (dev != null && d.getIsComplete() == 0) {
                                     %>
                                     <tr>
-                                        <td>Mark Complete :</td>
-                                        <td><a href='defectComplete?id=<%=d.getId()%>&case=2'>Yes</a></td>
+                                        <td>Defect status:</td>
+                                        <td><a href='defectComplete?id=<%=d.getId()%>&case=2'><span class="label label-success label-mini">Defect completed, click to mark complete</span></a></td>
+                                       
                                     </tr>
                                     <%
                                         }

@@ -76,6 +76,7 @@
                     <header class="panel-heading">
                         View All Projects
                         <span class="tools pull-right">
+                            <a href="assignProject" class="fa fa-refresh"></a>
                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                          </span>
                     </header>
@@ -110,6 +111,7 @@
                                         %>
                                     </tbody>
                                 </table>
+                                    <!--
                                     <form action='assignProject' method='POST'id='main'>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
@@ -117,7 +119,7 @@
                                         <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>
-                                    </form>
+                                    </form>-->
                             </div>
                         </section>
                     </div>
