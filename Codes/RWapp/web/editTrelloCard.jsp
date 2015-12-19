@@ -113,18 +113,17 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">End Date</label>
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Number of Days(Project Size)</label>
                                         <div class="col-lg-10">
-                                            <input type="date" name="eDate" required/><p></p>
+                                            <input type="number" name="days" required/><p></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
                                         <div class="col-lg-10">
                                             <select name='priority' class="form-control m-bot15">
-                                                <option value='1'>1 - Low</option>
-                                                <option value='2'>2 - Medium</option>
-                                                <option value='3'>3 - High</option>
+                                                <option value='0'>Standard Project</option>
+                                                <option value='1'>High Priority Project</option>
                                             </select>
                                         </div>
                                     </div>

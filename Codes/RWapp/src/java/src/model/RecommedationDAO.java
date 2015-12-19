@@ -239,7 +239,6 @@ Recommendation toAdd = new Recommendation(rs.getString("developer"),
             ConnectionManager.close(conn, pstmt, rs);
             //System.out.println("finally");
             return recommendations;
-
         }
     }
 }

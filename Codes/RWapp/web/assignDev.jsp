@@ -50,8 +50,23 @@
 
 
                                     %>
-                                    <input type="checkbox" name="dev" value='<%=r.getUsername()%>'/> <%=count%>. <%=r.getUsername()%>, Workload Score: <%=r.getWorkloadScore()%>,
-                                    Defects Score: <%=r.getDefectScore()%>, Experience Rating: <%=r.getExperienceScore()%>, Overall Score: <%=r.getPointSystemScore()%>
+                                    <input type="checkbox" name="dev" value='<%=r.getUsername()%>'/> 
+                                    <%=count%>. <%=r.getUsername()%>, 
+                                    nationality: <%=r.getNationality()%>,
+                                    No of current project: <%=r.getCurrentprojectcount()%>,
+                                    Next project earliest start date: <%=r.getEarlieststart()%>,
+                                    Estimated working days to complete project: <%=r.getEstimateworkingday() %>,
+                                    Estimated days(incl weekends) to complete project: <%=r.getEstimateday()%>,
+                                    Schedule performance: <%=r.getScheduleperformance()%>,
+                                    Estimated completion date : <%=r.getEstimatecompletion() %>,
+                                    Ideal completion date: <%=r.getIdealcompletion()%>,
+                                    Defectless Score: <%=r.getDefectlessfactor()%>,
+                                    Schedule score: <%=r.getSchedulefactor()%>,
+                                    Average defects per project: <%=r.getAvgdefectperproject()%>,
+                                    Experience Score: <%=r.getExperiencefactor()%>,
+                                    Number of similar project completed: <%=r.getProjectexperiencecount()%>,
+                                    Zainess Score: <%=r.getZainessscore()%>,
+                                    Sorting Order: <%=r.getSorting()%>
 
                                     </br>
 

@@ -1,17 +1,27 @@
-#mega query that combine zainess and loadbalancing
-select loadbalance.developerusername as developer,nationality, overlapproject as currentproject, earlieststart, estimateworkingday,estimateday, 
-loadbalance.scheduleperformance, estimatecompletion, idealcompletion, defectlessfactor,schedulefactor,avgdefectperproject,experiencefactor,projectcount,zainessscore,
+select loadbalance.developerusername as developer,
+nationality, 
+overlapproject as currentproject, 
+earlieststart, 
+estimateworkingday,
+estimateday, 
+loadbalance.scheduleperformance, 
+estimatecompletion, 
+idealcompletion, 
+defectlessfactor,
+schedulefactor,
+avgdefectperproject,
+experiencefactor,
+projectcount,
+zainessscore,
 @sorting:=0 as sorting
 from
-(		#Workload by no of overlapping mandays
-		select username as developerusername, 
+(select username as developerusername, 
 		ifnull(overlapproject,0) as overlapproject, 
 		ifnull(earlieststart,'2014-03-04') earlieststart,
 		ifnull(scheduleperformance,1.0) as scheduleperformance,
 		ceiling(ifnull(scheduleperformance,1.0)*14) as estimateworkingday,
         ceiling(ifnull(scheduleperformance,1.0)*14/(5/7)) as estimateday,
         nationality,
-		#need to manually account for weekend using 5/7
 		date_add(ifnull(earlieststart,'2014-03-04'), interval ceiling(ifnull(scheduleperformance,1.0)*14/(5/7)) day) as estimatecompletion,
 		date_add(ifnull(earlieststart,'2014-03-04'), interval ceiling(14/(5/7)) day) as idealcompletion
 		from
@@ -28,25 +38,21 @@ from
 			having type='eCommerce') as timeliness
 		on timeliness.developerusername=developerskill.username
 		left outer join 
-			#planday+1 weekend accounted for
 			(select developerusername,max(date_add(actualstart, interval planday+1 day)) as earlieststart, 
 			count(developerusername) as overlapproject
 				from 
 				(select developerusername,datediff(planend, planstart) as planday,actualstart
 				from projectallocation
 				where
-				#omit project that have ended
 				actualstart is not null 
 				and actualend is null
-				#omit project that fall outside period, planend must after start and planstart must be before end
 				and planend >= '2014-03-04'
 				and planstart <= date_add('2014-03-04', interval 14 day)) as earliestfree
 			group by developerusername) as overlap
 		on overlap.developerusername = developerskill.username
 ) as loadbalance
 inner join
-(
-		select final.developerusername, 
+(select final.developerusername,
 		ifnull(scheduleperformance,1) as scheduleperformance,ifnull(schedulefactor,0) as schedulefactor,
 		ifnull(experiencefactor,0) as experiencefactor, ifnull(projectcount,0) as projectcount,
 		ifnull(defectlessfactor,0) defectlessfactor,ifnull(avgdefectperproject,0) as avgdefectperproject,
@@ -71,30 +77,21 @@ inner join
 			) experiencetable) as finaltable) as final1
 		on final1.developerusername=final.developerusername
 		left outer join
-			#defects
 			(select developerusername, format(1-pavgdcount,4)as defectlessfactor, avgdefectperproject
 			from
 			(
-			#avg defects per developer
 			select username as developerusername,defectpoint, defectcount, projectcount
-			#x
 			avgdefectperproject, 
-			#mu
 			meanavgdefectperproject, 
-			#sd
 			sdavgdefectperproject, 
 			format((avgdefectperproject - meanavgdefectperproject)/sdavgdefectperproject,2) as zavgdcount,
-			(select pvalue from ztable where zvalue=format((avgdefectperproject - meanavgdefectperproject)/sdavgdefectperproject,2)) as pavgdcount,
-			#x
-			avgdefectpointperproject, 
-			#mu
-			meanavgdefectpointsperproject,
-			#sd
+			(select pvalue from ztable where zvalue=format((avgdefectperproject - meanavgdefectperproject)/sdavgdefectperproject,2)) as pavgdcount,			
+			avgdefectpointperproject, 			
+			meanavgdefectpointsperproject,			
 			sdavgdefectpointsperproject, 
 			format((avgdefectpointperproject - meanavgdefectpointsperproject)/sdavgdefectpointsperproject,2) as zavgdpoint,
 			(select pvalue from ztable where zvalue=format((avgdefectpointperproject - meanavgdefectpointsperproject)/sdavgdefectpointsperproject,2)) as pavgdpoint
 			from developer
-			#we need to get all developers, having 0 zero allocation will result in no project
 			left outer join
 				(select developerusername, 
 					ifnull(sum(severity),0) as defectpoint, 
@@ -103,12 +100,9 @@ inner join
 					(ifnull(sum(numberdefect),0)/ifnull(count(developerusername),0) ) as avgdefectperproject, 
 					(ifnull(sum(severity),0)/ifnull(count(developerusername),0) ) as avgdefectpointperproject		
 					from
-					#who did what project, filter out uncompleted project for performance sake
 					(select developerusername, projectname from projectallocation 
 						where actualend is not null group by projectname,developerusername) as a
 					left outer join
-					#defect score and number of defects of each project, high severity_3pts, mid_2, low_1
-					#using data for last 3 months
 					(select projectname, sum(severity) as severity, count(severity) 
 						as numberdefect from defect where updatetime >= now()-interval 3 month
 						group by projectname) as b
@@ -138,7 +132,6 @@ inner join
 			) as finaltable) as final2
 		on final1.developerusername=final2.developerusername
 		left outer join
-		#schedule factor
 			(select developerusername, 
 			format(1-log(avg(datediff(actualend,actualstart)/datediff(planend,planstart))),4) as schedulefactor,
 			avg(datediff(actualend,actualstart)/datediff(planend,planstart)) as scheduleperformance
