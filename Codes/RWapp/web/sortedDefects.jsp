@@ -6,7 +6,6 @@
 <%@page import="src.model.Defect"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectPM.jsp" %>
-<%@include file="protectTester.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

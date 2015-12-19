@@ -8,7 +8,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@include file="protectPM.jsp" %>
-<%@include file="protectTester.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
