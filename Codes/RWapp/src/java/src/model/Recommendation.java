@@ -49,6 +49,25 @@ public class Recommendation {
     private double zainessscore;
     private int sorting;
 
+    /**
+     *
+     * @param username
+     * @param nationality
+     * @param currentprojectcount
+     * @param earlieststart
+     * @param estimateworkingday
+     * @param estimateday
+     * @param scheduleperformance
+     * @param estimatecompletion
+     * @param idealcompletion
+     * @param defectlessfactor
+     * @param schedulefactor
+     * @param avgdefectperproject
+     * @param experiencefactor
+     * @param projectexperiencecount
+     * @param zainessscore
+     * @param sorting
+     */
     public Recommendation(String username, String nationality, int currentprojectcount, 
             Date earlieststart, int estimateworkingday, int estimateday, double scheduleperformance, 
             Date estimatecompletion, Date idealcompletion, double defectlessfactor, 
@@ -72,136 +91,162 @@ public class Recommendation {
         this.sorting = sorting;
     }
 
+    /**
+     *
+     * @return The developer's name.
+     */
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
+    /**
+     *The developer's country.
+     * @return 
+     */
     public String getNationality() {
         return nationality;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
 
+    /**
+     * The number of ongoing projects that a developer is partaking for the given planned start and end date.  
+     *@return 
+     */
     public int getCurrentprojectcount() {
         return currentprojectcount;
     }
 
-    public void setCurrentprojectcount(int currentprojectcount) {
-        this.currentprojectcount = currentprojectcount;
-    }
 
+    /**
+     *
+     * 
+     * The earliest date that a developer can start on a new project. This is 1 day after the end date of the last project.
+     * @return 
+     */
     public Date getEarlieststart() {
         return earlieststart;
     }
 
-    public void setEarlieststart(Date earlieststart) {
-        this.earlieststart = earlieststart;
-    }
-
+    /**
+     *
+     * The estimated working days a developer need to complete a project of a fixed size based on his timeliness score working on projects of the similar type.
+     * @return 
+     */
     public int getEstimateworkingday() {
         return estimateworkingday;
     }
 
-    public void setEstimateworkingday(int estimateworkingday) {
-        this.estimateworkingday = estimateworkingday;
-    }
-
+    /**
+     *
+     * The working days(including weekend) a developer need to complete a project of a fixed size based on his timeliness score working on projects of the similar type. 
+     * We use Estimated working day &divide (5/7). Therefore, this estimation is up to the accuracy of ~1-2 days.
+     * @return 
+     */
     public int getEstimateday() {
         return estimateday;
     }
 
-    public void setEstimateday(int estimateday) {
-        this.estimateday = estimateday;
-    }
 
+    /**
+     *
+     * The schedule performance score is the ratio to gauge the timeliness past project assignment for the developer for a specific type of project. 
+     * e.g Days taken (Actual end - Actual start) &divide Allocated Days (Plan end - Plan start). 1 is always on time, 2 is always take 2x the allocated time.
+     * @return 
+     */
     public double getScheduleperformance() {
         return scheduleperformance;
     }
 
-    public void setScheduleperformance(double scheduleperformance) {
-        this.scheduleperformance = scheduleperformance;
-    }
-
+    /**
+     *
+     * The estimated completion date based on developer's timeliness of past project of the same type, weekend is accounted for.
+     * @return 
+     */
     public Date getEstimatecompletion() {
         return estimatecompletion;
     }
 
-    public void setEstimatecompletion(Date estimatecompletion) {
-        this.estimatecompletion = estimatecompletion;
-    }
-
+    /**
+     *
+     * The ideal completion date for this developer to complete the project based on the number of day a PM estimated for that project based on functionalities.
+     * @return 
+     */
     public Date getIdealcompletion() {
         return idealcompletion;
     }
 
-    public void setIdealcompletion(Date idealcompletion) {
-        this.idealcompletion = idealcompletion;
-    }
 
+    /**
+     *
+     * The defect score for a developer based on the developer past defect history
+     * that take into account the severity of the defects and deduct points based on: high=-3, mid=-2, low=-1. 
+     * The score is normalize as the a percentile(p-value) based on a normal distribution(Z-table).
+     * @return 
+     */
     public double getDefectlessfactor() {
         return defectlessfactor;
     }
 
-    public void setDefectlessfactor(double defectlessfactor) {
-        this.defectlessfactor = defectlessfactor;
-    }
-
+    /**
+     *
+     * A log function of the Schedule Performance to represent timeliness of developer for a specific type of project. 
+     * e.g 0 is worse. 1 is best.
+     * @see getScheduleperformance()
+     * @return 
+     */
     public double getSchedulefactor() {
         return schedulefactor;
     }
 
-    public void setSchedulefactor(double schedulefactor) {
-        this.schedulefactor = schedulefactor;
-    }
-
+    /**
+     *
+     * The average defects per project for a specific developer.
+     * @return 
+     */
     public double getAvgdefectperproject() {
         return avgdefectperproject;
     }
 
-    public void setAvgdefectperproject(double avgdefectperproject) {
-        this.avgdefectperproject = avgdefectperproject;
-    }
-
+    /**
+     *
+     * The experience score of a developer. 0 is worse. 1 is best.
+     * We use a formula similar to Amdahl's law to represent developer experience score leveling off after 10 standard project(20points).
+     * e.g High=3points Mid=2points Low=1points 20point = experience factor=0.8
+     * @return 
+     */
     public double getExperiencefactor() {
         return experiencefactor;
     }
 
-    public void setExperiencefactor(double experiencefactor) {
-        this.experiencefactor = experiencefactor;
-    }
-
+    /**
+     *
+     * The number of project of the similar type that a developer have completed. 
+     * @return 
+     */
     public int getProjectexperiencecount() {
         return projectexperiencecount;
     }
 
-    public void setProjectexperiencecount(int projectexperiencecount) {
-        this.projectexperiencecount = projectexperiencecount;
-    }
-
+    /**
+     *
+     *  A score based on 3 the weighted(33% each) average of 3 factors to get the most "Zai" developer to take on high priority project: 
+     * Skillset, Timeliness,low defects, High experience. 
+     * @return 
+     */
     public double getZainessscore() {
         return zainessscore;
     }
 
-    public void setZainessscore(double zainessscore) {
-        this.zainessscore = zainessscore;
-    }
 
+    /**
+     *
+     * The ranking order of the list of recommendation, 1 is based on "zainess" and 0 is based on earliest estimated completion date.
+     * @return 
+     */
     public int getSorting() {
         return sorting;
     }
 
-    public void setSorting(int sorting) {
-        this.sorting = sorting;
-    }
-    
-
-    
-    
 
 }

@@ -18,9 +18,21 @@ import java.util.Date;
  * @author KIANLAM
  */
 public class RecommedationDAO {
-//Recommendation(String username, double loadFactor, double defectScore, 
-    //double scheduleScore, double experienceScore) 
-    public static ArrayList<Recommendation> getRecommendation(String projectType,
+    
+    /**
+     *
+     * Returning an arraylist of recommendation objects based on ProjectType, ProjectStartDate, Days and Priority.
+     * 
+     * @param projectType The project type "eCommence", "wordpress" or "custom" project. Any other value will result in empty resultset.
+     * @param projectStartDate Planned start date of the project. Must be in "yyyy-MM-dd" format. e.g "2016-03-04"
+     * @param days Project Managers' estimation of the expected number of days that a project will take to completion based on functionalities.
+     * @param priority 1 high priority and 0 for standard project . 
+     * Any other value will result in default/random sorting order. 
+     * "High Priority"(1) projects will be sorted based on the "zainessscore" to get the best developer, which is based on the skillset, timeliness,low defects and  experience score. 
+     * "Standard"(0) projects will be sorted based on matching skillset developers who can complete the project on the earliest date to archieve overall load balancing e.g reduce slack time between projects.
+     * @return A collection of recommendation objects.
+     */
+        public static ArrayList<Recommendation> getRecommendation(String projectType,
             String projectStartDate, int days, int priority) {
         ArrayList<Recommendation> recommendations = new ArrayList<Recommendation>();
         Connection conn = null;
