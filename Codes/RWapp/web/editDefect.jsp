@@ -8,6 +8,7 @@
 <%@page import="src.model.DefectDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="protectPM.jsp" %>
+<%@include file="protectTester.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>

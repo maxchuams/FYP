@@ -103,6 +103,7 @@
                                                 <option value="p">Project Manager</option>
                                                  <option value="c">Developer</option>
                                                 <option value="d">Designer</option>
+                                                <option value="t">Tester</option>
                                             </select>
                                         </div>
                                         <div id='devOnly'>
