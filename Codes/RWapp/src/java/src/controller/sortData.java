@@ -40,9 +40,15 @@ public class sortData extends HttpServlet {
         String filterby = request.getParameter("filter");
         if (filterby == null)
             filterby="";
-        String filterText = request.getParameter("inputText");
-        if (filterText==null)
-            filterText="";
+        
+        String filterText = "";
+        if(filterby.equals("projectname")){
+            filterText = request.getParameter("inputP");
+        } else if (filterby.equals("severity")){
+            filterText = request.getParameter("inputS");
+        }
+          
+        
         String username= request.getParameter("username");
         
         ArrayList<Defect> dList = null;
