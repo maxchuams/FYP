@@ -60,12 +60,14 @@ public class assignRecommendation extends HttpServlet {
                 type= request.getParameter("inputType");
             }
             //get todays date
-            String today = request.getParameter("sDate");
-            String eDate = request.getParameter("eDate");
+            String sDate = request.getParameter("sDate");
+            
+            String daysstr = request.getParameter("days");
+            int days= Integer.parseInt(daysstr);
             
             RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
             try {
-                boolean valid = validDate(today);
+                boolean valid = validDate(sDate);
                 if (!valid) {
                     request.setAttribute("err", "Please set a date that is after today");
                     view.forward(request, response);
@@ -78,10 +80,10 @@ public class assignRecommendation extends HttpServlet {
                 return;
             }
             try {
-                boolean valid = validDate(eDate);
-                boolean valid2 = validDate2(eDate, today);
-                if (!valid || !valid2) {
-                    request.setAttribute("err", "Please set the end date after the start date");
+                boolean valid = validDate(sDate);
+                //boolean valid2 = validDate2(eDate, today);
+                if (!valid ) {
+                    request.setAttribute("err", "Please set the start date today/after today.");
                     view.forward(request, response);
                     return;
                 }
@@ -90,16 +92,7 @@ public class assignRecommendation extends HttpServlet {
                 request.setAttribute("err", "invalid date");
                 view.forward(request, response);
                 return;
-            }
-        //System.out.println(today);
-//        Date start = null;
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-//        try {
-//            start = formatter.parse(today);
-//            System.out.println(start.toString());
-//        } catch (Exception e) {
-//        }
-//        
+            }       
 
             HttpSession sess = request.getSession();
             Person p1 = (Person) sess.getAttribute("loggedInDev");
@@ -249,6 +242,8 @@ public class assignRecommendation extends HttpServlet {
             String dateToFormat = toAssign.getDue();
             System.out.println(toAssign.toString());
             
+            
+            /**Commented because there is no need to input an end date. End date depends on the number of functionalities not client
             try{
                 boolean valid= validDate3(dateToFormat, eDate);
                 if(!valid){
@@ -261,7 +256,8 @@ public class assignRecommendation extends HttpServlet {
                     view.forward(request, response);
                     return;
             }
-
+            * */
+            
         //dateToFormat.replace("-","/");
 //        Date toFormat = new Date();
 //          SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy/MM/dd");
@@ -271,7 +267,7 @@ public class assignRecommendation extends HttpServlet {
 //        } catch (Exception e) {
 //            System.out.println("error");
 //        }
-            ArrayList<Recommendation> rList = RecommedationDAO.getRecommendation(type, eDate, today, priority);
+            ArrayList<Recommendation> rList = RecommedationDAO.getRecommendation(type, sDate, days, priority);
 
         //add to dao, return true if added, return false if not
 //        for(TrelloCard tCard : tcList){
@@ -312,7 +308,8 @@ public class assignRecommendation extends HttpServlet {
         }
 
     }
-
+    
+    //check if a date is before today, reture false 
     private boolean validDate(String date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
@@ -322,7 +319,7 @@ public class assignRecommendation extends HttpServlet {
         return !validate.before(new Date());
 
     }
-
+    //check if 1st param date is after second param date, return true
     private boolean validDate2(String date, String sDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
@@ -332,7 +329,7 @@ public class assignRecommendation extends HttpServlet {
         return validate.after(start);
 
     }
-    
+    //check if 1st param date is after second param date, return true
     private boolean validDate3(String cDate, String eDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
