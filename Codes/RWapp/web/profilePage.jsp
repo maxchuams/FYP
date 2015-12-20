@@ -444,7 +444,7 @@
                                             <div class="col-md-6">
                                                 <div class="prf-contacts">
                                                     <%
-                                                            String d = DeveloperDAO.retrieveDev(p.getUsername());
+                                                            String d = DeveloperDAO.retrieveDevCountry(p.getUsername());
                                                         %>
                                                     <h2> <span><i class="fa fa-map-marker"></i></span> Current Country : <%=d%></h2>
                                                     <div class="location-info">

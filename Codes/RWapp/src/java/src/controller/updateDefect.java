@@ -42,10 +42,9 @@ public class updateDefect extends HttpServlet {
         String complete = request.getParameter("complete");
         int isComplete = Integer.parseInt(complete);
         String pm = request.getParameter("pmname");
-      
         boolean success = DefectDAO.updateDefect(id,dname,desc,pm,isComplete,sev);
         
-        RequestDispatcher rd = request.getRequestDispatcher("editDefect.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
         if (success){
             request.setAttribute("sucess", "Details successfully changed!");
         } else {

@@ -6,6 +6,7 @@
 
 <%@page import="src.model.Project"%>
 <%@page import="src.model.ProjectDAO"%>
+<%@page import="src.model.DefectScreenshotDAO"%>
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.DefectDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -49,8 +50,34 @@
     </script>
     </head>
     <body>
+        
+        <%  String errorMsg = (String) request.getAttribute("err");
+                                String sucess = (String) request.getAttribute("sucess"); %>
+        
         <section id="main-content">
             <section class="wrapper">
+                <%if (errorMsg!=null){ %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=errorMsg%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                            <%}%>
+                            <%if (sucess!=null){ %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                            <%}%>
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
@@ -191,6 +218,10 @@
                                     <tr>
                                         <td>Description: </td>
                                         <td><%=d.getDesc()%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Screenshots uploaded: </td>
+                                        <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size()%></a></td>
                                     </tr>
                                     <tr>
                                         <td>Reported by: </td>

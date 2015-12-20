@@ -8,55 +8,93 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@include file="protectPM.jsp" %>
+<%String thisPage = "addDefect"; //This is to change the highlight in Navigation Bar%>
+<%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add new defect</title>
+        <title>Add Defect</title>
     </head>
     <body>
-        <h1>Add new defects</h1>
-        <h3><a href='manageDefects.jsp'>View Defects</a></h3>
-        <%  String errorMsg = (String) request.getAttribute("err");
-            String sucess = (String) request.getAttribute("sucess");
-            ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
-            if (errorMsg != null) {
-                out.println(errorMsg);
-            }
-            if (sucess != null) {
-                out.println(sucess);
-            }
-            if(errorArr!=null){
-                out.println(errorArr);
-            }
-        %>
-        </br>
-        <form action="addNewDefect">
-            Project Name: 
-                <select name="projectname">
-            <%
-            ArrayList<Project> pList = ProjectDAO.retrieveInProgress();
-            for(Project p : pList){
-                %>
-                <option value='<%=p.getName()%>'><%=p.getName()%></option>
-                <%
-            }
-            %>
-            </select></br>
-            Name of Defect: <input type='text' name='defname'required/></br>
-            Description:</br>
-            <textarea rows="4" cols="50" name='desc' required></textarea></br>
-            Severity: 
-            <select name='severity'>
-                <option value='1'>Low</option>
-                <option value='2'>Medium</option>
-                <option value='3'>High</option>
-            </select></br>
-            
-            <input type='hidden' name='pmName' value='<%=pm.getUsername()%>'/>
-            <input type='submit' value='submit'/>
-        </form>
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Add Defect
+                            </header>
+                            <div class="panel-body">
 
+                                <%  String errorMsg = (String) request.getAttribute("err");
+                                    String sucess = (String) request.getAttribute("sucess");
+                                    ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
+                                    if (errorMsg != null) {
+                                        out.println(errorMsg);
+                                    }
+                                    if (sucess != null) {
+                                        out.println(sucess);
+                                    }
+                                    if (errorArr != null) {
+                                        out.println(errorArr);
+                                    }
+                                %>
+                                </br>
+                                <form action="addNewDefect" id='main'>
+                                    <label for="inputType" class="col-lg-2 control-label">Project name</label>
+                                    <div class="col-lg-9">
+                                        <select name="projectname" class="form-control m-bot15">
+                                            <%
+                                                ArrayList<Project> pList = ProjectDAO.retrieveInProgress();
+                                                for (Project p : pList) {
+                                            %>
+                                            <option value='<%=p.getName()%>'><%=p.getName()%></option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-2 control-label">Defect Name</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" name="defname" required class="form-control" id="defname" placeholder="" required>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-2 control-label">Description</label>
+                                        <div class="col-lg-9">
+                                            <textarea class="form-control" rows="4" id="desc" name="desc"></textarea>
+                                            <p></p>
+                                        </div>
+                                    </div>
+
+                                    <label for="inputType" class="col-lg-2 control-label">Severity</label>
+                                    <div class="col-lg-9">
+                                        <select name="severity" class="form-control m-bot15">
+                                            <option value='1'>Low</option>
+                                            <option value='2'>Medium</option>
+                                            <option value='3'>High</option>
+                                        </select>
+                                    </div>
+
+                                    <input type='hidden' name='pmName' value='<%=pm.getUsername()%>'/>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <p></p>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
     </body>
 </html>

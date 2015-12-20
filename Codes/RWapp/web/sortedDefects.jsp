@@ -6,6 +6,7 @@
 <%@page import="src.model.Project"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@page import="src.model.Defect"%>
+<%@page import="src.model.DefectScreenshotDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectPM.jsp" %>
 <%String thisPage = "sortedDefects"; //This is to change the highlight in Navigation Bar%>
@@ -196,6 +197,11 @@
                                     <tr>
                                         <td>Severity: </td>
                                         <td><%=severity%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Screenshots uploaded: </td>
+                                        <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size(); %>
+                                        <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%if (size==0){%>NIL<%}else{out.println(size);}%></a></td>
                                     </tr>
                                     <tr>
                                         <td>Description: </td>

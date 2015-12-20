@@ -165,7 +165,8 @@
                                     </tr>
                                     <tr>
                                         <td>Screenshots uploaded: </td>
-                                        <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size()%></a></td>
+                                        <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size(); %>
+                                        <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%if (size==0){%>NIL<%}else{out.println(size);}%></a></td>
                                     </tr>
                                     <tr>
                                         <td>Reported by: </td>
