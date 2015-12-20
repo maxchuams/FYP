@@ -41,11 +41,13 @@
         </script>
             <script type="text/javascript">
         function confirmDelete(){
-    var agree=CONFIRM("Are you sure you want to delete this file?");
-    if (agree)
+            alert("hi");
+    var agree = confirm("Are you sure you want to delete this file?");
+    if (agree){
      return true ;
-    else
+ }else{
      return false ;
+ }
     }
     </script>
     </head>
@@ -182,7 +184,7 @@
                                             <th>Project <%=d.getProjectName()%></th>
                                             <th><div align="right"><a href="defectscreenshot.jsp?id=<%=d.getId()%>" class="fa fa-picture-o"> Add Screenshot </a> | 
                                         <a href="editDefect.jsp?id=<%=d.getId()%>" class="fa fa-pencil-square-o"> Edit </a> | 
-                                        <a href="defectComplete?id=<%=d.getId()%>&case=0" class="fa fa-minus-circle" onClick="confirmDelete();"> Delete </a></div>
+                                        <a href="defectComplete?id=<%=d.getId()%>&case=0" class="fa fa-minus-circle" onclick="confirmDelete();"> Delete </a></div>
                                     </th>
                                     </tr>
                                     </thead>
