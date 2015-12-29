@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * @author maxchua
  */
 public class ProjectAllocationDAO {
-     public static boolean addAllocation(String projName, String dev, String dateAllocated) {
+    public static boolean addAllocation(String projName, String dev, String dateAllocated) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -42,4 +43,39 @@ public class ProjectAllocationDAO {
 
         }
     }
+     
+    public static ArrayList<ProjectAllocation> returnProject(){
+        
+        ArrayList<ProjectAllocation> pAllocate = new ArrayList<ProjectAllocation>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ProjectAllocation pA = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select projectname,planstart,planend,developerusername from projectallocation order by developerusername");
+            //pstmt.setString(1, projName);
+            //pstmt.setString(2, dev);
+            //pstmt.setString(3, dateAllocated);
+      
+            rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                pA = new ProjectAllocation(rs.getString(1),rs.getTimestamp(2),rs.getTimestamp(3),rs.getString(4));
+                pAllocate.add(pA);
+            }
+            
+            //return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+        
+        return pAllocate;
+    } 
+     
 }
