@@ -115,7 +115,7 @@
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Number of Days(Project Size)</label>
                                         <div class="col-lg-10">
-                                            <input type="number" name="days" required/><p></p>
+                                            <input type="number" name="days" min=1 required/><p></p>
                                         </div>
                                     </div>
                                     <div class="form-group">

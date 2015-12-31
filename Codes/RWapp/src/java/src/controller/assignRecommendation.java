@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
@@ -52,19 +52,25 @@ public class assignRecommendation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String projName = request.getParameter("card");
+            String projName = request.getParameter("card"); 
             String intensity = request.getParameter("priority");
-            int priority = Integer.parseInt(intensity);
             String type = request.getParameter("type");
-            if(type.equals("Others")){
-                type= request.getParameter("inputType");
+            if ("Others".equals(type)) {
+                type = request.getParameter("inputType");
             }
             //get todays date
             String sDate = request.getParameter("sDate");
-            
             String daysstr = request.getParameter("days");
-            int days= Integer.parseInt(daysstr);
+            if(projName==null || intensity==null || type==null || sDate==null || daysstr==null){
+                response.sendRedirect("login.jsp");
+                //request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
             
+            
+            int priority = Integer.parseInt(intensity); 
+            int days = Integer.parseInt(daysstr);
+
             RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
             try {
                 boolean valid = validDate(sDate);
@@ -81,8 +87,8 @@ public class assignRecommendation extends HttpServlet {
             }
             try {
                 boolean valid = validDate(sDate);
-                //boolean valid2 = validDate2(eDate, today);
-                if (!valid ) {
+                
+                if (!valid) {
                     request.setAttribute("err", "Please set the start date today/after today.");
                     view.forward(request, response);
                     return;
@@ -92,13 +98,14 @@ public class assignRecommendation extends HttpServlet {
                 request.setAttribute("err", "invalid date");
                 view.forward(request, response);
                 return;
-            }       
+            }
 
             HttpSession sess = request.getSession();
+            if(sess==null) response.sendRedirect("login.jsp");
             Person p1 = (Person) sess.getAttribute("loggedInDev");
             Person p2 = (Person) sess.getAttribute("loggedInDesg");
             Person p3 = (Person) sess.getAttribute("loggedInPm");
-
+            
             Person currUser = null;
 
             if (p1 != null) {
@@ -113,14 +120,12 @@ public class assignRecommendation extends HttpServlet {
             } else {
                 response.sendRedirect("login.jsp");
             }
-        //truncate trello data
-//        TrelloCardDAO.clearData();
-            //get the trello details
-            //System.out.println(currUser);
+            
+            
             String username = currUser.getUsername();
             String key = TrelloDetailsDAO.retrieveTrelloKey(username);
             String token = TrelloDetailsDAO.retrieveTrelloToken(username);
-        //System.out.println("KEY:  " + key + " TOKEN : " + token);
+            //System.out.println("KEY:  " + key + " TOKEN : " + token);
             //first url to call the user's boards
 
             URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + key + "&token=" + token);
@@ -178,7 +183,7 @@ public class assignRecommendation extends HttpServlet {
                 }
             }
 
-        //now we will get all cards related to the user
+            //now we will get all cards related to the user
             //and with the masterboardid as well as the listid, we will be able to identify all 
             //cards related to the development list
             URL cardUrl = new URL("https://api.trello.com/1/boards/" + masterboardID + "/cards?key=" + key + "&token=" + token);
@@ -236,64 +241,21 @@ public class assignRecommendation extends HttpServlet {
                         desc = desc.substring(0, 100);
                     }
                     toAssign = new TrelloCard(name, projName, desc, due, priority, type);
-
                 }
             }
             String dateToFormat = toAssign.getDue();
             System.out.println(toAssign.toString());
-            
-            
-            /**Commented because there is no need to input an end date. End date depends on the number of functionalities not client
-            try{
-                boolean valid= validDate3(dateToFormat, eDate);
-                if(!valid){
-                    request.setAttribute("err", "Please set a date that is before Project Completion date");
-                    view.forward(request, response);
-                    return;
-                }
-            } catch (ParseException e){
-                request.setAttribute("err", "Invalid date input");
-                    view.forward(request, response);
-                    return;
+
+            //validate project size
+            if (days < 1) {
+                request.setAttribute("err", "Project size must be greater than zero days!");
+                view.forward(request, response);
+                return;
             }
-            * */
-            
-        //dateToFormat.replace("-","/");
-//        Date toFormat = new Date();
-//          SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy/MM/dd");
-//        try {
-//           toFormat = formatter1.parse(dateToFormat);
-//
-//        } catch (Exception e) {
-//            System.out.println("error");
-//        }
+
             ArrayList<Recommendation> rList = RecommedationDAO.getRecommendation(type, sDate, days, priority);
 
-        //add to dao, return true if added, return false if not
-//        for(TrelloCard tCard : tcList){
-//            TrelloCardDAO.addCard(tCard);
-//        }
-        //array of cards:
-            //https://api.trello.com/1/boards/560e321c27db2ef9d08873ec/cards?key=7e35111227918de8a37f8c20844ed555&token=65095ea4469fc51399471d010e58e2f6a95b2f15c83b9ddea167940939534b0f
-            //array of lists:
-            //https://api.trello.com/1/boards/560e321c27db2ef9d08873ec/lists?key=7e35111227918de8a37f8c20844ed555&token=65095ea4469fc51399471d010e58e2f6a95b2f15c83b9ddea167940939534b0f
-//        
-//        for(int i = 0; i < arr.length() ; i++){
-//            JSONObject main = arr.getJSONObject(i);
-//            String boardName = main.getString("name");
-//            if(boardName.equals("Projects Master Board")){
-//                String id = main.getString("id");
-//                JSONArray mArr = main.getJSONArray("memberships");
-//                ArrayList<TrelloMember> tmList = new ArrayList<TrelloMember> ();
-//                for(int j = 0; j<mArr.length(); j++){
-//                    String membershipId = mArr.getJSONObject(i).getString("idMember");
-//                    TrelloMember tm = new TrelloMember(membershipId);
-//                    tmList.add(tm);
-//                }
-//                tb = new TrelloBoard(boardName, id, tmList);
-//            }
-//        }
-            RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp?name="+toAssign.getName());
+            RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp?name=" + toAssign.getName());
             request.setAttribute("rList", rList);
             request.setAttribute("project", toAssign);
 
@@ -308,7 +270,7 @@ public class assignRecommendation extends HttpServlet {
         }
 
     }
-    
+
     //check if a date is before today, reture false 
     private boolean validDate(String date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -319,23 +281,27 @@ public class assignRecommendation extends HttpServlet {
         return !validate.before(new Date());
 
     }
+
     //check if 1st param date is after second param date, return true
+
     private boolean validDate2(String date, String sDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
 
         Date validate = sdf.parse(date);
-        Date start= sdf.parse(sDate);
+        Date start = sdf.parse(sDate);
         return validate.after(start);
 
     }
+
     //check if 1st param date is after second param date, return true
+
     private boolean validDate3(String cDate, String eDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
 
         Date validate = sdf.parse(cDate);
-        Date start= sdf.parse(eDate);
+        Date start = sdf.parse(eDate);
         return validate.after(start);
 
     }
