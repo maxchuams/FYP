@@ -46,6 +46,8 @@ public class sortData extends HttpServlet {
             filterText = request.getParameter("inputP");
         } else if (filterby.equals("severity")){
             filterText = request.getParameter("inputS");
+        } else if (filterby.equals("iscomplete")){
+            filterText = request.getParameter("inputC");
         }
           
         

@@ -21,18 +21,26 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#pname').hide(); //hide field on start
+               $('#pname').hide(); //hide field on start
                 $('#severity').hide();
+                $('#completed').hide();
                 $('#role').change(function () {
 
                     var $index = $('#role').index(this);
                     if ($('#role').val() == 'projectname') { //if this value is NOT selected
                         $('#pname').show();
+                        $('#completed').hide();
                         $('#severity').hide();//this field is hidden
                     }
                     if ($('#role').val() == 'severity') { //if this value is NOT selected
                         $('#pname').hide();
+                        $('#completed').hide();
                         $('#severity').show();//this field is hidden
+                    }
+                    if($('#role').val() == 'iscomplete') { //if this value is NOT selected
+                        $('#pname').hide();
+                        $('#completed').show();
+                        $('#severity').hide();//this field is hidden
                     }
                 });
             });
@@ -80,7 +88,7 @@
                                                     <option value="projectname">Project Name</option>
                                                     <option value="defectname">Defect Name</option>
                                                     <option value="updatetime">Update Time</option>
-                                                    <option value='iscomplete'>Defect Status</option>
+                                                    <!--<option value='iscomplete'>Defect Status</option>-->
                                                 </select>
                                                 <input type="hidden"  name='username' value='<%=pm.getUsername()%>'/>
                                                 <input type='hidden' value='' name='inputText'/>
@@ -102,6 +110,7 @@
                                                     <option value="projectname">Project Name</option>
                                                     <!--<option value="defectname">Defect Name</option>-->
                                                     <option value="severity">Severity</option>
+                                                    <option value="iscomplete">Completion status</option>
                                                 </select>
                                             </div>
                                             <div id="pname">
@@ -125,7 +134,15 @@
                                                     </select>
                                                 </div>
                                             </div>
-
+                                             <div id="completed">
+                                                <div class="col-lg-3">
+                                                    <select name="inputC" class="form-control m-bot15">
+                                                        <option value="0">Developer has not yet complete</option>
+                                                        <option value="1">Developer has marked as completed</option>
+                                                        <option value="2">Defect has been resolved</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <input type="hidden" name='username' value='<%=pm.getUsername()%>'/>
                                             <input type='hidden' name='sortby' value=''/>
                                             <input type='hidden' value='pm' name='case'/>
