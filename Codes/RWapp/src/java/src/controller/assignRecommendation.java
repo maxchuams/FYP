@@ -258,6 +258,7 @@ public class assignRecommendation extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp?name=" + toAssign.getName());
             request.setAttribute("rList", rList);
             request.setAttribute("project", toAssign);
+            request.setAttribute("days", days);
 
             rd.forward(request, response);
             return;
