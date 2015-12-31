@@ -81,7 +81,7 @@ create table defectscreenshot(
     constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE
 );
 
-CREATE TABLE `PjsRecco`.`ztable` (
+CREATE TABLE `ztable` (
   `zvalue` DECIMAL(14,2) NOT NULL,
   `pvalue` DECIMAL(14,4) NULL,
   PRIMARY KEY (`zvalue`));
