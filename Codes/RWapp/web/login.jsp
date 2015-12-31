@@ -31,7 +31,7 @@
     
 // check if user is authenticated
 
-    Person dev = (Person) session.getAttribute("loggedInUser");
+    Person dev = (Person) session.getAttribute("loggedInDev");
     Person desg = (Person) session.getAttribute("loggedInDesg");
     Person pm = (Person) session.getAttribute("loggedInPm");
     Person sudo = (Person) session.getAttribute("loggedInSudo");
