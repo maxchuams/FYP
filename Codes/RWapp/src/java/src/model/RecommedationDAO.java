@@ -70,11 +70,11 @@ public class RecommedationDAO {
             "		ifnull(overlapproject,0) as overlapproject,  " +
             "		ifnull(earlieststart,?) earlieststart, " +
             "		ifnull(scheduleperformance,1.0) as scheduleperformance, " +
-            "		ceiling(ifnull(scheduleperformance,1.0)*?) as estimateworkingday, " +
-            "        ceiling(ifnull(scheduleperformance,1.0)*?/(5/7)) as estimateday, " +
+            "		ceiling(floor(ifnull(scheduleperformance,1.0)*?))as estimateworkingday, " +
+            "        ceiling(floor(ifnull(scheduleperformance,1.0)*?/(5/7))) as estimateday, " +
             "        nationality, " +
-            "		date_add(ifnull(earlieststart,?), interval ceiling(ifnull(scheduleperformance,1.0)*?/(5/7)) day) as estimatecompletion, " +
-            "		date_add(ifnull(earlieststart,?), interval ceiling(?/(5/7)) day) as idealcompletion " +
+            "		date_add(ifnull(earlieststart,?), interval ceiling(floor(ifnull(scheduleperformance,1.0)*?/(5/7))) day) as estimatecompletion, " +
+            "		date_add(ifnull(earlieststart,?), interval ceiling(floor(?/(5/7))) day) as idealcompletion " +
             "		from " +
             "		(select ds.username as username, nationality   " +
             "        from developerskill ds, developer d where d.username=ds.username  " +
