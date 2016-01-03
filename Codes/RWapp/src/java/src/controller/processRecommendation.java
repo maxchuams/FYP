@@ -5,15 +5,26 @@
  */
 package src.controller;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import src.model.Person;
+import src.model.PersonDAO;
+import src.model.Project;
 import src.model.ProjectAllocationDAO;
+import src.model.ProjectDAO;
 import src.model.TrelloCard;
 import src.model.TrelloCardDAO;
 
@@ -34,50 +45,111 @@ public class processRecommendation extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        ArrayList<String> errList = new ArrayList<String>();
         String[] dev = request.getParameterValues("dev");
         String projName = request.getParameter("projName");
         String type = request.getParameter("type");
         String priority = request.getParameter("priority");
         String due = request.getParameter("due");
+//        Date date = null;
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+//        try {
+//
+//            date = formatter.parse(due);
+//            System.out.println(date);
+//        } catch (ParseException e) {
+//            errList.add("Date contains errors");
+//        }
         String desc = request.getParameter("desc");
+        //trello card id
         String id = request.getParameter("id");
-
+        String pmname = request.getParameter("pmname");
+        String psize = request.getParameter("psize");
         int priorityInt = Integer.parseInt(priority);
-
-        //Person toAdd = PersonDAO.retrieveUser(dev);
-        TrelloCard toAssign = new TrelloCard(projName, id, desc, due, priorityInt, type);
-            //toAssign.addMember(toAdd);
-
-        //get todays date
-        String today = null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        try {
-            today = formatter.format(new Date());
-
-        } catch (Exception e) {
+        boolean success = false;
+        if(errList.isEmpty()){
+          Project toAdd = new Project(projName, "", desc, pmname, due, Integer.parseInt(priority), 0, type, Integer.parseInt(psize));  
+          success = ProjectDAO.add(toAdd);
         }
-
-        boolean sucess = TrelloCardDAO.addCard(toAssign);
-        boolean insertionSucess = true;
-        for (String user : dev) {
-            //Person toAdd = PersonDAO.retrieveUser(user);
-            boolean allocated = ProjectAllocationDAO.addAllocation(projName, user,today);
-            if(!allocated){
-                insertionSucess = false;
+        
+        //TO DO:
+        //1. add new project to the project table
+         
+        if (!success) {
+            errList.add("Project could not be added to Database");
+        } else if (errList.isEmpty()) {
+            //-if successful
+            //need to pull the trello id:
+            ArrayList<String> trelloID = new ArrayList<String>();
+            trelloID.add(PersonDAO.retrieveMemberId(pmname));
+            // add to allocation table
+            for (String developer : dev) {
+                //for multiple allocation
+                trelloID.add(PersonDAO.retrieveMemberId(developer));
+                 //update project allocation DAO
+                //HOLD: Need to figure out plan start and plan end
+//                boolean updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, developer, );
             }
 
+            //update trello
+            String memIdList = "";
+          for (int i = 0; i < trelloID.size(); i++){
+              if (i == trelloID.size() -1){
+                   memIdList += trelloID.get(i);
+              }else {
+                   memIdList += trelloID.get(i) + ",";
+              }
+             
+          }
+          //make connection to trello:
+          
+          	String url = "https://api.trello.com/1/cards/"+ id +"?";
+		URL obj = new URL(url);
+		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+
+		//add reuqest header
+		con.setRequestMethod("PUT");
+		con.setRequestProperty("User-Agent", "Chrome/45.0.2454.101 m");
+		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                Person pm = PersonDAO.retrieveUser(pmname);
+		String urlParameters = "idMembers=" + memIdList + "&key=" + pm.getTrelloKey() + "&token=" + pm.getToken();
+		
+		// Send post request
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+
+		int responseCode = con.getResponseCode();
+		System.out.println("\nSending 'POST' request to URL : " + url);
+		System.out.println("Post parameters : " + urlParameters);
+		System.out.println("Response Code : " + responseCode);
+
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response1 = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response1.append(inputLine);
+		}
+		in.close();
+            
+            
         }
-        
-        
+
+       
+
         RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp");
-        if(sucess && insertionSucess){
+        if (errList.isEmpty()) {
             request.setAttribute("sucess", "Project sucessfully assigned!");
             rd.forward(request, response);
 
         } else {
-            
-            request.setAttribute("err", "Passwords do not match");
+
+            request.setAttribute("errList", errList);
             rd.forward(request, response);
         }
 

@@ -47,7 +47,31 @@ public class PersonDAO {
         return user;
 
     }
+    
+    public static String retrieveMemberId(String username){
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String toReturn = "";
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select trelloId from user where username like ?");
+            pstmt.setString(1, username);
+            rs = pstmt.executeQuery();
 
+            while (rs.next()) {
+
+                toReturn = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
+    
     public static ArrayList<Person> retrieveUsers() {
         ArrayList<Person> users = new ArrayList<Person>();
         Connection conn = null;
@@ -99,7 +123,34 @@ public class PersonDAO {
         }
         return true;
     }
+    
+    public static boolean updateMemberID(String username, String id){
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
 
+            String sql = "UPDATE user set trelloId = ? where username=? ";
+
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, id);
+            pstmt.setString(2, username);
+           
+            //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionManager.close(conn, pstmt);
+        }
+        return true;
+    }
+    
     public static boolean addPerson(Person p) {
 
         Connection conn = null;

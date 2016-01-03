@@ -32,7 +32,7 @@ public class ProjectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9)));
+                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,7 +56,7 @@ public class ProjectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9)));
+                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,4 +91,35 @@ public class ProjectDAO {
         return toReturn;
 
     }
+     
+     public static boolean add(Project p ){
+         Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize) values (?,?,?,?,?,?,?,?,?)");
+            pstmt.setString(1, p.getName());
+            pstmt.setString(2, p.getTrelloKey());
+            pstmt.setString(3, p.getDesc());
+            pstmt.setString(4, p.getAssignedBy());
+            pstmt.setString(5, p.getDuedate());
+            pstmt.setInt(6, p.getPriortiy());
+            pstmt.setInt(7, p.getIsComplete());
+            pstmt.setString(8, p.getType());
+            pstmt.setInt(9, p.getPsize());
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+     }
+     
 }

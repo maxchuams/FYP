@@ -30,6 +30,7 @@
                                 <%
                                     ArrayList<Recommendation> rlist = (ArrayList<Recommendation>) request.getAttribute("rList");
                                     TrelloCard toAssign = (TrelloCard) request.getAttribute("project");
+                                    Integer days = (Integer) request.getAttribute("days");
                                 %>
                                 <% String name = request.getParameter("name");%>
                                 Please choose Developer for <%=toAssign.getType()%> Project <%=name%>, due <%=toAssign.getDue()%> with priority <%=toAssign.getPriority()%><br/>
@@ -55,10 +56,10 @@
                                     nationality: <%=r.getNationality()%>,
                                     No of current project: <%=r.getCurrentprojectcount()%>,
                                     Next project earliest start date: <%=r.getEarlieststart()%>,
-                                    Estimated working days to complete project: <%=r.getEstimateworkingday() %>,
+                                    Estimated working days to complete project: <%=r.getEstimateworkingday()%>,
                                     Estimated days(incl weekends) to complete project: <%=r.getEstimateday()%>,
                                     Schedule performance: <%=r.getScheduleperformance()%>,
-                                    Estimated completion date : <%=r.getEstimatecompletion() %>,
+                                    Estimated completion date : <%=r.getEstimatecompletion()%>,
                                     Ideal completion date: <%=r.getIdealcompletion()%>,
                                     Defectless Score: <%=r.getDefectlessfactor()%>,
                                     Schedule score: <%=r.getSchedulefactor()%>,
@@ -69,30 +70,33 @@
                                     Sorting Order: <%=r.getSorting()%>
 
                                     </br>
-
+                                    
                                     <%
                                             count++;
                                         }
 
                                     %>
-                                    <input type='hidden' name='projName' value='<%=toAssign.getName()%>'/>
-                                    <input type='hidden' name='type' value='<%=toAssign.getType()%>'/>
-                                    <input type='hidden' name='priority' value='<%=toAssign.getPriority()%>'/>
-                                    <input type='hidden' name='due' value='<%=toAssign.getDue()%>'/>
-                                    <input type='hidden' name='desc' value='<%=toAssign.getDesc()%>'/>
-                                    <input type='hidden' name='id' value='<%=toAssign.getId()%>'/>
 
                                     <!--<div class="form-group">
                                         <div class="col-lg-offset-0 col-lg-12"><p></p>
                                                                                 <button type="submit" class="btn btn-danger">Submit</button>
                                                                             </div>
                                                                         </div>-->
-                                </form>
+                             
 
 
 
-                                <input type="hidden" name="card" value=''/>
-
+                                
+                                <input type='hidden' name='projName' value='<%=toAssign.getName()%>'/>
+                                
+                                <input type='hidden' name='type' value='<%=toAssign.getType()%>'/>
+                                <input type='hidden' name='priority' value='<%=toAssign.getPriority()%>'/>
+                                <input type='hidden' name='due' value='<%=toAssign.getDue()%>'/>
+                                <input type='hidden' name='desc' value='<%=toAssign.getDesc()%>'/>
+                                <input type='hidden' name='id' value='<%=toAssign.getId()%>'/>
+                                <input type="hidden" name="pmname" value='<%=pm.getUsername()%>'/>
+                                <input type="hidden" name="psize" value='<%=days%>'/>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
 
                             </div>

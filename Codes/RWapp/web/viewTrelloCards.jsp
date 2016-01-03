@@ -78,12 +78,17 @@
         
         <%             String errorMsg = (String) request.getAttribute("err");
             String sucess = (String) request.getAttribute("sucess");
+            ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
             if (errorMsg == null) {
                 errorMsg = "";
             }
 
             if (sucess == null) {
                 sucess = "";
+            }
+            
+            if(errorList == null || errorList.isEmpty()){
+                
             }
 
 

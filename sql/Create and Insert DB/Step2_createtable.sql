@@ -4,7 +4,8 @@ create table user(
 	type varchar(1) not null,
 	trellokey varchar(100),
 	trellotoken varchar(100),
-	photo longblob
+	photo longblob,
+	trelloId varchar(100)
 );
 
 create table developer(
@@ -39,7 +40,7 @@ create table project(
 create table projectallocation(
 	projectname varchar(25) not null,
 	developerusername varchar(25) not null,
-    dateallocated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    dateallocated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	planstart date,
     planend date,
     actualstart date,
@@ -48,7 +49,6 @@ create table projectallocation(
 	constraint pallo_fk foreign key (projectname) references project(projectname) ,
 	constraint pallo_fk2 foreign key (developerusername) references developer(username) ON DELETE CASCADE
 );
-
 
 create table projectfunction(
 	projectname varchar(25) not null,

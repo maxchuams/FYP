@@ -169,9 +169,13 @@ public class assignProject extends HttpServlet {
             JSONObject member = membArr.getJSONObject(i);
             String memUsername= member.getString("username");
             String memID=member.getString("id");
+            //store the member ID
+            PersonDAO.updateMemberID(memUsername, memID);
             for(Person toCheck : devList){
+                
                 if(toCheck.getUsername().contains(memUsername)){
                     mTList.add(memID);
+                    
                 }
             }
         }

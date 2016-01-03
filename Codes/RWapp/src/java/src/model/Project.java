@@ -16,13 +16,13 @@ public class Project {
     private String trelloKey;
     private String desc;
     private String assignedBy;
-    private Date duedate;
+    private String duedate;
     private int priortiy;
     private int isComplete;
     private String type;
     private int psize;
 
-    public Project(String name, String trelloKey, String desc, String assignedBy, Date duedate, int priortiy, int isComplete, String type, int psize) {
+    public Project(String name, String trelloKey, String desc, String assignedBy, String duedate, int priortiy, int isComplete, String type, int psize) {
         this.name = name;
         this.trelloKey = trelloKey;
         this.desc = desc;
@@ -58,11 +58,11 @@ public class Project {
         this.desc = desc;
     }
 
-    public Date getDuedate() {
+    public String getDuedate() {
         return duedate;
     }
 
-    public void setDuedate(Date duedate) {
+    public void setDuedate(String duedate) {
         this.duedate = duedate;
     }
 
