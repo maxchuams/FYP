@@ -4,6 +4,8 @@
     Author     : admin
 --%>
 
+<%@page import="src.model.ProjectDAO"%>
+<%@page import="src.model.Project"%>
 <%@page import="src.model.TrelloCardDAO"%>
 <%@page import="src.model.TrelloCard"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,110 +23,123 @@
     </head>
     <body>
         <%
-            
-            ArrayList<TrelloCard> tList = TrelloCardDAO.retrieveAll();
-            
+            String userid = "";
+            String role = "";
+            if (dev != null) {
+                userid = dev.getUsername();
+                role = "dev";
+            }
+            if (pm != null) {
+                userid = pm.getUsername();
+                role = "pm";
+            }
+            ArrayList<Project> tList = ProjectDAO.retrieveByUser(role, userid);
+
         %>
         <section id="main-content">
-        <section class="wrapper">
-            <!--kw code-->
-            <div class="row">
-            <div class="col-sm-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        View All Projects
-                        <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                         </span>
-                    </header>
-                    <div class="panel-body">
-                        <table class="table  table-hover general-table">
-                            <thead>
-                            <tr>
-                                <th>Project Name</th>
-                                <th>Due Date</th>
-                                <!--<th>Members</th>-->
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <%
-            for (TrelloCard t : tList){
-               %> 
-               <tr>
-                   <td><%=t.getName()%></td>
-                   <td><%=t.getDue()%></td>
-                   <!--<td>
-                   <%//ArrayList<Person> memberList = t.getMembers(); 
-                   //for(Person p : memberList){
-                    //   p.getUsername();
-//}%>
-                   </td>-->
-               </tr>
-               <% 
-            }
-            %>
-                            </tbody>
-                        </table>
+            <section class="wrapper">
+                <!--kw code-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                View All Projects
+                                <span class="tools pull-right">
+                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                </span>
+                            </header>
+                            <div class="panel-body">
+                                <table class="table  table-hover general-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Project Name</th>
+                                            <th>type</th>
+                                            <th>Due Date</th>
+                                                <% if (dev != null && pm == null) {%>
+                                            <th>Assigned By</th>
+                                                <%}%>
+                                            <!--<th>Members</th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            for (Project t : tList) {
+                                        %> 
+                                        <tr>
+                                            <td><%=t.getName()%></td>
+                                            <td><%=t.getType()%></td>
+                                            <td><%=t.getDuedate()%></td>
+                                            <% if (dev != null && pm == null) {%>
+                                            <td><%=t.getAssignedBy()%></td>
+                                            <%}%>
+
+                                            <!--<td>
+                                            <%//ArrayList<Person> memberList = t.getMembers(); 
+                                                //for(Person p : memberList){
+                                                //   p.getUsername();
+                         //}%>
+                                            </td>-->
+                                        </tr>
+                                        <% 
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
                     </div>
-                </section>
-            </div>
-            <!--kw code-->
-        
-        
-        <% 
-        %>
-        
-        </br>
-        
-        <%             String errorMsg = (String) request.getAttribute("err");
-            String sucess = (String) request.getAttribute("sucess");
-            ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
-            if (errorMsg == null) {
-                errorMsg = "";
-            }
-
-            if (sucess == null) {
-                sucess = "";
-            }
-            
-            if(errorList == null || errorList.isEmpty()){
-                
-            }
+                    <!--kw code-->
 
 
-        %>
-        
-<!--        <h2>Edit Priority</h2>
-        <form action="editPriority" method="GET">
-            Select Project:
-            <select name="projectTitle">
-            <%
-           
-//            for(TrelloCard card: tList){
-//                String projectName = card.getName();
-                //System.out.println(projectName);
-                %>
-                <option value='projectName%>'>projectName%></option>
-                <%
-//            }
-           
-           
-           
-           %>
-        </select>
-        </br>
-        <select name="priority">
-            <option value="Low">Low</option>
-            <option valie="Medium">Medium</option>
-            <option value="High">High</option>
-        </select>
-        <input type="submit" value="Set Priority!">
-        </form>-->
-        
-       
-        
+                    <%
+                    %>
+
+                    </br>
+
+                    <%             String errorMsg = (String) request.getAttribute("err");
+                        String sucess = (String) request.getAttribute("sucess");
+                        ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+                        if (errorMsg == null) {
+                            errorMsg = "";
+                        }
+
+                        if (sucess == null) {
+                            sucess = "";
+                        }
+
+                        if (errorList == null || errorList.isEmpty()) {
+
+                        }
+
+
+                    %>
+
+                    <!--        <h2>Edit Priority</h2>
+                            <form action="editPriority" method="GET">
+                                Select Project:
+                                <select name="projectTitle">
+                    <%//            for(TrelloCard card: tList){
+        //                String projectName = card.getName();
+                        //System.out.println(projectName);
+                    %>
+                    <option value='projectName%>'>projectName%></option>
+                    <%//            }
+
+                    %>
+                 </select>
+                 </br>
+                 <select name="priority">
+                     <option value="Low">Low</option>
+                     <option valie="Medium">Medium</option>
+                     <option value="High">High</option>
+                 </select>
+                 <input type="submit" value="Set Priority!">
+                 </form>-->
+
+
+
+            </section>
         </section>
-        </section>
-        
+
     </body>
 </html>
