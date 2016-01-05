@@ -47,6 +47,7 @@ public class processRecommendation extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<String> errList = new ArrayList<String>();
         String[] dev = request.getParameterValues("dev");
+//        System.out.println(dev);
         String projName = request.getParameter("projName");
         String type = request.getParameter("type");
         String priority = request.getParameter("priority");
@@ -67,14 +68,13 @@ public class processRecommendation extends HttpServlet {
         String psize = request.getParameter("psize");
         int priorityInt = Integer.parseInt(priority);
         boolean success = false;
-        if(errList.isEmpty()){
-          Project toAdd = new Project(projName, "", desc, pmname, due, Integer.parseInt(priority), 0, type, Integer.parseInt(psize));  
-          success = ProjectDAO.add(toAdd);
+        if (errList.isEmpty()) {
+            Project toAdd = new Project(projName, "", desc, pmname, due, Integer.parseInt(priority), 0, type, Integer.parseInt(psize));
+            success = ProjectDAO.add(toAdd);
         }
-        
+
         //TO DO:
         //1. add new project to the project table
-         
         if (!success) {
             errList.add("Project could not be added to Database");
         } else if (errList.isEmpty()) {
@@ -82,65 +82,69 @@ public class processRecommendation extends HttpServlet {
             //need to pull the trello id:
             ArrayList<String> trelloID = new ArrayList<String>();
             trelloID.add(PersonDAO.retrieveMemberId(pmname));
+            boolean updateAllocationDAO = false;
             // add to allocation table
             for (String developer : dev) {
+                String[] strarr = developer.split(",");
                 //for multiple allocation
-                trelloID.add(PersonDAO.retrieveMemberId(developer));
-                 //update project allocation DAO
+                trelloID.add(PersonDAO.retrieveMemberId(strarr[0]));
+                //update project allocation DAO
                 //HOLD: Need to figure out plan start and plan end
-//                boolean updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, developer, );
+//                String projName, String dev, String dateAllocated, String planStart, String planEnd, String actualStart) {
+                
+                updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, strarr[0], strarr[1], strarr[2], strarr[1]);
             }
+            if (updateAllocationDAO) {
+                //update trello
+                String memIdList = "";
+                for (int i = 0; i < trelloID.size(); i++) {
+                    if (i == trelloID.size() - 1) {
+                        memIdList += trelloID.get(i);
+                    } else {
+                        memIdList += trelloID.get(i) + ",";
+                    }
 
-            //update trello
-            String memIdList = "";
-          for (int i = 0; i < trelloID.size(); i++){
-              if (i == trelloID.size() -1){
-                   memIdList += trelloID.get(i);
-              }else {
-                   memIdList += trelloID.get(i) + ",";
-              }
-             
-          }
+                }
           //make connection to trello:
-          
-          	String url = "https://api.trello.com/1/cards/"+ id +"?";
-		URL obj = new URL(url);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
-		//add reuqest header
-		con.setRequestMethod("PUT");
-		con.setRequestProperty("User-Agent", "Chrome/45.0.2454.101 m");
-		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                String url = "https://api.trello.com/1/cards/" + id + "?";
+                URL obj = new URL(url);
+                HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+
+                //add reuqest header
+                con.setRequestMethod("PUT");
+                con.setRequestProperty("User-Agent", "Chrome/45.0.2454.101 m");
+                con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 Person pm = PersonDAO.retrieveUser(pmname);
-		String urlParameters = "idMembers=" + memIdList + "&key=" + pm.getTrelloKey() + "&token=" + pm.getToken();
-		
-		// Send post request
-		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-		wr.close();
+                String urlParameters = "idMembers=" + memIdList + "&key=" + pm.getTrelloKey() + "&token=" + pm.getToken();
 
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+                // Send post request
+                con.setDoOutput(true);
+                DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
 
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response1 = new StringBuffer();
+                int responseCode = con.getResponseCode();
+                System.out.println("\nSending 'POST' request to URL : " + url);
+                System.out.println("Post parameters : " + urlParameters);
+                System.out.println("Response Code : " + responseCode);
 
-		while ((inputLine = in.readLine()) != null) {
-			response1.append(inputLine);
-		}
-		in.close();
-            
-            
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response1 = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response1.append(inputLine);
+                }
+                in.close();
+
+            } else {
+                errList.add("Project could not be allocated to the selected Developer");
+            }
         }
-
-       
 
         RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp");
         if (errList.isEmpty()) {

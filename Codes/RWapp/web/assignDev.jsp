@@ -51,26 +51,47 @@
 
 
                                     %>
-                                    <input type="checkbox" name="dev" value='<%=r.getUsername()%>'/> 
-                                    <%=count%>. <%=r.getUsername()%>, 
-                                    nationality: <%=r.getNationality()%>,
-                                    No of current project: <%=r.getCurrentprojectcount()%>,
-                                    Next project earliest start date: <%=r.getEarlieststart()%>,
-                                    Estimated working days to complete project: <%=r.getEstimateworkingday()%>,
-                                    Estimated days(incl weekends) to complete project: <%=r.getEstimateday()%>,
-                                    Schedule performance: <%=r.getScheduleperformance()%>,
-                                    Estimated completion date : <%=r.getEstimatecompletion()%>,
-                                    Ideal completion date: <%=r.getIdealcompletion()%>,
-                                    Defectless Score: <%=r.getDefectlessfactor()%>,
-                                    Schedule score: <%=r.getSchedulefactor()%>,
-                                    Average defects per project: <%=r.getAvgdefectperproject()%>,
-                                    Experience Score: <%=r.getExperiencefactor()%>,
-                                    Number of similar project completed: <%=r.getProjectexperiencecount()%>,
-                                    Zainess Score: <%=r.getZainessscore()%>,
-                                    Sorting Order: <%=r.getSorting()%>
-
-                                    </br>
+                                    <input type="checkbox" name="dev" value='<%=r.getUsername()%>,<%=r.getEarlieststart()%>,<%=r.getEstimatecompletion()%>'/> 
+                                    <table>
+                                        
+                                           
+                                        <b><%=count%>. <%=r.getUsername()%></b></br>
+                                        
+                                    <!--nationality: 
+                                    <%--<%=r.getNationality()%>--%>
+                                    ,-->
                                     
+                                    No of current project: <%=r.getCurrentprojectcount()%></br>
+                                    Next project earliest start date: <%=r.getEarlieststart()%></br>
+                                    Estimated working days to complete project: <%=r.getEstimateworkingday()%></br>
+                                    <!--Estimated days(incl weekends) to complete project:--> 
+                                    <%--<%= //r.getEstimateday()%>--%>
+                                    <!--,-->
+<!--                                    Schedule performance: 
+                                    <%--<%=r.getScheduleperformance()%>--%>
+                                    ,-->
+                                    Estimated completion date : <%=r.getEstimatecompletion()%> </br>
+                                    <!--Ideal completion date:--> 
+                                    <%--<%= //r.getIdealcompletion()%>--%>
+                                    <!--,-->
+                                    <!--                                    Defectless Score: 
+                                    <%--<%=r.getDefectlessfactor()%>--%>
+                                    ,
+                                    Schedule score: 
+                                    <%--<%=r.getSchedulefactor()%>--%>
+                                    ,-->
+                                    Average defects per project: <%=r.getAvgdefectperproject()%> </br>
+                                    <!--Experience Score: 
+                                    <%--<%=r.getExperiencefactor()%>--%>
+                                    ,-->
+                                    Number of similar project completed: <%=r.getProjectexperiencecount()%> </br>
+                                    Overall Score: <%=r.getZainessscore()%> </br>
+                                    <!--Sorting Order:--> 
+                                    <%--<%=r.getSorting()%>--%>
+                                    
+                                    </table>
+                                    </br>
+
                                     <%
                                             count++;
                                         }
@@ -82,21 +103,21 @@
                                                                                 <button type="submit" class="btn btn-danger">Submit</button>
                                                                             </div>
                                                                         </div>-->
-                             
 
 
 
-                                
-                                <input type='hidden' name='projName' value='<%=toAssign.getName()%>'/>
-                                
-                                <input type='hidden' name='type' value='<%=toAssign.getType()%>'/>
-                                <input type='hidden' name='priority' value='<%=toAssign.getPriority()%>'/>
-                                <input type='hidden' name='due' value='<%=toAssign.getDue()%>'/>
-                                <input type='hidden' name='desc' value='<%=toAssign.getDesc()%>'/>
-                                <input type='hidden' name='id' value='<%=toAssign.getId()%>'/>
-                                <input type="hidden" name="pmname" value='<%=pm.getUsername()%>'/>
-                                <input type="hidden" name="psize" value='<%=days%>'/>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+
+
+                                    <input type='hidden' name='projName' value='<%=toAssign.getName()%>'/>
+
+                                    <input type='hidden' name='type' value='<%=toAssign.getType()%>'/>
+                                    <input type='hidden' name='priority' value='<%=toAssign.getPriority()%>'/>
+                                    <input type='hidden' name='due' value='<%=toAssign.getDue()%>'/>
+                                    <input type='hidden' name='desc' value='<%=toAssign.getDesc()%>'/>
+                                    <input type='hidden' name='id' value='<%=toAssign.getId()%>'/>
+                                    <input type="hidden" name="pmname" value='<%=pm.getUsername()%>'/>
+                                    <input type="hidden" name="psize" value='<%=days%>'/>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
 
                             </div>

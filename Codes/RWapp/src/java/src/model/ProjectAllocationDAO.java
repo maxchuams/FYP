@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author maxchua
  */
 public class ProjectAllocationDAO {
-    public static boolean addAllocation(String projName, String dev, String dateAllocated, String planStart, String planEnd, String actualStart) {
+    public static boolean addAllocation(String projName, String dev, String planStart, String planEnd, String actualStart) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -26,7 +26,7 @@ public class ProjectAllocationDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("insert into projectallocation (projectname, developerusername, planstart, planend, actualstart) values (?, ?, ?,?,?,?)");
+            pstmt = conn.prepareStatement("insert into projectallocation (projectname, developerusername, planstart, planend, actualstart) values (?,?,?,?,?)");
             pstmt.setString(1, projName);
             pstmt.setString(2, dev);
             pstmt.setString(3, planStart);
