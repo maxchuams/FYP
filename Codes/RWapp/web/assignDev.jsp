@@ -88,6 +88,7 @@
                                     Overall Score: <%=r.getZainessscore()%> </br>
                                     <!--Sorting Order:--> 
                                     <%--<%=r.getSorting()%>--%>
+                                    <img src="ImageServlet?imageid=<%=r.getUsername()%>" alt="Display this text instead" align="center"/>
                                     
                                     </table>
                                     </br>
