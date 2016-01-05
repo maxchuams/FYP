@@ -50,18 +50,19 @@
                                         </div>
                                     </div>
                                 </form>
-
+                                        <table>
                                 <%
 
                                     ArrayList<String> timestamps = DefectScreenshotDAO.getScreenshotTimestamp(idDef);
                                     for (String stamp : timestamps) {
                                 %>
+                                <tr><td>
                                 <div class="col-lg-2"><img src='DefectScreenshotServlet?defectid=<%=idDef%>&updatetime=<%=stamp%>' align="center"/></div>
                                 <div class="col-lg-10"></div>
                                 <br/><br/>
                                 <!--Defect ID: -->
                                 <%//=idDef%><%//=stamp%>
-
+                                    <td>
                                 <form method="POST"  action="DefectScreenshotController" enctype="multipart/form-data" >
 
                                     <div class="form-group">
@@ -71,10 +72,15 @@
                                         <input type='hidden' name="d" value='delete'>
                                         <input type='hidden' name='defectid' value='<%=idDef%>'>
                                         <button type="submit" class="btn btn-primary">Delete</button>
-                                </form>
+                                
+                                        </div>
+                                        </form>
+                                    </td>
+                                </td></tr>
                                 <%}%>
+                                </table>
                                 </br>
-                            </div>
+                            
                         </section>
                     </div>
                 </div>
