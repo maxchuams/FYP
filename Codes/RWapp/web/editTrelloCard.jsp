@@ -127,7 +127,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    //change the input here to go to DAO and select
+                                    
                                     <%
                                     ArrayList<String> pTypeList = ProjectDAO.retrieveAllTypes();
                                     %>
