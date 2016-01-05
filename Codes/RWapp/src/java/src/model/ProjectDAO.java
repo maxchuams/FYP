@@ -121,5 +121,44 @@ public class ProjectDAO {
 
         }
      }
-     
+     public static ArrayList<Project> retrieveByUser(String role, String username) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Project> toReturn = new ArrayList<Project>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select @sortingtype:= ? as sortingtype, @sortingname:= ? as sortingname,developerusername, p.projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize "
+                    + "from project p, projectallocation pa "
+                    + "where p.projectname=pa.projectname "
+                    + "group by p.projectname , "
+                    + "CASE sortingtype "
+                    + "        WHEN 'dev' THEN developerusername "
+                    + "        ELSE  assignby "
+                    + "END "
+                    + "having "
+                    + "CASE sortingtype "
+                    + "        WHEN 'dev' THEN developerusername "
+                    + "        ELSE  assignby "
+                    + "END "
+                    + "= sortingname;");
+            pstmt.setString(1, role);
+            pstmt.setString(2, username);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(new Project(rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getInt(10), rs.getString(11), rs.getInt(12)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+
 }
