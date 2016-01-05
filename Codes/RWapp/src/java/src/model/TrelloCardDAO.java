@@ -102,9 +102,11 @@ public class TrelloCardDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select * from project");
+            //String name, String id, String desc,String due, int priority, String type
+            pstmt = conn.prepareStatement("select projectname, trellokey, description,duedate, priority,type  from project");
             rs = pstmt.executeQuery();
-
+  
+      
             while (rs.next()) {
                 if(rs.getString(3)!=null){
                     cards.add(new TrelloCard(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4), rs.getInt(5), rs.getString(6)));
