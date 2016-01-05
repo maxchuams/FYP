@@ -42,7 +42,12 @@ public class ValidateUser extends HttpServlet {
             username= username.trim();
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
-            
+            if(session.getAttribute("loggedInDev")!=null || 
+                    session.getAttribute("loggedInPm")!=null || 
+                    session.getAttribute("loggedInDesg")!=null ||
+                    session.getAttribute("loggedInSudo")!=null){
+                response.sendRedirect("index.jsp");
+            }else{
             Person person = PersonDAO.retrieveUser(username);
            
             if(person != null && person.getPassword().equals(password)){
@@ -67,9 +72,11 @@ public class ValidateUser extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher("login.jsp");
                 view.forward(request, response);
             }
-        } finally {
+        
+            }} finally {
             out.close();
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
