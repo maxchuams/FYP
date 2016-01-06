@@ -11,7 +11,6 @@
 <%@include file="protectPM.jsp" %>
 <%String thisPage = "sortedDefects"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -50,6 +49,11 @@
         <%String sortby = request.getParameter("sortby");%>
         <%String filterby = request.getParameter("filterby");%>
         <%String filterText = request.getParameter("filterText");%>
+        <% 
+        if(sortby==null && filterby==null){
+            response.sendRedirect("manageDefects.jsp");
+        }
+        %>
         <%  String errorMsg = (String) request.getAttribute("err");
             ArrayList<Defect> sucess = (ArrayList<Defect>) request.getAttribute("sucess"); %>
 
@@ -71,7 +75,7 @@
                         <section class="panel">
                             <header class="panel-heading tab-bg-dark-navy-blue ">
                                 <ul class="nav nav-tabs">
-                                    <%if (!sortby.equals("")) {%>
+                                    <%if (sortby!= null && sortby.length()!=0) {%>
                                     <li class="active">
                                         <a data-toggle="tab" href="#home">Sort defects</a>
                                     </li>
@@ -79,7 +83,7 @@
                                         <a data-toggle="tab" href="#about">Filter Defects</a>
                                     </li>
                                     <%}%>
-                                    <%if (!filterby.equals("")) {%>
+                                    <%if (filterby != null && filterby.length()!=0) {%>
                                     <li class="">
                                         <a data-toggle="tab" href="#home">Sort defects</a>
                                     </li>
@@ -91,7 +95,7 @@
                             </header>
                             <div class="panel-body">
                                 <div class="tab-content">
-                                    <%if (!sortby.equals("")) {%>  
+                                    <%if (sortby != null && sortby.length()!=0) {%>  
                                     <div id="home" class="tab-pane active">
                                         <%} else {%>
                                         <div id="home" class="tab-pane">
@@ -133,7 +137,7 @@
                                             </form>
 
                                         </div>
-                                        <%if (!filterby.equals("")) {%>
+                                        <%if (filterby != null && filterby.length()!=0) {%>
                                         <div id="about" class="tab-pane active" class="form-control m-bot15">
                                             <% } else { %>
                                             <div id="about" class="tab-pane" class="form-control m-bot15">
@@ -190,7 +194,6 @@
                                                 </form>
                                             </div>
                                         </div>
-                                                    
                                     
                                         <%if ("projectname".equals(filterby)) {%>
                                         <div class="col-md-12">
@@ -208,7 +211,7 @@
                                             <%if (filterText.equals("3")){%>Severity, High<%}%>
                                             
                                         </div>
-                                    </div>s
+                                    </div>
                                     <%}%>
                                     <%if ("iscomplete".equals(filterby)) {%>
                                     <div class="col-md-12">
