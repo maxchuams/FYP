@@ -12,6 +12,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectPM.jsp" %>
 <%String thisPage = "manageDefects"; //This is to change the highlight in Navigation Bar%>
+<%String selected = null;%>
 <%@include file="navbar.jsp"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -107,10 +108,10 @@
                                             <label class="control-label col-lg-2" for="inputSuccess">Sort by:</label>
                                             <div class="col-lg-3">
                                                 <select name="sortby" class="form-control m-bot15">
+                                                    <option value=''>Select one...</option>
                                                     <option value="projectname">Project Name</option>
                                                     <option value="defectname">Defect Name</option>
                                                     <option value="updatetime">Latest Update Time</option>
-                                                    <!--<option value='iscomplete'>Defect Status</option>-->
                                                 </select>
                                                 <input type="hidden"  name='username' value='<%=pm.getUsername()%>'/>
                                                 <input type='hidden' value='' name='inputText'/>
@@ -240,7 +241,10 @@
                                     </tr>
                                     <tr>
                                         <td>Screenshots uploaded: </td>
-                                        <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size()%></a></td>
+                                        <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size(); %>
+                                        <td><%if (size==0){%>NIL
+                                            <%}else{%>
+                                        <a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size()%><%}%></a></td>
                                     </tr>
                                     <tr>
                                         <td>Reported by: </td>

@@ -57,7 +57,7 @@ public class sortData extends HttpServlet {
         RequestDispatcher rd= null;
         if (caseType.equals("pm")) {
             dList = DefectDAO.filterSortDefectsPm(filterby, filterText, sortby, username);
-            rd = request.getRequestDispatcher("sortedDefects.jsp");
+            rd = request.getRequestDispatcher("sortedDefects.jsp?sortby="+sortby+"&filterby="+filterby+"&filterText="+filterText);
         } else if(caseType.equals("dev")){
             dList= DefectDAO.filterSortDefectsDev(filterby, filterText, sortby, username);
             rd= request.getRequestDispatcher("viewSortedDefects.jsp");
