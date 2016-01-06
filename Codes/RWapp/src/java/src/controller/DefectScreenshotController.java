@@ -120,7 +120,7 @@ public class DefectScreenshotController extends HttpServlet {
                     conn.close();
                     }catch(Exception e){e.printStackTrace();}
                     
-                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp");
+                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
                         rs.include(request, response);
                 }
     }   
