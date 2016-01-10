@@ -308,7 +308,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Last updated time: </td>
-                                                        <td><%=d.getUpdateTime()%></td>
+                                                        <td><% out.println(d.getUpdateTime().subSequence(0,16)); %></td>
                                                     </tr>
                                             </table>
                                         </div>

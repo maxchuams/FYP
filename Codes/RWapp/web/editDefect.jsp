@@ -31,7 +31,6 @@
                                     int id = Integer.parseInt(defId);
 
                                     Defect toEdit = DefectDAO.retrieveDefect(id);
-
                                 %>
 
                                 <%  String errorMsg = (String) request.getAttribute("err");

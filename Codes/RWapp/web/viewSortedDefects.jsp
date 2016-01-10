@@ -47,12 +47,17 @@
         </script>
     </head>
     <body>
-        
+        <%String sortby = request.getParameter("sortby");%>
+        <%String filterby = request.getParameter("filterby");%>
+        <%String filterText = request.getParameter("filterText");%>
+        <% 
+        if(sortby==null && filterby==null){
+            response.sendRedirect("manageDefects.jsp");
+        }
+        %>
          <%  String errorMsg = (String) request.getAttribute("err");
              ArrayList<Defect> sucess = (ArrayList<Defect>) request.getAttribute("sucess");
         %>
-        
-        
         
         <section id="main-content">
             <section class="wrapper">
@@ -73,25 +78,58 @@
                         <section class="panel">
                             <header class="panel-heading tab-bg-dark-navy-blue ">
                                 <ul class="nav nav-tabs">
+                                    <%if (sortby!= null && sortby.length()!=0) {%>
                                     <li class="active">
                                         <a data-toggle="tab" href="#home">Sort defects</a>
                                     </li>
                                     <li class="">
                                         <a data-toggle="tab" href="#about">Filter Defects</a>
                                     </li>
+                                    <%}%>
+                                    <%if (filterby != null && filterby.length()!=0) {%>
+                                    <li class="">
+                                        <a data-toggle="tab" href="#home">Sort defects</a>
+                                    </li>
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#about">Filter Defects</a>
+                                    </li>
+                                    <%}%>
 
                                 </ul>
                             </header>
                             <div class="panel-body">
                                 <div class="tab-content">
+                                    
+                                    <%if (sortby != null && sortby.length()!=0) {%>  
                                     <div id="home" class="tab-pane active">
+                                        <%} else {%>
+                                        <div id="home" class="tab-pane">
+                                            <%}%>
+                                            
                                         <form action="sortData" class="form-group">
                                             <label class="control-label col-lg-2" for="inputSuccess">Sort by:</label>
                                             <div class="col-lg-3">
                                                 <select name="sortby" class="form-control m-bot15">
-                                                    <option value="projectname">Project Name</option>
-                                                    <option value="defectname">Defect Name</option>
-                                                    <option value="updatetime">Latest Update Time</option>
+                                                    <%
+                                                            if ("projectname".equals(sortby)) {
+                                                                out.println("<option value='projectname' selected>Project Name</option>");
+                                                                out.println("<option value='defectname'>Defect Name</option>");
+                                                                out.println("<option value='updatetime'>Update Time</option>");
+                                                            } else if ("defectname".equals(sortby)) {
+                                                                out.println("<option value='projectname'>Project Name</option>");
+                                                                out.println("<option value='defectname' selected>Defect Name</option>");
+                                                                out.println("<option value='updatetime'>Update Time</option>");
+                                                            } else if ("updatetime".equals(sortby)) {
+                                                                out.println("<option value='projectname'>Project Name</option>");
+                                                                out.println("<option value='defectname'>Defect Name</option>");
+                                                                out.println("<option value='updatetime' selected>Update Time</option>");
+                                                            } else {
+                                                                out.println("<option value=''>Please select one...</option>");
+                                                                out.println("<option value='projectname'>Project Name</option>");
+                                                                out.println("<option value='defectname'>Defect Name</option>");
+                                                                out.println("<option value='updatetime'>Update Time</option>");
+                                                            }
+                                                        %>
                                                     <!--<option value='iscomplete'>Defect Status</option>-->
                                                 </select>
                                                 <input type="hidden"  name='username' value='<%=dev.getUsername()%>'/>
@@ -104,7 +142,12 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div id="about" class="tab-pane" class="form-control m-bot15">
+                                                <%if (filterby != null && filterby.length()!=0) {%>
+                                        <div id="about" class="tab-pane active" class="form-control m-bot15">
+                                            <% } else { %>
+                                            <div id="about" class="tab-pane" class="form-control m-bot15">
+                                                <% } %>
+                                    <!--<div id="about" class="tab-pane" class="form-control m-bot15">-->
                                         <form action="sortData" class="form-group">
                                             <label class="control-label col-lg-2" for="inputSuccess">Filter by:</label>
                                             <div class="col-lg-3">
@@ -156,6 +199,36 @@
                                         </form>
                                     </div>
                                 </div>
+                                            <%if ("projectname".equals(filterby)) {%>
+                                        <div class="col-md-12">
+                                        <div class="well">
+                                            Filtering by: Project Name, <%=filterText%>
+                                        </div>
+                                        </div>
+                                    <%}%>
+                                    <%if ("severity".equals(filterby)) {%>
+                                    <div class="col-md-12">
+                                        <div class="well">
+                                            Filtering by:
+                                            <%if (filterText.equals("1")){%>Severity, Low<%}%>
+                                            <%if (filterText.equals("2")){%>Severity, Medium<%}%>
+                                            <%if (filterText.equals("3")){%>Severity, High<%}%>
+                                            
+                                        </div>
+                                    </div>
+                                    <%}%>
+                                    <%if ("iscomplete".equals(filterby)) {%>
+                                    <div class="col-md-12">
+                                        <div class="well">
+                                            Filtering by: 
+                                            <%if (filterText.equals("0")){%>Completion Status, Developer has not yet complete<%}%>
+                                            <%if (filterText.equals("1")){%>Completion Status, Developer has marked as completed<%}%>
+                                            <%if (filterText.equals("2")){%>Completion Status, Defect has been resolved<%}%>
+                                            
+                                        </div>
+                                            <div class="col-md-12">
+                                    <%}%>
+                                    
                             </div>
                         </section>
         
@@ -198,7 +271,10 @@
                     </tr>
                     <tr>
                                         <td>Screenshots uploaded: </td>
-                                        <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size()%></a></td>
+                                        <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size(); %>
+                                        <td><%if (size==0){%>NIL
+                                            <%}else{%>
+                                        <a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size()%><%}%></a></td>
                                     </tr>
                     <tr>
                         <td>Reported by: </td>
@@ -206,7 +282,7 @@
                     </tr>
                      <tr>
                         <td>Last updated time: </td>
-                        <td><%=d.getUpdateTime()%></td>
+                        <td><% out.println(d.getUpdateTime().subSequence(0,16)); %></td>
                     </tr>
                     <%
 

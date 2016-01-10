@@ -39,107 +39,113 @@
         <section id="main-content">
             <section class="wrapper">
                 <!--kw code-->
+                <!--                <div class="row">
+                                    <div class="col-sm-12">
+                                        <section class="panel">
+                                            <header class="panel-heading">
+                                                View All Projects
+                                                <span class="tools pull-right">
+                                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                                </span>
+                                            </header>
+                                            <div class="panel-body">
+                                                <table class="table  table-hover general-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Project Name</th>
+                                                            <th>type</th>
+                                                            <th>Due Date</th>
+                <% if (dev != null && pm == null) {%>
+            <th>Assigned By</th>
+                <%}%>
+            <th>Members</th>
+        </tr>
+    </thead>
+    <tbody>
+                <%
+                    for (Project t : tList) {
+                %> 
+                <tr>
+                    <td><%=t.getName()%></td>
+                    <td><%=t.getType()%></td>
+                    <td><%=t.getDuedate()%></td>
+                <% if (dev != null && pm == null) {%>
+                <td><%=t.getAssignedBy()%></td>
+                <%}%>
+
+                <td>
+                <%//ArrayList<Person> memberList = t.getMembers(); 
+                    //for(Person p : memberList){
+                    //   p.getUsername();
+                    //}%>
+                </td>
+            </tr>
+                <% 
+                    }
+                %>
+            </tbody>
+        </table>
+    </div>
+</section>
+</div>-->
+                <!--kw code-->
+                <%
+                %>
+
+                </br>
+
+                <%             String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
+                    ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+                    if (errorMsg == null) {
+                        errorMsg = "";
+                    }
+
+                    if (sucess == null) {
+                        sucess = "";
+                    }
+
+                    if (errorList == null || errorList.isEmpty()) {
+
+                    }
+                %>
+
+
                 <div class="row">
                     <div class="col-sm-12">
-                        <section class="panel">
-                            <header class="panel-heading">
-                                View All Projects
-                                <span class="tools pull-right">
-                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                </span>
-                            </header>
-                            <div class="panel-body">
-                                <table class="table  table-hover general-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Project Name</th>
-                                            <th>type</th>
-                                            <th>Due Date</th>
+                        <div class="row-fluid" id="draggable_portlets">
+                            <div class="row">
+                                <%
+                    for (Project t : tList) {
+                %> 
+                                <!-- BEGIN Portlet PORTLET-->
+                                <div class="col-md-4">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            Project <%=t.getName()%>
+                                            <span class="tools pull-right">
+                                            </span>
+                                        </div>
+                                        <div class="panel-body">
+                                            <ul class="nav nav-pills nav-stacked">
+                                                <li> <span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li>
+                                                <span class="pull-right">
+                                                    <li> <b>Type:</b> <%=t.getType()%> </li>
                                                 <% if (dev != null && pm == null) {%>
-                                            <th>Assigned By</th>
-                                                <%}%>
-                                            <!--<th>Members</th>-->
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            for (Project t : tList) {
-                                        %> 
-                                        <tr>
-                                            <td><%=t.getName()%></td>
-                                            <td><%=t.getType()%></td>
-                                            <td><%=t.getDuedate()%></td>
-                                            <% if (dev != null && pm == null) {%>
-                                            <td><%=t.getAssignedBy()%></td>
-                                            <%}%>
-
-                                            <!--<td>
-                                            <%//ArrayList<Person> memberList = t.getMembers(); 
-                                                //for(Person p : memberList){
-                                                //   p.getUsername();
-                         //}%>
-                                            </td>-->
-                                        </tr>
-                                        <% 
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
+                                                    <li> <b>Assigned by:</b> <%=t.getAssignedBy()%> <%}%></li>
+                                                </span>
+                                                 </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Portlet PORTLET-->
+                                <% } %>
                             </div>
-                        </section>
+                        </div>
                     </div>
-                    <!--kw code-->
-
-
-                    <%
-                    %>
-
-                    </br>
-
-                    <%             String errorMsg = (String) request.getAttribute("err");
-                        String sucess = (String) request.getAttribute("sucess");
-                        ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
-                        if (errorMsg == null) {
-                            errorMsg = "";
-                        }
-
-                        if (sucess == null) {
-                            sucess = "";
-                        }
-
-                        if (errorList == null || errorList.isEmpty()) {
-
-                        }
-
-
-                    %>
-
-                    <!--        <h2>Edit Priority</h2>
-                            <form action="editPriority" method="GET">
-                                Select Project:
-                                <select name="projectTitle">
-                    <%//            for(TrelloCard card: tList){
-        //                String projectName = card.getName();
-                        //System.out.println(projectName);
-                    %>
-                    <option value='projectName%>'>projectName%></option>
-                    <%//            }
-
-                    %>
-                 </select>
-                 </br>
-                 <select name="priority">
-                     <option value="Low">Low</option>
-                     <option valie="Medium">Medium</option>
-                     <option value="High">High</option>
-                 </select>
-                 <input type="submit" value="Set Priority!">
-                 </form>-->
-
-
-
+                </div>
+                </div>
             </section>
         </section>
-
     </body>
 </html>

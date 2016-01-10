@@ -63,7 +63,6 @@
                                     <li class="">
                                         <a data-toggle="tab" href="#about">Filter Defects</a>
                                     </li>
-
                                 </ul>
                             </header>
                             <div class="panel-body">
@@ -73,9 +72,10 @@
                                             <label class="control-label col-lg-2" for="inputSuccess">Sort by:</label>
                                             <div class="col-lg-3">
                                                 <select name="sortby" class="form-control m-bot15">
+                                                    <option value=''>Select one...</option>
                                                     <option value="projectname">Project Name</option>
                                                     <option value="defectname">Defect Name</option>
-                                                    <option value="updatetime">Latest Update Time</option>
+                                                    <option value="updatetime">Update Time</option>
                                                     <!--<option value='iscomplete'>Defect Status</option>-->
                                                 </select>
                                                 <input type="hidden"  name='username' value='<%=dev.getUsername()%>'/>
@@ -183,7 +183,10 @@
                                     <tr>
                                         <td>Screenshots uploaded: </td>
                                         <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size(); %>
-                                        <td><a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%if (size==0){%>NIL<%}else{out.println(size);}%></a></td>
+                                        <td><%if (size==0){%>NIL
+                                            <%}else{%>
+                                        <a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size()%><%}%></a></td>
+                                    
                                     </tr>
                                     <tr>
                                         <td>Reported by: </td>
@@ -191,7 +194,7 @@
                                     </tr>
                                     <tr>
                                         <td>Last updated time: </td>
-                                        <td><%=d.getUpdateTime()%></td>
+                                        <td><% out.println(d.getUpdateTime().subSequence(0,16)); %></td>
                                     </tr>
                                     <%
 

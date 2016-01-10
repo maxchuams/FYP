@@ -111,7 +111,7 @@
                                                     <option value=''>Select one...</option>
                                                     <option value="projectname">Project Name</option>
                                                     <option value="defectname">Defect Name</option>
-                                                    <option value="updatetime">Latest Update Time</option>
+                                                    <option value="updatetime">Update Time</option>
                                                 </select>
                                                 <input type="hidden"  name='username' value='<%=pm.getUsername()%>'/>
                                                 <input type='hidden' value='' name='inputText'/>
@@ -252,7 +252,7 @@
                                     </tr>
                                     <tr>
                                         <td>Last updated time: </td>
-                                        <td><%=d.getUpdateTime()%></td>
+                                        <td><% out.println(d.getUpdateTime().subSequence(0,16)); %></td>
                                     </tr>
                                     <%
                                         }

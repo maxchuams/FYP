@@ -147,7 +147,7 @@
                                             </select>
                                         </div>
                                         <div id='devOnly'>
-                                            <label for="inputType" class="col-lg-2 control-label">Project type </label>
+                                            <label for="inputType" class="col-lg-2 control-label">Project Type </label>
                                              <div class="col-lg-9">
                                                 <input type='text' name='otherType' class="form-control"/><p></p>
                                              </div>
