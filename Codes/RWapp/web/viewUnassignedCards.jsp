@@ -70,7 +70,7 @@
                 <!--End of error/success display--> 
                 
                 <!--kw code-->
-            <div class="row">
+<!--            <div class="row">
             <div class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
@@ -87,22 +87,22 @@
                                 <th>Project Name</th>
                                 <th>Due Date</th>
                                 <th>Assign Developer</th>
-                                <!--<th>Members</th>-->
+                                <th>Members</th>
                             </tr>
                             </thead>
                             <tbody>
                             
-                                        <%                                            for (TrelloCard t : tb) {
+                                        <% for (TrelloCard t : tb) {
                                         %> 
                                         <tr>
                                             <td><%=t.getName()%></td>
                                             <td><%=t.getDue()%></td>
-                                            <!--<td>
+                                            <td>
                                             <%//ArrayList<Person> memberList = t.getMembers(); 
                                                 //for(Person p : memberList){
                                                 //   p.getUsername();
                                                 //}%>
-                                            </td>-->
+                                            </td>
                                                     <td><a href="editTrelloCard.jsp?name=<%=t.getName()%>&id=<%=t.getId()%>"><button type="button" class="btn btn-primary btn-xs">Assign</button></a></td>
                                                 
                                         </tr>
@@ -111,7 +111,7 @@
                                         %>
                                     </tbody>
                                 </table>
-                                    <!--
+                                    
                                     <form action='assignProject' method='POST'id='main'>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
@@ -119,12 +119,43 @@
                                         <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>
-                                    </form>-->
+                                    </form>
                             </div>
                         </section>
                     </div>
-                </div>
+                </div>-->
                 <!--kw code-->
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row-fluid" id="draggable_portlets">
+                            <div class="row">
+                                <% for (TrelloCard t : tb) { %>
+                                <!-- BEGIN Portlet PORTLET-->
+                                <div class="col-md-4">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            Project <%=t.getName()%>
+                                            <span class="tools pull-right">
+                                            </span>
+                                        </div>
+                                        <div class="panel-body">
+                                            <ul class="nav nav-pills nav-stacked">
+                                                <li> <span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDue()%></span></li>
+                                                <span class="pull-right">
+                                                    <li> <a href="editTrelloCard.jsp?name=<%=t.getName()%>&id=<%=t.getId()%>"><button type="button" class="btn btn-primary btn-xs">Assign Developer to Project</button></a>
+                                         </li><br/>
+                                                </span>
+                                                 </ul>
+                                                </div>
+                                    </div>
+                                </div>
+                                <!-- END Portlet PORTLET-->
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </section>
     </body>

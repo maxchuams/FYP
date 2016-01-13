@@ -28,7 +28,7 @@
                             <div class="panel-body profile-information">
                                 <div class="col-md-6">
                                     <div class="profile-pic text-right">
-                                        <img src="ImageServlet?imageid=<%=username%>" alt="Display this text instead" align="center"/>
+                                        <img src="ImageServlet?imageid=<%=username%>" alt="" align="center"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -36,10 +36,10 @@
                                     <span class="text-muted">User Role: <%
                                    Person p = PersonDAO.retrieveUser(username);
                                                                            if (p.getType().equals("s")) {
-                                       out.println("SuperAdmin");%></spa                                        n><%
+                                       out.println("SuperAdmin");%></span><%
                                                                                }
                                                                                if (p.getType().equals("p")) {
-                                           out.println("Project Manager");%></spa                                        n><%
+                                           out.println("Project Manager");%></span><%
                                                                                }
                                                                                if (p.getType().equals("c")) {
                                                                                    out.println("Developer");%></span><%
@@ -60,19 +60,21 @@
                                             Profile Picture
                                         </a>
                                     </li>
+                                    <% if (p.getType().equals("c")) { %>
                                     <li>
                                         <a data-toggle="tab" href="#contacts" class="contact-map">
                                             Country
                                         </a>
                                     </li>
+                                    <% } %>
                                     <li>
-                                        <a data-toggle="tab" href="#job-history">
-                                            Job History
+                                        <a data-toggle="tab" href="#"><!--href="#job-history">-->
+                                            WIP
                                         </a>
                                     </li>
                                     <li>
-                                        <a data-toggle="tab" href="#settings">
-                                            Others
+                                        <a data-toggle="tab" href="#"><!--href="#settings">-->
+                                            WIP
                                         </a>
                                     </li>
                                 </ul>
@@ -439,6 +441,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                                    <%if (p.getType().equals("c")) { %>
                                     <div id="contacts" class="tab-pane ">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -704,7 +707,10 @@
                                                                     <option value="Zimbabwe">Zimbabwe</option>
                                                                 </select>
                                                             </div>
-                                                            <input type="hidden" name="user" value="<%=dev.getUsername()%>"/>
+                                                            <% 
+                                                            if (dev != null){
+                                                            String devName = dev.getUsername(); }%>
+                                                            <input type="hidden" name="user" value="devName"/>
                                                             <div class="col-lg-offset-3 col-lg-9">
                                                             <button class="btn btn-danger" type="submit">Submit</button>
                                                             </div>
@@ -715,7 +721,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+<% } %>
                                 </div>
                             </div>
                         </section>
