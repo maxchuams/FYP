@@ -107,21 +107,21 @@
                                 <form action="assignRecommendation" method="POST" class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Start Date</label>
-                                        <div class="col-lg-10">
-                                            <input type="date" name="sDate" required/>
+                                        <div class="col-lg-6">
+                                            <input type="date" class="form-control m-bot15" name="sDate" required/>
                                         </div>
 
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Number of Days(Project Size)</label>
-                                        <div class="col-lg-10">
-                                            <input type="number" name="days" min=1 required/><p></p>
+                                        <div class="col-lg-6">
+                                            <input class="form-control m-bot15" type="number" name="days" min=1 required/><p></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
-                                        <div class="col-lg-10">
-                                            <select name='priority' class="form-control m-bot15">
+                                        <div class="col-lg-6">
+                                            <select name='priority' class="form-control m-bot12">
                                                 <option value='0'>Standard Project</option>
                                                 <option value='1'>High Priority Project</option>
                                             </select>
@@ -133,7 +133,7 @@
                                     %>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
-                                        <div class="col-lg-10">
+                                        <div class="col-lg-6">
                                             <select name='type' class="form-control m-bot15" id="role">
                                                 <%
                                                 for (String s : pTypeList){
