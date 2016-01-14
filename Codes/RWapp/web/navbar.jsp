@@ -53,7 +53,7 @@
                 <div class="brand">
 
                     <a href="index.jsp" class="logo">
-                        <img src="bootstrap/html/images/ReccoWhite.svg" alt="" width="168px" height="32px">
+                        <img src="bootstrap/html/images/ReccoWhite.svg" onerror="this.onerror=null; this.src='bootstrap/html/images/ReccoWhite.png'" width="168" height="32" alt="" title="" />
                     </a>
                     <div class="sidebar-toggle-box">
                         <div class="fa fa-bars"></div>

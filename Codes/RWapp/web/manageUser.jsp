@@ -71,7 +71,7 @@
                                     <thead>
                                         <tr>
                                             <th>Username</th>
-                                            <th>Number of projects assigned</th>
+                                            <th>Number of on-going projects</th>
                                             <th>Edit</th>
                                         </tr>
                                     </thead>
@@ -123,6 +123,7 @@
                                         <tr>
                                             <th>Username</th>
                                             <th>Country</th>
+                                            <th>Number of on-going projects</th>
                                             <th>Edit</th>
                                         </tr>
                                     </thead>
@@ -142,6 +143,7 @@
                                                 String d = DeveloperDAO.retrieveDevCountry(p.getUsername());
                                                 out.println(d);
                                             %></td>
+                                            <td></td>
                                             <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
                                         </tr>
                                         <%}%>

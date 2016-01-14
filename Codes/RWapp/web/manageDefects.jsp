@@ -200,9 +200,9 @@
                                     <thead>
                                         <tr>
                                             <th>Project <%=d.getProjectName()%></th>
-                                            <th><div align="right"><a href="defectscreenshot.jsp?id=<%=d.getId()%>" class="fa fa-picture-o"> Add Screenshot </a> | 
-                                        <a href="editDefect.jsp?id=<%=d.getId()%>" class="fa fa-pencil-square-o"> Edit </a> | 
-                                        <a href="#" class="fa fa-minus-circle" onclick="confirmDelete('defectComplete?id=<%=d.getId()%>&case=0');"> Delete </a></div>
+                                            <th><div align="right"><a href="defectscreenshot.jsp?id=<%=d.getId()%>"> <i class="fa fa-picture-o"></i> Add Screenshot </a> | 
+                                        <a href="editDefect.jsp?id=<%=d.getId()%>"> <i class="fa fa-pencil-square-o"></i> Edit </a> | 
+                                        <a href="#" onclick="confirmDelete('defectComplete?id=<%=d.getId()%>&case=0');"> <i class="fa fa-minus-circle"></i> Delete </a></div>
                                     </th>
                                     </tr>
                                     </thead>
