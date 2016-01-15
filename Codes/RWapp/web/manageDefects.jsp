@@ -10,7 +10,7 @@
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.DefectDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@include file="protectPM.jsp" %>
+<%@include file="protectPMandTester.jsp" %>
 <%String thisPage = "manageDefects"; //This is to change the highlight in Navigation Bar%>
 <%String selected = null;%>
 <%@include file="navbar.jsp"%>
@@ -220,7 +220,7 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (p.getName().equals(d.getProjectName())) {
+                                                if (p.getName().equalsIgnoreCase(d.getProjectName())) {
                                                     if (pm != null) { 
                                                         out.println("<a href='viewDefectInfo.jsp?defectId="+d.getId()+"'>");  
                                                         if (d.getIsComplete() == 2){ %>

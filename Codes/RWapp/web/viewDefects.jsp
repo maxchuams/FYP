@@ -149,12 +149,12 @@
                             ArrayList<Defect> dList = DefectDAO.retrieveDev(dev.getUsername());
                         %>
 
-                        <%for (Project p : pList) {%>
+                        <%for (Project p : pList) {%><!--5 project-->
                         <div class="row">
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Project <%=p.getName()%> <!--5 project-->
+                                        Project <%=p.getName()%> 
                                         <span class="tools pull-right">
                                             <a href="addDefect.jsp?name="<%=p.getName()%> class="fa fa-plus-circle"></a>
                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
@@ -173,8 +173,8 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (d.getProjectName().equals(p.getName())) {
-                                                    if (dev != null) { 
+                                                if (p.getName().equalsIgnoreCase(d.getProjectName())) {
+                                                    
                                                         out.println("<a href='viewDefectInfo.jsp?defectId="+d.getId()+"'>");  
                                                         if (d.getIsComplete() == 2){ %>
                                                         <div class='col-lg-4 col-sm-4'> 
@@ -195,7 +195,7 @@
                                                                 out.println("<tr><td><b>Severity: </b></td><td> "+severity+ "</td></tr>");
                                                                 out.println("<tr><td><b>Date: </b></td><td> "+d.getUpdateTime().subSequence(0, 16) +"</td></tr>");
                                                                 out.println("</table>");
-                                                    }
+                                                    
                                                             %> 
                                                         </div>
                                                     </div>
