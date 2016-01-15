@@ -79,5 +79,37 @@ public class ProjectAllocationDAO {
         
         return pAllocate;
     } 
-     
+    
+    //SELECT distinct developerusername FROM projectallocation WHERE projectname = "candy"
+    public static ArrayList<String> retrieveDev(String projectname){
+        ArrayList<String> toReturn = new ArrayList<String>();
+                
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ProjectAllocation pA = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct developerusername from projectallocation where projectname = ?");
+            pstmt.setString(1, projectname);
+            
+            rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                
+                toReturn.add(rs.getString(1));
+            }
+            
+            //return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+        
+        return toReturn;
+    }
 }

@@ -8,8 +8,10 @@ package src.controller;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,11 +22,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import src.model.Person;
 import src.model.PersonDAO;
 import src.model.Project;
 import src.model.ProjectAllocationDAO;
 import src.model.ProjectDAO;
+import src.model.TrelloBoard;
 import src.model.TrelloCard;
 import src.model.TrelloCardDAO;
 
@@ -69,7 +74,7 @@ public class processRecommendation extends HttpServlet {
         int priorityInt = Integer.parseInt(priority);
         boolean success = false;
         if (errList.isEmpty()) {
-            Project toAdd = new Project(projName, "", desc, pmname, due, Integer.parseInt(priority), 0, type, Integer.parseInt(psize));
+            Project toAdd = new Project(projName, id, desc, pmname, due, Integer.parseInt(priority), 0, type, Integer.parseInt(psize));
             success = ProjectDAO.add(toAdd);
         }
 
@@ -91,7 +96,7 @@ public class processRecommendation extends HttpServlet {
                 //update project allocation DAO
                 //HOLD: Need to figure out plan start and plan end
 //                String projName, String dev, String dateAllocated, String planStart, String planEnd, String actualStart) {
-                
+
                 updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, strarr[0], strarr[1], strarr[2], strarr[1]);
             }
             if (updateAllocationDAO) {
@@ -105,28 +110,61 @@ public class processRecommendation extends HttpServlet {
                     }
 
                 }
-          //make connection to trello:
+                Person pm = PersonDAO.retrieveUser(pmname);
+                //https://api.trello.com/1/cards/568c92514a3b3bcdcbc42106?fields=idMembers&key=7e35111227918de8a37f8c20844ed555&token=f7f588e4ce535adc2f08539a56b4b7d24caad79d0e7142cebb564fe979cbc565
+                //make connection to trello:
+                //get exisiting members, store on the list
+                URL memberUrl = new URL("https://api.trello.com/1/cards/" + id + "?fields=idMembers&key=" + pm.getTrelloKey() + "&token=" + pm.getToken());
+                //System.out.println(memberUrl);
+
+                URLConnection con = memberUrl.openConnection();
+                InputStream is = con.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+                String line = null;
+                String jsonOutput = "";
+                TrelloBoard tb = null;
+                // read each line and throw string into JSONObject
+                while ((line = br.readLine()) != null) {
+                    jsonOutput += line;
+
+                }
+
+                JSONObject obj = new JSONObject(jsonOutput);
+                JSONArray memArr = obj.getJSONArray("idMembers");
+        //iterate through the user's boards and store into an arraylist first
+
+                //masterboardID - id for masterboard need this for the URL
+              
+                for (int i = 0; i < memArr.length(); i++) {
+                  
+                    String memId = memArr.getString(i);
+                    if(!memIdList.contains(memId)){
+                        memIdList += "," + memId;
+                    }
+
+                }
 
                 String url = "https://api.trello.com/1/cards/" + id + "?";
-                URL obj = new URL(url);
-                HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+                URL obj1 = new URL(url);
+                HttpsURLConnection con1 = (HttpsURLConnection) obj1.openConnection();
 
                 //add reuqest header
-                con.setRequestMethod("PUT");
-                con.setRequestProperty("User-Agent", "Chrome/45.0.2454.101 m");
-                con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                Person pm = PersonDAO.retrieveUser(pmname);
+                con1.setRequestMethod("PUT");
+                con1.setRequestProperty("User-Agent", "Chrome/45.0.2454.101 m");
+                con1.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+                con1.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                
                 String urlParameters = "idMembers=" + memIdList + "&key=" + pm.getTrelloKey() + "&token=" + pm.getToken();
 
                 // Send post request
-                con.setDoOutput(true);
-                DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                con1.setDoOutput(true);
+                DataOutputStream wr = new DataOutputStream(con1.getOutputStream());
                 wr.writeBytes(urlParameters);
                 wr.flush();
                 wr.close();
 
-                int responseCode = con.getResponseCode();
+                int responseCode = con1.getResponseCode();
                 System.out.println("\nSending 'POST' request to URL : " + url);
                 System.out.println("Post parameters : " + urlParameters);
                 System.out.println("Response Code : " + responseCode);
