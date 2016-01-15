@@ -14,26 +14,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Recco</title>
     </head>
-    <body>
+    <body onload="startTime()">
         <section id="main-content">
             <section class="wrapper">
                 <div class="row">
         <div class="col-md-12">
-                
-
                 <div class="profile-nav alt">
                     <section class="panel">
-                        <div class="user-heading alt clock-row terques-bg">
-                            <h1>Nov 6</h1>
-                            <p class="text-left">2015, Friday</p>
-                            <p class="text-left">10:00 am</p>
-                        </div>
-                        <ul id="clock">
-                            <li id="sec"></li>
-                            <li id="hour"></li>
-                            <li id="min"></li>
-                        </ul>
-<br/>
+                            <div id="time" class="user-heading alt clock-row terques-bg"></div>
                     </section>
                 </div>
 
@@ -41,6 +29,28 @@
                 </div>
             </section>
         </section>
-                    
+                    <script>
+        function startTime()
+        {
+            var today=new Date();
+            var h=today.getHours();
+            var m=today.getMinutes();
+            var s=today.getSeconds();
+            // add a zero in front of numbers<10
+            m=checkTime(m);
+            s=checkTime(s);
+            document.getElementById('time').innerHTML=h+":"+m+":"+s;
+            t=setTimeout(function(){startTime()},500);
+        }
+
+        function checkTime(i)
+        {
+            if (i<10)
+            {
+                i="0" + i;
+            }
+            return i;
+        }
+    </script>
     </body>
 </html>

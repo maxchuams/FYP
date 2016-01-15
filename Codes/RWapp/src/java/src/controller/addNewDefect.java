@@ -56,7 +56,7 @@ public class addNewDefect extends HttpServlet {
         int severity = Integer.parseInt(sev);
         
         boolean success = DefectDAO.addDefect(projname, defname, desc, pmname, severity);
-        RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
         if (!errList.isEmpty()){
             request.setAttribute("err1", errList );
               rd.forward(request,response);

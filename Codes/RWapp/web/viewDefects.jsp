@@ -142,11 +142,86 @@
                                 </div>
                             </div>
                         </section>
-
+                                            
+                                            
+                                            <!--kaiwen codes-->
                         <%
-                            //need  to change to cater to projects under dev
                             ArrayList<Defect> dList = DefectDAO.retrieveDev(dev.getUsername());
                         %>
+
+                        <%for (Project p : pList) {%>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        Project <%=p.getName()%> <!--5 project-->
+                                        <span class="tools pull-right">
+                                            <a href="addDefect.jsp?name="<%=p.getName()%> class="fa fa-plus-circle"></a>
+                                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                        </span>
+                                    </header>
+                                    <div class="panel-body">
+                                        <%
+                                            int count = 0;
+                                            for (Defect d : dList) { //30 defect
+                                                int sev = d.getSeverity();
+                                                String severity = "";
+                                                if (sev == 1) {
+                                                    severity = "Low";
+                                                } else if (sev == 2) {
+                                                    severity = "Medium";
+                                                } else if (sev == 3) {
+                                                    severity = "High";
+                                                }
+                                                if (d.getProjectName().equals(p.getName())) {
+                                                    if (dev != null) { 
+                                                        out.println("<a href='viewDefectInfo.jsp?defectId="+d.getId()+"'>");  
+                                                        if (d.getIsComplete() == 2){ %>
+                                                        <div class='col-lg-4 col-sm-4'> 
+                                                        <div class="alert alert-success fade in"> 
+                                                        <% }
+                                                        else if (d.getIsComplete() == 1) {
+                                                    %> 
+                                                    <div class='col-lg-4 col-sm-4'> 
+                                                        <div class="alert alert-warning fade in"> 
+                                                            <% }
+                                                        else if (d.getIsComplete() == 0) { %>
+                                                        <div class='col-lg-4 col-sm-4'> 
+                                                        <div class="alert alert-danger fade in"> 
+                                                        <% }
+                                                        %>
+                                                            <%
+                                                            out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> "+d.getDefectName()+"</td></tr>");
+                                                                out.println("<tr><td><b>Severity: </b></td><td> "+severity+ "</td></tr>");
+                                                                out.println("<tr><td><b>Date: </b></td><td> "+d.getUpdateTime().subSequence(0, 16) +"</td></tr>");
+                                                                out.println("</table>");
+                                                    }
+                                                            %> 
+                                                        </div>
+                                                    </div>
+                                                        </a>
+                                                    <%
+                                                    count++;
+                                                }
+                                            }
+                                            if (count == 0) {
+                                                out.println("<a href='addDefect.jsp'>No defects found <i>yet</i>. <br/>Add one?</a>");
+                                            }
+                                            
+                                            count = 0;
+                                            
+                                        %>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <% } %>
+
+                        <!--end of kw codes-->
+
+                                            
+
+                        
 
                         <%
                             for (Defect d : dList) {
@@ -160,7 +235,7 @@
                                     severity = "High";
                                 }
                         %>
-                        <section class="panel">
+<!--                        <section class="panel">
                             <div class="panel-body">
                                 <table class="table  table-hover general-table">
                                     <thead>
@@ -211,13 +286,15 @@
 
                                 </table>
                             </div>
-                        </section>
+                        </section>-->
                         <%
                             }
                         %>
+                    </section>
                     </div>
                 </div>
             </section>
         </section>
-    </body>
+    </table>
+</body>
 </html>
