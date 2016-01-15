@@ -43,6 +43,7 @@ public class ValidateUser extends HttpServlet {
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
             if(session.getAttribute("loggedInDev")!=null || 
+                    session.getAttribute("loggedInTester")!=null || 
                     session.getAttribute("loggedInPm")!=null || 
                     session.getAttribute("loggedInDesg")!=null ||
                     session.getAttribute("loggedInSudo")!=null){
@@ -64,7 +65,10 @@ public class ValidateUser extends HttpServlet {
                 }else if (person.getType().equals("s")) {
                     session.setAttribute("loggedInSudo", person);
                     response.sendRedirect("index.jsp");
-                }             
+                }  else if (person.getType().equals("t")) {
+                    session.setAttribute("loggedInTester", person);
+                    response.sendRedirect("index.jsp");
+                }           
             } else {
                 //send error message
                 request.setAttribute("errorMsg", "Wrong username/password");

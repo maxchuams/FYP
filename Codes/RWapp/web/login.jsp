@@ -38,7 +38,7 @@
     Person tester = (Person) session.getAttribute("loggedInTester");
 
     
-    if (pm != null || dev != null || desg != null) {
+    if (pm != null || dev != null || desg != null || tester != null) {
         response.sendRedirect("index.jsp");
         return;
     }else if(sudo !=null){
