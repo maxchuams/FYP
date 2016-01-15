@@ -160,5 +160,29 @@ public class ProjectDAO {
         return toReturn;
 
     }
+     
+     public static Project retrieveProjectById(String id){
+        Project toReturn = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize from project where trellokey = ?");
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
 
+            while (rs.next()) {
+
+                toReturn = new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+     }
 }

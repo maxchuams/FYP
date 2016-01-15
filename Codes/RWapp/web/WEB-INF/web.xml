@@ -96,6 +96,10 @@
         <servlet-name>DefectScreenshotController</servlet-name>
         <servlet-class>src.controller.DefectScreenshotController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>removeDev</servlet-name>
+        <servlet-class>src.controller.removeDev</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -191,6 +195,10 @@
     <servlet-mapping>
         <servlet-name>DefectScreenshotController</servlet-name>
         <url-pattern>/DefectScreenshotController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>removeDev</servlet-name>
+        <url-pattern>/removeDev</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

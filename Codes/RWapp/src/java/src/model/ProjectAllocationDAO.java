@@ -112,4 +112,29 @@ public class ProjectAllocationDAO {
         
         return toReturn;
     }
+    public static boolean delete(String username, String projname) {
+          Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
+
+            String sql = "DELETE FROM projectallocation where projectname = ?"
+                    + "username=?  ";
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, projname);
+            pstmt.setString(2, username);
+            
+
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionManager.close(conn, pstmt);
+        }
+    }
+     
 }
