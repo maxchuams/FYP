@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -18,6 +19,26 @@ import java.util.Date;
  * @author KIANLAM
  */
 public class RecommedationDAO {
+    
+    
+        public static ArrayList<ArrayList<Recommendation>> getRecommendation(String projectType,
+          String projectStartDate, int days, int priority, int developerCount, double experienceFactor, double defectsFactor, double scheduleFactor, int k) {
+            if(developerCount==1) {
+                ArrayList<ArrayList<Recommendation>> recommendationsList = new ArrayList<ArrayList<Recommendation>>(); 
+                ArrayList<Recommendation> recommendations = getSingleRecommendation(projectType,projectStartDate, days, priority, experienceFactor, defectsFactor, scheduleFactor);
+                for(int i=0;i<recommendations.size();i++){
+                    if(i==k) break;
+                    Recommendation re = recommendations.get(i);
+                    ArrayList<Recommendation> devList = new ArrayList<Recommendation>();
+                    devList.add(re);
+                    recommendationsList.add(devList);
+                }
+                  return recommendationsList;
+            }
+            return getMultiRecommendation(projectType,projectStartDate, days, priority, developerCount, experienceFactor, defectsFactor, scheduleFactor,k);
+          }
+    
+  
     
     /**
      *
@@ -32,9 +53,10 @@ public class RecommedationDAO {
      * "Standard"(0) projects will be sorted based on matching skillset developers who can complete the project on the earliest date to archieve overall load balancing e.g reduce slack time between projects.
      * @return A collection of recommendation objects.
      */
-        public static ArrayList<Recommendation> getRecommendation(String projectType,
-            String projectStartDate, int days, int priority) {
+        public static ArrayList<Recommendation> getSingleRecommendation(String projectType,
+            String projectStartDate, int days, int priority, double experienceFactor, double defectsFactor, double scheduleFactor) {
         ArrayList<Recommendation> recommendations = new ArrayList<Recommendation>();
+        //ArrayList<ArrayList<Recommendation>> recommendationsList = new ArrayList<ArrayList<Recommendation>>();
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -107,7 +129,7 @@ public class RecommedationDAO {
             "		ifnull(scheduleperformance,1) as scheduleperformance,ifnull(schedulefactor,0) as schedulefactor, " +
             "		ifnull(experiencefactor,0) as experiencefactor, ifnull(projectcount,0) as projectcount, " +
             "		ifnull(defectlessfactor,0) defectlessfactor,ifnull(avgdefectperproject,0) as avgdefectperproject, " +
-            "		format((0.33*ifnull(experiencefactor,0) + 0.33*ifnull(defectlessfactor,0) + 0.33*ifnull(schedulefactor,0)),4) as zainessscore " +
+            "		format((?*ifnull(experiencefactor,0) + ?*ifnull(defectlessfactor,0) + ?*ifnull(schedulefactor,0)),4) as zainessscore " +
             "		from " +
             "			(select username as developerusername from developerskill where skill =?) as final " +
             "		left outer join " +
@@ -202,7 +224,8 @@ public class RecommedationDAO {
         "CASE sorting " +
         "        WHEN 0 THEN estimatecompletion " +
         "        ELSE  '' END " +
-        "ASC;";
+        "ASC " +
+        "LIMIT 10";
           
         try {
             conn = ConnectionManager.getConnection();
@@ -221,9 +244,12 @@ public class RecommedationDAO {
             pstmt.setDate(11, new java.sql.Date(sDate.getTime()));
             pstmt.setDate(12, new java.sql.Date(sDate.getTime()));
             pstmt.setInt(13, days);
-            pstmt.setString(14, projectType);
-            pstmt.setString(15, projectType);
-            pstmt.setString(16, projectType);
+            pstmt.setDouble(14, 0.33);
+            pstmt.setDouble(15, 0.33);
+            pstmt.setDouble(16, 0.33);
+            pstmt.setString(17, projectType);//experience factor
+            pstmt.setString(18, projectType);//defects factor
+            pstmt.setString(19, projectType);//schedule factor
 
             rs = pstmt.executeQuery();
             
@@ -241,7 +267,8 @@ Recommendation toAdd = new Recommendation(rs.getString("developer"),
 
                 recommendations.add(toAdd);
             }
-
+            
+            
             return recommendations;
         } catch (SQLException ex) {
             //Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -249,8 +276,144 @@ Recommendation toAdd = new Recommendation(rs.getString("developer"),
             System.out.println("catch");
         } finally {
             ConnectionManager.close(conn, pstmt, rs);
-            //System.out.println("finally");
             return recommendations;
         }
     }
+    
+    public static ArrayList<ArrayList<Recommendation>> getMultiRecommendation(String projectType,
+            String projectStartDate, int days, int priority, int developerCount, double experienceFactor, double defectsFactor, double scheduleFactor, int k) {
+        //assume is size is for each developer e.g days=15 develperCount=2 means 2 developer each take 15days
+        ArrayList<Recommendation> recommendations = getSingleRecommendation(projectType,projectStartDate, days/developerCount , priority, experienceFactor, defectsFactor, scheduleFactor);
+        ArrayList<ArrayList<Recommendation>> rList = new ArrayList<ArrayList<Recommendation>> ();
+        ArrayList<ArrayList<Integer>> combinations = devCombinator(recommendations.size(),developerCount);
+        for(int i=0;i<combinations.size();i++){
+            if(i==k) break;
+            ArrayList<Recommendation> toAdd = new ArrayList<Recommendation>();
+            ArrayList<Integer> combo = combinations.get(i);
+            for(Integer index : combo){
+               toAdd.add(recommendations.get(index-1));
+            }
+            rList.add(toAdd);
+        }
+        return rList;
+ 
+    }    
+        
+        
+
+   
+    
+    
+    //Adapted from http://www.programcreek.com/2014/03/leetcode-combinations-java/
+    public static ArrayList<ArrayList<Integer>> devCombinator(int n, int k) {
+	ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+ 
+	if (n <= 0 || n < k)
+		return result;
+ 
+	ArrayList<Integer> item = new ArrayList<Integer>();
+	dfs(n, k, 1, item, result); // because it need to begin from 1
+        
+        Collections.sort(result,new SumArrayComparator());
+        
+	return result;
+}
+ 
+    private static void dfs(int n, int k, int start, ArrayList<Integer> item,
+                    ArrayList<ArrayList<Integer>> res) {
+            if (item.size() == k) {
+                    res.add(new ArrayList<Integer>(item));
+                    return;
+            }
+
+            for (int i = start; i <= n; i++) {
+                    item.add(i);
+                    dfs(n, k, i + 1, item, res);
+                    item.remove(item.size() - 1);
+            }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    public static Integer[][] devCombinator(int devCount, int numberRank, int poolSize){
+//    
+//        Integer[][] rList = new Integer[numberRank][devCount];
+// 
+//        ArrayList<Integer>  tempMin = new ArrayList<Integer>();
+//        ArrayList<Integer>  tempMax = new ArrayList<Integer>();
+//        ArrayList<Integer>  tempReturn = new ArrayList<Integer>();
+//        //ArrayList of int from 0..devCount
+//        ArrayList<Integer>  arrayDevCount = new ArrayList<Integer>(devCount);
+//        for(int x=0;x<poolSize;x++) arrayDevCount.add(x);
+//        //System.out.println(arrayDevCount);
+//       
+//        
+//        for(int i=0;i<numberRank;i++){
+//            
+//            if(tempReturn.size()==devCount){
+//                //get smallest from new number
+//                tempMax.add(tempReturn.remove(tempReturn.size()-1));
+//            }
+//           //for each rank
+//           while(tempReturn.size()<devCount){
+//                 //get smallest from old number
+//                if(tempMax.size() != 0 && 
+//                        tempReturn.get(tempReturn.size()-1) > (tempMax.get(0))){
+//                    tempReturn.add(tempMax.remove(0));
+//                }else{
+//                    
+//                    tempReturn.add(arrayDevCount.remove(0));
+//                }
+//                
+//            }
+//
+//           rList[i] = tempReturn.toArray(new Integer[devCount]);
+//        }
+//        return rList;
+//     }  
+//        
+//        
+//        
+//        
+//    //experimental codes for greddy algor, do not use
+//    public static ArrayList<ArrayList<Recommendation>> getMultiRecommendationX(ArrayList<String> projectTypeAndSize,
+//            String projectStartDate, int priority) {
+//        ArrayList<ArrayList<Recommendation>> rList = new ArrayList<ArrayList<Recommendation>> ();
+//        for(String coder: projectTypeAndSize){
+//            String[] typeandsize = coder.split(",");
+//            String projectType = typeandsize[0];
+//            int days = Integer.parseInt(typeandsize[1]);
+//            //rList.add(getRecommendation(projectType, projectStartDate, days, priority));
+//        }
+//        return rList;
+//    }
+//    
+//    //experimental codes for greddy algor, do not use
+//    public static ArrayList<ArrayList<Recommendation>> greedy(){
+//        return null;
+//    }
 }

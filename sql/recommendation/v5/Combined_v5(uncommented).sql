@@ -151,4 +151,5 @@ DESC,
 CASE sorting
         WHEN 0 THEN estimatecompletion
         ELSE  '' END
-ASC;
+ASC
+LIMIT 10;

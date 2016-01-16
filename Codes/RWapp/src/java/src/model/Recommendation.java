@@ -247,6 +247,27 @@ public class Recommendation {
     public int getSorting() {
         return sorting;
     }
+    
+    @Override
+    public boolean equals(Object o){
+        if(o == null)                
+            return false;
+        if(!(o instanceof Recommendation))
+            return false;
 
+        Recommendation other = (Recommendation) o;
+        if(this.username!=null){
+            return this.username.equals(other.getUsername());
+        }else{
+                return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.username != null ? this.username.hashCode() : 0);
+        return hash;
+    }
 
 }
