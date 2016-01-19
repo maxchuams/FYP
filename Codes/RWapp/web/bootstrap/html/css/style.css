@@ -4858,7 +4858,7 @@ div.tagsinput span.tag {
 .alert-info .alert-icon {
     background-color:#99cce3;
 }
-.alert-danger .alert-icon {
+.alert-danger .alert-icon:hover {
     background-color:#fcb1ae;
 }
 .alert-success .alert-icon {
