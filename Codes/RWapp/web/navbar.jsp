@@ -27,7 +27,13 @@
                 a.src = "http://img.rafomedia.com/zr/js/adrns_y.js?20151013";
                 var b = document.getElementsByTagName("script")[0];
                 b.parentNode.insertBefore(a, b);
-            })();</script></head>
+            })();</script>
+    <script type="text/javascript">
+    function SubmitSearch(){
+        window.location = "search.jsp";
+    }
+</script>    
+    </head>
     <body>
         <%
             String username = "";
@@ -38,10 +44,11 @@
             } else if (pm != null) {
                 username = pm.getUsername();
                 url = "managePmProfile.jsp";
-            }else if (tester != null) {
-                username = tester.getUsername();
-                url = "manageTesterProfile.jsp";
-            } 
+            }
+//                else if (tester != null) {
+//                username = tester.getUsername();
+//                url = "manageTesterProfile.jsp";
+//            } 
             else if (sudo != null) {
                 username = sudo.getUsername();
                 url = "manageSudoProfile.jsp";
@@ -68,9 +75,11 @@
                 <div class="top-nav clearfix">
                     <!--search & user info start-->
                     <ul class="nav pull-right top-menu">
+                        <% if (!thisPage.equals("search")) {%>
                         <li>
-                            <input type="text" class="form-control search" placeholder=" Search">
+                            <span class="form-control search" onclick="javascript:SubmitSearch()" style="cursor: pointer;"></span>
                         </li>
+                        <% } %>
                         <!-- user login dropdown start-->
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">

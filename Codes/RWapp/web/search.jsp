@@ -3,7 +3,8 @@
     Created on : Jan 19, 2016, 5:57:42 PM
     Author     : maxchua
 --%>
-
+<%@include file="protect.jsp" %>
+<%String thisPage = "search"; //This is to change the highlight in Navigation Bar%>
 <%@page import="src.model.Person"%>
 <%@page import="src.model.PersonDAO"%>
 <%@page import="src.model.Defect"%>
@@ -12,6 +13,7 @@
 <%@page import="src.model.Project"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="navbar.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -70,87 +72,101 @@
 
     </head>
     <body>
-        <h1>Search something</h1>
+        <section id="main-content">
+            <section class="wrapper">
+                <!-- page start-->
 
-        <%
-            ArrayList<Project> pList = ProjectDAO.retrieveAll();
-            ArrayList<Defect> defList = DefectDAO.retrieveAll();
-            ArrayList<Person> devList = PersonDAO.retrievAllDev();
-        %>
-        <label>Quick Search: <input id="search" type="text"></label>
-        <select id="role" name="category">
-            <option value="projname">Projects</option>
-            <option value="devname">Developers</option>
-            <option value="defname">Defects</option>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Search
+                            </header>
+                            <div class="panel-body">
 
-        </select>
-        <div id="proj">
-            </br><h2>Looking for Projects:</h2></br>
-            <table>
-                <%
-                    for (Project p : pList) {
-                %>
-                <tr>
+                                <%
+                                    ArrayList<Project> pList = ProjectDAO.retrieveAll();
+                                    ArrayList<Defect> defList = DefectDAO.retrieveAll();
+                                    ArrayList<Person> devList = PersonDAO.retrievAllDev();
+                                %>
+                                <label>Quick Search: <input id="search" type="text" class="form-control"></label>
+                                <select id="role" name="category" class="form-control">
+                                    <option value="projname">Projects</option>
+                                    <option value="devname">Developers</option>
+                                    <option value="defname">Defects</option>
 
-                    <td><%=p.getName()%></td>
+                                </select>
+                                <div id="proj">
+                                    </br><h2>Looking for Projects:</h2></br>
+                                    <table>
+                                        <%
+                                            for (Project p : pList) {
+                                        %>
+                                        <tr>
 
-                </tr>
-                <%
-                    }
+                                            <td><%=p.getName()%></td>
 
-                %>
-            </table>
-        </div>
-         <div id="dev">
-            </br><h2>Looking for developers</h2></br>
-            <table>
-                <%
-                    for (Person p : devList) {
-                %>
-                <tr>
+                                        </tr>
+                                        <%
+                                            }
 
-                    <td><%=p.getUsername()%></td>
+                                        %>
+                                    </table>
+                                </div>
+                                <div id="dev">
+                                    </br><h2>Looking for developers</h2></br>
+                                    <table>
+                                        <%                    for (Person p : devList) {
+                                        %>
+                                        <tr>
 
-                </tr>
-                <%
-                    }
+                                            <td><%=p.getUsername()%></td>
 
-                %>
-            </table>
-        </div>
-         <div id="def">
-            </br><h2>Looking for Defects</h2></br>
-            <table>
-                <%
-                    for (Defect p : defList) {
-                %>
-                <tr>
+                                        </tr>
+                                        <%
+                                            }
 
-                    <td><%=p.getDefectName()%></td>
+                                        %>
+                                    </table>
+                                </div>
+                                <div id="def">
+                                    </br><h2>Looking for Defects</h2></br>
+                                    <table>
+                                        <%                    for (Defect p : defList) {
+                                        %>
+                                        <tr>
 
-                </tr>
-                <%
-                    }
+                                            <td><%=p.getDefectName()%></td>
 
-                %>
-            </table>
-        </div>
-        <!--        <table>
-                    <tr>
-                        <td>FredF</td>
-                        <td>Fred Flintstone</td>
-                        <td><input type="checkbox" name="userId" value="@user.UserId" /></td>
-                    </tr>
-                    <tr>
-                        <td>BarneyR</td>
-                        <td>Barney Rubble</td>
-                        <td><input type="checkbox" name="userId" value="@user.UserId" /></td>
-                    </tr>
-                    <tr>
-                        <td>FredF</td>
-                        <td>Fred Flintstone</td>
-                        <td><input type="checkbox" name="userId" value="@user.UserId" /></td>
-                    </tr>
-                </table>-->
+                                        </tr>
+                                        <%
+                                            }
+
+                                        %>
+                                    </table>
+                                </div>
+                                <!--        <table>
+                                            <tr>
+                                                <td>FredF</td>
+                                                <td>Fred Flintstone</td>
+                                                <td><input type="checkbox" name="userId" value="@user.UserId" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>BarneyR</td>
+                                                <td>Barney Rubble</td>
+                                                <td><input type="checkbox" name="userId" value="@user.UserId" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>FredF</td>
+                                                <td>Fred Flintstone</td>
+                                                <td><input type="checkbox" name="userId" value="@user.UserId" /></td>
+                                            </tr>
+                                        </table>-->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+
     </body>
 </html>

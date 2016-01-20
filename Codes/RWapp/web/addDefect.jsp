@@ -7,7 +7,7 @@
 <%@page import="src.model.Project"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="src.model.ProjectDAO"%>
-<%@include file="protectPM.jsp" %>
+<%@include file="protectPMandTester.jsp" %>
 <%String thisPage = "addDefect"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
