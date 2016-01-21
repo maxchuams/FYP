@@ -211,4 +211,29 @@ public class ProjectDAO {
 
         return toReturn;
      }
+     
+     //replaceType
+      public static boolean replaceType(String toChange, String replaceWith){
+         Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("UPDATE project SET type=? WHERE type=?");
+            pstmt.setString(1, replaceWith);
+            pstmt.setString(2,toChange);
+           
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+     }
 }
