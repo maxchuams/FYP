@@ -8,6 +8,7 @@
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.Project"%>
 <%@page import="src.model.ProjectDAO"%>
+<%@include file="protectPM.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,6 +23,7 @@
             Project currP = ProjectDAO.retrieveProjectById(id);
             
             ArrayList<String> devList = ProjectAllocationDAO.retrieveDev(currP.getName());
+            
         %>
         <h1>Select developer to remove from <%=currP.getName()%></h1>
         <form action="removeDev">
@@ -35,6 +37,7 @@
                 <%}%>
             
             <input type='hidden' name='projectId' value='<%=id%>'/>
+            <input type="hidden" name="pmname" value="<%=pm.getUsername()%>"/>
             <input type='submit' value='submit'/>
         </form>
     </body>
