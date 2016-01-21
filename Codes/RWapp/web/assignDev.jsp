@@ -28,7 +28,7 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <%
-                                    ArrayList<Recommendation> rlist = (ArrayList<Recommendation>) request.getAttribute("rList");
+                                    ArrayList<ArrayList<Recommendation>> rlist = (ArrayList<ArrayList<Recommendation>>) request.getAttribute("rList");
                                     TrelloCard toAssign = (TrelloCard) request.getAttribute("project");
                                     Integer days = (Integer) request.getAttribute("days");
                                 %>
@@ -47,53 +47,70 @@
                                     <%
                                         //System.out.println(rlist.size());
                                         int count = 1;
-                                        for (Recommendation r : rlist) {
+
+                                        for (ArrayList<Recommendation> recommendations : rlist) {
+                                            String devDetails = "";
+                                            for (int i=0;i<recommendations.size();i++) {
+                                                Recommendation rConcat = recommendations.get(i);
+                                                if(i>0) devDetails += ","; 
+                                                devDetails += rConcat.getUsername()+","+rConcat.getEarlieststart()+","+rConcat.getEstimatecompletion();
+                                            }
+                                           
 
 
                                     %>
-                                    <input type="checkbox" name="dev" value='<%=r.getUsername()%>,<%=r.getEarlieststart()%>,<%=r.getEstimatecompletion()%>'/> 
+                                    <input type="radio" name="dev" value='<%=devDetails%>'/> 
+                                   <b> Choice Ranking: <%=count%>.</b>
+                                   <br><br>
+                                    <% for (Recommendation r : recommendations) { %>
+                                    
+                                    
                                     <table>
+
+
+                                        <b> <%=r.getUsername()%></b></br>
+                                        <img style="height:75px;width:75px" src="ImageServlet?imageid=<%=r.getUsername()%>" alt="Display this text instead" align="center"/>
+                                        </br>
+                                        <!--nationality: 
+                                        <%--<%=r.getNationality()%>--%>
+                                        ,-->
+
+                                        No of current project: <%=r.getCurrentprojectcount()%></br>
+                                        Next project earliest start date: <%=r.getEarlieststart()%></br>
+                                        Estimated working days to complete project: <%=r.getEstimateworkingday()%></br>
+                                        <!--Estimated days(incl weekends) to complete project:--> 
+                                        <%--<%= //r.getEstimateday()%>--%>
+                                        <!--,-->
+                                        <!--                                    Schedule performance: 
+                                        <%--<%=r.getScheduleperformance()%>--%>
+                                        ,-->
+                                        Estimated completion date : <%=r.getEstimatecompletion()%> </br>
+                                        <!--Ideal completion date:--> 
+                                        <%--<%= //r.getIdealcompletion()%>--%>
+                                        <!--,-->
+                                        <!--                                    Defectless Score: 
+                                        <%--<%=r.getDefectlessfactor()%>--%>
+                                        ,
+                                        Schedule score: 
+                                        <%--<%=r.getSchedulefactor()%>--%>
+                                        ,-->
+                                        Average defects per project: <%=r.getAvgdefectperproject()%> </br>
+                                        <!--Experience Score: 
+                                        <%--<%=r.getExperiencefactor()%>--%>
+                                        ,-->
+                                        Number of similar project completed: <%=r.getProjectexperiencecount()%> </br>
+                                        Overall Score: <%=r.getZainessscore()%> </br>
+                                        <!--Sorting Order:--> 
+                                        <%--<%=r.getSorting()%>--%>
                                         
                                            
-                                        <b><%=count%>. <%=r.getUsername()%></b></br>
                                         
-                                    <!--nationality: 
-                                    <%--<%=r.getNationality()%>--%>
-                                    ,-->
-                                    
-                                    No of current project: <%=r.getCurrentprojectcount()%></br>
-                                    Next project earliest start date: <%=r.getEarlieststart()%></br>
-                                    Estimated working days to complete project: <%=r.getEstimateworkingday()%></br>
-                                    <!--Estimated days(incl weekends) to complete project:--> 
-                                    <%--<%= //r.getEstimateday()%>--%>
-                                    <!--,-->
-<!--                                    Schedule performance: 
-                                    <%--<%=r.getScheduleperformance()%>--%>
-                                    ,-->
-                                    Estimated completion date : <%=r.getEstimatecompletion()%> </br>
-                                    <!--Ideal completion date:--> 
-                                    <%--<%= //r.getIdealcompletion()%>--%>
-                                    <!--,-->
-                                    <!--                                    Defectless Score: 
-                                    <%--<%=r.getDefectlessfactor()%>--%>
-                                    ,
-                                    Schedule score: 
-                                    <%--<%=r.getSchedulefactor()%>--%>
-                                    ,-->
-                                    Average defects per project: <%=r.getAvgdefectperproject()%> </br>
-                                    <!--Experience Score: 
-                                    <%--<%=r.getExperiencefactor()%>--%>
-                                    ,-->
-                                    Number of similar project completed: <%=r.getProjectexperiencecount()%> </br>
-                                    Overall Score: <%=r.getZainessscore()%> </br>
-                                    <!--Sorting Order:--> 
-                                    <%--<%=r.getSorting()%>--%>
-                                    <img src="ImageServlet?imageid=<%=r.getUsername()%>" alt="Display this text instead" align="center"/>
-                                    
                                     </table>
                                     </br>
 
                                     <%
+                                                
+                                            }
                                             count++;
                                         }
 

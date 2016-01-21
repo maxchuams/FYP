@@ -283,7 +283,7 @@ Recommendation toAdd = new Recommendation(rs.getString("developer"),
     public static ArrayList<ArrayList<Recommendation>> getMultiRecommendation(String projectType,
             String projectStartDate, int days, int priority, int developerCount, double experienceFactor, double defectsFactor, double scheduleFactor, int k) {
         //assume is size is for each developer e.g days=15 develperCount=2 means 2 developer each take 15days
-        ArrayList<Recommendation> recommendations = getSingleRecommendation(projectType,projectStartDate, days/developerCount , priority, experienceFactor, defectsFactor, scheduleFactor);
+        ArrayList<Recommendation> recommendations = getSingleRecommendation(projectType,projectStartDate, days , priority, experienceFactor, defectsFactor, scheduleFactor);
         ArrayList<ArrayList<Recommendation>> rList = new ArrayList<ArrayList<Recommendation>> ();
         ArrayList<ArrayList<Integer>> combinations = devCombinator(recommendations.size(),developerCount);
         for(int i=0;i<combinations.size();i++){

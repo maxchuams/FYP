@@ -51,8 +51,10 @@ public class processRecommendation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ArrayList<String> errList = new ArrayList<String>();
-        String[] dev = request.getParameterValues("dev");
-//        System.out.println(dev);
+        String devList = request.getParameter("dev");
+        System.out.println(devList);
+        String [] dev = devList.split(",");
+       System.out.println(dev);
         String projName = request.getParameter("projName");
         String type = request.getParameter("type");
         String priority = request.getParameter("priority");

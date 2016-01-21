@@ -61,8 +61,19 @@ public class assignRecommendation extends HttpServlet {
             //get todays date
             String sDate = request.getParameter("sDate");
             String daysstr = request.getParameter("days");
-            if(projName==null || intensity==null || type==null || sDate==null || daysstr==null){
-                response.sendRedirect("login.jsp");
+            
+            String devCountStr= request.getParameter("devCount");
+            String kStr = request.getParameter("k");
+            String experienceFactorStr= request.getParameter("experienceFactor");
+            String defectFactorStr= request.getParameter("defectFactor");
+            String scheduleFactorStr= request.getParameter("scheduleFactor");
+            
+            
+            
+            if(projName==null || intensity==null || type==null || sDate==null || daysstr==null || 
+                    devCountStr==null || experienceFactorStr==null || defectFactorStr==null 
+                    ||scheduleFactorStr==null||kStr==null){
+                //response.sendRedirect("login.jsp");
                 //request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
@@ -70,6 +81,11 @@ public class assignRecommendation extends HttpServlet {
             
             int priority = Integer.parseInt(intensity); 
             int days = Integer.parseInt(daysstr);
+            int devCount = Integer.parseInt(devCountStr);
+            int k = Integer.parseInt(kStr);
+            double experienceFactor = Double.parseDouble(experienceFactorStr);
+            double defectFactor = Double.parseDouble(defectFactorStr);
+            double scheduleFactor = Double.parseDouble(scheduleFactorStr);
 
             RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
             try {
@@ -252,8 +268,21 @@ public class assignRecommendation extends HttpServlet {
                 view.forward(request, response);
                 return;
             }
+            //validate 
+            if (devCount < 1) {
+                request.setAttribute("err", "Developer Count must be greater than zero!");
+                view.forward(request, response);
+                return;
+            }
+             //validate project size
+            if (k < 1 || k >10) {
+                request.setAttribute("err", "The top K must be between 1 to 10!");
+                view.forward(request, response);
+                return;
+            }
 
-            ArrayList<Recommendation> rList = RecommedationDAO.getRecommendation(type, sDate, days, priority);
+
+            ArrayList<ArrayList<Recommendation>> rList = RecommedationDAO.getRecommendation(type, sDate, days, priority, devCount, experienceFactor, defectFactor, scheduleFactor,k);
 
             RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp?name=" + toAssign.getName());
             request.setAttribute("rList", rList);

@@ -4,7 +4,8 @@ create table user(
 	type varchar(1) not null,
 	trellokey varchar(100),
 	trellotoken varchar(100),
-	photo longblob
+	photo longblob,
+	trelloId varchar(100)
 );
 
 create table developer(

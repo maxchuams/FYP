@@ -127,6 +127,27 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Developer Count</label>
+                                        <div class="col-lg-6">
+                                            <select name='devCount' class="form-control m-bot12">
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
                                     
                                     <%
                                     ArrayList<String> pTypeList = ProjectDAO.retrieveAllTypes();
@@ -154,6 +175,10 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="card" value='<%=id%>'/>
+                                    <input type="hidden" name="experienceFactor" value='0.33'/>
+                                    <input type="hidden" name="defectFactor" value='0.33'/>
+                                    <input type="hidden" name="scheduleFactor" value='0.33'/>
+                                    <input type="hidden" name="k" value='3'/>
                                     <div class="form-group">
                                         <div class="col-lg-offset-2 col-lg-10">
                                             <button type="submit" class="btn btn-danger">Recommend</button>
