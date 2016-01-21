@@ -136,5 +136,33 @@ public class ProjectAllocationDAO {
             ConnectionManager.close(conn, pstmt);
         }
     }
-     
+     //setIsComplete
+     public static boolean setIsComplete(String projectname, String username, int isComplete) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
+
+            String sql = "UPDATE projectallocation set iscomplete=? where projectname=? and developerusername=?";
+
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, isComplete);
+            pstmt.setString(2, projectname);
+            pstmt.setString(3, username);
+           
+
+            //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionManager.close(conn, pstmt);
+        }
+        return true;
+    }
 }

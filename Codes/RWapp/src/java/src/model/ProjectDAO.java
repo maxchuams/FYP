@@ -129,7 +129,7 @@ public class ProjectDAO {
         ArrayList<Project> toReturn = new ArrayList<Project>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select @sortingtype:= ? as sortingtype, @sortingname:= ? as sortingname,developerusername, p.projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize "
+            pstmt = conn.prepareStatement("select @sortingtype:= ? as sortingtype, @sortingname:= ? as sortingname,developerusername, p.projectname, trellokey, description, assignby, duedate, priority, p.iscomplete, type, psize "
                     + "from project p, projectallocation pa "
                     + "where p.projectname=pa.projectname "
                     + "group by p.projectname , "
