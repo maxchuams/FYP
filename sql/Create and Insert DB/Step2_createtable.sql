@@ -4,8 +4,7 @@ create table user(
 	type varchar(1) not null,
 	trellokey varchar(100),
 	trellotoken varchar(100),
-	photo longblob,
-	trelloId varchar(100)
+	photo longblob
 );
 
 create table developer(
@@ -40,12 +39,13 @@ create table project(
 create table projectallocation(
 	projectname varchar(25) not null,
 	developerusername varchar(25) not null,
-    dateallocated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    dateallocated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	planstart date,
     planend date,
     actualstart date,
     actualend date,
-	constraint pallo_pk primary key (projectname, developerusername, dateallocated), 
+    iscomplete int NOT NULL DEFAULT 0,
+    constraint pallo_pk primary key (projectname, developerusername, dateallocated), 
 	constraint pallo_fk foreign key (projectname) references project(projectname) ,
 	constraint pallo_fk2 foreign key (developerusername) references developer(username) ON DELETE CASCADE
 );
@@ -78,10 +78,10 @@ create table defectscreenshot(
 	updatetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	photo longblob,
 	constraint defects_pk primary key (defectid,updatetime),
-    constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE
+    constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE;
 );
 
-CREATE TABLE `ztable` (
-  `zvalue` DECIMAL(14,2) NOT NULL,
-  `pvalue` DECIMAL(14,4) NULL,
-  PRIMARY KEY (`zvalue`));
+CREATE TABLE ztable (
+  zvalue DECIMAL(14,2) NOT NULL,
+  pvalue DECIMAL(14,4) NULL,
+  PRIMARY KEY (zvalue));
