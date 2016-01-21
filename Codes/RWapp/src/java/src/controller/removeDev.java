@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import src.model.Person;
 import src.model.PersonDAO;
 import src.model.Project;
 import src.model.ProjectAllocationDAO;
@@ -56,7 +57,9 @@ public class removeDev extends HttpServlet {
             errList.add("Please select a developer");
             success = false;
         }
-
+        String pmname = request.getParameter("pmname");
+        Person pm = PersonDAO.retrieveUser(pmname);
+        
         if (success) {
             //call trello
             for (String d : dev) {
@@ -72,7 +75,7 @@ public class removeDev extends HttpServlet {
                     con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
                     con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                    String urlParameters = "key=7e35111227918de8a37f8c20844ed555&token=f7f588e4ce535adc2f08539a56b4b7d24caad79d0e7142cebb564fe979cbc565";
+                    String urlParameters = "key=" + pm.getTrelloKey() +"&token=" + pm.getToken();
 
                     // Send post request
                     con.setDoOutput(true);
@@ -99,8 +102,8 @@ public class removeDev extends HttpServlet {
                     //print result
                     System.out.println(response1.toString());
                     
-                    boolean delete = ProjectAllocationDAO.delete(d, proj.getName());
-                    if(!delete){
+                    boolean alter = ProjectAllocationDAO.setIsComplete(proj.getName(),d, -1);
+                    if(!alter){
                         errList.add(d + " cannot be deleted!");
                     }
                 } catch (Exception e) {
