@@ -159,14 +159,14 @@
                                     <section class="panel">
                                         <div class="panel-body">
                                             <table class="table table-striped table-hover table-bordered">
-                                                
+
                                                 <% for (Person p : devList) {
                                                 %>
                                                 <tr>
 
                                                     <td><%=p.getUsername()%></td>
                                                     <%
-                                        String d = DeveloperDAO.retrieveDevCountry(p.getUsername());%>
+                                                        String d = DeveloperDAO.retrieveDevCountry(p.getUsername());%>
                                                     <td><%=d%></td>
 
                                                 </tr>
@@ -187,13 +187,47 @@
                                     Results found under "Defects"
                                 </div>
                             </div>
-                            <table>
-                                <%                    for (Defect p : defList) {
+                            <table width="100%">
+                                <%     for (Defect p : defList) {
+                                        int sev = p.getSeverity();
+                                        String severity = "";
+                                        if (sev == 1) {
+                                            severity = "Low";
+                                        } else if (sev == 2) {
+                                            severity = "Medium";
+                                        } else if (sev == 3) {
+                                            severity = "High";
+                                        }
                                 %>
                                 <tr>
+                                    <td class='col-md-12'>
+                                        <% if (p.getIsComplete() == 2) {%>
+                                        <% out.println("<a href='viewDefectInfo.jsp?defectId="+p.getId()+"'>");  %>
+                                        <div class="alert alert-success fade in">
+                                            <%=p.getDefectName()%><br/>
+                                            <%=severity%><br/>
+                                            <%=p.getUpdateTime().subSequence(0, 16)%>
+                                        </div>
+                                        </a>
+                                        <% } else if (p.getIsComplete() == 1) {%>
+                                        <% out.println("<a href='viewDefectInfo.jsp?defectId="+p.getId()+"'>");  %>
+                                        <div class="alert alert-warning fade in">
+                                            <%=p.getDefectName()%><br/>
+                                            <%=severity%><br/>
+                                            <%=p.getUpdateTime().subSequence(0, 16)%>
+                                        </div>
+                                        </a>
+                                        <% } else if (p.getIsComplete() == 0) {%>
+                                        <% out.println("<a href='viewDefectInfo.jsp?defectId="+p.getId()+"'>");  %>
+                                        <div class="alert alert-danger fade in">
+                                            <%=p.getDefectName()%><br/>
+                                            <%=severity%><br/>
+                                            <%=p.getUpdateTime().subSequence(0, 16)%>
+                                        </div>
+                                        </a>
+                                        <%}%> 
 
-                                    <td><%=p.getDefectName()%></td>
-
+                                    </td>
                                 </tr>
                                 <%
                                     }
