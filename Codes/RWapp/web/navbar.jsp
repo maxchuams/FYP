@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!--<link rel="icon" src="bootstrap/html/images/favicon.svg" type="image/svg" href="bootstrap/html/images/favicon.svg" sizes="32x32" />-->
+        <link href="bootstrap/html/images/favicon.ico" rel="shortcut icon">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Recco</title>
@@ -75,11 +77,10 @@
                 <div class="top-nav clearfix">
                     <!--search & user info start-->
                     <ul class="nav pull-right top-menu">
-                        <% if (!thisPage.equals("search")) {%>
+                        
                         <li>
                             <span class="form-control search" onclick="javascript:SubmitSearch()" style="cursor: pointer;"></span>
                         </li>
-                        <% } %>
                         <!-- user login dropdown start-->
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
