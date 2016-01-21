@@ -6,6 +6,7 @@
 <%@include file="protect.jsp" %>
 <%@page import="src.model.Person"%>
 <%@page import="src.model.PersonDAO"%>
+<%@page import="src.model.DeveloperDAO"%>
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.DefectDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -153,20 +154,33 @@
                                     Results found under "Developers"
                                 </div>
                             </div>
-                            <table>
-                                <%                    for (Person p : devList) {
-                                %>
-                                <tr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <section class="panel">
+                                        <div class="panel-body">
+                                            <table class="table table-striped table-hover table-bordered">
+                                                
+                                                <% for (Person p : devList) {
+                                                %>
+                                                <tr>
 
-                                    <td><%=p.getUsername()%></td>
+                                                    <td><%=p.getUsername()%></td>
+                                                    <%
+                                        String d = DeveloperDAO.retrieveDevCountry(p.getUsername());%>
+                                                    <td><%=d%></td>
 
-                                </tr>
-                                <%
-                                    }
+                                                </tr>
+                                                <%
+                                                    }
 
-                                %>
-                            </table>
+                                                %>
+                                            </table>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
                         </div>
+
                         <div id="def">
                             <div class="col-md-12">
                                 <div class="well">
