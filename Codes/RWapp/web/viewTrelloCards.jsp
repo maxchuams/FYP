@@ -116,9 +116,10 @@
                         <div class="row-fluid" id="draggable_portlets">
                             <div class="row">
                                 <%
-                    for (Project t : tList) {
-                %> 
+                                    for (Project t : tList) {
+                                %> 
                                 <!-- BEGIN Portlet PORTLET-->
+                                <% out.println("<a href='viewProjectInfo.jsp?projectName="+t.getName()+"'>");  %>
                                 <div class="col-md-4">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
@@ -131,15 +132,16 @@
                                                 <li> <span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li>
                                                 <span class="pull-right">
                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
-                                                <% if (dev != null && pm == null) {%>
+                                                        <% if (dev != null && pm == null) {%>
                                                     <li> <b>Assigned by:</b> <%=t.getAssignedBy()%> <%}%></li>
                                                 </span>
-                                                 </ul>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
+                            </a>
                                 <!-- END Portlet PORTLET-->
-                                <% } %>
+                                <% }%>
                             </div>
                         </div>
                     </div>

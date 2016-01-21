@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <header class="panel-heading">Viewing: <%=d.getDefectName()%></header>
+                            <header class="panel-heading">Viewing: Defect <%=d.getDefectName()%></header>
                             <div class="panel-body">
                                 <table class="table  table-hover general-table">
                                     <thead><tr><td>Defect status</td><td><%if (d.getIsComplete() == 0) {out.println("<span class='label label-danger label-mini'>Defect is incomplete</span>");

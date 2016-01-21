@@ -8,6 +8,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+        <link href="bootstrap/html/images/favicon.ico" rel="shortcut icon">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">

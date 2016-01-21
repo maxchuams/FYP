@@ -95,7 +95,9 @@
                                 <div class="col-lg-3">
                                     <select id="role" name="category" class="form-control">
                                         <option value="projname">Projects</option>
-                                        <option value="devname">Developers</option>
+                                        <%if (pm!=null) {%>
+                                            <option value="devname">Developers</option>
+                                        <% } %>
                                         <option value="defname">Defects</option>
                                     </select>
                                 </div>
@@ -121,7 +123,9 @@
                                     for (Project p : pList) {
                                 %>
                                 <tr>
+                                    
                                     <td class="col-md-4">
+                                        <% out.println("<a href='viewProjectInfo.jsp?projectName="+p.getName()+"'>");  %>
                                         <div class="panel panel-primary">
                                             <div class="panel-heading">
                                                 Project <%=p.getName()%>
@@ -138,9 +142,9 @@
                                                     </span>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div></a>
                                     </td>
-
+                                    
                                 </tr>
                                 <%
                                     }
