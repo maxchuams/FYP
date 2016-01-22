@@ -73,7 +73,7 @@ public class assignRecommendation extends HttpServlet {
             if(projName==null || intensity==null || type==null || sDate==null || daysstr==null || 
                     devCountStr==null || experienceFactorStr==null || defectFactorStr==null 
                     ||scheduleFactorStr==null||kStr==null){
-                //response.sendRedirect("login.jsp");
+                response.sendRedirect("login.jsp");
                 //request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
@@ -270,13 +270,13 @@ public class assignRecommendation extends HttpServlet {
             }
             //validate 
             if (devCount < 1) {
-                request.setAttribute("err", "Developer Count must be greater than zero!");
+                request.setAttribute("err", "Developer count for project must be greater than zero!");
                 view.forward(request, response);
                 return;
             }
              //validate project size
             if (k < 1 || k >10) {
-                request.setAttribute("err", "The top K must be between 1 to 10!");
+                request.setAttribute("err", "The top K selection must be between 1 to 10!");
                 view.forward(request, response);
                 return;
             }
