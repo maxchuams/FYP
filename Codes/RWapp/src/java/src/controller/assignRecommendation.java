@@ -61,12 +61,29 @@ public class assignRecommendation extends HttpServlet {
             //get todays date
             String sDate = request.getParameter("sDate");
             String daysstr = request.getParameter("days");
-            
             String devCountStr= request.getParameter("devCount");
             String kStr = request.getParameter("k");
             String experienceFactorStr= request.getParameter("experienceFactor");
             String defectFactorStr= request.getParameter("defectFactor");
             String scheduleFactorStr= request.getParameter("scheduleFactor");
+            String nameForRequestObj = request.getParameter("name");
+            String id = request.getParameter("id");
+            
+            
+            //Setting attriute to pass back to previous page if needed 
+            request.setAttribute("card", projName); 
+            request.setAttribute("priority",intensity);
+            request.setAttribute("type",type);
+            request.setAttribute("sDate", sDate );
+            request.setAttribute("days",daysstr);
+            request.setAttribute("devCount",devCountStr);
+            request.setAttribute("k",kStr);
+            request.setAttribute("experienceFactor",experienceFactorStr);
+            request.setAttribute("defectFactor",defectFactorStr);
+            request.setAttribute("scheduleFactor",scheduleFactorStr);
+            request.setAttribute("name",nameForRequestObj );
+            request.setAttribute("id",id);
+            
             
             
             
@@ -87,7 +104,7 @@ public class assignRecommendation extends HttpServlet {
             double defectFactor = Double.parseDouble(defectFactorStr);
             double scheduleFactor = Double.parseDouble(scheduleFactorStr);
 
-            RequestDispatcher view = request.getRequestDispatcher("viewUnassignedCards.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp");
             try {
                 boolean valid = validDate(sDate);
                 if (!valid) {
@@ -97,7 +114,7 @@ public class assignRecommendation extends HttpServlet {
                 }
             } catch (ParseException w) {
 
-                request.setAttribute("err", "invalid date");
+                request.setAttribute("err", "Invalid date format.");
                 view.forward(request, response);
                 return;
             }

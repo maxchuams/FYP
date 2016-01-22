@@ -37,8 +37,25 @@
     </head>
     <body>
         <%
+        
+        
+        
+            //for form filling
+            String projName = request.getParameter("card"); 
+            String intensity = request.getParameter("priority");
+            String type = request.getParameter("type");
+            String sDate = request.getParameter("sDate");
+            String daysstr = request.getParameter("days");
+            String devCountStr= request.getParameter("devCount");
+            String kStr = request.getParameter("k");
+            String experienceFactorStr= request.getParameter("experienceFactor");
+            String defectFactorStr= request.getParameter("defectFactor");
+            String scheduleFactorStr= request.getParameter("scheduleFactor");
+        
+
             String name = request.getParameter("name");
             String id = request.getParameter("id");
+            
             ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) session.getAttribute("tc");
 
             String errorMsg = (String) request.getAttribute("err");
@@ -174,6 +191,7 @@
                                              </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="name" value='<%=name%>'/>
                                     <input type="hidden" name="card" value='<%=id%>'/>
                                     <input type="hidden" name="experienceFactor" value='0.33'/>
                                     <input type="hidden" name="defectFactor" value='0.33'/>
