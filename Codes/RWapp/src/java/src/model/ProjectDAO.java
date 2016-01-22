@@ -239,5 +239,55 @@ public class ProjectDAO {
             ConnectionManager.close(conn, pstmt, rs);
 
         }
+
+     }
+      
+    public static ArrayList<String> retrieveAllProjectNames(){
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select projectname from project");
+           
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
+    
+    public static boolean addCardFromTrello(String name, String cardId, String desc){
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description) values (?,?,?)");
+            pstmt.setString(1, name);
+            pstmt.setString(2, cardId);
+            pstmt.setString(3, desc);
+          
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt);
+
+        }
+
     }
 }

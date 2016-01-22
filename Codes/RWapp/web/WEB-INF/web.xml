@@ -104,6 +104,10 @@
         <servlet-name>editProjectType</servlet-name>
         <servlet-class>src.controller.editProjectType</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateProjectFromTrello</servlet-name>
+        <servlet-class>src.controller.updateProjectFromTrello</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -207,6 +211,10 @@
     <servlet-mapping>
         <servlet-name>editProjectType</servlet-name>
         <url-pattern>/editProjectType</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateProjectFromTrello</servlet-name>
+        <url-pattern>/updateProjectFromTrello</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
