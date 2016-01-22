@@ -18,7 +18,8 @@ import java.util.logging.Logger;
  * @author maxchua
  */
 public class ProjectDAO {
-     public static ArrayList<Project> retrieveAll() {
+
+    public static ArrayList<Project> retrieveAll() {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -27,12 +28,12 @@ public class ProjectDAO {
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize from project");
-           
+
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9)));
+                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8), rs.getInt(9)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -43,20 +44,21 @@ public class ProjectDAO {
         return toReturn;
 
     }
-     public static ArrayList<Project> retrieveInProgress(){
-         Connection conn = null;
+
+    public static ArrayList<Project> retrieveInProgress() {
+        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ArrayList<Project> toReturn = new ArrayList<Project>();
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize from project where iscomplete = 0");
-           
+
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9)));
+                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8), rs.getInt(9)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,8 +67,9 @@ public class ProjectDAO {
         }
 
         return toReturn;
-     }
-     public static ArrayList<String> retrieveAllTypes() {
+    }
+
+    public static ArrayList<String> retrieveAllTypes() {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -75,7 +78,7 @@ public class ProjectDAO {
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select distinct type from project");
-           
+
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -91,26 +94,27 @@ public class ProjectDAO {
         return toReturn;
 
     }
-     
-     public static boolean add(Project p ){
-         Connection conn = null;
+
+    public static boolean add(Project p) {
+        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-            conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize) values (?,?,?,?,?,?,?,?,?)");
-            pstmt.setString(1, p.getName());
-            pstmt.setString(2, p.getTrelloKey());
-            pstmt.setString(3, p.getDesc());
-            pstmt.setString(4, p.getAssignedBy());
-            pstmt.setString(5, p.getDuedate());
-            pstmt.setInt(6, p.getPriortiy());
-            pstmt.setInt(7, p.getIsComplete());
-            pstmt.setString(8, p.getType());
-            pstmt.setInt(9, p.getPsize());
-            pstmt.executeUpdate();
-
+            if (retrieveProjectByProjectName(p.getName()) == null) {
+                conn = ConnectionManager.getConnection();
+                pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize) values (?,?,?,?,?,?,?,?,?)");
+                pstmt.setString(1, p.getName());
+                pstmt.setString(2, p.getTrelloKey());
+                pstmt.setString(3, p.getDesc());
+                pstmt.setString(4, p.getAssignedBy());
+                pstmt.setString(5, p.getDuedate());
+                pstmt.setInt(6, p.getPriortiy());
+                pstmt.setInt(7, p.getIsComplete());
+                pstmt.setString(8, p.getType());
+                pstmt.setInt(9, p.getPsize());
+                pstmt.executeUpdate();
+            }
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,8 +124,9 @@ public class ProjectDAO {
             ConnectionManager.close(conn, pstmt, rs);
 
         }
-     }
-     public static ArrayList<Project> retrieveByUser(String role, String username) {
+    }
+
+    public static ArrayList<Project> retrieveByUser(String role, String username) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -160,13 +165,13 @@ public class ProjectDAO {
         return toReturn;
 
     }
-     
-     public static Project retrieveProjectById(String id){
+
+    public static Project retrieveProjectById(String id) {
         Project toReturn = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize from project where trellokey = ?");
@@ -175,7 +180,7 @@ public class ProjectDAO {
 
             while (rs.next()) {
 
-                toReturn = new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9));
+                toReturn = new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8), rs.getInt(9));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,15 +189,14 @@ public class ProjectDAO {
         }
 
         return toReturn;
-     }
-     
-     
-     public static Project retrieveProjectByProjectName(String name){
+    }
+
+    public static Project retrieveProjectByProjectName(String name) {
         Project toReturn = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize from project where projectname = ?");
@@ -201,7 +205,7 @@ public class ProjectDAO {
 
             while (rs.next()) {
 
-                toReturn = new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getInt(7), rs.getString(8),rs.getInt(9));
+                toReturn = new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8), rs.getInt(9));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -210,11 +214,11 @@ public class ProjectDAO {
         }
 
         return toReturn;
-     }
-     
-     //replaceType
-      public static boolean replaceType(String toChange, String replaceWith){
-         Connection conn = null;
+    }
+
+    //replaceType
+    public static boolean replaceType(String toChange, String replaceWith) {
+        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
@@ -222,8 +226,8 @@ public class ProjectDAO {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("UPDATE project SET type=? WHERE type=?");
             pstmt.setString(1, replaceWith);
-            pstmt.setString(2,toChange);
-           
+            pstmt.setString(2, toChange);
+
             pstmt.executeUpdate();
 
             return true;
@@ -235,5 +239,5 @@ public class ProjectDAO {
             ConnectionManager.close(conn, pstmt, rs);
 
         }
-     }
+    }
 }

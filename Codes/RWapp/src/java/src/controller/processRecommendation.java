@@ -12,10 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,22 +49,14 @@ public class processRecommendation extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<String> errList = new ArrayList<String>();
         String devList = request.getParameter("dev");
-        System.out.println(devList);
+        
         String [] dev = devList.split(",");
-       System.out.println(dev);
+
         String projName = request.getParameter("projName");
         String type = request.getParameter("type");
         String priority = request.getParameter("priority");
         String due = request.getParameter("due");
-//        Date date = null;
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-//        try {
-//
-//            date = formatter.parse(due);
-//            System.out.println(date);
-//        } catch (ParseException e) {
-//            errList.add("Date contains errors");
-//        }
+
         String desc = request.getParameter("desc");
         //trello card id
         String id = request.getParameter("id");
@@ -75,7 +64,9 @@ public class processRecommendation extends HttpServlet {
         String psize = request.getParameter("psize");
         int priorityInt = Integer.parseInt(priority);
         boolean success = false;
+        
         if (errList.isEmpty()) {
+            //to add in code to check if project exist
             Project toAdd = new Project(projName, id, desc, pmname, due, Integer.parseInt(priority), 0, type, Integer.parseInt(psize));
             success = ProjectDAO.add(toAdd);
         }
@@ -91,15 +82,13 @@ public class processRecommendation extends HttpServlet {
             trelloID.add(PersonDAO.retrieveMemberId(pmname));
             boolean updateAllocationDAO = false;
             // add to allocation table
-            for (String developer : dev) {
-                String[] strarr = developer.split(",");
+            for (int i=0;i<dev.length;i+=3) {
                 //for multiple allocation
-                trelloID.add(PersonDAO.retrieveMemberId(strarr[0]));
+                trelloID.add(PersonDAO.retrieveMemberId(dev[i]));
                 //update project allocation DAO
                 //HOLD: Need to figure out plan start and plan end
-//                String projName, String dev, String dateAllocated, String planStart, String planEnd, String actualStart) {
-
-                updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, strarr[0], strarr[1], strarr[2], strarr[1]);
+                //String projName, String dev, String dateAllocated, String planStart, String planEnd, String actualStart) {
+                updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, dev[i], dev[i+1], dev[i+2], dev[i+1]);
             }
             if (updateAllocationDAO) {
                 //update trello
@@ -134,7 +123,7 @@ public class processRecommendation extends HttpServlet {
 
                 JSONObject obj = new JSONObject(jsonOutput);
                 JSONArray memArr = obj.getJSONArray("idMembers");
-        //iterate through the user's boards and store into an arraylist first
+                //iterate through the user's boards and store into an arraylist first
 
                 //masterboardID - id for masterboard need this for the URL
               
