@@ -18,9 +18,61 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+<link href="./bootstrap/fbphotobox.css" rel="stylesheet" type="text/css" />
+<script src="./bootstrap/fbphotobox.js"></script>
         <title>JSP Page</title>
     </head>
     <body>
+        
+        <%--- JS ----%>
+            <script>
+	$(document).ready(function() {
+		$(".fbphotobox img").fbPhotoBox({
+			rightWidth: 360,
+			leftBgColor: "black",
+			rightBgColor: "white",
+			footerBgColor: "black",
+			overlayBgColor: "#222",
+			containerClassName: 'fbphotobox',
+			imageClassName: 'photo',
+			onImageShow: function() {
+				$(".fbphotobox img").fbPhotoBox("addTags",
+						[{x:0.3,y:0.3,w:0.3,h:0.3}]
+				);
+				$(".fbphotobox-image-content").html('<div style="font-size:16px;">'+$(this).attr("alt")+'</div>'+$(this).attr("src"));
+			}
+		});
+		
+		$("button").click(function() {
+			$( ".fbphotobox" ).append('<img class="photo" fbphotobox-src="./images/dummy-1760x990-Mosque.jpg" src="./images/dummy-1760x990-Mosque.jpg"/><img class="photo" fbphotobox-src="./images/dummy-1920x2560-Goemetry.jpg" src="./images/dummy-1920x2560-Goemetry.jpg"/>');
+		});
+	});
+</script>
+<style>
+	body {
+		font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+		font-size: 13px;
+		position: relative;
+	}
+	
+	.fbphotobox img {
+		width:200px;
+		height:200px;
+		margin:10px;
+		border-radius:5px;
+	}
+	
+	.fbphotobox img:hover {
+		box-sizing:border-box;
+		  -moz-box-sizing:border-box;
+		  -webkit-box-sizing:border-box;
+		border: 5px solid #4AE;
+	}
+</style>
+        <%--- JS ----%>
         <%
             String defectId = request.getParameter("defectId");
             Defect d = DefectDAO.retrieveDefect(Integer.parseInt(defectId));
@@ -51,7 +103,12 @@
                                         <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size(); %>
                                         <td><%if (size == 0) {%>NIL
                                             <%} else {%>
-                                            <a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size()%><%}%></a></td>
+                                            <div class="fbphotobox">
+		<a><img style="height:75px;width:75px" class="photo" fbphotobox-src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:22" src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:22"/></a>
+                <a><img style="height:75px;width:75px" class="photo" fbphotobox-src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:22" src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:55"/></a>
+		<a><img style="height:75px;width:75px" class="photo" fbphotobox-src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:22" src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:41:51"/></a>
+	</div>
+                                            <%}%></a></td>
                                     </tr>
                                 </table>
                             </div>
