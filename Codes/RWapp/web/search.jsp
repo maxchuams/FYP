@@ -83,9 +83,24 @@
                             </header>
                             <div class="panel-body">
                                 <%
-                                    ArrayList<Project> pList = ProjectDAO.retrieveAll();
-                                    ArrayList<Defect> defList = DefectDAO.retrieveAll();
-                                    ArrayList<Person> devList = PersonDAO.retrievAllDev();
+                                ArrayList<Project> pList = null;
+                                ArrayList<Defect> defList = null;
+                                ArrayList<Person> devList = null;
+                                if(pm!=null){
+                                    pList = ProjectDAO.retrieveAll();
+                                    defList = DefectDAO.retrieveAll();
+                                    devList = PersonDAO.retrievAllDev();
+                                }else if(dev!=null){
+                                    String userid = dev.getUsername();
+                                    String role = "dev";
+                                    pList = ProjectDAO.retrieveByUser(role, userid);
+                                    defList = DefectDAO.retrieveDev(dev.getUsername());
+                                    devList = PersonDAO.retrievAllDev();
+                                }else{
+                                    pList = ProjectDAO.retrieveAll();
+                                    defList = DefectDAO.retrieveAll();
+                                    devList = PersonDAO.retrievAllDev();
+                                }
                                 %>
                                 <label class="control-label col-lg-2" for="inputSuccess">Search for:</label>
 
