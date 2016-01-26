@@ -110,7 +110,7 @@
                                 <div class="col-lg-3">
                                     <select id="role" name="category" class="form-control">
                                         <option value="projname">Projects</option>
-                                        <%if (pm!=null) {%>
+                                        <%if (dev == null) {%>
                                             <option value="devname">Developers</option>
                                         <% } %>
                                         <option value="defname">Defects</option>
