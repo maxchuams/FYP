@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import src.model.Person;
 import src.model.PersonDAO;
 import src.model.Project;
+import src.model.ProjectAllocationDAO;
 import src.model.ProjectDAO;
 import src.model.TrelloBoard;
 import src.model.TrelloCard;
@@ -174,7 +175,7 @@ public class updateProjectFromTrello extends HttpServlet {
         ArrayList<String> projList = ProjectDAO.retrieveAllProjectNames();
         //get the card, add to arraylist
         JSONArray cardsArr = new JSONArray(jsonOutput);
-       
+        ArrayList<Person> pmList = PersonDAO.retrievAllPM();
         ArrayList<String> errList = new ArrayList<String>();
         for (int i = 0; i < cardsArr.length(); i++) {
             JSONObject tempCard = cardsArr.getJSONObject(i);
@@ -182,7 +183,9 @@ public class updateProjectFromTrello extends HttpServlet {
             String idList = tempCard.getString("idList");
             //System.out.println(idList);
             JSONArray members = tempCard.getJSONArray("idMembers");
+            ArrayList<String> devToAdd = new ArrayList<String>();
             boolean unassigned = true;
+            String assignby = "";
             for (int j = 0; j < members.length(); j++) {
 
                 String cardmem = members.getString(j);
@@ -190,12 +193,26 @@ public class updateProjectFromTrello extends HttpServlet {
 
                     if (cardmem.equals(dev)) {
                         unassigned = false;
-                    }
+                        Person devObj = PersonDAO.retrieveUserById(cardmem);
+                        devToAdd.add(devObj.getUsername());
+                    } 
                 }
 
             }
-             boolean success = true;
-            if (idList.equals(listId) && !unassigned) {
+            for (int j = 0; j < members.length(); j++) {
+                String cardmem = members.getString(j);
+//                System.out.println("it went in");
+//                System.out.println("dev " + cardmem);
+                for (Person pm : pmList) {
+                    String id = PersonDAO.retrieveMemberId(pm.getUsername());
+                    if (id.equals(cardmem)) {
+                        assignby = pm.getUsername();
+//                        System.out.println("assignby pmname: " + assignby);
+                    }
+                }
+            }
+            boolean success = true;
+            if (idList.equals(listId) && !unassigned && assignby.length() > 0) {
                 String name = tempCard.getString("name");
                 if (!projList.contains(name)) {
                     String desc = tempCard.getString("desc").replace("**", "");
@@ -204,28 +221,35 @@ public class updateProjectFromTrello extends HttpServlet {
                     }
                     String due = tempCard.getString("due").substring(0, 10);
                     String cardId = tempCard.getString("id");
-                    
-                    success = ProjectDAO.addCardFromTrello(name, cardId, desc);
+                    System.out.println("assignby " + assignby);
+
+                    success = ProjectDAO.addCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated");
                     //tcList.add(new TrelloCard(cardId, name, due, desc));
-                    if(!success){
+                    if (!devToAdd.isEmpty()){
+                        for(String devusername : devToAdd){
+                            ProjectAllocationDAO.addBasicAllocation(name, devusername);
+                        }
+                        
+                    }
+                    if (!success) {
                         errList.add(name + " could not be added to the Database, please try again later");
                     }
                 }
 
             }
         }
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp");
-        if(errList.isEmpty()){
+        if (errList.isEmpty()) {
             request.setAttribute("sucess", "Database successfully synced with Trello");
             rd.forward(request, response);
             return;
-        }else {
+        } else {
             request.setAttribute("errList", errList);
             rd.forward(request, response);
             return;
         }
-       
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -266,16 +266,21 @@ public class ProjectDAO {
         return toReturn;
     }
     
-    public static boolean addCardFromTrello(String name, String cardId, String desc){
+    public static boolean addCardFromTrello(String name, String assignby, String cardId, String desc, String due, int priority, String type){
         Connection conn = null;
         PreparedStatement pstmt = null;
         
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description) values (?,?,?)");
+            
+            pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description, assignby, duedate, priority,type) values (?,?,?,?,?,?,?)");
             pstmt.setString(1, name);
             pstmt.setString(2, cardId);
             pstmt.setString(3, desc);
+            pstmt.setString(4, assignby);
+            pstmt.setString(5, due);
+            pstmt.setInt(6, priority);
+            pstmt.setString(7, type);
           
             pstmt.executeUpdate();
 

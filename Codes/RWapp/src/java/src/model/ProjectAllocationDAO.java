@@ -165,4 +165,30 @@ public class ProjectAllocationDAO {
         }
         return true;
     }
+     
+     public static boolean addBasicAllocation(String projName, String dev) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("insert into projectallocation (projectname, developerusername) values (?,?)");
+            pstmt.setString(1, projName);
+            pstmt.setString(2, dev);
+          
+      
+            pstmt.executeUpdate();
+          
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+    }
 }

@@ -47,8 +47,8 @@ public class PersonDAO {
         return user;
 
     }
-    
-    public static String retrieveMemberId(String username){
+
+    public static String retrieveMemberId(String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -71,7 +71,7 @@ public class PersonDAO {
 
         return toReturn;
     }
-    
+
     public static ArrayList<Person> retrieveUsers() {
         ArrayList<Person> users = new ArrayList<Person>();
         Connection conn = null;
@@ -123,8 +123,8 @@ public class PersonDAO {
         }
         return true;
     }
-    
-    public static boolean updateMemberID(String username, String id){
+
+    public static boolean updateMemberID(String username, String id) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -137,7 +137,7 @@ public class PersonDAO {
 
             pstmt.setString(1, id);
             pstmt.setString(2, username);
-           
+
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
             pstmt.executeUpdate();
 
@@ -150,7 +150,7 @@ public class PersonDAO {
         }
         return true;
     }
-    
+
     public static boolean addPerson(Person p) {
 
         Connection conn = null;
@@ -179,7 +179,7 @@ public class PersonDAO {
         }
 
     }
-    
+
     public static ArrayList<Person> retrievAllDev() {
         ArrayList<Person> users = new ArrayList<Person>();
         Connection conn = null;
@@ -192,7 +192,7 @@ public class PersonDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                if(rs.getString(3)!=null){
+                if (rs.getString(3) != null) {
                     users.add(new Person(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
                 }
             }
@@ -203,8 +203,9 @@ public class PersonDAO {
         }
         return users;
     }
-     public static boolean delete(String username) {
-          Connection conn = null;
+
+    public static boolean delete(String username) {
+        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
@@ -215,7 +216,6 @@ public class PersonDAO {
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, username);
-            
 
             pstmt.executeUpdate();
             return true;
@@ -226,6 +226,54 @@ public class PersonDAO {
             ConnectionManager.close(conn, pstmt);
         }
     }
-     
 
+    public static ArrayList<Person> retrievAllPM() {
+        ArrayList<Person> users = new ArrayList<Person>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select username,password,type,trellokey,trellotoken from user where type='p'");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getString(3) != null) {
+                    users.add(new Person(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+        return users;
+    }
+
+    public static Person retrieveUserById(String id) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Person user = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select username,password,type,trellokey,trellotoken from user where trelloid like ?");
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                user = new Person(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return user;
+
+    }
 }
