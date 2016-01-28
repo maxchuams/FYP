@@ -10,11 +10,31 @@
 <%@page import="src.model.Project"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="protectPM.jsp"%>
+<%String thisPage = "viewTrelloCards"; //This is to change the highlight in Navigation Bar%>
+<%@include file="navbar.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hi wen wen</title>
+        <title>Edit Project</title>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#devOnly').hide(); //hide field on start
+
+                $('#role').change(function () {
+
+                    var $index = $('#role').index(this);
+                    if ($('#role').val() != 'Others') { //if this value is NOT selected
+                        $('#devOnly').hide(); //this field is hidden
+                    }
+                    else {
+                        $('#devOnly').show();//else it is shown
+
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         <%
@@ -23,76 +43,111 @@
             ArrayList<Person> pmList = PersonDAO.retrievAllPM();
             ArrayList<String> typeList = ProjectDAO.retrieveAllTypes();
         %>
-        <h1>Project Details</h1>
-        <form action="updateProject">
-        Name: <%=toEdit.getName()%> </br>
-        Id: <%=toEdit.getTrelloKey()%> </br>
-        Description: <%=toEdit.getDesc()%> </br>
-        Type: <%=toEdit.getType()%> </br>
-        Project size: <%=toEdit.getPsize()%> days</br>
-        Assigned by: 
-        <select name="assignedby">
-            <%
-                for (Person pm : pmList) {
-                    if (pm.getUsername().equals(toEdit.getName())) {
-            %>
-            <option value="<%=pm.getUsername()%>" selected><%=pm.getUsername()%></option>
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Viewing: Project <%=toEdit.getName()%>
+                            </header>
+                            <div class="panel-body">
 
-            <%
-            } else {
-            %>
+                                <form action="updateProject">
+                        <!--        Id: <%=toEdit.getTrelloKey()%> </br>-->
+                        <!--        Description: <%=toEdit.getDesc()%> </br>-->
+<!--                                    Type: <%=toEdit.getType()%> </br>-->
 
-            <option value="<%=pm.getUsername()%>"><%=pm.getUsername()%></option>
-            <%
-                    }
-                }
+                                  
 
-            %>
-        </select></br>
-        Due date: <input type="date" name="duedate"/> </br>
-        Priority: 
-        <select name="priority">
-            <%                if (toEdit.getPriortiy() == 1) {
-            %>
-            <option value="1" selected>Low</option>
-            <%
-                } else {%>
 
-            <option value="1">Low</option>
-            <%
-                }
-            %>
-            <%
-                if (toEdit.getPriortiy() == 2) {
-            %>
-            <option value="2" selected>Medium</option>
-            <%
-                } else {%>
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
+                                        <div class="col-lg-6">
+                                            <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=toEdit.getPsize()%>" required/><p></p>
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
+                                        <div class="col-lg-6">
+                                            <%if ("0".equals(toEdit.getPriortiy())){%>
+                                                <select name='priority' class="form-control m-bot12">
+                                                <option value='0' selected>Standard Project</option>
+                                                <option value='1'>High Priority Project</option>
+                                                </select>
+                                            <%}else{%>
+                                            <select name='priority' class="form-control m-bot12">
+                                                <option value='0'>Standard Project</option>
+                                                <option value='1' selected>High Priority Project</option>
+                                            </select>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                        
+                                    <%
+                                        ArrayList<String> pTypeList = ProjectDAO.retrieveAllTypes();
+                                    %>
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
+                                        <div class="col-lg-6">
+                                            <select name='type' class="form-control m-bot15" id="role">
+                                                <%
+                                                    for (String s : pTypeList) {
+                                                        if (!"to be updated".equals(s)) {
+                                                %>
+                                                <option value='<%=s%>'><%=s%></option>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
 
-            <option value="2">Medium</option>
-            <%
-                }
-            %>
-            <%
-                if (toEdit.getPriortiy() == 3) {
-            %>
-            <option value="3" selected>High</option>
-            <%
-                } else {%>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </div>
+                                        <div id='devOnly'>
+                                            <label for="inputType" class="col-lg-2 control-label">Project Type </label>
+                                            <div class="col-lg-9">
+                                                <input type='text' name='otherType' class="form-control"/><p></p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-            <option value="3">High</option>
-            <%
-                }
-            %>
 
-        </select></br>
-        Completion status: 
-        <select name="iscomplete">
-            <option value="0">Developer not yet done</option>
-            <option value="1">Developer has completed the task</option>
-        </select> </br>
-        <input type="hidden" value="<%=pname%>" name="pname"/>
-        <input type="submit" value="submit"/>
-        </form>
+                                    Assigned by: 
+                                    <select name="assignedby">
+                                        <%
+                                            for (Person p : pmList) {
+                                                if (p.getUsername().equals(toEdit.getName())) {
+                                        %>
+                                        <option value="<%=p.getUsername()%>" selected><%=p.getUsername()%></option>
+
+                                        <%
+                                        } else {
+                                        %>
+
+                                        <option value="<%=p.getUsername()%>"><%=p.getUsername()%></option>
+                                        <%
+                                                }
+                                            }
+
+                                        %>
+                                    </select></br>
+                                    Due date: <input type="date" name="duedate"/> </br>
+                                    
+                                    Completion status: 
+                                    <select name="iscomplete">
+                                        <option value="0">Developer not yet done</option>
+                                        <option value="1">Developer has completed the task</option>
+                                    </select> </br>
+                                    <input type="hidden" value="<%=pname%>" name="pname"/>
+                                    <input type="submit" value="submit"/>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
     </body>
 </html>

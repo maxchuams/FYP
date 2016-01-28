@@ -100,12 +100,20 @@
                                         <select name="severity" class="form-control m-bot15">
                                             <% if (sev==1){%>
                                             <option value='1' selected>Low</option>
-                                            <% } %>
-                                            <% if (sev==2){%>
+                                            <option value='2' >Medium</option>
+                                            <option value='3' >High</option>
+                                            <% } else if (sev==2){%>
+                                            <option value='1' >Low</option>
                                             <option value='2' selected>Medium</option>
-                                            <% } %>
-                                            <% if (sev==3){%>
+                                            <option value='3' >High</option>
+                                            <% } else if (sev==3){%>
+                                            <option value='1' >Low</option>
+                                            <option value='2' >Medium</option>
                                             <option value='3' selected>High</option>
+                                            <% } else {%>
+                                            <option value='1' >Low</option>
+                                            <option value='2' >Medium</option>
+                                            <option value='3' >High</option>
                                             <% } %>
                                         </select>
                                     </div>

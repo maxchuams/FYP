@@ -29,9 +29,50 @@
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <header class="panel-heading">Viewing: Project <%=p.getName()%></header>
+                            <header class="panel-heading">
+                                Viewing: Project <%=p.getName()%>
+                                <span class="tools pull-right">
+                                    <a href="editProject.jsp?pname=<%=p.getName()%>">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                        <span>Edit</span>
+                                    </a>
+                                </span>
+                            </header>
                             <div class="panel-body">
-                                To-edit information here
+                                <table class="table  table-hover general-table">
+                                    <thead><tr>
+                                            <th>
+                                                Due date
+                                            </th>
+                                            <th>
+                                                <%=p.getDuedate()%>
+                                            </th>
+                                    </tr></thead>
+                                    <tr>
+                                        <td>
+                                            Project manager
+                                        </td>
+                                        <td>
+                                            <%=p.getAssignedBy()%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Project type
+                                        </td>
+                                        <td>
+                                            <%=p.getType()%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Project size
+                                        </td>
+                                        <td>
+                                            <%=p.getPsize()%>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </section>
                     </div>
