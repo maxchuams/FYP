@@ -41,9 +41,11 @@ public class updateProject extends HttpServlet {
         int pInt = Integer.parseInt(priority);
         String iscomplete= request.getParameter("iscomplete");
         int cInt = Integer.parseInt(iscomplete);
+        String days = request.getParameter("days");
+        int dInt = Integer.parseInt(days);
+        String type = request.getParameter("type");
         
-        
-        boolean success = ProjectDAO.updateProject(assignedby, due, pInt, cInt, pname);
+        boolean success = ProjectDAO.updateProject(assignedby, due, pInt, cInt, dInt, type, pname);
         if(success){
              RequestDispatcher rd = request.getRequestDispatcher("editProject.jsp?pname="+pname);
             request.setAttribute("success", "Project successfully updated");

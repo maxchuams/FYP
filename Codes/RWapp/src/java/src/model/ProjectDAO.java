@@ -296,19 +296,21 @@ public class ProjectDAO {
 
     }
 
-    public static boolean updateProject(String assignby, String due, int priority, int complete, String pname) {
+    public static boolean updateProject(String assignby, String due, int priority, int complete,int days, String type, String pname) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("UPDATE project SET assignby=?,duedate=?,priority=?,iscomplete=? WHERE projectname=?");
+            pstmt = conn.prepareStatement("UPDATE project SET assignby=?,duedate=?,priority=?,iscomplete=?,type=?,psize=? WHERE projectname=?");
             pstmt.setString(1, assignby);
             pstmt.setString(2, due);
             pstmt.setInt(3, priority);
             pstmt.setInt(4, complete);
-            pstmt.setString(5, pname);
+            pstmt.setString(5, type);
+            pstmt.setInt(6, days);
+            pstmt.setString(7, pname);
 
             pstmt.executeUpdate();
 
