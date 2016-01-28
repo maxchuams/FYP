@@ -84,9 +84,6 @@ public class assignRecommendation extends HttpServlet {
             request.setAttribute("name",nameForRequestObj );
             request.setAttribute("id",id);
             
-            
-            
-            
             if(projName==null || intensity==null || type==null || sDate==null || daysstr==null || 
                     devCountStr==null || experienceFactorStr==null || defectFactorStr==null 
                     ||scheduleFactorStr==null||kStr==null){
@@ -94,7 +91,6 @@ public class assignRecommendation extends HttpServlet {
                 //request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            
             
             int priority = Integer.parseInt(intensity); 
             int days = Integer.parseInt(daysstr);

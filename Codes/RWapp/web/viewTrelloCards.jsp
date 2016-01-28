@@ -38,6 +38,62 @@
         %>
         <section id="main-content">
             <section class="wrapper">
+                <!--Error/success display-->
+                <%  String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
+                    ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+
+                    if (errorMsg != null) {
+                %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=errorMsg%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                    if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    } if (errorList != null && !errorList.isEmpty()) { %>
+                        <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success">
+                                    <% for(int i=0; i<errorList.size(); i++){
+                                    out.println(errorList.get(i));
+                                }%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                    <% }
+                %>
+
+
+                <!--End of error/success display-->
+                <div class="row">
+                        <div class="panel-body">
+                                    <form action="updateProjectFromTrello">
+                                        <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
+                                            Sync Projects
+                                        </button>
+                                    </form>
+                                </div>
+                        </div>
                 <!--kw code-->
                 <!--                <div class="row">
                                     <div class="col-sm-12">
@@ -89,37 +145,18 @@
 </section>
 </div>-->
                 <!--kw code-->
-                <%
-                %>
-
-                </br>
-
-                <%             String errorMsg = (String) request.getAttribute("err");
-                    String sucess = (String) request.getAttribute("sucess");
-                    ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
-                    if (errorMsg == null) {
-                        errorMsg = "";
-                    }
-
-                    if (sucess == null) {
-                        sucess = "";
-                    }
-
-                    if (errorList == null || errorList.isEmpty()) {
-
-                    }
-                %>
-
 
                 <div class="row">
                     <div class="col-sm-12">
+                        
                         <div class="row-fluid" id="draggable_portlets">
                             <div class="row">
+                                
                                 <%
                                     for (Project t : tList) {
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
-                                <% out.println("<a href='viewProjectInfo.jsp?projectName="+t.getName()+"'>");  %>
+                                <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");%>
                                 <div class="col-md-4">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
@@ -139,7 +176,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                                </a>
                                 <!-- END Portlet PORTLET-->
                                 <% }%>
                             </div>

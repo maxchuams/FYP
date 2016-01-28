@@ -79,7 +79,7 @@ create table defectscreenshot(
 	updatetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	photo longblob,
 	constraint defects_pk primary key (defectid,updatetime),
-    constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE;
+    constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE
 );
 
 CREATE TABLE ztable (

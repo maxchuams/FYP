@@ -38,8 +38,6 @@
     <body>
         <%
         
-        
-        
             //for form filling
             String projName = request.getParameter("card"); 
             String intensity = request.getParameter("priority");
@@ -113,7 +111,7 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                Assign Developer to <%=name%><br/><br/>
+                                Assign Developer to Project <%=name%><br/><br/>
                                 <!--                                <form action="ManageProfile" method="POST">
                                                                     Password: <input type="password" name="password1" /> </br>
                                                                     Confirm password again: <input type="password" name="password2" /> </br>
@@ -125,31 +123,39 @@
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Start Date</label>
                                         <div class="col-lg-6">
-                                            <input type="date" class="form-control m-bot15" name="sDate" required/>
+                                            <input type="date" class="form-control m-bot12" name="sDate" value="<%=sDate%>" required/>
                                         </div>
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Number of Days(Project Size)</label>
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
                                         <div class="col-lg-6">
-                                            <input class="form-control m-bot15" type="number" name="days" min=1 required/><p></p>
+                                            <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=daysstr%>" required/><p></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
                                         <div class="col-lg-6">
+                                            <%if ("0".equals(intensity)){%>
+                                                <select name='priority' class="form-control m-bot12">
+                                                <option value='0' selected>Standard Project</option>
+                                                <option value='1'>High Priority Project</option>
+                                                </select>
+                                            <%}else{%>
                                             <select name='priority' class="form-control m-bot12">
                                                 <option value='0'>Standard Project</option>
-                                                <option value='1'>High Priority Project</option>
+                                                <option value='1' selected>High Priority Project</option>
                                             </select>
+                                            <%}%>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Developer Count</label>
                                         <div class="col-lg-6">
-                                            <select name='devCount' class="form-control m-bot12">
-                                                <option value='1'>1</option>
+                                            <%if ("1".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1' selected>1</option>
                                                 <option value='2'>2</option>
                                                 <option value='3'>3</option>
                                                 <option value='4'>4</option>
@@ -160,6 +166,125 @@
                                                 <option value='9'>9</option>
                                                 <option value='10'>10</option>
                                             </select>
+                                            <%} else if ("2".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1'>1</option>
+                                                <option value='2' selected>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                            <%} else if ("3".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1' >1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3' selected>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                            <%} else if ("4".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4' selected>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                            <%} else if ("5".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1' >1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5' selected>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                            <%} else if ("6".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1' >1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6' selected>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                            <%} else if ("7".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7' selected>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                            <%} else if ("8".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8' selected>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                            <%} else if ("9".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9' selected>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                            <%} else if ("10".equals(devCountStr)){%>
+                                                <select name='devCount' class="form-control m-bot12">
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10' selected>10</option>
+                                            </select>
+                                            <%}%>
+                                            
                                         </div>
                                     </div>
                                     
@@ -175,9 +300,11 @@
                                             <select name='type' class="form-control m-bot15" id="role">
                                                 <%
                                                 for (String s : pTypeList){
+                                                    if(!"to be updated".equals(s)){
                                                     %>
                                                     <option value='<%=s%>'><%=s%></option>
                                                     <%
+                                                    }
                                                 }
                                                 %>
                                                
