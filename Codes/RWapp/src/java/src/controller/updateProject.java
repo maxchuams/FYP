@@ -47,7 +47,7 @@ public class updateProject extends HttpServlet {
         
         boolean success = ProjectDAO.updateProject(assignedby, due, pInt, cInt, dInt, type, pname);
         if(success){
-             RequestDispatcher rd = request.getRequestDispatcher("editProject.jsp?pname="+pname);
+             RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp?pname="+pname);
             request.setAttribute("success", "Project successfully updated");
             rd.forward(request, response);
             return;

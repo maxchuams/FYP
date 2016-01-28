@@ -302,8 +302,6 @@
                                     </div>
                                     
                                     
-                                    
-                                    
                                     <%
                                     ArrayList<String> pTypeList = ProjectDAO.retrieveAllTypes();
                                     %>

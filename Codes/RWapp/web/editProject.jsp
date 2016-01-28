@@ -53,18 +53,16 @@
                             </header>
                             <div class="panel-body">
 
-                                <form action="updateProject">
+                                <form action="updateProject" class="form-horizontal" role="form">
                         <!--        Id: <%=toEdit.getTrelloKey()%> </br>-->
                         <!--        Description: <%=toEdit.getDesc()%> </br>-->
 <!--                                    Type: <%=toEdit.getType()%> </br>-->
 
                                   
-
-
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
                                         <div class="col-lg-6">
-                                            <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=toEdit.getPsize()%>" required/><p></p>
+                                            <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=toEdit.getPsize()%>" required/>
                                         </div>
                                     </div>
                                         
@@ -108,14 +106,15 @@
                                         <div id='devOnly'>
                                             <label for="inputType" class="col-lg-2 control-label">Project Type </label>
                                             <div class="col-lg-9">
-                                                <input type='text' name='otherType' class="form-control"/><p></p>
+                                                <input type='text' name='otherType' class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
-
-
-                                    Assigned by: 
-                                    <select name="assignedby">
+                                                
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project manager</label>
+                                        <div class="col-lg-6">
+                                            <select name="assignedby" class="form-control m-bot12">
                                         <%
                                             for (Person p : pmList) {
                                                 if (p.getUsername().equals(toEdit.getName())) {
@@ -125,23 +124,42 @@
                                         <%
                                         } else {
                                         %>
-
                                         <option value="<%=p.getUsername()%>"><%=p.getUsername()%></option>
                                         <%
                                                 }
                                             }
 
                                         %>
-                                    </select></br>
-                                    Due date: <input type="date" name="duedate"/> </br>
+                                    </select>
+                                        </div>
+                                    </div>
+
                                     
-                                    Completion status: 
-                                    <select name="iscomplete">
-                                        <option value="0">Developer not yet done</option>
-                                        <option value="1">Developer has completed the task</option>
-                                    </select> </br>
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Due date</label>
+                                        <div class="col-lg-6">
+                                            <input class="form-control m-bot12" type="date" name="duedate" min=1 value="<%=toEdit.getDuedate()%>" required/>
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project status</label>
+                                        <div class="col-lg-6">
+                                            <select name="iscomplete" class="form-control m-bot12">
+                                                <option value="0">Developer not yet done</option>
+                                                <option value="1">Developer has completed the task</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
                                     <input type="hidden" value="<%=pname%>" name="pname"/>
-                                    <input type="submit" value="submit"/>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                    
                                 </form>
                             </div>
                         </section>

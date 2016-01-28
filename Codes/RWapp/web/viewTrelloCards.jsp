@@ -41,6 +41,7 @@
                 <!--Error/success display-->
                 <%  String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
+                    String success = (String) request.getAttribute("success");
                     ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
 
                     if (errorMsg != null) {
@@ -62,6 +63,18 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <div class="text-success"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                    if (success != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=success%></div>
                             </div>
                         </section>
                     </div>
@@ -160,6 +173,8 @@
 
                                 <%
                                     for (Project t : tList) {
+                                        if(t.getIsComplete() == 0){
+                                        
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
                                 <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");%>
@@ -184,7 +199,32 @@
                                 </div>
                                 </a>
                                 <!-- END Portlet PORTLET-->
-                                <% }%>
+                                <% }else{%>
+                                            <!-- BEGIN Portlet PORTLET-->
+                                <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");%>
+                                <div class="col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Project <%=t.getName()%>
+                                            <span class="tools pull-right">
+                                            </span>
+                                        </div>
+                                        <div class="panel-body">
+                                            <ul class="nav nav-pills nav-stacked">
+                                                <li> <span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li>
+                                                <span class="pull-right">
+                                                    <li> <b>Type:</b> <%=t.getType()%> </li>
+                                                        <% if (dev != null && pm == null) {%>
+                                                    <li> <b>Assigned by:</b> <%=t.getAssignedBy()%> <%}%></li>
+                                                </span>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                </a>
+                                <!-- END Portlet PORTLET-->
+                                    <%    }
+                                    }%>
                             </div>
                         </div>
                     </div>
