@@ -158,20 +158,32 @@
                             </li><%}%>
                             <%if (sudo == null) {%>
                             <li class="sub-menu">
-                                <% if (thisPage.equals("viewTrelloCards") || thisPage.equals("viewUnassignedCards")) { %>
+                                <% if (thisPage.equals("viewTrelloCards") || thisPage.equals("viewAllTrelloCards") || thisPage.equals("updateProjectType") || thisPage.equals("viewUnassignedCards")) { %>
                                 <a href="javascript:;" class="active"> <% } else { %>
                                     <a href="javascript:;"> <% } %>
                                         <i class="fa fa-laptop"></i>
                                         <span>Projects</span>
                                     </a>
-                                    <ul class="sub"><% if (thisPage.equals("viewTrelloCards")) { %>
+                                    <ul class="sub">
+                                        <% if (thisPage.equals("viewTrelloCards")) { %>
                                         <li class="active"><a href="viewTrelloCards.jsp">View Projects</a></li> <% } else { %>
-                                        <li><a href="viewTrelloCards.jsp">View Projects</a></li><% } %>
+                                        <li><a href="viewTrelloCards.jsp">View My Projects</a></li><% } %>
                                             <%if (pm != null) {%>
+                                        
+                                        <% if (thisPage.equals("viewAllTrelloCards")) { %>
+                                        <li class="active"><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } else { %>
+                                        <li><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } %>
+                                        
                                             <% if (thisPage.equals("viewUnassignedCards")) { %>
                                         <li class="active"><a href="assignProject">View Unassigned Projects</a></li><% } else { %>
                                         <li><a href="assignProject">View Unassigned Projects</a></li><% } %>
+                                        
+                                        
+                                        <% if (thisPage.equals("updateProjectType")) { %>
+                                        <li class="active"><a href="updateProjectType.jsp">Update Project Type</a></li><% } else { %>
+                                        <li><a href="updateProjectType.jsp">Update Project Type</a></li><% } %>
                                             <%}%>
+                                        
                                     </ul>
                             </li>
                             <%}%>

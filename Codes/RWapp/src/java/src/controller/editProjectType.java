@@ -36,7 +36,7 @@ public class editProjectType extends HttpServlet {
 
         ArrayList<String> errList = new ArrayList<String>();
         if (type == null || type.length == 0) {
-            errList.add("Please select a type");
+            errList.add("Please select a type to replace");
         }
 
         String replacedText = request.getParameter("replacedText");
@@ -51,7 +51,7 @@ public class editProjectType extends HttpServlet {
            
             
         } else {
-            errList.add("Please seleect an replacement type");
+            errList.add("Please select a replacement type");
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("updateProjectType.jsp");

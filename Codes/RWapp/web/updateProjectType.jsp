@@ -8,62 +8,121 @@
 <%@page import="src.model.ProjectDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@include file="protect.jsp"%>
+<%String thisPage = "updateProjectType"; //This is to change the highlight in Navigation Bar%>
+<%@include file="navbar.jsp"%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SUP<3</title>
+        <title>Update Project Type</title>
     </head>
     <body>
-        
-        <%
-            ArrayList<String> typeList = ProjectDAO.retrieveAllTypes();
-            
-            %>
-        <h1>tidy project type</h1>
-        
-        <form action="editProjectType"/>
-      
-        <%
-            for(String t: typeList){
+        <section id="main-content">
+            <section class="wrapper">
+                <!--Error/success display-->
+                <%  String success = (String) request.getAttribute("success");
+                    String err = (String) request.getAttribute("err");
+                    ArrayList<String> errList = (ArrayList<String>) request.getAttribute("errList");
+
+                    if (err != null) {
                 %>
-                
-                <input type='checkbox' name='type' value='<%=t%>'/><%=t%></br>
-                
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=err%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
                 <%
-            }
-            
-            
-            %>
-            
-            Replace with: <input type="text" name="replacedText" /></br>
-            Or select from: 
-            <select name="typeOption">
-                <option value="">select...</option>
+                    }
+                    if (success != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=success%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
                 <%
-                for(String t : typeList){
-            %>
-            <option value="<%=t%>"><%=t%></option>
-            <%}
+                    }
+                    if (errList != null && !errList.isEmpty()) { %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger">
+                                    <% for (int i = 0; i < errList.size(); i++) {
+                                            out.println(errList.get(i)+"<br/>");
+                                        }%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <% }
                 %>
-            </select>
-            <input type="submit" value="submit"/>
-        </form>
-            
-            </br>
-            
-            <%
-                String success = (String) request.getAttribute("success");
-                String err = (String) request.getAttribute("err");
-                ArrayList<String> errList = (ArrayList<String>) request.getAttribute("errList");
-                if (success!= null){
-                    out.println(success);
-                } 
-                if (err!= null){
-                    out.println(err);
-                }
-                if(errList != null && !errList.isEmpty()){
-                    out.println(errList);
-                }
-                %>
+                <!--End of error/success display--> 
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Update All Project Types
+                            </header>
+                            <div class="panel-body">
+                                <%
+                                    ArrayList<String> typeList = ProjectDAO.retrieveAllTypes();
+                                %>
+                                <form action="editProjectType">
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Select Project Type to Update:</label>
+                                        <div class="col-lg-9">
+                                            <% for (String t : typeList) {%> 
+                                            <input type='checkbox' name='type' value='<%=t%>'/> &nbsp;&nbsp;<%=t%> <br/> 
+                                            <% } %>
+                                            <p></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Replace with a New Project Type:</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" name="replacedText" class="form-control" id="inputPassword1" placeholder="">
+                                            <p></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Or Replace with Existing Project Types:</label>
+                                        <div class="col-lg-9">
+                                            <select name="typeOption" class="form-control">
+                                                <option value="">select...</option>
+                                                <%
+                                                    for (String t : typeList) {
+                                                %>
+                                                <option value="<%=t%>"><%=t%></option>
+                                                <%}
+                                                %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-3 col-lg-9">
+                                            <p></p>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
     </body>
 </html>

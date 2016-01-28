@@ -39,15 +39,15 @@ public class defectComplete extends HttpServlet {
         if (casenum.equals("1")){
             //pm marks complete
             success = DefectDAO.markComplete(id);
-            status = "marked as complete.";
+            status = "marked as complete by PM";
         } else if (casenum.equals("0")){
             //pm deletes defect
             success = DefectDAO.deleteDefect(id);
-            status = "deleted.";
+            status = "deleted";
         } else if (casenum.equals("2")){
             //dev marks complete
             success = DefectDAO.devMarkComplete(id);
-            status = "marked by developer as complete.";
+            status = "marked by developer as complete";
         
         }
         

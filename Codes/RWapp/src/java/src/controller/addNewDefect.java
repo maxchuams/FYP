@@ -48,7 +48,7 @@ public class addNewDefect extends HttpServlet {
             errList.add("Please fill in the name of the defect");
         }
         if (desc == null || desc.length()==0){
-            errList.add("Please give a descriotion of the defect");
+            errList.add("Please give a description of the defect");
         }
         if (sev == null){
             errList.add("Please give a severity rating for the defect");
@@ -62,11 +62,11 @@ public class addNewDefect extends HttpServlet {
               rd.forward(request,response);
               return;
         } else if(!success){
-            request.setAttribute("err", "Defect could not be added into the System");
+            request.setAttribute("err", "Defect could not be added into the system");
               rd.forward(request,response);
               return;
         } else if(success){
-            request.setAttribute("sucess", "Defect "+ defname+ "  from Project " + projname + " has been added into the system.");
+            request.setAttribute("sucess", "Defect "+ defname+ "  from Project " + projname + " has been successfully added into the system");
               rd.forward(request,response);
               return;
         }

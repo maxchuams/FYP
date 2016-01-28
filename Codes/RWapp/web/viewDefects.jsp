@@ -51,6 +51,54 @@
     <body>
         <section id="main-content">
             <section class="wrapper">
+                <!--Error/success display-->
+                <%  String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
+                    ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+
+                    if (errorMsg != null) {
+                %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=errorMsg%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                    if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                    if (errorList != null && !errorList.isEmpty()) { %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success">
+                                    <% for (int i = 0; i < errorList.size(); i++) {
+                                            out.println(errorList.get(i));
+                                        }%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <% }
+                %>
+
+
+                <!--End of error/success display-->
                 <div class="row">
                     <div class="col-lg-12">
                         <!--tab nav start-->
@@ -144,7 +192,7 @@
                         </section>
                                             
                                             
-                                            <!--kaiwen codes-->
+                        <!--kaiwen codes-->
                         <%
                             ArrayList<Defect> dList = DefectDAO.retrieveDev(dev.getUsername());
                         %>
@@ -156,7 +204,6 @@
                                     <header class="panel-heading">
                                         Project <%=p.getName()%> 
                                         <span class="tools pull-right">
-                                            <a href="addDefect.jsp?name="<%=p.getName()%> class="fa fa-plus-circle"></a>
                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                                         </span>
                                     </header>

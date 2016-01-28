@@ -19,6 +19,36 @@
     <body>
         <section id="main-content">
             <section class="wrapper">
+                <!--Error/success display-->
+                <%  String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
+
+                    if (errorMsg != null) {
+                %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=errorMsg%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                    if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }%>
+                <!--End of error/success display-->
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
@@ -31,19 +61,18 @@
                                     int id = Integer.parseInt(defId);
 
                                     Defect toEdit = DefectDAO.retrieveDefect(id);
+                                    int sev = toEdit.getSeverity();
+                                    String severity = "";
+
+                                    if (sev == 1) {
+                                        severity = "Low";
+                                    } else if (sev == 2) {
+                                        severity = "Medium";
+                                    } else if (sev == 3) {
+                                        severity = "High";
+                                    }
                                 %>
 
-                                <%  String errorMsg = (String) request.getAttribute("err");
-                                    String sucess = (String) request.getAttribute("sucess");
-
-                                    if (errorMsg != null) {
-                                        out.println(errorMsg);
-                                    }
-                                    if (sucess != null) {
-                                        out.println(sucess);
-                                    }
-
-                                %>
                                 <form action="updateDefect" id='main' method="post">
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 control-label">Project Name</label>
@@ -69,9 +98,15 @@
                                     <label for="inputType" class="col-lg-2 control-label">Severity</label>
                                     <div class="col-lg-9">
                                         <select name="severity" class="form-control m-bot15">
-                                            <option value='1'>Low</option>
-                                            <option value='2'>Medium</option>
-                                            <option value='3'>High</option>
+                                            <% if (sev==1){%>
+                                            <option value='1' selected>Low</option>
+                                            <% } %>
+                                            <% if (sev==2){%>
+                                            <option value='2' selected>Medium</option>
+                                            <% } %>
+                                            <% if (sev==3){%>
+                                            <option value='3' selected>High</option>
+                                            <% } %>
                                         </select>
                                     </div>
                                     <label for="inputType" class="col-lg-2 control-label">Defect status</label>

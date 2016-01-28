@@ -203,7 +203,7 @@
                                     <header class="panel-heading">
                                         Project <%=p.getName()%>
                                         <span class="tools pull-right">
-                                            <a href="addDefect.jsp?name="<%=p.getName()%> class="fa fa-plus-circle"></a>
+                                            <a href="addDefect.jsp?name=<%=p.getName()%>" class="fa fa-plus-circle"></a>
                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                                         </span>
                                     </header>
@@ -252,7 +252,7 @@
                                                 }
                                             }
                                             if (count == 0) {
-                                                out.println("<a href='addDefect.jsp'>No defects found <i>yet</i>. <br/>Add one?</a>");
+                                                out.println("<a href='addDefect.jsp?name=" + p.getName() + "'>No defects found <i>yet</i>. <br/>Add one?</a>");
                                             }
                                             
                                             count = 0;

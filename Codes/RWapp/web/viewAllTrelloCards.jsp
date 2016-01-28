@@ -1,7 +1,7 @@
 <%-- 
     Document   : viewTrelloCards
     Created on : Oct 5, 2015, 2:15:52 AM
-    Author     : admin
+    Author     : Kaiwen
 --%>
 
 <%@page import="src.model.ProjectDAO"%>
@@ -13,7 +13,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="protect.jsp"%>
-<%String thisPage = "viewTrelloCards"; //This is to change the highlight in Navigation Bar%>
+<%String thisPage = "viewAllTrelloCards"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 
 <html>
@@ -33,7 +33,7 @@
                 userid = pm.getUsername();
                 role = "pm";
             }
-            ArrayList<Project> tList = ProjectDAO.retrieveByUser(role, userid);
+            ArrayList<Project> tList = ProjectDAO.retrieveAll();
 
         %>
         <section id="main-content">
@@ -67,21 +67,20 @@
                     </div>
                 </div>
                 <%
-                    }
-                    if (errorList != null && !errorList.isEmpty()) { %>
-                <div class="row">
+                    } if (errorList != null && !errorList.isEmpty()) { %>
+                        <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
                                 <div class="text-success">
-                                    <% for (int i = 0; i < errorList.size(); i++) {
-                                            out.println(errorList.get(i));
-                                        }%></div>
+                                    <% for(int i=0; i<errorList.size(); i++){
+                                    out.println(errorList.get(i));
+                                }%></div>
                             </div>
                         </section>
                     </div>
                 </div>
-                <% }
+                    <% }
                 %>
 
 
@@ -90,7 +89,7 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <label class='pull-left top-menu'>Viewing all my projects</label>
+                                <label class='pull-left top-menu'>Viewing all projects</label>
                                 <form action="updateProjectFromTrello">
                                     <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
                                         Sync Projects
@@ -154,10 +153,10 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-
+                        
                         <div class="row-fluid" id="draggable_portlets">
                             <div class="row">
-
+                                
                                 <%
                                     for (Project t : tList) {
                                 %> 
@@ -175,8 +174,7 @@
                                                 <li> <span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li>
                                                 <span class="pull-right">
                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
-                                                        <% if (dev != null && pm == null) {%>
-                                                    <li> <b>Assigned by:</b> <%=t.getAssignedBy()%> <%}%></li>
+                                                    <li> <b>PM:</b> <%=t.getAssignedBy()%></li>
                                                 </span>
                                             </ul>
                                         </div>

@@ -28,7 +28,9 @@
                             </header>
                             <div class="panel-body">
 
-                                <%  String errorMsg = (String) request.getAttribute("err");
+                                <%
+                                String name = request.getParameter("name");
+                                String errorMsg = (String) request.getAttribute("err");
                                     String sucess = (String) request.getAttribute("sucess");
                                     ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
                                     if (errorMsg != null) {
@@ -49,9 +51,13 @@
                                             <%
                                                 ArrayList<Project> pList = ProjectDAO.retrieveInProgress();
                                                 for (Project p : pList) {
+                                                    if(name!=null && name.equalsIgnoreCase(p.getName())){%>
+                                                        <option value='<%=p.getName()%>' selected><%=p.getName()%></option>
+                                                    <%}else{
                                             %>
                                             <option value='<%=p.getName()%>'><%=p.getName()%></option>
                                             <%
+                                                }
                                                 }
                                             %>
                                         </select>
@@ -67,19 +73,26 @@
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 control-label">Description</label>
                                         <div class="col-lg-9">
-                                            <textarea class="form-control" rows="4" id="desc" name="desc"></textarea>
+                                            <textarea class="form-control" rows="4" id="desc" name="desc" required></textarea>
                                             <p></p>
                                         </div>
                                     </div>
 
                                     <label for="inputType" class="col-lg-2 control-label">Severity</label>
-                                    <div class="col-lg-9">
-                                        <select name="severity" class="form-control m-bot15">
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='type' value='1' checked="checked"/> Low <br/> 
+                                        </div>
+                                        <div class="col-lg-1">
+                                        <input type='radio' name='type' value='2'/> Med <br/> 
+                                        </div>
+                                        <div class="col-lg-1">
+                                        <input type='radio' name='type' value='3'/> High <br/> 
+                                        </div>
+<!--                                        <select name="severity" class="form-control m-bot15">
                                             <option value='1'>Low</option>
                                             <option value='2'>Medium</option>
                                             <option value='3'>High</option>
-                                        </select>
-                                    </div>
+                                        </select>-->
 
                                     <input type='hidden' name='pmName' value='<%=pm.getUsername()%>'/>
 
