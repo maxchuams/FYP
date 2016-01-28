@@ -374,7 +374,8 @@ public class ProjectDAO {
 
         return toReturn;
     }
-
+    
+    //Warning: If project name is invalid, this method will return null
     public static ArrayList<String> retrievePlanActualEnd(String pname) {
         ArrayList<String> toReturn = new ArrayList<String>();
         Connection conn = null;
@@ -397,7 +398,8 @@ public class ProjectDAO {
             ConnectionManager.close(conn, pstmt, rs);
         }
 
-        return toReturn;
+        if(toReturn.size()==2) return toReturn;
+        return null;
     }
 
 }
