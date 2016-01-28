@@ -296,7 +296,7 @@ public class ProjectDAO {
 
     }
 
-    public static boolean updateProject(String assignby, String due, int priority, int complete,int days, String type, String pname) {
+    public static boolean updateProject(String assignby, String due, int priority, int complete, int days, String type, String pname) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -349,9 +349,9 @@ public class ProjectDAO {
         }
 
     }
-    
-    public static String retrieveTrelloPhoto(String pname){
-         String toReturn = null;
+
+    public static String retrieveTrelloPhoto(String pname) {
+        String toReturn = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -374,4 +374,30 @@ public class ProjectDAO {
 
         return toReturn;
     }
+
+    public static ArrayList<String> retrievePlanActualEnd(String pname) {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select min(planstart) as planstart,max(planend) as planend from projectallocation where projectname=? group by projectname;");
+            pstmt.setString(1, pname);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(rs.getString("planstart"));
+                toReturn.add(rs.getString("planend"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
+
 }
