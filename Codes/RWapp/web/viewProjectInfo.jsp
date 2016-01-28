@@ -3,6 +3,9 @@
     Created on : Jan 21, 2016, 4:29:41 PM
     Author     : Kaiwen
 --%>
+<%@page import="src.model.ProjectAllocation"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@page import="src.model.Project"%>
 <%@page import="src.model.TrelloCardDAO"%>
@@ -50,10 +53,31 @@
                                     </tr></thead>
                                     <tr>
                                         <td>
+                                            Start and end date
+                                        </td>
+                                        <td>
+                                            To get from Lam
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             Project manager
                                         </td>
                                         <td>
                                             <%=p.getAssignedBy()%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Developer
+                                        </td>
+                                        <td>
+                                            <% 
+                                            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(p.getName());
+                                            for (String developer : getDev){
+                                                out.println(developer+"<br/>");
+                                            }
+                                            %>
                                         </td>
                                     </tr>
                                     <tr>

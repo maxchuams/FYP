@@ -69,7 +69,7 @@
 
 
                                         <b> <%=r.getUsername()%></b></br>
-                                        <img style="height:75px;width:75px" src="ImageServlet?imageid=<%=r.getUsername()%>" alt="Display this text instead" align="center"/>
+                                        <img style="height:75px;width:75px" src="ImageServlet?imageid=<%=r.getUsername()%>" alt="No Image" align="center"/>
                                         </br>
                                         <!--nationality: 
                                         <%--<%=r.getNationality()%>--%>

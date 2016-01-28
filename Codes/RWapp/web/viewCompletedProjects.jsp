@@ -14,7 +14,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="protect.jsp"%>
-<%String thisPage = "viewTrelloCards"; //This is to change the highlight in Navigation Bar%>
+<%String thisPage = "viewCompletedProjects"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 
 <html>
@@ -174,13 +174,11 @@
 
                                 <%
                                     for (Project t : tList) {
-                                        if(t.getIsComplete() == 0){
-                                        
-                                %> 
-                                <!-- BEGIN Portlet PORTLET-->
+                                        if(t.getIsComplete() == 1){%>
+                                            <!-- BEGIN Portlet PORTLET-->
                                 <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");%>
                                 <div class="col-md-4">
-                                    <div class="panel panel-primary">
+                                    <div class="panel panel-default">
                                         <div class="panel-heading">
                                             Project <%=t.getName()%>
                                             <span class="tools pull-right">
@@ -193,18 +191,6 @@
                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
                                                         <% if (dev != null && pm == null) {%>
                                                     <li> <b>Assigned by:</b> <%=t.getAssignedBy()%> <%}%></li>
-                                                    <li> <b>Developer:</b>
-                                                        <% 
-                                            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(t.getName());
-                                            if(getDev.size()==1){
-                                                for (String developer : getDev){
-                                                    out.println(developer+"<br/>");
-                                                }
-                                            }else{
-                                                out.println("2 Developers");
-                                            }
-                                            %>
-                                                    </li>
                                                 </span>
                                             </ul>
                                         </div>
@@ -212,7 +198,7 @@
                                 </div>
                                 </a>
                                 <!-- END Portlet PORTLET-->
-                                <% }
+                                    <%    }
                                     }%>
                             </div>
                         </div>
