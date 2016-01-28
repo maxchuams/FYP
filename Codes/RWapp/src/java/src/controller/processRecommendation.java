@@ -49,8 +49,8 @@ public class processRecommendation extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<String> errList = new ArrayList<String>();
         String devList = request.getParameter("dev");
-        
-        String [] dev = devList.split(",");
+
+        String[] dev = devList.split(",");
 
         String projName = request.getParameter("projName");
         String type = request.getParameter("type");
@@ -64,11 +64,41 @@ public class processRecommendation extends HttpServlet {
         String psize = request.getParameter("psize");
         int priorityInt = Integer.parseInt(priority);
         boolean success = false;
-        
+        Person pm = PersonDAO.retrieveUser(pmname);
         if (errList.isEmpty()) {
             //to add in code to check if project exist
             Project toAdd = new Project(projName, id, desc, pmname, due, Integer.parseInt(priority), 0, type, Integer.parseInt(psize));
             success = ProjectDAO.add(toAdd);
+            try {
+                URL memberUrl = new URL("https://api.trello.com/1/cards/" + id + "/attachments?fields=url&key=" + pm.getTrelloKey() + "&token=" + pm.getToken());
+                //System.out.println(memberUrl);
+
+                URLConnection con = memberUrl.openConnection();
+                InputStream is = con.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+                String line = null;
+                String jsonOutput1 = "";
+
+                // read each line and throw string into JSONObject
+                while ((line = br.readLine()) != null) {
+                    jsonOutput1 += line;
+
+                }
+
+                JSONArray obj = new JSONArray(jsonOutput1);
+                //masterboardID - id for masterboard need this for the URL
+                String url = "";
+//            for (int i = 0; i < obj.length(); i++) {
+                JSONObject jobj = obj.getJSONObject(0);
+                url = jobj.getString("url");
+
+//            }
+                System.out.println("url " + url);
+                ProjectDAO.addURL(projName, url);
+            } catch (Exception e) {
+
+            }
         }
 
         //TO DO:
@@ -82,13 +112,13 @@ public class processRecommendation extends HttpServlet {
             trelloID.add(PersonDAO.retrieveMemberId(pmname));
             boolean updateAllocationDAO = false;
             // add to allocation table
-            for (int i=0;i<dev.length;i+=3) {
+            for (int i = 0; i < dev.length; i += 3) {
                 //for multiple allocation
                 trelloID.add(PersonDAO.retrieveMemberId(dev[i]));
                 //update project allocation DAO
                 //HOLD: Need to figure out plan start and plan end
                 //String projName, String dev, String dateAllocated, String planStart, String planEnd, String actualStart) {
-                updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, dev[i], dev[i+1], dev[i+2], dev[i+1]);
+                updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, dev[i], dev[i + 1], dev[i + 2], dev[i + 1]);
             }
             if (updateAllocationDAO) {
                 //update trello
@@ -101,7 +131,7 @@ public class processRecommendation extends HttpServlet {
                     }
 
                 }
-                Person pm = PersonDAO.retrieveUser(pmname);
+
                 //https://api.trello.com/1/cards/568c92514a3b3bcdcbc42106?fields=idMembers&key=7e35111227918de8a37f8c20844ed555&token=f7f588e4ce535adc2f08539a56b4b7d24caad79d0e7142cebb564fe979cbc565
                 //make connection to trello:
                 //get exisiting members, store on the list
@@ -126,11 +156,10 @@ public class processRecommendation extends HttpServlet {
                 //iterate through the user's boards and store into an arraylist first
 
                 //masterboardID - id for masterboard need this for the URL
-              
                 for (int i = 0; i < memArr.length(); i++) {
-                  
+
                     String memId = memArr.getString(i);
-                    if(!memIdList.contains(memId)){
+                    if (!memIdList.contains(memId)) {
                         memIdList += "," + memId;
                     }
 
@@ -145,7 +174,7 @@ public class processRecommendation extends HttpServlet {
                 con1.setRequestProperty("User-Agent", "Chrome/45.0.2454.101 m");
                 con1.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
                 con1.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                
+
                 String urlParameters = "idMembers=" + memIdList + "&key=" + pm.getTrelloKey() + "&token=" + pm.getToken();
 
                 // Send post request

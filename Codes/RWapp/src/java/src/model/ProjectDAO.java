@@ -240,9 +240,9 @@ public class ProjectDAO {
 
         }
 
-     }
-      
-    public static ArrayList<String> retrieveAllProjectNames(){
+    }
+
+    public static ArrayList<String> retrieveAllProjectNames() {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -250,7 +250,7 @@ public class ProjectDAO {
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select projectname from project");
-           
+
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -265,14 +265,14 @@ public class ProjectDAO {
 
         return toReturn;
     }
-    
-    public static boolean addCardFromTrello(String name, String assignby, String cardId, String desc, String due, int priority, String type){
+
+    public static boolean addCardFromTrello(String name, String assignby, String cardId, String desc, String due, int priority, String type) {
         Connection conn = null;
         PreparedStatement pstmt = null;
-        
+
         try {
             conn = ConnectionManager.getConnection();
-            
+
             pstmt = conn.prepareStatement("insert into project (projectname, trellokey, description, assignby, duedate, priority,type) values (?,?,?,?,?,?,?)");
             pstmt.setString(1, name);
             pstmt.setString(2, cardId);
@@ -281,7 +281,7 @@ public class ProjectDAO {
             pstmt.setString(5, due);
             pstmt.setInt(6, priority);
             pstmt.setString(7, type);
-          
+
             pstmt.executeUpdate();
 
             return true;
@@ -295,8 +295,8 @@ public class ProjectDAO {
         }
 
     }
-    
-    public static boolean updateProject(String assignby, String due, int priority, int complete, String pname){
+
+    public static boolean updateProject(String assignby, String due, int priority, int complete, String pname) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -321,5 +321,55 @@ public class ProjectDAO {
             ConnectionManager.close(conn, pstmt, rs);
 
         }
+    }
+
+    public static boolean addURL(String projname, String url) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("UPDATE project SET trellophoto=? WHERE projectname=?");
+            pstmt.setString(1, url);
+            pstmt.setString(2, projname);
+
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+
+    }
+    
+    public static String retrieveTrelloPhoto(String pname){
+         String toReturn = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select trellophoto from project where projectname = ?");
+            pstmt.setString(1, pname);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
     }
 }
