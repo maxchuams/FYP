@@ -295,4 +295,31 @@ public class ProjectDAO {
         }
 
     }
+    
+    public static boolean updateProject(String assignby, String due, int priority, int complete, String pname){
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("UPDATE project SET assignby=?,duedate=?,priority=?,iscomplete=? WHERE projectname=?");
+            pstmt.setString(1, assignby);
+            pstmt.setString(2, due);
+            pstmt.setInt(3, priority);
+            pstmt.setInt(4, complete);
+            pstmt.setString(5, pname);
+
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+    }
 }
