@@ -48,6 +48,33 @@ public class DeveloperDAO {
 
     }
     
+    
+    public static ArrayList<Developer> retrieveDevelopers() {
+        ArrayList<Developer> developers = new ArrayList<Developer>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            
+            pstmt = conn.prepareStatement("select d.username as username,password,type,trellokey,trellotoken, employmentdate, nationality from user u, developer d where u.username=d.username");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                developers.add(new Developer(
+                        new Person(rs.getString("username"), rs.getString("password"), rs.getString("type"), rs.getString("trellokey"), rs.getString("trellotoken"))
+                ,rs.getString("employmentdate"), rs.getString("nationality")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+        return developers;
+    }
+    
+    
     public static String retrieveDevCountry(String username){
         Connection conn = null;
         PreparedStatement pstmt = null;
