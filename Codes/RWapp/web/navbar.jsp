@@ -30,11 +30,11 @@
                 var b = document.getElementsByTagName("script")[0];
                 b.parentNode.insertBefore(a, b);
             })();</script>
-    <script type="text/javascript">
-    function SubmitSearch(){
-        window.location = "search.jsp";
-    }
-</script>    
+        <script type="text/javascript">
+            function SubmitSearch() {
+                window.location = "search.jsp";
+            }
+        </script>    
     </head>
     <body>
         <%
@@ -46,11 +46,10 @@
             } else if (pm != null) {
                 username = pm.getUsername();
                 url = "managePmProfile.jsp";
-            }
-//                else if (tester != null) {
-//                username = tester.getUsername();
-//                url = "manageTesterProfile.jsp";
-//            } 
+            } //                else if (tester != null) {
+            //                username = tester.getUsername();
+            //                url = "manageTesterProfile.jsp";
+            //            } 
             else if (sudo != null) {
                 username = sudo.getUsername();
                 url = "manageSudoProfile.jsp";
@@ -74,10 +73,56 @@
                 </div>
                 <!--logo end-->
 
+
+                <div class="nav notify-row" id="top_menu">
+                    <!--  notification start -->
+                    <ul class="nav top-menu">
+                        <!-- notification dropdown start-->
+                        <li id="header_notification_bar" class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                                <i class="fa fa-bell-o"></i>
+                                <span class="badge bg-warning">3</span>
+                            </a>
+                            <ul class="dropdown-menu extended notification">
+                                <li>
+                                    <p>Notifications</p>
+                                </li>
+                                <li>
+                                    <div class="alert alert-info clearfix">
+                                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
+                                        <div class="noti-info">
+                                            <a href="#"> Server #1 overloaded.</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="alert alert-danger clearfix">
+                                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
+                                        <div class="noti-info">
+                                            <a href="#"> Server #2 overloaded.</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="alert alert-success clearfix">
+                                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
+                                        <div class="noti-info">
+                                            <a href="#"> Server #3 overloaded.</a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!-- notification dropdown end -->
+                    </ul>
+                    <!--  notification end -->
+                </div>
+
                 <div class="top-nav clearfix">
                     <!--search & user info start-->
                     <ul class="nav pull-right top-menu">
-                        
                         <li>
                             <span class="form-control search" onclick="javascript:SubmitSearch()" style="cursor: pointer;"></span>
                         </li>
@@ -96,9 +141,12 @@
                         </li>
                         <!-- user login dropdown end -->
 
+
                     </ul>
                     <!--search & user info end-->
                 </div>
+
+
             </header>
             <!--header end-->
             <!--sidebar start-->
@@ -148,8 +196,8 @@
                                         <li class="active"><a href="manageDefects.jsp">View Defects</a></li><% } else { %>
                                         <li><a href="manageDefects.jsp">View Defects</a></li><% } %>
                                             <%}%>
-                                        <%if (pm != null) {%>
-                                        <% if (thisPage.equals("addDefect")) { %>
+                                            <%if (pm != null) {%>
+                                            <% if (thisPage.equals("addDefect")) { %>
                                         <li class="active"><a href="addDefect.jsp">Add Defects</a></li><% } else { %>
                                         <li><a href="addDefect.jsp">Add Defects</a></li><% } %>
                                             <%}%>
@@ -169,25 +217,25 @@
                                         <li class="active"><a href="viewTrelloCards.jsp">View Projects</a></li> <% } else { %>
                                         <li><a href="viewTrelloCards.jsp">View My Projects</a></li><% } %>
                                             <%if (pm != null) {%>
-                                        
+
                                         <% if (thisPage.equals("viewCompletedProjects")) { %>
                                         <li class="active"><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } else { %>
                                         <li><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } %>
-                                        
+
                                         <% if (thisPage.equals("viewAllTrelloCards")) { %>
                                         <li class="active"><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } else { %>
                                         <li><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } %>
-                                        
-                                            <% if (thisPage.equals("viewUnassignedCards")) { %>
+
+                                        <% if (thisPage.equals("viewUnassignedCards")) { %>
                                         <li class="active"><a href="assignProject">View Unassigned Projects</a></li><% } else { %>
                                         <li><a href="assignProject">View Unassigned Projects</a></li><% } %>
-                                        
-                                        
+
+
                                         <% if (thisPage.equals("updateProjectType")) { %>
                                         <li class="active"><a href="updateProjectType.jsp">Update Project Type</a></li><% } else { %>
                                         <li><a href="updateProjectType.jsp">Update Project Type</a></li><% } %>
                                             <%}%>
-                                        
+
                                     </ul>
                             </li>
                             <%}%>
