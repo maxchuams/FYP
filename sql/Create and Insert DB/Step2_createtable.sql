@@ -34,6 +34,7 @@ create table project(
     iscomplete int not null default 0,
 	type varchar(25) not null,
 	psize int not null default 1,
+	trellophoto varchar(1000),
 	constraint project_fk foreign key (assignby) references user (username)
 );
 
