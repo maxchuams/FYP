@@ -55,15 +55,24 @@ public class DefectScreenshotController extends HttpServlet {
                 String delete = request.getParameter("delete");
                 
                 ArrayList<String> imgList = DefectScreenshotDAO.getScreenshotTimestamp(defectid);
+        
+                if(delete==null){
                 if (imgList.size() == 3){
                     RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
                     request.setAttribute("err" , "You can only upload a maximum of 3 images");
                     rd.forward(request, response);
                     return;
                 }
-                if(delete==null){
                 if (filePart != null) 
                 {
+                 if (filePart.getSize() == 0){
+                    RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
+                    request.setAttribute("err" , "Do not upload blank image!");
+                    rd.forward(request, response);
+                    return;
+                }
+                    
+                    
                     System.out.println(filePart.getName());
                     System.out.println(filePart.getSize());
                     System.out.println(filePart.getContentType());

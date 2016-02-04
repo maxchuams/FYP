@@ -4,6 +4,7 @@
     Author     : calvin
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="src.model.PersonDAO"%>
 <%@page import="src.model.DeveloperDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -17,6 +18,10 @@
         <title>Recco</title>
     </head>
     <body>
+        <%  String err = (String) request.getAttribute("err");
+            String sucess = (String) request.getAttribute("sucess");
+            ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+        %>
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper">
@@ -34,16 +39,16 @@
                                 <div class="col-md-6">
                                     <h1><%=username%></h1>
                                     <span class="text-muted">User Role: <%
-                                   Person p = PersonDAO.retrieveUser(username);
-                                                                           if (p.getType().equals("s")) {
-                                       out.println("SuperAdmin");%></span><%
-                                                                               }
-                                                                               if (p.getType().equals("p")) {
-                                           out.println("Project Manager");%></span><%
-                                                                               }
-                                                                               if (p.getType().equals("c")) {
-                                                                                   out.println("Developer");%></span><%
-                                                                               }
+                                        Person p = PersonDAO.retrieveUser(username);
+                                        if (p.getType().equals("s")) {
+                                            out.println("SuperAdmin");%>                                        </span><%
+                                                }
+                                                if (p.getType().equals("                                        p")) {
+                                                    out.println("Project Manager");%></span><%
+                                                        }
+                                                        if (p.getType().equals("c")) {
+                                                            out.println("Developer");%></span><%
+                                                                                                   }
                                     %>
 
                                 </div>
@@ -66,7 +71,7 @@
                                             Country
                                         </a>
                                     </li>
-                                    <% } %>
+                                    <% }%>
                                     <li>
                                         <a data-toggle="tab" href="#"><!--href="#job-history">-->
                                             WIP
@@ -88,6 +93,25 @@
                                                 <div class="col-md-0"></div>
                                                 <div class="prf-contacts sttng col-md-12">
                                                     <h2>Edit Profile Picture</h2>
+
+                                                    <h3>  
+                                                        <%if (err != null) {%>
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <section class="panel">
+                                                                    <div class="panel-body">
+                                                                        <div class="text-danger"><%=err%></div>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                        <%}%>
+                                                    </h3>
                                                 </div>
                                                 <form role="form" method="post" action="uploadServlet" enctype="multipart/form-data" class="form-horizontal">
 
@@ -441,17 +465,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                                    <%if (p.getType().equals("c")) { %>
+                                    <%if (p.getType().equals("c")) { %>
                                     <div id="contacts" class="tab-pane ">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="prf-contacts">
                                                     <%
-                                                            String d = DeveloperDAO.retrieveDevCountry(p.getUsername());
-                                                        %>
+                                                        String d = DeveloperDAO.retrieveDevCountry(p.getUsername());
+                                                    %>
                                                     <h2> <span><i class="fa fa-map-marker"></i></span> Current Country : <%=d%></h2>
                                                     <div class="location-info">
-                                                        
+
                                                         <form action='modifyCountry' class="form-horizontal">
                                                             <label class="col-lg-3 control-label">Change Country</label>
                                                             <div class="col-lg-9">
@@ -707,12 +731,13 @@
                                                                     <option value="Zimbabwe">Zimbabwe</option>
                                                                 </select>
                                                             </div>
-                                                            <% 
-                                                            if (dev != null){
-                                                            String devName = dev.getUsername(); }%>
+                                                            <%
+                                                                if (dev != null) {
+                                                                    String devName = dev.getUsername();
+                                                                }%>
                                                             <input type="hidden" name="user" value="devName"/>
                                                             <div class="col-lg-offset-3 col-lg-9">
-                                                            <button class="btn btn-danger" type="submit">Submit</button>
+                                                                <button class="btn btn-danger" type="submit">Submit</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -721,7 +746,7 @@
                                             </div>
                                         </div>
                                     </div>
-<% } %>
+                                    <% }%>
                                 </div>
                             </div>
                         </section>
