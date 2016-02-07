@@ -7,6 +7,9 @@ package src.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,26 +35,81 @@ public class updateDefect extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String pname = request.getParameter("projname");
         String dname = request.getParameter("defname");
         String defid = request.getParameter("id");
         int id = Integer.parseInt(defid);
         String severity = request.getParameter("severity");
-        int sev = Integer.parseInt(severity);
+        int sev = 0;
         String desc = request.getParameter("desc");
         String complete = request.getParameter("complete");
         int isComplete = Integer.parseInt(complete);
         String pm = request.getParameter("pmname");
-        boolean success = DefectDAO.updateDefect(id,dname,desc,pm,isComplete,sev);
-        
-        RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
-        if (success){
-            request.setAttribute("sucess", "Details successfully changed!");
-        } else {
-            request.setAttribute("err", "Defect could not be updated");
+        String duedateStr = request.getParameter("duedate");
+
+        ArrayList<String> errList = new ArrayList<String>();
+
+        Date duedate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+
+        if (dname == null) {
+            errList.add("Please fill in a defect name");
         }
-        rd.forward(request,response);
-        return;
+
+        //validate date to be after today
+        if (duedateStr == null) {
+            errList.add("Please fill in a due date");
+        } else {
+            try {
+                duedate = sdf.parse(duedateStr);
+            } catch (Exception e) {
+                System.out.println("Date object parsing error");
+            }
+            if (duedate.before(new Date())) {
+                errList.add("Date cannot be before today");
+            }
+        }
+        if (desc == null || desc.length() == 0) {
+            errList.add("Please give a description of the defect");
+        }
+        if (severity == null) {
+            errList.add("Please give a severity rating for the defect");
+        }
+        if (complete == null) {
+            errList.add("Please set the completion status for the defect");
+        } else {
+            sev = Integer.parseInt(severity);
+        }
+
+        boolean success = false;
+
+        if (errList.size() == 0) {
+
+            success = DefectDAO.updateDefect(id, dname, desc, pm, isComplete, sev, duedateStr);
+            if (success) {
+                RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
+                request.setAttribute("sucess", "Details successfully changed!");
+                rd.forward(request, response);
+                return;
+            }else{
+                RequestDispatcher rd = request.getRequestDispatcher("editDefect.jsp");
+                request.setAttribute("id", defid);
+                request.setAttribute("err", "Database Error: Defect could not be added into the system");
+                rd.forward(request, response);
+                return;
+            }
+        } else {
+            RequestDispatcher rd = request.getRequestDispatcher("editDefect.jsp");
+            request.setAttribute("id", defid);
+            request.setAttribute("err1", errList);
+            rd.forward(request, response);
+            return;
+
+        }
+ 
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

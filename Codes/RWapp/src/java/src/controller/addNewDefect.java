@@ -7,7 +7,10 @@ package src.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,40 +40,67 @@ public class addNewDefect extends HttpServlet {
         String defname = request.getParameter("defname").trim();
         String desc = request.getParameter("desc").trim();
         String sev = request.getParameter("severity");
-            
         String pmname = request.getParameter("pmName");
-        
+        String duedateStr = request.getParameter("duedate");
+
+        Date duedate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+
         ArrayList<String> errList = new ArrayList<String>();
-        if(projname == null){
+        if (projname == null) {
             errList.add("Please fill in a project name");
         }
-        if (defname== null){
+
+        //validate date to be after today
+        if (duedateStr == null) {
+            errList.add("Please fill in a due date");
+        } else {
+            try {
+                duedate = sdf.parse(duedateStr);
+            } catch (Exception e) {
+                System.out.println("Date object parsing error");
+            }
+            if (duedate.before(new Date())) {
+                errList.add("Date cannot be before today");
+            }
+        }
+
+        if (defname == null) {
             errList.add("Please fill in the name of the defect");
         }
-        if (desc == null || desc.length()==0){
+        if (desc == null || desc.length() == 0) {
             errList.add("Please give a description of the defect");
         }
-        if (sev == null){
+        if (sev == null) {
             errList.add("Please give a severity rating for the defect");
         }
-        int severity = Integer.parseInt(sev);
-        
-        boolean success = DefectDAO.addDefect(projname, defname, desc, pmname, severity);
-        RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
-        if (!errList.isEmpty()){
-            request.setAttribute("err1", errList );
-              rd.forward(request,response);
-              return;
-        } else if(!success){
-            request.setAttribute("err", "Defect could not be added into the system");
-              rd.forward(request,response);
-              return;
-        } else if(success){
-            request.setAttribute("sucess", "Defect "+ defname+ "  from Project " + projname + " has been successfully added into the system");
-              rd.forward(request,response);
-              return;
+       
+
+       
+
+        if (errList.isEmpty()) {
+            int severity = Integer.parseInt(sev);
+            boolean success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr);
+            if (success) {
+                RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
+                request.setAttribute("sucess", "Defect " + defname + "  from Project " + projname + " has been successfully added into the system");
+                rd.forward(request, response);
+                return;
+            } else {
+                RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
+                request.setAttribute("err", "Database Error: Defect could not be added into the system");
+                rd.forward(request, response);
+                return;
+            }
+
+        } else {
+            RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
+            request.setAttribute("err1", errList);
+            rd.forward(request, response);
+            return;
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

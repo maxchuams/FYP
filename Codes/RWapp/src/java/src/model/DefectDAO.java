@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,21 +21,31 @@ import java.util.logging.Logger;
  */
 public class DefectDAO {
 
-    public static boolean addDefect(String pname, String dname, String desc, String reportby, int severity) {
+    public static boolean addDefect(String pname, String dname, String desc, String reportby, int severity, String duedate) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Date duedateDate = null;
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            duedateDate = formatter.parse(duedate);
+        } catch (Exception e) {
+            System.out.println("Date object parsing error");
+        }
 
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("insert into defect (projectname, defectname, description, reportby, iscomplete, severity) values (?,?,?,?,?,?)");
+            pstmt = conn.prepareStatement("insert into defect (projectname, defectname, description, reportby, iscomplete, severity, duedate) values (?,?,?,?,?,?,?)");
             pstmt.setString(1, pname);
             pstmt.setString(2, dname);
             pstmt.setString(3, desc);
             pstmt.setString(4, reportby);
             pstmt.setInt(5, 0);
             pstmt.setInt(6, severity);
+            pstmt.setDate(7, new java.sql.Date(duedateDate.getTime()));
             pstmt.executeUpdate();
 
             return true;
@@ -41,21 +53,29 @@ public class DefectDAO {
             Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
-
             ConnectionManager.close(conn, pstmt, rs);
 
         }
 
     }
 
-    public static boolean updateDefect(int id, String dname, String desc, String pm, int isComplete, int sev) {
+    public static boolean updateDefect(int id, String dname, String desc, String pm, int isComplete, int sev, String duedate) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Date duedateDate = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            duedateDate = formatter.parse(duedate);
+        } catch (Exception e) {
+            System.out.println("Date object parsing error");
+        }
+
         try {
             conn = ConnectionManager.getConnection();
 
-            String sql = "UPDATE defect set defectname=?, description = ?,iscomplete=?, severity=? where defectid=? ";
+            String sql = "UPDATE defect set defectname=?, description = ?,iscomplete=?, severity=?,duedate=? where defectid=? ";
 
             pstmt = conn.prepareStatement(sql);
 
@@ -63,7 +83,8 @@ public class DefectDAO {
             pstmt.setString(2, desc);
             pstmt.setInt(3, isComplete);
             pstmt.setInt(4, sev);
-            pstmt.setInt(5, id);
+            pstmt.setDate(5, new java.sql.Date(duedateDate.getTime()));
+            pstmt.setInt(6, id);
 
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
             pstmt.executeUpdate();
@@ -138,13 +159,12 @@ public class DefectDAO {
         ArrayList<Defect> toReturn = new ArrayList<Defect>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity from defect");
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate from defect");
 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,7 +208,7 @@ public class DefectDAO {
         ArrayList<Defect> toReturn = new ArrayList<Defect>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime,iscomplete,severity "
+            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate "
                     + "from defect d, "
                     + "(select projectname "
                     + "from projectallocation group by "
@@ -201,7 +221,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -221,7 +241,7 @@ public class DefectDAO {
         ArrayList<Defect> toReturn = new ArrayList<Defect>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime, iscomplete,severity "
+            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime, iscomplete,severity,duedate "
                     + "from defect d, "
                     + "(select projectname "
                     + "from project group by "
@@ -234,7 +254,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,13 +274,13 @@ public class DefectDAO {
         Defect toReturn = null;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime, iscomplete,severity from defect where defectid=?");
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime, iscomplete,severity,duedate from defect where defectid=?");
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                toReturn = new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8));
+                toReturn = new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8),rs.getDate(9));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -279,7 +299,7 @@ public class DefectDAO {
         ArrayList<Defect> toReturn = new ArrayList<Defect>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime, iscomplete,severity,filtering, filteringvalue,sorting "
+            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime, iscomplete,severity,filtering, filteringvalue,sorting, duedate "
                     + "from defect d,  "
                     + "( "
                     + "select projectname, "
@@ -317,7 +337,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(12)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -374,7 +394,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(12)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);

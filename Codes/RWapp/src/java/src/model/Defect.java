@@ -12,6 +12,7 @@ import java.util.Date;
  * @author maxchua
  */
 public class Defect {
+
     private int id;
     private String projectName;
     private String defectName;
@@ -20,8 +21,9 @@ public class Defect {
     private String reportedBy;
     private int isComplete;
     private int severity;
+    private Date duedate;
 
-    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, String updateTime, int isComplete, int severity) {
+    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, String updateTime, int isComplete, int severity, Date duedate) {
         this.id = id;
         this.projectName = projectName;
         this.defectName = defectName;
@@ -30,6 +32,7 @@ public class Defect {
         this.updateTime = updateTime;
         this.isComplete = isComplete;
         this.severity = severity;
+        this.duedate = duedate;
     }
 
     public String getProjectName() {
@@ -83,6 +86,10 @@ public class Defect {
     public int getId() {
         return id;
     }
+    
+        public Date getDuedate() {
+        return duedate;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -95,12 +102,14 @@ public class Defect {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
+    
+    public void setDuedate(Date due) {
+        this.duedate = due;
+    }
 
     @Override
     public String toString() {
-        return "Defect{" + "id=" + id + ", projectName=" + projectName + ", defectName=" + defectName + ", updateTime=" + updateTime + ", desc=" + desc + ", reportedBy=" + reportedBy + ", isComplete=" + isComplete + ", severity=" + severity + '}';
+        return "Defect{" + "id=" + id + ", projectName=" + projectName + ", defectName=" + defectName + ", updateTime=" + updateTime + ", desc=" + desc + ", reportedBy=" + reportedBy + ", isComplete=" + isComplete + ", severity=" + severity + ", dudedate=" + duedate.toString() + '}';
     }
 
-   
-    
-}   
+}

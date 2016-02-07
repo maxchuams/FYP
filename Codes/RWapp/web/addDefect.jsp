@@ -29,8 +29,8 @@
                             <div class="panel-body">
 
                                 <%
-                                String name = request.getParameter("name");
-                                String errorMsg = (String) request.getAttribute("err");
+                                    String name = request.getParameter("name");
+                                    String errorMsg = (String) request.getAttribute("err");
                                     String sucess = (String) request.getAttribute("sucess");
                                     ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
                                     if (errorMsg != null) {
@@ -40,7 +40,10 @@
                                         out.println(sucess);
                                     }
                                     if (errorArr != null) {
-                                        out.println(errorArr);
+                                        for(String es: errorArr){
+                                            out.println(es + "<br>");
+                                        }
+                                        
                                     }
                                 %>
                                 </br>
@@ -51,13 +54,13 @@
                                             <%
                                                 ArrayList<Project> pList = ProjectDAO.retrieveInProgress();
                                                 for (Project p : pList) {
-                                                    if(name!=null && name.equalsIgnoreCase(p.getName())){%>
-                                                        <option value='<%=p.getName()%>' selected><%=p.getName()%></option>
-                                                    <%}else{
+                                                    if (name != null && name.equalsIgnoreCase(p.getName())) {%>
+                                            <option value='<%=p.getName()%>' selected><%=p.getName()%></option>
+                                            <%} else {
                                             %>
                                             <option value='<%=p.getName()%>'><%=p.getName()%></option>
                                             <%
-                                                }
+                                                    }
                                                 }
                                             %>
                                         </select>
@@ -70,6 +73,18 @@
                                             <p></p>
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Due Date</label>
+                                        <div class="col-lg-9">
+                                            <input type="date" class="form-control m-bot12" name="duedate" required/>
+                                            <p></p>
+                                        </div>
+
+                                    </div>   
+
+
+
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 control-label">Description</label>
                                         <div class="col-lg-9">
@@ -78,21 +93,22 @@
                                         </div>
                                     </div>
 
+
                                     <label for="inputType" class="col-lg-2 control-label">Severity</label>
                                     <div class="col-lg-1">
-                                        <input type='radio' name='type' value='1' checked="checked"/> Low <br/> 
-                                        </div>
-                                        <div class="col-lg-1">
-                                        <input type='radio' name='type' value='2'/> Med <br/> 
-                                        </div>
-                                        <div class="col-lg-1">
-                                        <input type='radio' name='type' value='3'/> High <br/> 
-                                        </div>
-<!--                                        <select name="severity" class="form-control m-bot15">
-                                            <option value='1'>Low</option>
-                                            <option value='2'>Medium</option>
-                                            <option value='3'>High</option>
-                                        </select>-->
+                                        <input type='radio' name='severity' value='1'/> Low <br/> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity' value='2'/> Med <br/> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity' value='3'/> High <br/> 
+                                    </div>
+                                    <!--                                        <select name="severity" class="form-control m-bot15">
+                                                                                <option value='1'>Low</option>
+                                                                                <option value='2'>Medium</option>
+                                                                                <option value='3'>High</option>
+                                                                            </select>-->
 
                                     <input type='hidden' name='pmName' value='<%=pm.getUsername()%>'/>
 

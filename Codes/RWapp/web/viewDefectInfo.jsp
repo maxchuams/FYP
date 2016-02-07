@@ -100,31 +100,34 @@
                             </header>
                             <div class="panel-body">
                                 <table class="table  table-hover general-table">
-                                    <thead><tr><td>Defect status</td><td><%if (d.getIsComplete() == 0) {
+                                                <thead><tr><td>Defect status</td><td><%if (d.getIsComplete() == 0) {
 
-                                                if(pm==null){%><a href='defectComplete?id=<%=d.getId()%>&case=2'><%out.println("<span class='label label-danger label-mini'>Defect incomplete, click to mark as complete</span></a>");}else{
-                                                out.println("<span class='label label-danger label-mini'>Defect incomplete by developer</span></a>");}
-                                            } else if (d.getIsComplete() == 1 && pm != null) {
+                                                        if (pm == null) {%><a href='defectComplete?id=<%=d.getId()%>&case=2'><%out.println("<span class='label label-danger label-mini'>Defect incomplete, click to mark as complete</span></a>");
+                                                                } else {
+                                                                    out.println("<span class='label label-danger label-mini'>Defect incomplete by developer</span></a>");
+                                                                }
+                                                            } else if (d.getIsComplete() == 1 && pm != null) {
                                                     %><a href='defectComplete?id=<%=d.getId()%>&case=1'><%out.println("<span class='label label-warning label-mini'>Defect is done, please check and then mark complete</span></a>");
-                                                } else if (d.getIsComplete() == 1 && dev != null) {
-                                                    out.println("<span class='label label-warning label-mini'>Defect is done, please wait for PM to check</span>");
-                                                } else if (d.getIsComplete() == 2) {
-                                                    out.println("<span class='label label-success label-mini'>Defect has been fixed</span>");
-                                                } %></td></tr>
+                                                                    } else if (d.getIsComplete() == 1 && dev != null) {
+                                                                        out.println("<span class='label label-warning label-mini'>Defect is done, please wait for PM to check</span>");
+                                                                    } else if (d.getIsComplete() == 2) {
+                                                                        out.println("<span class='label label-success label-mini'>Defect has been fixed</span>");
+                                                        } %></td></tr>
                                                         <tr><td>Defect severity</td><td><% int sevInt = d.getSeverity();
                                                             if (sevInt == 1) {
                                                                 out.println("Low");
                                                             } else if (sevInt == 2) {
                                                                 out.println("Medium");
                                                             } else if (sevInt == 3) {
-                                                out.println("High");
-                                            }%></td></tr><thead>
+                                                                out.println("High");
+                                                            }%></td></tr><thead>
                                                             <tr><td>Defect description</td><td><%
-                                                            if(d.getDesc().length()==0){
-                                                            out.println("No description");
-                                                            }else{
-                                                            out.println(d.getDesc());}%>
-                                                            </td></tr>
+                                                                if (d.getDesc().length() == 0) {
+                                                                    out.println("No description");
+                                                                } else {
+                                                                    out.println(d.getDesc());
+                                                                }%>
+                                                                </td></tr>
                                                             <tr>
                                                                 <td>Reported by</td>
                                                                 <td><%=d.getReportedBy()%></td>
@@ -137,6 +140,10 @@
                                                                         out.println(getDev + "<br/>");
                                                                     }
                                                                     %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Due Date</td>
+                                                                <td><% out.println(d.getDuedate()); %></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Last updated time</td>

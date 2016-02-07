@@ -63,7 +63,7 @@
 
         <%  String errorMsg = (String) request.getAttribute("err");
             String sucess = (String) request.getAttribute("sucess");
-            String errorMsg1 = (String) request.getAttribute("err1"); %>
+            ArrayList<String> errorMsg1 = (ArrayList<String>) request.getAttribute("err1"); %>
 
         <section id="main-content">
             <section class="wrapper">

@@ -4,6 +4,7 @@
     Author     : maxchua
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.DefectDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,6 +23,7 @@
                 <!--Error/success display-->
                 <%  String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
+                    ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("err1");
 
                     if (errorMsg != null) {
                 %>
@@ -35,6 +37,21 @@
                     </div>
                 </div>
                 <%
+                    }
+                    if (errorList != null) {
+                        for (String eStr : errorList) {
+                %>
+                             <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-danger"><%=eStr%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>  
+                <%
+                        }
                     }
                     if (sucess != null) {%>
                 <div class="row">
@@ -58,6 +75,7 @@
                             <div class="panel-body">
                                 <%
                                     String defId = request.getParameter("id");
+                                    if(defId==null){defId=(String)request.getAttribute("id");}
                                     int id = Integer.parseInt(defId);
 
                                     Defect toEdit = DefectDAO.retrieveDefect(id);
@@ -88,6 +106,17 @@
                                             <p></p>
                                         </div>
                                     </div>
+
+
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Due Date</label>
+                                        <div class="col-lg-9">
+                                            <input type="date" class="form-control m-bot12" name="duedate"  value="<%=toEdit.getDuedate()%>" required/>
+                                            <p></p>
+                                        </div>
+
+                                    </div>  
+
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 control-label">Description</label>
                                         <div class="col-lg-9">
@@ -98,15 +127,15 @@
                                     <label for="inputType" class="col-lg-2 control-label">Severity</label>
                                     <div class="col-lg-9">
                                         <select name="severity" class="form-control m-bot15">
-                                            <% if (sev==1){%>
+                                            <% if (sev == 1) {%>
                                             <option value='1' selected>Low</option>
                                             <option value='2' >Medium</option>
                                             <option value='3' >High</option>
-                                            <% } else if (sev==2){%>
+                                            <% } else if (sev == 2) {%>
                                             <option value='1' >Low</option>
                                             <option value='2' selected>Medium</option>
                                             <option value='3' >High</option>
-                                            <% } else if (sev==3){%>
+                                            <% } else if (sev == 3) {%>
                                             <option value='1' >Low</option>
                                             <option value='2' >Medium</option>
                                             <option value='3' selected>High</option>
@@ -114,7 +143,7 @@
                                             <option value='1' >Low</option>
                                             <option value='2' >Medium</option>
                                             <option value='3' >High</option>
-                                            <% } %>
+                                            <% }%>
                                         </select>
                                     </div>
                                     <label for="inputType" class="col-lg-2 control-label">Defect status</label>

@@ -123,14 +123,14 @@
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Start Date</label>
                                         <div class="col-lg-6">
-                                            <input type="date" class="form-control m-bot12" name="sDate" value="<%=sDate%>" required/>
+                                            <input type="date" class="form-control m-bot12" name="sDate"  required/>
                                         </div>
 
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
                                         <div class="col-lg-6">
-                                            <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=daysstr%>" required/><p></p>
+                                            <input class="form-control m-bot12" type="number" name="days" min=1 required/><p></p>
                                         </div>
                                     </div>
                                     <div class="form-group">

@@ -78,6 +78,9 @@ public class DefectScreenshotController extends HttpServlet {
                     System.out.println(filePart.getContentType());
 
                     inputStream = filePart.getInputStream();
+                }else{
+                    //kes to catch filePath object null, not doing anything null 
+                    //bcos I cant think of a null scenario
                 }
                 
                 try 
@@ -100,6 +103,7 @@ public class DefectScreenshotController extends HttpServlet {
                     if (row > 0) 
                     {
                         conn.close();
+                        request.setAttribute("sucess" , "Image successfully uploaded.");
                         RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
                         rs.include(request, response);
                     }
@@ -108,7 +112,7 @@ public class DefectScreenshotController extends HttpServlet {
                         conn.close();
                         
                         RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
-
+                        request.setAttribute("err" , "Sorry, image could not be updated due to database issue.");
                         rs.include(request, response);
                     }    
                 }catch(Exception e){e.printStackTrace();}     

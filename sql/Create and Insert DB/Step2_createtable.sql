@@ -38,6 +38,7 @@ create table project(
 	constraint project_fk foreign key (assignby) references user (username)
 );
 
+
 create table projectallocation(
 	projectname varchar(25) not null,
 	developerusername varchar(25) not null,
@@ -70,6 +71,7 @@ create table defect(
     updatetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     iscomplete int NOT NULL DEFAULT 0,
     severity int NOT NULL DEFAULT 2,
+    duedate DATE NOT NULL,
 	constraint defects_pk primary key (defectid),
     constraint defects_fk1 foreign key (projectname) references project (projectname),
     constraint defects_fk2 foreign key (reportby) references user (username)
