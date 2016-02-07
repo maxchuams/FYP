@@ -97,12 +97,12 @@
                 <% }
                 %>
 
-
                 <!--End of error/success display-->
+                
                 <div class="row">
                     <div class="col-lg-12">
                         <!--tab nav start-->
-                        <section class="panel">
+<!--                        <section class="panel">
                             <header class="panel-heading tab-bg-dark-navy-blue ">
                                 <ul class="nav nav-tabs">
                                     <li class="active">
@@ -124,7 +124,7 @@
                                                     <option value="projectname">Project Name</option>
                                                     <option value="defectname">Defect Name</option>
                                                     <option value="updatetime">Update Time</option>
-                                                    <!--<option value='iscomplete'>Defect Status</option>-->
+                                                    <option value='iscomplete'>Defect Status</option>
                                                 </select>
                                                 <input type="hidden"  name='username' value='<%=dev.getUsername()%>'/>
                                                 <input type='hidden' value='' name='inputText'/>
@@ -143,7 +143,7 @@
                                                 <select name="filter" id="role" class="form-control m-bot15">
                                                     <option>Select one..</option>
                                                     <option value="projectname">Project Name</option>
-                                                    <!--<option value="defectname">Defect Name</option>-->
+                                                    <option value="defectname">Defect Name</option>
                                                     <option value="severity">Severity</option>
                                                     <option value="iscomplete">Completion status</option>
                                                 </select>
@@ -189,7 +189,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </section>-->
                                             
                                             
                         <!--kaiwen codes-->

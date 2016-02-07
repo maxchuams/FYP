@@ -14,12 +14,82 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="res/select2/css/select2.css" rel="stylesheet"/>
+        <script src="res/select2/js/select2.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Defect</title>
+        <script>
+            $(function () {
+                // turn the element to select2 select style
+                $('select').select2();
+
+                $(".devSelect2").select2(
+                        {
+                            placeholder: "Select a developer"
+                        }
+                );
+
+                $(".projectSelect2").select2(
+                        {
+                            placeholder: "Select a projecr"
+                        }
+                );
+            });
+        </script>
     </head>
     <body>
+        <%
+            String name = request.getParameter("name");
+            String errorMsg = (String) request.getAttribute("err");
+            String sucess = (String) request.getAttribute("sucess");
+            ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
+        %>
         <section id="main-content">
             <section class="wrapper">
+                <% if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%} if (errorMsg != null) { %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=errorMsg%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%} if (errorArr != null) {
+                        for (String eStr : errorArr) {
+                %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=eStr%>
+                            </div>
+                        </section>
+                    </div>
+                </div>  
+                <%
+                        }
+                    }%>
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
@@ -27,30 +97,10 @@
                                 Add Defect
                             </header>
                             <div class="panel-body">
-
-                                <%
-                                    String name = request.getParameter("name");
-                                    String errorMsg = (String) request.getAttribute("err");
-                                    String sucess = (String) request.getAttribute("sucess");
-                                    ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
-                                    if (errorMsg != null) {
-                                        out.println(errorMsg);
-                                    }
-                                    if (sucess != null) {
-                                        out.println(sucess);
-                                    }
-                                    if (errorArr != null) {
-                                        for(String es: errorArr){
-                                            out.println(es + "<br>");
-                                        }
-                                        
-                                    }
-                                %>
-                                </br>
                                 <form action="addNewDefect" id='main'>
                                     <label for="inputType" class="col-lg-2 control-label">Project name</label>
                                     <div class="col-lg-9">
-                                        <select name="projectname" class="form-control m-bot15">
+                                        <select name="projectname" class="devSelect2 form-control m-bot15">
                                             <%
                                                 ArrayList<Project> pList = ProjectDAO.retrieveInProgress();
                                                 for (Project p : pList) {
@@ -65,7 +115,7 @@
                                             %>
                                         </select>
                                     </div>
-
+                                    <p></p><br/><br/>
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 control-label">Defect Name</label>
                                         <div class="col-lg-9">

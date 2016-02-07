@@ -14,8 +14,28 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="res/select2/css/select2.css" rel="stylesheet"/>
+        <script src="res/select2/js/select2.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Recco</title>
+        <title>Profile Page</title>
+        <script>
+            $(function () {
+                // turn the element to select2 select style
+                $('select').select2();
+
+                $(".countrySelect2").select2(
+                        {
+                            placeholder: "Select a country"
+                        }
+                );
+
+                $(".projectSelect2").select2(
+                        {
+                            placeholder: "Select a projecr"
+                        }
+                );
+            });
+        </script>
     </head>
     <body>
         <%  String err = (String) request.getAttribute("err");
@@ -25,6 +45,34 @@
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper">
+                <%if (err != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=err%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%}%>
+                <%if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%}%>
                 <!-- page start-->
 
                 <div class="row">
@@ -43,7 +91,7 @@
                                         if (p.getType().equals("s")) {
                                             out.println("SuperAdmin");%>                                        </span><%
                                                 }
-                                                if (p.getType().equals("                                        p")) {
+                                                if (p.getType().equals("p")) {
                                                     out.println("Project Manager");%></span><%
                                                         }
                                                         if (p.getType().equals("c")) {
@@ -93,25 +141,6 @@
                                                 <div class="col-md-0"></div>
                                                 <div class="prf-contacts sttng col-md-12">
                                                     <h2>Edit Profile Picture</h2>
-
-                                                    <h3>  
-                                                        <%if (err != null) {%>
-
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <section class="panel">
-                                                                    <div class="panel-body">
-                                                                        <div class="text-danger"><%=err%></div>
-                                                                    </div>
-                                                                </section>
-                                                            </div>
-                                                        </div>
-
-
-
-
-                                                        <%}%>
-                                                    </h3>
                                                 </div>
                                                 <form role="form" method="post" action="uploadServlet" enctype="multipart/form-data" class="form-horizontal">
 
@@ -479,7 +508,7 @@
                                                         <form action='modifyCountry' class="form-horizontal">
                                                             <label class="col-lg-3 control-label">Change Country</label>
                                                             <div class="col-lg-9">
-                                                                <select name="country" class="form-control m-bot15">
+                                                                <select name="country" class="countrySelect2 form-control m-bot15" style="width: 300px">
                                                                     <option value="">Country...</option>
                                                                     <option value="Singapore">Singapore</option>
                                                                     <option value="Afganistan">Afghanistan</option>
@@ -732,10 +761,11 @@
                                                                 </select>
                                                             </div>
                                                             <%
+                                                                String devName = null;
                                                                 if (dev != null) {
-                                                                    String devName = dev.getUsername();
+                                                                    devName = dev.getUsername();
                                                                 }%>
-                                                            <input type="hidden" name="user" value="devName"/>
+                                                            <input type="hidden" name="user" value="<%=devName%>"/>
                                                             <div class="col-lg-offset-3 col-lg-9">
                                                                 <button class="btn btn-danger" type="submit">Submit</button>
                                                             </div>

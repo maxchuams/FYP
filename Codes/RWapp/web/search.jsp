@@ -3,6 +3,7 @@
     Created on : Jan 19, 2016, 5:57:42 PM
     Author     : maxchua
 --%>
+<%@page import="src.model.ProjectAllocationDAO"%>
 <%@include file="protect.jsp" %>
 <%@page import="src.model.Person"%>
 <%@page import="src.model.PersonDAO"%>
@@ -151,9 +152,18 @@
                                                 <ul class="nav nav-pills nav-stacked">
                                                     <li> <span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=p.getDuedate()%></span></li>
                                                     <span class="pull-right">
-                                                        <li> <b>Type:</b> <%=p.getType()%> </li>
-                                                            <% if (dev != null && pm == null) {%>
-                                                        <li> <b>Assigned by:</b> <%=p.getAssignedBy()%> <%}%></li>
+                                                        <li> <b>Type:</b> <%=p.getType()%>
+                                                            <% if (dev == null && pm != null) {%> |
+                                                        <b>PM:</b> <%=p.getAssignedBy()%> <%}%> |
+                                                        <b>Developer:</b> 
+                                                        <% 
+                                            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(p.getName());
+                                            for (String developer : getDev){
+                                                out.println(developer+" ");
+                                            }
+                                            %>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;View more
+                                                        </li>
                                                     </span>
                                                 </ul>
                                             </div>
@@ -223,25 +233,28 @@
                                         <% if (p.getIsComplete() == 2) {%>
                                         <% out.println("<a href='viewDefectInfo.jsp?defectId="+p.getId()+"'>");  %>
                                         <div class="alert alert-success fade in">
-                                            <%=p.getDefectName()%><br/>
-                                            <%=severity%><br/>
-                                            <%=p.getUpdateTime().subSequence(0, 16)%>
+                                            <b>Defect:</b> <%=p.getDefectName()%> |
+                                            <b>Severity:</b> <%=severity%> |
+                                            <b>Latest update time: </b><%=p.getUpdateTime().subSequence(0, 16)%>
+                                            <span class="pull-right">View More</span>
                                         </div>
                                         </a>
                                         <% } else if (p.getIsComplete() == 1) {%>
                                         <% out.println("<a href='viewDefectInfo.jsp?defectId="+p.getId()+"'>");  %>
                                         <div class="alert alert-warning fade in">
-                                            <%=p.getDefectName()%><br/>
-                                            <%=severity%><br/>
-                                            <%=p.getUpdateTime().subSequence(0, 16)%>
+                                            <b>Defect:</b> <%=p.getDefectName()%> |
+                                            <b>Severity:</b> <%=severity%> |
+                                            <b>Latest update time: </b><%=p.getUpdateTime().subSequence(0, 16)%>
+                                            <span class="pull-right">View More</span>
                                         </div>
                                         </a>
                                         <% } else if (p.getIsComplete() == 0) {%>
                                         <% out.println("<a href='viewDefectInfo.jsp?defectId="+p.getId()+"'>");  %>
                                         <div class="alert alert-danger fade in">
-                                            <%=p.getDefectName()%><br/>
-                                            <%=severity%><br/>
-                                            <%=p.getUpdateTime().subSequence(0, 16)%>
+                                            <b>Defect:</b> <%=p.getDefectName()%> |
+                                            <b>Severity:</b> <%=severity%> |
+                                            <b>Latest update time: </b><%=p.getUpdateTime().subSequence(0, 16)%>
+                                            <span class="pull-right">View More</span>
                                         </div>
                                         </a>
                                         <%}%> 

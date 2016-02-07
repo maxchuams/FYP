@@ -204,7 +204,7 @@ public class processRecommendation extends HttpServlet {
             }
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName="+projName);
         if (errList.isEmpty()) {
             request.setAttribute("sucess", "Project sucessfully assigned!");
             rd.forward(request, response);

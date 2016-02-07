@@ -33,8 +33,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-danger"><%=err%></div>
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=err%>
                             </div>
                         </section>
                     </div>
@@ -45,8 +48,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-success"><%=sucess%></div>
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
                             </div>
                         </section>
                     </div>
@@ -57,20 +63,21 @@
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-success">
-                                    <% for (int i = 0; i < errorList.size(); i++) {
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <% for (int i = 0; i < errorList.size(); i++) {
                                             out.println(errorList.get(i));
-                                        }%></div>
+                                        }%>
                             </div>
                         </section>
                     </div>
                 </div>
                 <% }
                 %>
-
-
                 <!--End of error/success display-->
+                
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
