@@ -5,14 +5,27 @@
  */
 package src.controller;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import src.model.Person;
+import src.model.PersonDAO;
+import src.model.Project;
 import src.model.ProjectDAO;
+import src.model.TrelloBoard;
 
 /**
  *
@@ -31,39 +44,147 @@ public class updateProject extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String pname = request.getParameter("pname");
-        
-        try{
-        String assignedby = request.getParameter("assignedby");
-        String due = request.getParameter("duedate");
-        String priority = request.getParameter("priority");
-        int pInt = Integer.parseInt(priority);
-        String iscomplete= request.getParameter("iscomplete");
-        int cInt = Integer.parseInt(iscomplete);
-        String days = request.getParameter("days");
-        int dInt = Integer.parseInt(days);
-        String type = request.getParameter("type");
-        
-        boolean success = ProjectDAO.updateProject(assignedby, due, pInt, cInt, dInt, type, pname);
-        if(success){
-             RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp?pname="+pname);
-            request.setAttribute("success", "Project successfully updated");
-            rd.forward(request, response);
-            return;
-        } else {
-             RequestDispatcher rd = request.getRequestDispatcher("editProject.jsp?pname="+pname);
+
+        try {
+            String assignedby = request.getParameter("assignedby");
+            String due = request.getParameter("duedate");
+            String priority = request.getParameter("priority");
+            int pInt = Integer.parseInt(priority);
+            String iscomplete = request.getParameter("iscomplete");
+            int cInt = Integer.parseInt(iscomplete);
+            String days = request.getParameter("days");
+            int dInt = Integer.parseInt(days);
+            String type = request.getParameter("type");
+
+            boolean success = ProjectDAO.updateProject(assignedby, due, pInt, cInt, dInt, type, pname);
+            if (success) {
+                try {
+                    if (cInt == 1) {
+                        Person pm = PersonDAO.retrieveUser(assignedby);
+                        String token = pm.getToken();
+                        String key = pm.getTrelloKey();
+                        URL memberUrl = new URL("https://api.trello.com/1/members/" + assignedby + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + key + "&token=" + token);
+                        //System.out.println(memberUrl);
+
+                        URLConnection con = memberUrl.openConnection();
+                        InputStream is = con.getInputStream();
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+                        String line = null;
+                        String jsonOutput = "";
+                        TrelloBoard tb = null;
+                        // read each line and throw string into JSONObject
+                        while ((line = br.readLine()) != null) {
+                            jsonOutput += line;
+
+                        }
+
+                        JSONObject obj = new JSONObject(jsonOutput);
+                        JSONArray boardArr = obj.getJSONArray("boards");
+        //iterate through the user's boards and store into an arraylist first
+
+                        //masterboardID - id for masterboard need this for the URL
+                        String masterboardID = "";
+                        for (int i = 0; i < boardArr.length(); i++) {
+                            JSONObject board = boardArr.getJSONObject(i);
+                            String name = board.getString("name");
+                            if (name.equals("Projects Master Board")) {
+                                masterboardID = board.getString("id");
+                            }
+
+                        }
+
+                        //now we will call the api to get the boards and check for projects master board
+                        URL listUrl = new URL("https://api.trello.com/1/boards/" + masterboardID + "/lists?key=" + key + "&token=" + token);
+                        con = listUrl.openConnection();
+                        is = con.getInputStream();
+                        br = new BufferedReader(new InputStreamReader(is));
+
+                        line = null;
+                        jsonOutput = "";
+                        while ((line = br.readLine()) != null) {
+                            jsonOutput += line;
+                        }
+                        //store the id of the List
+                        String listId = "";
+
+                        JSONArray boardList = new JSONArray(jsonOutput);
+                        for (int i = 0; i < boardList.length(); i++) {
+                            JSONObject list = boardList.getJSONObject(i);
+
+                            String listName = list.getString("name");
+                            if (listName.equals("UAT")) {
+                                listId = list.getString("id");
+                            }
+                        }
+                        Project cardToUpdate = ProjectDAO.retrieveProjectByProjectName(pname);
+                        String id = cardToUpdate.getTrelloKey();
+                        
+                        System.out.println("list id : " + listId + "  ** card id = " + id);
+
+                        String url = "https://api.trello.com/1/cards/"+ id + "/idList?";
+                        URL moveToTrello = new URL(url);
+                        HttpsURLConnection con1 = (HttpsURLConnection) moveToTrello.openConnection();
+
+                        //add reuqest header
+                        con1.setRequestMethod("PUT");
+                        con1.setRequestProperty("User-Agent", "Chrome/45.0.2454.101 m");
+                        con1.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+                        con1.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                        String urlParameters = "value="+ listId +"&key=" +key + "&token=" + token;
+
+                        // Send post request
+                        con1.setDoOutput(true);
+                        DataOutputStream wr = new DataOutputStream(con1.getOutputStream());
+                        wr.writeBytes(urlParameters);
+                        wr.flush();
+                        wr.close();
+
+                        int responseCode = con1.getResponseCode();
+                        System.out.println("\nSending 'POST' request to URL : " + url);
+                        System.out.println("Post parameters : " + urlParameters);
+                        System.out.println("Response Code : " + responseCode);
+
+                        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(con.getInputStream()));
+                        String inputLine;
+                        StringBuffer response1 = new StringBuffer();
+
+                        while ((inputLine = in.readLine()) != null) {
+                            response1.append(inputLine);
+                        }
+                        in.close();
+
+                        //print result
+                        System.out.println(response.toString());
+
+                    }
+                } catch (Exception e) {
+                    RequestDispatcher rd = request.getRequestDispatcher("editProject.jsp?pname=" + pname);
+                    request.setAttribute("err", "Project has been updated. However, card could not be moved to the next list in Trello. Please do so manually. ");
+                    rd.forward(request, response);
+                    return;
+                }
+                RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp?pname=" + pname);
+                request.setAttribute("success", "Project successfully updated");
+                rd.forward(request, response);
+                return;
+            } else {
+                RequestDispatcher rd = request.getRequestDispatcher("editProject.jsp?pname=" + pname);
+                request.setAttribute("err", "Project could not be updated. Please try again!");
+                rd.forward(request, response);
+                return;
+            }
+        } catch (Exception e) {
+            RequestDispatcher rd = request.getRequestDispatcher("editProject.jsp?pname=" + pname);
             request.setAttribute("err", "Project could not be updated. Please try again!");
             rd.forward(request, response);
             return;
         }
-        } catch (Exception e){
-            RequestDispatcher rd = request.getRequestDispatcher("editProject.jsp?pname="+pname);
-            request.setAttribute("err", "Project could not be updated. Please try again!");
-            rd.forward(request, response);
-            return;
-        }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

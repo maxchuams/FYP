@@ -4,6 +4,7 @@
     Person dev = (Person) session.getAttribute("loggedInDev");
     Person sudo = null;
     Person desg = null;
+    Person tester = null;
     if ( pm == null && dev == null) {
         response.sendRedirect("login.jsp");
         return;

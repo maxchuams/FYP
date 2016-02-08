@@ -5,6 +5,7 @@
      Person pm = null;
      Person dev = null;
      Person sudo = null;
+     Person tester = null;
     if (desg == null) {
         response.sendRedirect("login.jsp");
         return;
