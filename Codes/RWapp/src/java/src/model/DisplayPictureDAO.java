@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,31 +22,7 @@ import java.util.logging.Logger;
 public class DisplayPictureDAO {
 
     static ArrayList<Person> plist;
-/**
-    public static ImageDTOBean retrievePhoto(String username) {
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        ImageDTOBean photo = null;
-        try {
-            conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select photo from user where username like ?");
-            pstmt.setString(1, username);
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                //photo = new ImageDTOBean(rs.getBlob(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DisplayPictureDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            ConnectionManager.close(conn, pstmt, rs);
-        }
-
-        return photo;
-    }
-    **/
 
     public static ImageDTOBean getImageData(String imageName) {
 

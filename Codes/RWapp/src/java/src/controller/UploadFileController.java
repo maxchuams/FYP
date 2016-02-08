@@ -28,7 +28,6 @@ import src.model.ConnectionManager;
  */
 @WebServlet(name = "uploadServlet", urlPatterns = {"/uploadServlet"})
 @MultipartConfig(maxFileSize = 16177215)
-
 public class UploadFileController extends HttpServlet {
 
     @Override
@@ -41,20 +40,34 @@ public class UploadFileController extends HttpServlet {
 
         Connection conn = null;
         String username = (request.getParameter("username"));
+       
         Part filePart = request.getPart("file_uploaded");
+        
+
         String delete = request.getParameter("delete");
 
         if (delete == null) {
+ 
             if (filePart != null) {
+                  //check image format
+                if (!("image/png".equals(filePart.getContentType()) 
+                        || "image/jpeg".equals(filePart.getContentType()))) {
+                    RequestDispatcher rd = request.getRequestDispatcher("profilePage.jsp");
+                    request.setAttribute("err", "Sorry. Image can only be JPEG or PNG format.");
+                    rd.forward(request, response);
+                    return;
+                }
+
+                //check blank photo
                 if (filePart.getSize() == 0) {
                     RequestDispatcher rd = request.getRequestDispatcher("profilePage.jsp");
                     request.setAttribute("err", "Do not upload blank image!");
                     rd.forward(request, response);
                     return;
                 }
-                System.out.println(filePart.getName());
-                System.out.println(filePart.getSize());
-                System.out.println(filePart.getContentType());
+                //System.out.println(filePart.getName());
+                //System.out.println(filePart.getSize());
+                //System.out.println(filePart.getContentType());
 
                 inputStream = filePart.getInputStream();
             }

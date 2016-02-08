@@ -21,14 +21,14 @@ import src.model.ImageDTOBean;
  * @author KIANLAM
  */
 public class DefectScreenshotServlet extends HttpServlet {
-    
-  public void doGet(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
-        processAction(request,response); 
-  } 
 
-  public void doPost(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
-       processAction(request,response);
-  }
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processAction(request, response);
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processAction(request, response);
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,16 +43,16 @@ public class DefectScreenshotServlet extends HttpServlet {
             throws ServletException, IOException {
         String defectid = request.getParameter("defectid");
         String updatetime = request.getParameter("updatetime");
-        
 
         //ImageDTOBean ibto = BIZDelegate.getImageDTO(imageName);
-           ImageDTOBean ibto = DefectScreenshotDAO.getScreenshot(defectid, updatetime);
-        if(ibto != null){
-          response.setContentType(ibto.getImageContentType());
-          response.setContentLength(ibto.getImageBuffer().length);
-          FileService.exportBuffer(ibto.getImageBuffer(),response.getOutputStream()); 
-        }else
-          log("No Data Found");                                                          
-  }
+        ImageDTOBean ibto = DefectScreenshotDAO.getScreenshot(defectid, updatetime);
+        if (ibto != null) {
+            response.setContentType(ibto.getImageContentType());
+            response.setContentLength(ibto.getImageBuffer().length);
+            FileService.exportBuffer(ibto.getImageBuffer(), response.getOutputStream());
+        } else {
+            log("No Data Found");
+        }
+    }
 
 }

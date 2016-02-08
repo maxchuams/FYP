@@ -1,6 +1,5 @@
 package src.model;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -53,7 +52,7 @@ public class ConnectionManager {
             } catch (Exception ex) {
                 // unable to load properties file
                 String message = "Unable to load '" + PROPS_FILENAME + "'.";
-                System.out.println(message);
+               // System.out.println(message);
                 Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
                 throw new RuntimeException(message, ex);
             }
@@ -82,7 +81,7 @@ public class ConnectionManager {
         try {
 
             Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("CONN:" + dbURL);
+            //System.out.println("CONN:" + dbURL);
             conn = DriverManager.getConnection(dbURL, dbUser, dbPassword);
 
         } catch (ClassNotFoundException ex) {

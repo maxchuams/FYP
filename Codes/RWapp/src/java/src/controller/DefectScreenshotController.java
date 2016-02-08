@@ -21,8 +21,6 @@ import javax.servlet.http.Part;
 import src.model.ConnectionManager;
 import src.model.DefectScreenshotDAO;
 
-
-
 /**
  *
  * @author KIANLAM
@@ -39,103 +37,109 @@ public class DefectScreenshotController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     @Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-                response.setContentType("text/html;charset=UTF-8");
-                PrintWriter out = response.getWriter();
-        
-                InputStream inputStream = null;
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
 
-                Connection conn = null;
-                String defectid=(request.getParameter("defectid"));
-                String updatetime=(request.getParameter("updatetime"));
-                Part filePart = request.getPart("file_uploaded");
-                String delete = request.getParameter("delete");
-                
-                ArrayList<String> imgList = DefectScreenshotDAO.getScreenshotTimestamp(defectid);
-        
-                if(delete==null){
-                if (imgList.size() == 3){
-                    RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
-                    request.setAttribute("err" , "You can only upload a maximum of 3 images");
+        InputStream inputStream = null;
+
+        Connection conn = null;
+        String defectid = request.getParameter("defectid");
+        String updatetime = request.getParameter("updatetime");
+        Part filePart = request.getPart("file_uploaded");
+        String delete = request.getParameter("delete");
+
+        System.out.println(filePart.getContentType());
+
+        ArrayList<String> imgList = DefectScreenshotDAO.getScreenshotTimestamp(defectid);
+
+        if (delete == null) {
+            if (imgList.size() == 3) {
+                RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
+                request.setAttribute("err", "You can only upload a maximum of 3 images");
+                rd.forward(request, response);
+                return;
+            }
+            if (filePart != null) {
+                //check image format
+                if (!("image/png".equals(filePart.getContentType()) 
+                        || "image/jpeg".equals(filePart.getContentType()))) {
+                    RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
+                    request.setAttribute("err", "Sorry. Image can only be JPEG or PNG format.");
                     rd.forward(request, response);
                     return;
                 }
-                if (filePart != null) 
-                {
-                 if (filePart.getSize() == 0){
-                    RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
-                    request.setAttribute("err" , "Do not upload blank image!");
+                //check blank image
+                if (filePart.getSize() == 0) {
+                    RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
+                    request.setAttribute("err", "Do not upload blank image!");
                     rd.forward(request, response);
                     return;
                 }
-                    
-                    
-                    System.out.println(filePart.getName());
-                    System.out.println(filePart.getSize());
-                    System.out.println(filePart.getContentType());
 
-                    inputStream = filePart.getInputStream();
-                }else{
+                //System.out.println(filePart.getName());
+                //System.out.println(filePart.getSize());
+                //System.out.println(filePart.getContentType());
+
+                inputStream = filePart.getInputStream();
+            } else {
                     //kes to catch filePath object null, not doing anything null 
-                    //bcos I cant think of a null scenario
-                }
-                
-                try 
-                {
-                    
-                    conn = ConnectionManager.getConnection();
-                    
-                    String sql = "INSERT into defectscreenshot (defectid,photo) value (?,?)";
-                    PreparedStatement statement = conn.prepareStatement(sql);
-                    
-                    statement.setString(1, defectid);
+                //bcos I cant think of a null scenario
+            }
 
-                    
-                    if (inputStream != null) 
-                    {
-                        statement.setBinaryStream(2, inputStream, (int) filePart.getSize());
-                    }
-                    
-                    int row = statement.executeUpdate();
-                    if (row > 0) 
-                    {
-                        conn.close();
-                        request.setAttribute("sucess" , "Image successfully uploaded.");
-                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
-                        rs.include(request, response);
-                    }
-                    else
-                    {   
-                        conn.close();
-                        
-                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
-                        request.setAttribute("err" , "Sorry, image could not be updated due to database issue.");
-                        rs.include(request, response);
-                    }    
-                }catch(Exception e){e.printStackTrace();}     
-    
-                }else{
-                
-                    try{
-                    conn = ConnectionManager.getConnection();
-                    
-                    String sql = "delete from defectscreenshot  WHERE defectid = ? and updatetime = ?";
-                    PreparedStatement statement = conn.prepareStatement(sql);
-                    
-                    statement.setString(1, defectid);
-                    statement.setString(2, updatetime);
-                    System.out.println(statement.toString());
-                    statement.executeUpdate();
-                    System.out.println(statement.toString());
-                    conn.close();
-                    }catch(Exception e){e.printStackTrace();}
-                    
-                        RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id="+defectid);
-                        rs.include(request, response);
+            try {
+
+                conn = ConnectionManager.getConnection();
+
+                String sql = "INSERT into defectscreenshot (defectid,photo) value (?,?)";
+                PreparedStatement statement = conn.prepareStatement(sql);
+
+                statement.setString(1, defectid);
+
+                if (inputStream != null) {
+                    statement.setBinaryStream(2, inputStream, (int) filePart.getSize());
                 }
-    }   
+
+                int row = statement.executeUpdate();
+                if (row > 0) {
+                    conn.close();
+                    request.setAttribute("sucess", "Image successfully uploaded.");
+                    RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
+                    rs.include(request, response);
+                } else {
+                    conn.close();
+
+                    RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
+                    request.setAttribute("err", "Sorry, image could not be updated due to database issue.");
+                    rs.include(request, response);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+
+            try {
+                conn = ConnectionManager.getConnection();
+
+                String sql = "delete from defectscreenshot  WHERE defectid = ? and updatetime = ?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+
+                statement.setString(1, defectid);
+                statement.setString(2, updatetime);
+                System.out.println(statement.toString());
+                statement.executeUpdate();
+                System.out.println(statement.toString());
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
+            rs.include(request, response);
+        }
+    }
 
 }
