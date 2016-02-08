@@ -46,11 +46,10 @@
             } else if (pm != null) {
                 username = pm.getUsername();
                 url = "managePmProfile.jsp";
-            } //                else if (tester != null) {
-            //                username = tester.getUsername();
-            //                url = "manageTesterProfile.jsp";
-            //            } 
-            else if (sudo != null) {
+            } else if (tester != null) {
+                username = tester.getUsername();
+                url = "manageTesterProfile.jsp";
+            } else if (sudo != null) {
                 username = sudo.getUsername();
                 url = "manageSudoProfile.jsp";
             } else {
