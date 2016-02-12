@@ -20,17 +20,15 @@ import java.util.logging.Logger;
 public class GanttDAO {
     
     public static ArrayList<Gnatt> retrieveGnatt(String name) {
-
+        System.out.println(name);
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ArrayList<Gnatt> fuck = new ArrayList<Gnatt>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("SELECT * FROM projectallocation left join project"
-                                          +  "on projectallocation.projectname = project.projectname"
-                                          +  "and project.iscomplete = 0 and project.assignby = '?'");
-            pstmt.setString(1, name);
+            pstmt = conn.prepareStatement("SELECT projectallocation.projectname,developerusername,planstart,planend FROM projectallocation left join project on projectallocation.projectname = project.projectname and project.iscomplete = 0 and project.assignby = 'kaiwen12'");
+           // pstmt.setString(1, name);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
