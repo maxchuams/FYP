@@ -51,6 +51,29 @@ public class assignRecommendation extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession sess = request.getSession();
+       
+        
+        Person p1 = (Person) sess.getAttribute("loggedInDev");
+        Person p2 = (Person) sess.getAttribute("loggedInDesg");
+        Person p3 = (Person) sess.getAttribute("loggedInPm");
+        Person p4 = (Person) sess.getAttribute("loggedInTester");
+        Person currUser = null;
+
+        if (p1 != null) {
+            currUser = p1;
+
+        } else if (p2 != null) {
+            currUser = p2;
+
+        } else if (p3 != null) {
+            currUser = p3;
+
+        } else if (p4 != null) {
+            currUser = p4;
+        } else {
+            response.sendRedirect("login.jsp");
+        }
         try {
             String projName = request.getParameter("card"); 
             String intensity = request.getParameter("priority");
@@ -129,26 +152,7 @@ public class assignRecommendation extends HttpServlet {
                 return;
             }
 
-            HttpSession sess = request.getSession();
-            if(sess==null) response.sendRedirect("login.jsp");
-            Person p1 = (Person) sess.getAttribute("loggedInDev");
-            Person p2 = (Person) sess.getAttribute("loggedInDesg");
-            Person p3 = (Person) sess.getAttribute("loggedInPm");
             
-            Person currUser = null;
-
-            if (p1 != null) {
-                currUser = p1;
-
-            } else if (p2 != null) {
-                currUser = p2;
-
-            } else if (p3 != null) {
-                currUser = p3;
-
-            } else {
-                response.sendRedirect("login.jsp");
-            }
             
             
             String username = currUser.getUsername();

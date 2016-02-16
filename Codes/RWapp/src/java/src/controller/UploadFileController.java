@@ -20,7 +20,9 @@ import javax.servlet.http.Part;
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 import src.model.ConnectionManager;
+import src.model.Person;
 
 /**
  *
@@ -33,6 +35,29 @@ public class UploadFileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession sess = request.getSession();
+       
+        
+        Person p1 = (Person) sess.getAttribute("loggedInDev");
+        Person p2 = (Person) sess.getAttribute("loggedInDesg");
+        Person p3 = (Person) sess.getAttribute("loggedInPm");
+        Person p4 = (Person) sess.getAttribute("loggedInTester");
+        Person currUser = null;
+
+        if (p1 != null) {
+            currUser = p1;
+
+        } else if (p2 != null) {
+            currUser = p2;
+
+        } else if (p3 != null) {
+            currUser = p3;
+
+        } else if (p4 != null) {
+            currUser = p4;
+        } else {
+            response.sendRedirect("login.jsp");
+        }
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 

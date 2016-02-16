@@ -12,6 +12,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import src.model.Person;
 import src.model.TrelloCardDAO;
 
 /**
@@ -31,6 +33,29 @@ public class editPriority extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession sess = request.getSession();
+       
+        
+        Person p1 = (Person) sess.getAttribute("loggedInDev");
+        Person p2 = (Person) sess.getAttribute("loggedInDesg");
+        Person p3 = (Person) sess.getAttribute("loggedInPm");
+        Person p4 = (Person) sess.getAttribute("loggedInTester");
+        Person currUser = null;
+
+        if (p1 != null) {
+            currUser = p1;
+
+        } else if (p2 != null) {
+            currUser = p2;
+
+        } else if (p3 != null) {
+            currUser = p3;
+
+        } else if (p4 != null) {
+            currUser = p4;
+        } else {
+            response.sendRedirect("login.jsp");
+        }
         String projName = request.getParameter("projectTitle");
         String priority = request.getParameter("priority");
         boolean changed = TrelloCardDAO.updatePriority(projName,priority);
