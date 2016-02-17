@@ -88,4 +88,24 @@ create table defectscreenshot(
 CREATE TABLE ztable (
   zvalue DECIMAL(14,2) NOT NULL,
   pvalue DECIMAL(14,4) NULL,
-  PRIMARY KEY (zvalue));
+  PRIMARY KEY (zvalue)
+);
+
+create table notifications(
+  notificationid int not null primary key auto_increment,
+    username varchar(25),
+    notificationtype varchar(25),
+    projectname varchar(25),
+    status char(1),
+    dateandtime datetime,
+  constraint notifications_fk foreign key (username) references user (username),
+  constraint notifications_fk2 foreign key (projectname) references project (projectname)
+);
+
+create table recommendationlog(
+id int not null primary key auto_increment,
+generated varchar(9999),
+selected varchar(9999),
+choice int,
+updated datetime 
+);

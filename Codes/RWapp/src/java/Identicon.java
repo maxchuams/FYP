@@ -22,7 +22,6 @@ public class Identicon {
 			System.err.println("usage: user name to generate identicon from.");
 			return;
 		}
-
 		//get input string
 		String userName = args[0];
 
