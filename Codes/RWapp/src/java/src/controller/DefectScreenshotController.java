@@ -78,7 +78,7 @@ public class DefectScreenshotController extends HttpServlet {
         Part filePart = request.getPart("file_uploaded");
         String delete = request.getParameter("delete");
 
-        System.out.println(filePart.getContentType());
+        //System.out.println(filePart.getContentType());
 
         ArrayList<String> imgList = DefectScreenshotDAO.getScreenshotTimestamp(defectid);
 
@@ -156,9 +156,9 @@ public class DefectScreenshotController extends HttpServlet {
 
                 statement.setString(1, defectid);
                 statement.setString(2, updatetime);
-                System.out.println(statement.toString());
+                //System.out.println(statement.toString());
                 statement.executeUpdate();
-                System.out.println(statement.toString());
+                //System.out.println(statement.toString());
                 conn.close();
             } catch (Exception e) {
                 e.printStackTrace();

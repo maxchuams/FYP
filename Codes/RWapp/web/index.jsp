@@ -97,10 +97,10 @@
                                             }
                                         }
                                     }
-                                    System.out.println("end: " + end);
-                                    System.out.println("start: " + start);
-                                    System.out.println("start: " + start.getTime());
-                                    System.out.println("end: " + end.getTime());
+                                    //System.out.println("end: " + end);
+                                    //System.out.println("start: " + start);
+                                    //System.out.println("start: " + start.getTime());
+                                    //System.out.println("end: " + end.getTime());
                                     long duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
                                     jj = new JsonObject();
                                     jj.addProperty("id", count);
