@@ -13,6 +13,9 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.*;
+import src.model.ConnectionManager;
 import src.model.Person;
 import src.model.TrelloBoard;
 import src.model.TrelloCard;
@@ -32,7 +36,10 @@ import src.model.TrelloMember;
  * @author admin
  */
 public class getTrelloData extends HttpServlet {
-
+    private static final String PROPS_FILENAME = "/trello.properties";
+    private static String mainboard;
+    private static String devList;
+    private static String adminUsername;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -77,7 +84,22 @@ public class getTrelloData extends HttpServlet {
         String token = TrelloDetailsDAO.retrieveTrelloToken(username);
         System.out.println("KEY:  " + key + " TOKEN : " + token);
         //first url to call the user's boards
+        try {
+            InputStream is4 = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
+            Properties props = new Properties();
+            props.load(is4);
 
+          
+            mainboard = props.getProperty("trello.mainboard").trim();
+            devList = props.getProperty("trello.developmentList").trim();
+            adminUsername = props.getProperty("trello.admin");
+        } catch (Exception ex) {
+            // unable to load properties file
+            String message = "Unable to load '" + PROPS_FILENAME + "'.";
+            // System.out.println(message);
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
+            throw new RuntimeException(message, ex);
+        }
         URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + key + "&token=" + token);
         //System.out.println(memberUrl);
 
@@ -103,7 +125,7 @@ public class getTrelloData extends HttpServlet {
         for (int i = 0; i < boardArr.length(); i++) {
             JSONObject board = boardArr.getJSONObject(i);
             String name = board.getString("name");
-            if (name.equals("Projects Master Board")) {
+            if (name.equals(mainboard)) {
                 masterboardID = board.getString("id");
             }
 
@@ -128,7 +150,7 @@ public class getTrelloData extends HttpServlet {
             JSONObject list = boardList.getJSONObject(i);
 
             String listName = list.getString("name");
-            if (listName.equals("Development")) {
+            if (listName.equals(devList)) {
                 listId = list.getString("id");
             }
         }

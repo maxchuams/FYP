@@ -16,6 +16,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import src.model.ConnectionManager;
 import src.model.Person;
 import src.model.PersonDAO;
 import src.model.RecommedationDAO;
@@ -39,6 +43,10 @@ import src.model.TrelloDetailsDAO;
 public class assignRecommendation extends HttpServlet {
 
     private Object RecommendationDAO;
+    private static final String PROPS_FILENAME = "/trello.properties";
+    private static String mainboard;
+    private static String devList;
+    private static String adminUsername;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -73,6 +81,22 @@ public class assignRecommendation extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+        }
+        try {
+            InputStream is4 = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
+            Properties props = new Properties();
+            props.load(is4);
+
+          
+            mainboard = props.getProperty("trello.mainboard").trim();
+            devList = props.getProperty("trello.developmentList").trim();
+            //adminUsername = props.getProperty("trello.admin");
+        } catch (Exception ex) {
+            // unable to load properties file
+            String message = "Unable to load '" + PROPS_FILENAME + "'.";
+            // System.out.println(message);
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
+            throw new RuntimeException(message, ex);
         }
         try {
             String projName = request.getParameter("card"); 
@@ -186,7 +210,7 @@ public class assignRecommendation extends HttpServlet {
             for (int i = 0; i < boardArr.length(); i++) {
                 JSONObject board = boardArr.getJSONObject(i);
                 String name = board.getString("name");
-                if (name.equals("Projects Master Board")) {
+                if (name.equals(mainboard)) {
                     masterboardID = board.getString("id");
                 }
 
@@ -211,7 +235,7 @@ public class assignRecommendation extends HttpServlet {
                 JSONObject list = boardList.getJSONObject(i);
 
                 String listName = list.getString("name");
-                if (listName.equals("Development")) {
+                if (listName.equals(devList)) {
                     listId = list.getString("id");
                 }
             }
