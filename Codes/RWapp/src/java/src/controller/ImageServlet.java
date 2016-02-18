@@ -72,12 +72,12 @@ public class ImageServlet extends HttpServlet{
            ImageDTOBean ibto = DisplayPictureDAO.getImageData(imageName);
         
            
-           System.out.println("Image size: " +ibto.getImageBuffer().length );
+           //System.out.println("Image size: " +ibto.getImageBuffer().length );
            
           
           if(ibto.getImageBuffer().length == 0){
                //replace with some nice photo
-               System.out.println(imageName);
+               //System.out.println(imageName);
                 HashGeneratorInterface hashGenerator = new MessageDigestHashGenerator("MD5");
 		BufferedImage identicon = IdenticonGenerator.generate(imageName, hashGenerator);
 		//convert to byte array

@@ -106,6 +106,6 @@ create table recommendationlog(
 id int not null primary key auto_increment,
 generated varchar(9999),
 selected varchar(9999),
-choice int,
-updated datetime 
+choice int DEFAULT 0,
+updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
