@@ -5,9 +5,9 @@
  */
 package src.controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,52 +35,71 @@ public class ValidateUser extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String hash = "";
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
             String username = request.getParameter("username");
-            username= username.trim();
+            username = username.trim();
             String password = request.getParameter("password");
-            HttpSession session = request.getSession();
-            if(session.getAttribute("loggedInDev")!=null || 
-                    session.getAttribute("loggedInTester")!=null || 
-                    session.getAttribute("loggedInPm")!=null || 
-                    session.getAttribute("loggedInDesg")!=null ||
-                    session.getAttribute("loggedInSudo")!=null){
-                response.sendRedirect("index.jsp");
-            }else{
-            Person person = PersonDAO.retrieveUser(username);
-           
-            if(person != null && person.getPassword().equals(password)){
-                //redirect to webpage
-                if (person.getType().equals("c")){
-                    session.setAttribute("loggedInDev", person);
-                    response.sendRedirect("index.jsp");
-                } else if (person.getType().equals("p")) {
-                    session.setAttribute("loggedInPm", person);
-                    response.sendRedirect("index.jsp");
-                 } else if (person.getType().equals("d")) {
-                    session.setAttribute("loggedInDesg", person);
-                    response.sendRedirect("index.jsp");
-                }else if (person.getType().equals("s")) {
-                    session.setAttribute("loggedInSudo", person);
-                    response.sendRedirect("index.jsp");
-                }  else if (person.getType().equals("t")) {
-                    session.setAttribute("loggedInTester", person);
-                    response.sendRedirect("index.jsp");
-                }           
-            } else {
-                //send error message
-                request.setAttribute("errorMsg", "Wrong username/password");
-          
-                RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-                view.forward(request, response);
+            
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(password.getBytes());
+
+                byte byteData[] = md.digest();
+
+                //convert the byte to hex format method 1
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < byteData.length; i++) {
+                    sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+               hash = sb.toString();
+            } catch (Exception e){
+                
             }
-        
-            }} finally {
+            HttpSession session = request.getSession();
+            if (session.getAttribute("loggedInDev") != null
+                    || session.getAttribute("loggedInTester") != null
+                    || session.getAttribute("loggedInPm") != null
+                    || session.getAttribute("loggedInDesg") != null
+                    || session.getAttribute("loggedInSudo") != null) {
+                response.sendRedirect("index.jsp");
+            } else {
+                Person person = PersonDAO.retrieveUser(username);
+
+                if (person != null && person.getPassword().equals(hash)) {
+                    //redirect to webpage
+                    if (person.getType().equals("c")) {
+                        session.setAttribute("loggedInDev", person);
+                        response.sendRedirect("index.jsp");
+                    } else if (person.getType().equals("p")) {
+                        session.setAttribute("loggedInPm", person);
+                        response.sendRedirect("index.jsp");
+                    } else if (person.getType().equals("d")) {
+                        session.setAttribute("loggedInDesg", person);
+                        response.sendRedirect("index.jsp");
+                    } else if (person.getType().equals("s")) {
+                        session.setAttribute("loggedInSudo", person);
+                        response.sendRedirect("index.jsp");
+                    } else if (person.getType().equals("t")) {
+                        session.setAttribute("loggedInTester", person);
+                        response.sendRedirect("index.jsp");
+                    }
+                } else {
+                    //send error message
+                    request.setAttribute("errorMsg", "Wrong username/password");
+
+                    RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+                    view.forward(request, response);
+                }
+
+            }
+        } finally {
             out.close();
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

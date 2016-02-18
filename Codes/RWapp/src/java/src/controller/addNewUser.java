@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.MessageDigest;
 import java.sql.Array;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -44,8 +45,7 @@ public class addNewUser extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sess = request.getSession();
-       
-        
+
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -75,8 +75,7 @@ public class addNewUser extends HttpServlet {
         String trellotoken = request.getParameter("trellotoken").trim();
         String nationality = request.getParameter("country");
         String eDate = request.getParameter("eDate");
-        
-       
+
         boolean valid = true;
         ArrayList<String> errors = new ArrayList<String>();
 
@@ -94,15 +93,30 @@ public class addNewUser extends HttpServlet {
             valid = false;
             errors.add("Passwords do not match");
         }
+        String hash = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(pw1.getBytes());
+
+            byte byteData[] = md.digest();
+
+            //convert the byte to hex format method 1
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+        } catch (Exception e) {
+
+        }
         //validate trell0 key and token if not null
-        if (trellotoken != null && trellotoken.length() > 0 && trellokey != null && trellokey.length()>0) {
+        if (trellotoken != null && trellotoken.length() > 0 && trellokey != null && trellokey.length() > 0) {
             try {
 
                 URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + trellokey + "&token=" + trellotoken);
                 //System.out.println(memberUrl);
 
                 URLConnection con = memberUrl.openConnection();
-                
+
                 InputStream is = con.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
             } catch (IOException e) {
@@ -117,12 +131,11 @@ public class addNewUser extends HttpServlet {
         if (trellotoken == null || trellotoken.length() == 0) {
             trellotoken = "";
         }
-        
 
-        RequestDispatcher rd = request.getRequestDispatcher("addUsers.jsp?username="+username);
+        RequestDispatcher rd = request.getRequestDispatcher("addUsers.jsp?username=" + username);
         if (valid) {
             if (type.equals("c")) {
-                Developer toAdd = new Developer(username, pw1, type, trellokey, trellotoken, eDate, nationality);
+                Developer toAdd = new Developer(username, hash, type, trellokey, trellotoken, eDate, nationality);
                 boolean sucess1 = PersonDAO.addPerson((Person) toAdd);
                 boolean sucess2 = DeveloperDAO.addDeveloper(toAdd);
                 if (sucess1 && sucess2) {
@@ -132,7 +145,7 @@ public class addNewUser extends HttpServlet {
                 }
                 rd.forward(request, response);
             } else {
-                Person toAdd = new Person(username, pw1, type, trellokey, trellotoken);
+                Person toAdd = new Person(username, hash, type, trellokey, trellotoken);
                 boolean sucess = PersonDAO.addPerson(toAdd);
                 if (sucess) {
                     request.setAttribute("sucess", "User sucessfully added!");
