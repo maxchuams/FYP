@@ -229,7 +229,12 @@ public class assignProject extends HttpServlet {
                 if(desc.length() >= 8000){
                     desc= desc.substring(0,8000);
                 }
-                String due = tempCard.getString("due").substring(0,10);
+                String due = "";
+                try{
+                due = tempCard.getString("due").substring(0,10);
+                } catch (Exception e){
+                    due = "No due date";
+                }
                 String cardId = tempCard.getString("id");
                 String name = tempCard.getString("name");
                 tcList.add(new TrelloCard(cardId, name, due, desc));
