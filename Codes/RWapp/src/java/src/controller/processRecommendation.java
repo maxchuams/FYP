@@ -26,7 +26,9 @@ import src.model.Person;
 import src.model.PersonDAO;
 import src.model.Project;
 import src.model.ProjectAllocationDAO;
+import src.model.RecommedationDAO;
 import src.model.ProjectDAO;
+import src.model.Recommendation;
 import src.model.TrelloBoard;
 import src.model.TrelloCard;
 import src.model.TrelloCardDAO;
@@ -49,8 +51,7 @@ public class processRecommendation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sess = request.getSession();
-       
-        
+
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -73,7 +74,10 @@ public class processRecommendation extends HttpServlet {
         }
         ArrayList<String> errList = new ArrayList<String>();
         String devList = request.getParameter("dev");
-
+        
+        ArrayList<ArrayList<Recommendation>> rlist = (ArrayList<ArrayList<Recommendation>>) sess.getAttribute("rList");
+        sess.removeAttribute("rList");
+        
         String[] dev = devList.split(",");
 
         String projName = request.getParameter("projName");
@@ -136,7 +140,7 @@ public class processRecommendation extends HttpServlet {
             trelloID.add(PersonDAO.retrieveMemberId(pmname));
             boolean updateAllocationDAO = false;
             // add to allocation table
-            for (int i = 0; i < dev.length; i += 3) {
+            for (int i = 1; i < dev.length - 1; i += 3) {
                 //for multiple allocation
                 trelloID.add(PersonDAO.retrieveMemberId(dev[i]));
                 //update project allocation DAO
@@ -228,8 +232,9 @@ public class processRecommendation extends HttpServlet {
             }
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName="+projName);
+        RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
         if (errList.isEmpty()) {
+            RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0])), projName ,Integer.parseInt(dev[0]));
             request.setAttribute("sucess", "Project sucessfully assigned!");
             rd.forward(request, response);
 

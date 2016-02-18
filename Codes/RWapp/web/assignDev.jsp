@@ -29,6 +29,8 @@
                             <div class="panel-body">
                                 <%
                                     ArrayList<ArrayList<Recommendation>> rlist = (ArrayList<ArrayList<Recommendation>>) request.getAttribute("rList");
+                                    session.setAttribute("rList",rlist);
+                                    
                                     TrelloCard toAssign = (TrelloCard) request.getAttribute("project");
                                     Integer days = (Integer) request.getAttribute("days");
                                 %>
@@ -59,7 +61,7 @@
 
 
                                     %>
-                                    <input type="radio" name="dev" value='<%=devDetails%>'/> 
+                                    <input type="radio" name="dev" value='<%=count%>,<%=devDetails%>'/> 
                                    <b> Choice Ranking: <%=count%>.</b>
                                    <br><br>
                                     <% for (Recommendation r : recommendations) { %>
@@ -67,7 +69,7 @@
                                     
                                     <table>
 
-
+                                        
                                         <b> <%=r.getUsername()%></b></br>
                                         <img style="height:75px;width:75px" src="ImageServlet?imageid=<%=r.getUsername()%>" alt="No Image" align="center"/>
                                         </br>
@@ -121,9 +123,6 @@
                                                                                 <button type="submit" class="btn btn-danger">Submit</button>
                                                                             </div>
                                                                         </div>-->
-
-
-
 
 
                                     <input type='hidden' name='projName' value='<%=toAssign.getName()%>'/>

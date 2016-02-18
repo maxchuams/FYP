@@ -277,7 +277,7 @@ public class assignRecommendation extends HttpServlet {
                 }
             }
             String dateToFormat = toAssign.getDue();
-            System.out.println(toAssign.toString());
+            //System.out.println(toAssign.toString());
 
             //validate project size
             if (days < 1) {

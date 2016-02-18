@@ -5,6 +5,8 @@
  */
 package src.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -262,7 +264,6 @@ public class RecommedationDAO {
             rs = pstmt.executeQuery();
 
            // System.out.println("executed");
-
             while (rs.next()) {
                 Recommendation toAdd = new Recommendation(rs.getString("developer"),
                         rs.getString("nationality"), rs.getInt("currentproject"),
@@ -338,21 +339,25 @@ public class RecommedationDAO {
         }
     }
 
-
-    
-    public static boolean logRecommendation(String generated, String selected, int choice){
+    public static boolean logRecommendation(ArrayList<ArrayList<Recommendation>> generatedArr, ArrayList<Recommendation> selectedArr, String projectname, int choice) {
         //ArrayList<ArrayList<Recommendation>>
-        
-         Connection conn = null;
+
+        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
+        //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new Gson();
+        String generated = gson.toJson(generatedArr);
+        String selected = gson.toJson(selectedArr);
+
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("insert into recommendationlog(generated,selected,choice) values (?,?,?)");
-            pstmt.setString(1,generated);
-            pstmt.setString(2,selected);
-            pstmt.setInt(3,choice);
+            pstmt = conn.prepareStatement("insert into recommendationlog(generated,selected,projectname, choice) values (?,?,?,?)");
+            pstmt.setString(1, generated);
+            pstmt.setString(2, selected);
+            pstmt.setString(3, projectname);
+            pstmt.setInt(4, choice);
             pstmt.executeUpdate();
 
             return true;
