@@ -21,7 +21,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- gx i removed this line below to make the nav bar work properly, please check if its messing up anything-->
-<!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+        <!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
         <link href="./bootstrap/fbphotobox.css" rel="stylesheet" type="text/css" />
@@ -101,19 +101,19 @@
                             </header>
                             <div class="panel-body">
                                 <table class="table  table-hover general-table">
-                                                <thead><tr><td>Defect status</td><td><%if (d.getIsComplete() == 0) {
+                                    <thead><tr><td>Defect status</td><td><%if (d.getIsComplete() == 0) {
 
-                                                        if (pm == null) {%><a href='defectComplete?id=<%=d.getId()%>&case=2'><%out.println("<span class='label label-danger label-mini'>Defect incomplete, click to mark as complete</span></a>");
-                                                                } else {
-                                                                    out.println("<span class='label label-danger label-mini'>Defect incomplete by developer</span></a>");
-                                                                }
-                                                            } else if (d.getIsComplete() == 1 && pm != null) {
+                                            if (pm == null) {%><a href='defectComplete?id=<%=d.getId()%>&case=2'><%out.println("<span class='label label-danger label-mini'>Defect incomplete, click to mark as complete</span></a>");
+                                                } else {
+                                                    out.println("<span class='label label-danger label-mini'>Defect incomplete by developer</span></a>");
+                                                }
+                                            } else if (d.getIsComplete() == 1 && pm != null) {
                                                     %><a href='defectComplete?id=<%=d.getId()%>&case=1'><%out.println("<span class='label label-warning label-mini'>Defect is done, please check and then mark complete</span></a>");
-                                                                    } else if (d.getIsComplete() == 1 && dev != null) {
-                                                                        out.println("<span class='label label-warning label-mini'>Defect is done, please wait for PM to check</span>");
-                                                                    } else if (d.getIsComplete() == 2) {
-                                                                        out.println("<span class='label label-success label-mini'>Defect has been fixed</span>");
-                                                        } %></td></tr>
+                                            } else if (d.getIsComplete() == 1 && dev != null) {
+                                                out.println("<span class='label label-warning label-mini'>Defect is done, please wait for PM to check</span>");
+                                            } else if (d.getIsComplete() == 2) {
+                                                out.println("<span class='label label-success label-mini'>Defect has been fixed</span>");
+                                            } %></td></tr>
                                                         <tr><td>Defect severity</td><td><% int sevInt = d.getSeverity();
                                                             if (sevInt == 1) {
                                                                 out.println("Low");
@@ -141,6 +141,10 @@
                                                                         out.println(getDev + "<br/>");
                                                                     }
                                                                     %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Defect assigned to</td>
+                                                                <td><%=d.getAssignto()%></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Due Date</td>

@@ -22,8 +22,9 @@ public class Defect {
     private int isComplete;
     private int severity;
     private Date duedate;
-
-    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, String updateTime, int isComplete, int severity, Date duedate) {
+    private String assignto;
+    
+    public Defect(int id, String projectName, String defectName, String desc, String reportedBy, String updateTime, int isComplete, int severity, Date duedate, String assignto) {
         this.id = id;
         this.projectName = projectName;
         this.defectName = defectName;
@@ -33,6 +34,7 @@ public class Defect {
         this.isComplete = isComplete;
         this.severity = severity;
         this.duedate = duedate;
+        this.assignto = assignto;
     }
 
     public String getProjectName() {
@@ -107,6 +109,16 @@ public class Defect {
         this.duedate = due;
     }
 
+    public String getAssignto() {
+        return assignto;
+    }
+
+    public void setAssignto(String assignto) {
+        this.assignto = assignto;
+    }
+    
+    
+    
     @Override
     public String toString() {
         return "Defect{" + "id=" + id + ", projectName=" + projectName + ", defectName=" + defectName + ", updateTime=" + updateTime + ", desc=" + desc + ", reportedBy=" + reportedBy + ", isComplete=" + isComplete + ", severity=" + severity + ", dudedate=" + duedate.toString() + '}';

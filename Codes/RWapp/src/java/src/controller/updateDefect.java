@@ -71,6 +71,7 @@ public class updateDefect extends HttpServlet {
         int isComplete = Integer.parseInt(complete);
         String pm = request.getParameter("pmname");
         String duedateStr = request.getParameter("duedate");
+        String devname = request.getParameter("devname");
 
         ArrayList<String> errList = new ArrayList<String>();
 
@@ -106,12 +107,15 @@ public class updateDefect extends HttpServlet {
         } else {
             sev = Integer.parseInt(severity);
         }
+        if (devname == null){
+            errList.add("Please assign a developer");
+        }
 
         boolean success = false;
 
         if (errList.size() == 0) {
 
-            success = DefectDAO.updateDefect(id, dname, desc, pm, isComplete, sev, duedateStr);
+            success = DefectDAO.updateDefect(id, dname, desc, pm, isComplete, sev, duedateStr, devname);
             if (success) {
                 RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
                 request.setAttribute("sucess", "Details successfully changed!");

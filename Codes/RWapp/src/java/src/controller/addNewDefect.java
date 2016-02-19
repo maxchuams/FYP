@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import src.model.Defect;
 import src.model.DefectDAO;
 import src.model.Person;
+import src.model.ProjectAllocationDAO;
 
 /**
  *
@@ -39,8 +40,7 @@ public class addNewDefect extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sess = request.getSession();
-       
-        
+
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -67,7 +67,7 @@ public class addNewDefect extends HttpServlet {
         String sev = request.getParameter("severity");
         String pmname = request.getParameter("pmName");
         String duedateStr = request.getParameter("duedate");
-
+        String filter = request.getParameter("filter");
         Date duedate = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
@@ -100,14 +100,31 @@ public class addNewDefect extends HttpServlet {
         if (sev == null) {
             errList.add("Please give a severity rating for the defect");
         }
-       
 
-       
-
+        boolean success = false;
         if (errList.isEmpty()) {
-            int severity = Integer.parseInt(sev);
-            boolean success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr);
+            ArrayList<String> devList = ProjectAllocationDAO.retrieveDev(projname);
+            if (devList.size() > 1 && filter.equals("yes")) {
+                //return error
+               RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
+                request.setAttribute("err", "Project selected contains more than 1 developer. Please select no and select a developer as well.");
+                rd.forward(request, response);
+                return;
+            } else if ("yes".equals(filter)){
+                int severity = Integer.parseInt(sev);
+                success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr,devList.get(0));
+            } else if ("no".equals(filter)){
+                String devname = request.getParameter("devname");
+                if (devname == null){
+                    errList.add("Please select a developer");
+                } else {
+                    int severity = Integer.parseInt(sev);
+                    success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr,devname);
+                }
+            }
+
             if (success) {
+
                 RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
                 request.setAttribute("sucess", "Defect " + defname + "  from Project " + projname + " has been successfully added into the system");
                 rd.forward(request, response);

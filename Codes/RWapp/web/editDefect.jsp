@@ -4,6 +4,8 @@
     Author     : maxchua
 --%>
 
+<%@page import="src.model.Developer"%>
+<%@page import="src.model.DeveloperDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.DefectDAO"%>
@@ -84,7 +86,9 @@
                             <div class="panel-body">
                                 <%
                                     String defId = request.getParameter("id");
-                                    if(defId==null){defId=(String)request.getAttribute("id");}
+                                    if (defId == null) {
+                                        defId = (String) request.getAttribute("id");
+                                    }
                                     int id = Integer.parseInt(defId);
 
                                     Defect toEdit = DefectDAO.retrieveDefect(id);
@@ -114,6 +118,23 @@
                                             <input type="text" name="defname" required class="form-control" id="defname" placeholder="Name" value="<%=toEdit.getDefectName()%>" required>
                                             <p></p>
                                         </div>
+                                    </div>
+                                    <label for="inputEmail1" class="col-lg-2 control-label">Developer</label>
+                                    <div class="col-lg-9">
+                                        <select name="devname" class="devSelect2 form-control m-bot15">
+                                            <%
+                                                ArrayList<Developer> dList = DeveloperDAO.retrieveDevelopers();
+                                                for (Developer d : dList) {
+                                                    if (toEdit.getAssignto() != null && toEdit.getAssignto().equalsIgnoreCase(d.getUsername())) {%>
+                                            <option value='<%=d.getUsername()%>' selected><%=d.getUsername()%></option>
+                                            <%} else {
+                                            %>
+                                            <option value='<%=d.getUsername()%>'><%=d.getUsername()%></option>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                        </select>
                                     </div>
 
 
