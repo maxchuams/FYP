@@ -7,6 +7,7 @@ package src.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
 import java.util.Arrays;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -87,7 +88,23 @@ public class ManageProfile extends HttpServlet {
             } else {
                 if (password1 != null && password2 != null && password1.length() > 0) {
                     if (password1.equals(password2)) {
-                        currUser.setPassword(password1);
+                        String hash = "";
+                        try {
+                            MessageDigest md = MessageDigest.getInstance("MD5");
+                            md.update(password1.getBytes());
+
+                            byte byteData[] = md.digest();
+
+                            //convert the byte to hex format method 1
+                            StringBuffer sb = new StringBuffer();
+                            for (int i = 0; i < byteData.length; i++) {
+                                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                            }
+                            hash = sb.toString();
+                        } catch (Exception e) {
+
+                        }
+                        currUser.setPassword(hash);
                         PersonDAO.updateUser(currUser);
 
                         if (type.equals("dev")) {

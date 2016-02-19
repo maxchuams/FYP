@@ -10,7 +10,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +50,6 @@ public class TestJob implements Job {
             Properties props = new Properties();
             props.load(is4);
 
-          
             mainboard = props.getProperty("trello.mainboard").trim();
             devList = props.getProperty("trello.developmentList").trim();
             adminUsername = props.getProperty("trello.admin");
@@ -58,10 +60,10 @@ public class TestJob implements Job {
             Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
             throw new RuntimeException(message, ex);
         }
-
+        System.out.println("Cron starts here");
         try {
             //1. get all trello board data
-
+            System.out.println("try  here");
             String key = TrelloDetailsDAO.retrieveTrelloKey(adminUsername);
             String token = TrelloDetailsDAO.retrieveTrelloToken(adminUsername);
             //System.out.println("KEY:  " + key + " TOKEN : " + token);
@@ -173,6 +175,7 @@ public class TestJob implements Job {
             ArrayList<Person> pmList = PersonDAO.retrievAllPM();
             ArrayList<String> errList = new ArrayList<String>();
             for (int i = 0; i < cardsArr.length(); i++) {
+
                 JSONObject tempCard = cardsArr.getJSONObject(i);
                 //System.out.println(tempCard);
                 String idList = tempCard.getString("idList");
@@ -214,11 +217,18 @@ public class TestJob implements Job {
                         if (desc.length() >= 8000) {
                             desc = desc.substring(0, 8000);
                         }
-                        String due = tempCard.getString("due").substring(0, 10);
+                        String due = "";
+                        try {
+                            due = tempCard.getString("due").substring(0, 10);
+                        } catch (Exception de) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            due = sdf.format(cal.getTime());
+                        }
                         String cardId = tempCard.getString("id");
                         System.out.println("assignby " + assignby);
 
-                        success = ProjectDAO.addCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated");
+                        success = ProjectDAO.addCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated", 30);
                         //tcList.add(new TrelloCard(cardId, name, due, desc));
                         Person pm = PersonDAO.retrieveUser(assignby);
                         try {
@@ -266,8 +276,9 @@ public class TestJob implements Job {
             }
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
+        System.out.println("Trello sync done.");
     }
 
 }

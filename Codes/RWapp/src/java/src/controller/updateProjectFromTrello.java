@@ -12,7 +12,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -251,11 +254,19 @@ public class updateProjectFromTrello extends HttpServlet {
                     if (desc.length() >= 8000) {
                         desc = desc.substring(0, 8000);
                     }
-                    String due = tempCard.getString("due").substring(0, 10);
+                    String due= "";
+                    try{
+                        due = tempCard.getString("due").substring(0, 10);
+                    } catch (Exception e){
+                        Calendar cal = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        due = sdf.format(cal.getTime());        
+                    }
+                    System.out.println(due);
                     String cardId = tempCard.getString("id");
                     System.out.println("assignby " + assignby);
 
-                    success = ProjectDAO.addCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated");
+                    success = ProjectDAO.addCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated",30);
                     //tcList.add(new TrelloCard(cardId, name, due, desc));
                     Person pm = PersonDAO.retrieveUser(assignby);
                     try {

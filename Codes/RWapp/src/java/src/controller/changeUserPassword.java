@@ -7,6 +7,7 @@ package src.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,8 +36,7 @@ public class changeUserPassword extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sess = request.getSession();
-       
-        
+
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -62,21 +62,39 @@ public class changeUserPassword extends HttpServlet {
         String pw2 = request.getParameter("password2");
         Person toChange = PersonDAO.retrieveUser(user);
         boolean changed = false;
-        if (pw1 == null || pw2 == null){
+        if (pw1 == null || pw2 == null) {
             changed = false;
-        } else if (pw1.equals(pw2)){
+        } else if (pw1.equals(pw2)) {
             toChange = PersonDAO.retrieveUser(user);
-            toChange.setPassword(pw2);
+            String hash = "";
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(pw1.getBytes());
+
+                byte byteData[] = md.digest();
+
+                //convert the byte to hex format method 1
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < byteData.length; i++) {
+                    sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                }
+                hash = sb.toString();
+            } catch (Exception e) {
+
+            }
+            toChange.setPassword(hash);
             changed = PersonDAO.updateUser(toChange);
         }
-        
-        RequestDispatcher rd = request.getRequestDispatcher("editUser.jsp?username="+toChange.getUsername());
+
+        RequestDispatcher rd = request.getRequestDispatcher("editUser.jsp?username=" + toChange.getUsername());
         if (!changed) {
             request.setAttribute("err", "Passwords do not match");
             rd.forward(request, response);
+            return;
         } else {
             request.setAttribute("sucess", "Password has been changed for " + user + "!");
             rd.forward(request, response);
+            return;
         }
 
     }
