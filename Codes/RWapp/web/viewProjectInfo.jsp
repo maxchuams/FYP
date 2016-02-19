@@ -28,7 +28,7 @@
         <%
             String projectName = request.getParameter("projectName");
             Project p = ProjectDAO.retrieveProjectByProjectName(projectName);
-            ArrayList<String> arr = ProjectDAO.retrievePlanActualEnd("recco");
+            ArrayList<String> arr = ProjectDAO.retrievePlanActualEnd(projectName);
             ArrayList<Defect> dList = null;
             if (pm!=null){
                 dList = DefectDAO.retrievePm(pm.getUsername());
