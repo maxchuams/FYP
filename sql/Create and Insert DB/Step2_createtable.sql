@@ -1,6 +1,6 @@
 create table user(
 	username varchar(25) not null primary key,
-	password varchar(25) not null,
+	password varchar(100) not null,
 	type varchar(1) not null,
 	trellokey varchar(100),
 	trellotoken varchar(100),
@@ -72,9 +72,11 @@ create table defect(
     iscomplete int NOT NULL DEFAULT 0,
     severity int NOT NULL DEFAULT 2,
     duedate DATE NOT NULL,
+    assignto varchar(25) not null,
 	constraint defects_pk primary key (defectid),
     constraint defects_fk1 foreign key (projectname) references project (projectname),
-    constraint defects_fk2 foreign key (reportby) references user (username)
+    constraint defects_fk2 foreign key (reportby) references user (username),
+    constraint defects_fk3 foreign key (assignto) references user (username) 
 );
 
 create table defectscreenshot(
