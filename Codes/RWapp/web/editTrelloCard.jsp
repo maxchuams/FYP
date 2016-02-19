@@ -322,6 +322,7 @@
                                                 <option value="Others">Others</option>
                                             </select>
                                         </div>
+                                                <p></p>
                                         <div id='devOnly'>
                                             <label for="inputType" class="col-lg-2 control-label">Project Type </label>
                                              <div class="col-lg-9">
