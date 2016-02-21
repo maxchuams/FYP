@@ -4,6 +4,7 @@
     Author     : admin
 --%>
 
+<%@page import="src.model.CronDAO"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@page import="src.model.Project"%>
@@ -94,7 +95,8 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <label class='pull-left top-menu'>Viewing all my projects</label>
+                                <label class='pull-left top-menu'>Viewing all my projects
+                                </br>Last update time: <%=CronDAO.retrieveTime()%></label>
                                 <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewTrelloCards"/>
                                     <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
