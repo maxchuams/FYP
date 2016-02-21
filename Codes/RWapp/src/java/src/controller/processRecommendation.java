@@ -71,6 +71,7 @@ public class processRecommendation extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         ArrayList<String> errList = new ArrayList<String>();
         String devList = request.getParameter("dev");

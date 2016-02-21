@@ -55,6 +55,7 @@ public class defectComplete extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String defId = request.getParameter("id");
         int id = Integer.parseInt(defId);

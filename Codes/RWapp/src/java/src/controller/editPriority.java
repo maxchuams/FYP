@@ -55,6 +55,7 @@ public class editPriority extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String projName = request.getParameter("projectTitle");
         String priority = request.getParameter("priority");

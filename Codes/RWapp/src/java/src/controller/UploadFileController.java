@@ -57,6 +57,7 @@ public class UploadFileController extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();

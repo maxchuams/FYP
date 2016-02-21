@@ -57,6 +57,7 @@ public class sortData extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String caseType = request.getParameter("case");
         String sortby = request.getParameter("sortby");

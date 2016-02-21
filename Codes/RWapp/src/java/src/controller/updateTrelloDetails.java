@@ -60,6 +60,7 @@ public class updateTrelloDetails extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String username = request.getParameter("user");
         String trellokey = request.getParameter("key");

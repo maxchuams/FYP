@@ -81,6 +81,7 @@ public class updateProjectFromTrello extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
 
         try {

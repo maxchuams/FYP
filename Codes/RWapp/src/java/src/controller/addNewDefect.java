@@ -60,6 +60,7 @@ public class addNewDefect extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String projname = request.getParameter("projectname").trim();
         String defname = request.getParameter("defname").trim();

@@ -61,7 +61,9 @@ public class GnattJSON extends HttpServlet {
         } else if (p4 != null) {
             currUser = p4;
         } else {
+            
             response.sendRedirect("login.jsp");
+            return;
         }
             PrintWriter out = response.getWriter();
             /* TODO output your page here. You may use following sample code. */

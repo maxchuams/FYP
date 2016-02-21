@@ -64,6 +64,7 @@ public class ImageServlet extends HttpServlet{
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
          
         String imageName = request.getParameter("imageid");

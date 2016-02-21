@@ -74,6 +74,7 @@ HttpSession sess = request.getSession();
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String pname = request.getParameter("pname");
         try {

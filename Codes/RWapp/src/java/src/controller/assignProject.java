@@ -75,6 +75,7 @@ public class assignProject extends HttpServlet {
 
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         
         try {
