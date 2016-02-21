@@ -116,6 +116,10 @@
         <servlet-name>ChartJSON</servlet-name>
         <servlet-class>src.controller.ChartJSON</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>removeDefect</servlet-name>
+        <servlet-class>src.controller.removeDefect</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -231,6 +235,10 @@
     <servlet-mapping>
         <servlet-name>ChartJSON</servlet-name>
         <url-pattern>/ChartJSON</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>removeDefect</servlet-name>
+        <url-pattern>/removeDefect</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
