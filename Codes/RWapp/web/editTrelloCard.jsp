@@ -294,7 +294,7 @@
                                     
                                     
                                     <%
-                                    ArrayList<String> pTypeList = ProjectDAO.retrieveAllTypes();
+                                    ArrayList<String> pTypeList = ProjectDAO.retrieveAllSkillTypes();
                                     %>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
