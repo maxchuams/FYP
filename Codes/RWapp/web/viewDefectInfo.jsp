@@ -96,6 +96,11 @@
                                         <i class="fa fa-pencil-square-o"></i>
                                         <span>Edit</span>
                                     </a>
+                                        
+                                    <% if(pm!=null){ %>
+                                    <a href="removeDefect?id=<%=d.getId()%>" onclick="return confirm('Confirm delete?')"><i class="fa fa-minus-circle"></i><span> Delete</span></a>
+                                    <% } %>
+                                    
                                     <a href="javascript:;" class="fa fa-chevron-down"></a>
                                 </span>
                             </header>
