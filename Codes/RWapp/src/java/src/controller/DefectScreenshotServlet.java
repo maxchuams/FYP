@@ -65,6 +65,7 @@ public class DefectScreenshotServlet extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String defectid = request.getParameter("defectid");
         String updatetime = request.getParameter("updatetime");

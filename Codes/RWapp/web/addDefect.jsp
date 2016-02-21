@@ -143,6 +143,12 @@
                                     <div class="col-lg-9">
                                         <select name="projectname" class="devSelect2 form-control m-bot15">
                                             <%
+                    Person per = null;
+                    if(session.getAttribute("loggedInPm")!=null){
+                        per = (Person)session.getAttribute("loggedInPm");
+                    }else{
+                        per = (Person)session.getAttribute("loggedInTester");
+                    }
                                                 ArrayList<Project> pList = ProjectDAO.retrieveInProgress();
                                                 for (Project p : pList) {
                                                     if (name != null && name.equalsIgnoreCase(p.getName())) {%>
@@ -233,7 +239,7 @@
                                                                                 <option value='3'>High</option>
                                                                             </select>-->
 
-                                    <input type='hidden' name='pmName' value='<%=pm.getUsername()%>'/>
+                                    <input type='hidden' name='pmName' value='<%=per.getUsername()%>'/>
 
                                     <div class="form-group">
                                         <div class="col-lg-offset-3 col-lg-9">

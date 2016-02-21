@@ -74,6 +74,7 @@ public class getTrelloData extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         //get the trello details
         System.out.println(currUser);

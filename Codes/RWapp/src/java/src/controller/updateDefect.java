@@ -59,6 +59,7 @@ public class updateDefect extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String pname = request.getParameter("projname");
         String dname = request.getParameter("defname");

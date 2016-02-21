@@ -57,6 +57,7 @@ public class editProjectType extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         String[] type = request.getParameterValues("type");
 

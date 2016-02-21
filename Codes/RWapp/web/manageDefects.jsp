@@ -109,7 +109,14 @@
                     </div>
                 </div>
                 <%}%>
-                
+                <%
+                    Person per = null;
+                    if(session.getAttribute("loggedInPm")!=null){
+                        per = (Person)session.getAttribute("loggedInPm");
+                    }else{
+                        per = (Person)session.getAttribute("loggedInTester");
+                    }
+                %>
                 <div class="row">
                     <div class="col-lg-12">
                         <!--                        <section class="panel">
@@ -135,7 +142,7 @@
                                                                             <option value="defectname">Defect Name</option>
                                                                             <option value="updatetime">Update Time</option>
                                                                         </select>
-                                                                        <input type="hidden"  name='username' value='<%=pm.getUsername()%>'/>
+                                                                        <input type="hidden"  name='username' value='<%=per.getUsername()%>'/>
                                                                         <input type='hidden' value='' name='inputText'/>
                                                                         <input type='hidden' value='' name='filter'/>
                                                                         <input type='hidden' value='pm' name='case'/>
@@ -188,7 +195,7 @@
                 </div>
             </div>
 
-            <input type="hidden" name='username' value='<%=pm.getUsername()%>'/>
+            <input type="hidden" name='username' value='<%=per.getUsername()%>'/>
             <input type='hidden' name='sortby' value=''/>
             <input type='hidden' value='pm' name='case'/>
 
@@ -203,7 +210,12 @@
                         <!--kaiwen codes-->
 
                         <%
-                            ArrayList<Defect> dList = DefectDAO.retrievePm(pm.getUsername());
+                            ArrayList<Defect> dList = null;
+                            if(pm!=null){
+                            dList = DefectDAO.retrievePm(pm.getUsername());
+                            }else{
+                            dList = DefectDAO.retrieveTester();
+                            }
                         %>
 
                         <%for (Project p : pList) {%>

@@ -270,9 +270,80 @@ public class TestJob implements Job {
                         if (!success) {
                             errList.add(name + " could not be added to the Database, please try again later");
                         }
+                    }else {
+                    //get values and update
+                    String desc = tempCard.getString("desc").replace("**", "");
+                    if (desc.length() >= 8000) {
+                        desc = desc.substring(0, 8000);
                     }
+                    String due = "";
+                    try {
+                        due = tempCard.getString("due").substring(0, 10);
+                    } catch (Exception e) {
+                        Calendar cal = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        due = sdf.format(cal.getTime());
+                    }
+//                    System.out.println(due);
+                    String cardId = tempCard.getString("id");
+//                    System.out.println("assignby " + assignby);
 
+                    
+                    //tcList.add(new TrelloCard(cardId, name, due, desc));
+                    Person pm = PersonDAO.retrieveUser(assignby);
+                    String url = "";
+                    try {
+                        URL photoUrl = new URL("https://api.trello.com/1/cards/" + cardId + "/attachments?fields=url&key=" + pm.getTrelloKey() + "&token=" + pm.getToken());
+                        //System.out.println(memberUrl);
+
+                        URLConnection con1 = photoUrl.openConnection();
+                        InputStream is1 = con1.getInputStream();
+                        BufferedReader br1 = new BufferedReader(new InputStreamReader(is1));
+
+                        String line1 = null;
+                        String jsonOutput2 = "";
+
+                        // read each line and throw string into JSONObject
+                        while ((line1 = br1.readLine()) != null) {
+                            jsonOutput2 += line1;
+
+                        }
+
+                        JSONArray obj1 = new JSONArray(jsonOutput2);
+                        //masterboardID - id for masterboard need this for the URL
+                        
+//            for (int i = 0; i < obj.length(); i++) {
+                        JSONObject jobj = obj1.getJSONObject(0);
+                        url = jobj.getString("url");
+
+//            }
+                        System.out.println("url " + url);
+                        ProjectDAO.addURL(name, url);
+                        
+                    } catch (Exception e) {
+
+                    }
+                    success = ProjectDAO.updateCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated", 30, url);
+                    //get current developers allocated to this project
+                    ArrayList<String> devListForProj = ProjectAllocationDAO.retrieveDev(name);
+                    if (!devToAdd.isEmpty()) {
+                        for (String devusername : devToAdd) {
+                            if(!devListForProj.contains(devusername)){
+                                ProjectAllocationDAO.addBasicAllocation(name, devusername);
+                            }
+                            
+                        }
+
+                    }
+                    if (!success) {
+                        errList.add(name + " could not be added to the Database, please try again later");
+                    }
                 }
+
+                } 
+//                else if (){
+//                    
+//                }
             }
 
         } catch (Exception e) {

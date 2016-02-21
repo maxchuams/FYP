@@ -82,6 +82,7 @@ public class assignRecommendation extends HttpServlet {
             currUser = p4;
         } else {
             response.sendRedirect("login.jsp");
+            return;
         }
         try {
             InputStream is4 = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
