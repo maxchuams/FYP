@@ -62,6 +62,7 @@
                                             SD: <%=arr.get(0)%><br/>
                                             ED: <%=arr.get(1)%>
                                         </th>
+                                        <th></th>
                                         </tr></thead>
                                     <% if (pm!=null){ %>
                                     <tr>
@@ -71,6 +72,7 @@
                                             <td>
                                                 <%=p.getDuedate()%>
                                             </td>
+                                            <td></td>
                                     </tr>
                                     <% } %>
                                     <tr>
@@ -80,6 +82,7 @@
                                         <td>
                                             <%=p.getAssignedBy()%>
                                         </td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -89,9 +92,12 @@
                                             <% 
                                             ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(p.getName());
                                             for (String developer : getDev){
-                                                out.println(developer+"<br/>");
+                                                out.println(developer+" ");
                                             }
                                             %>
+                                        </td>
+                                        <td>
+                                            <a href="removeDeveloperFromProject.jsp?id=<%=p.getTrelloKey()%>"><span class='label label-danger label-mini'>Remove developer</span></a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -101,6 +107,7 @@
                                         <td>
                                             <%=p.getType()%>
                                         </td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -109,6 +116,7 @@
                                         <td>
                                             <%=p.getPsize()%>
                                         </td>
+                                        <td></td>
                                     </tr>
                                 </table>
                             </div>
