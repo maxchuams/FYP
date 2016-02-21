@@ -145,6 +145,7 @@ public class addNewUser extends HttpServlet {
                     request.setAttribute("err", "User could not be added into the database");
                 }
                 rd.forward(request, response);
+                return;
             } else {
                 Person toAdd = new Person(username, hash, type, trellokey, trellotoken);
                 boolean sucess = PersonDAO.addPerson(toAdd);
@@ -154,6 +155,7 @@ public class addNewUser extends HttpServlet {
                     request.setAttribute("err", "User could not be added into the database");
                 }
                 rd.forward(request, response);
+                return;
             }
 
         } else {
@@ -161,6 +163,7 @@ public class addNewUser extends HttpServlet {
             toReturn.replace(",", "");
             request.setAttribute("err", toReturn);
             rd.forward(request, response);
+            return;
         }
     }
 
