@@ -144,7 +144,7 @@
                                             ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(t.getName());
                                             if(getDev.size()==1){
                                                 for (String developer : getDev){
-                                                    out.println(developer+"<br/>");
+                                                    out.println(developer);
                                                 }
                                             }else{
                                                 out.println("2 Developers");

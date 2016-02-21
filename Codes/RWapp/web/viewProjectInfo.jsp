@@ -106,7 +106,7 @@
                                                 <%
                                                     ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(p.getName());
                                                     for (String developer : getDev) {
-                                                        out.println(developer + ", ");
+                                                        out.println(developer + " ");
                                                     }
                                                 %>
                                             </td>
