@@ -90,6 +90,38 @@ public class ProjectAllocationDAO {
         ProjectAllocation pA = null;
         try {
             conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct developerusername from projectallocation where projectname = ?");
+            pstmt.setString(1, projectname);
+            
+            rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                
+                toReturn.add(rs.getString(1));
+            }
+            
+            //return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+        
+        return toReturn;
+    }
+    
+     public static ArrayList<String> retrieveAllocatedDev(String projectname){
+        ArrayList<String> toReturn = new ArrayList<String>();
+                
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ProjectAllocation pA = null;
+        try {
+            conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select distinct assignto from projectallocation where projectname = ?");
             pstmt.setString(1, projectname);
             
@@ -112,6 +144,7 @@ public class ProjectAllocationDAO {
         
         return toReturn;
     }
+     
     public static boolean delete(String username, String projname) {
           Connection conn = null;
         PreparedStatement pstmt = null;
