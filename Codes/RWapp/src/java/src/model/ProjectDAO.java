@@ -402,5 +402,39 @@ public class ProjectDAO {
         if(toReturn.size()==2) return toReturn;
         return null;
     }
+    
+    public static boolean updateCardFromTrello(String name, String assignby, String cardId, String desc, String due, int priority, String type, int days, String url) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+
+            pstmt = conn.prepareStatement("UPDATE project  set trellokey=? description=? assignby=? duedate-? priority=? type= ?"
+                    + "psize=? trellophoto=? WHERE projectname=?");
+            
+            pstmt.setString(1, cardId);
+            pstmt.setString(2, desc);
+            pstmt.setString(3, assignby);
+            pstmt.setString(4, due);
+            pstmt.setInt(5, priority);
+            pstmt.setString(6, type);
+            pstmt.setInt(7, days);
+            pstmt.setString(8, url);
+            pstmt.setString(9, name);
+
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt);
+
+        }
+
+    }
 
 }

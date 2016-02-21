@@ -38,10 +38,11 @@ public class removeDevSkill extends HttpServlet {
         HttpSession sess = request.getSession();
        
         
-        Person p1 = (Person) sess.getAttribute("loggedInDev");
+         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
         Person p4 = (Person) sess.getAttribute("loggedInTester");
+        Person p5 = (Person) sess.getAttribute("loggedInSudo");
         Person currUser = null;
 
         if (p1 != null) {
@@ -55,8 +56,12 @@ public class removeDevSkill extends HttpServlet {
 
         } else if (p4 != null) {
             currUser = p4;
-        } else {
+        } else if (p5 != null){
+            currUser = p5;
+            
+        }else {
             response.sendRedirect("login.jsp");
+            return;
         }
       String username = request.getParameter("user");
       String skill = request.getParameter("skill");

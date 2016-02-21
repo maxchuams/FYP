@@ -263,7 +263,7 @@ public class RecommedationDAO {
 
             rs = pstmt.executeQuery();
 
-           // System.out.println("executed");
+            // System.out.println("executed");
             while (rs.next()) {
                 Recommendation toAdd = new Recommendation(rs.getString("developer"),
                         rs.getString("nationality"), rs.getInt("currentproject"),
@@ -331,7 +331,6 @@ public class RecommedationDAO {
             res.add(new ArrayList<Integer>(item));
             return;
         }
-
         for (int i = start; i <= n; i++) {
             item.add(i);
             dfs(n, k, i + 1, item, res);
@@ -368,4 +367,65 @@ public class RecommedationDAO {
             ConnectionManager.close(conn, pstmt, rs);
         }
     }
+
+    public static int[] retrievexfs() {
+
+        Connection conn = null;
+        PreparedStatement pstmt1 = null;
+        PreparedStatement pstmt2 = null;
+        PreparedStatement pstmt3 = null;
+        PreparedStatement pstmt4 = null;
+        PreparedStatement pstmt5 = null;
+        ResultSet rs1 = null;
+        ResultSet rs2 = null;
+        ResultSet rs3 = null;
+        ResultSet rs4 = null;
+        ResultSet rs5 = null;
+
+
+        int[] xfs = new int[5];
+
+        try {
+            conn = ConnectionManager.getConnection();
+
+            pstmt1 = conn.prepareStatement("select count(*) as count from user;");
+            pstmt2 = conn.prepareStatement("select count(*) as count from  project;");
+            pstmt3 = conn.prepareStatement("select count(*) as count from recommendationlog where choice in (1,2,3,4,5);");
+            pstmt4 = conn.prepareStatement("select count(*) as count from recommendationlog where choice=1;");
+            pstmt5 = conn.prepareStatement("select round((count2 /count1)*100,0) as percent from "
+                    + "(select count(*) as count1 from recommendationlog where choice in (1,2,3,4,5)) as c1,"
+                    + "(select count(*) as count2 from recommendationlog where choice=1) as c2;");
+
+            rs1 = pstmt1.executeQuery();
+            while (rs1.next()) {
+                xfs[0] = rs1.getInt("count");
+            }
+            rs2 = pstmt2.executeQuery();
+            while (rs2.next()) {
+                xfs[1] = rs2.getInt("count");
+            }
+            rs3 = pstmt3.executeQuery();
+            while (rs3.next()) {
+                xfs[2] = rs3.getInt("count");
+            }
+            rs4 = pstmt4.executeQuery();
+            while (rs4.next()) {
+                xfs[3] = rs4.getInt("count");
+            }
+             rs5 = pstmt5.executeQuery();
+            while (rs5.next()) {
+                xfs[4] = rs5.getInt("percent");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error on xfactor DAO method.");
+        } finally {
+            ConnectionManager.close(conn, pstmt5, rs5);
+   
+        }
+
+        return xfs;
+
+    }
+
 }

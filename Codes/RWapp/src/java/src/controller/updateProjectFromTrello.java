@@ -52,16 +52,15 @@ public class updateProjectFromTrello extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     private static final String PROPS_FILENAME = "/trello.properties";
     private static String mainboard;
     private static String devList;
     private static String adminUsername;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sess = request.getSession();
-       
+
         String page = request.getParameter("page");
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
@@ -83,13 +82,12 @@ public class updateProjectFromTrello extends HttpServlet {
         } else {
             response.sendRedirect("login.jsp");
         }
-        
+
         try {
             InputStream is4 = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
             Properties props = new Properties();
             props.load(is4);
 
-          
             mainboard = props.getProperty("trello.mainboard").trim();
             devList = props.getProperty("trello.developmentList").trim();
             //adminUsername = props.getProperty("trello.admin");
@@ -254,19 +252,19 @@ public class updateProjectFromTrello extends HttpServlet {
                     if (desc.length() >= 8000) {
                         desc = desc.substring(0, 8000);
                     }
-                    String due= "";
-                    try{
+                    String due = "";
+                    try {
                         due = tempCard.getString("due").substring(0, 10);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         Calendar cal = Calendar.getInstance();
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        due = sdf.format(cal.getTime());        
+                        due = sdf.format(cal.getTime());
                     }
-                    System.out.println(due);
+//                    System.out.println(due);
                     String cardId = tempCard.getString("id");
-                    System.out.println("assignby " + assignby);
+//                    System.out.println("assignby " + assignby);
 
-                    success = ProjectDAO.addCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated",30);
+                    success = ProjectDAO.addCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated", 30);
                     //tcList.add(new TrelloCard(cardId, name, due, desc));
                     Person pm = PersonDAO.retrieveUser(assignby);
                     try {
@@ -308,19 +306,87 @@ public class updateProjectFromTrello extends HttpServlet {
                     if (!success) {
                         errList.add(name + " could not be added to the Database, please try again later");
                     }
+                } else {
+                    //get values and update
+                    String desc = tempCard.getString("desc").replace("**", "");
+                    if (desc.length() >= 8000) {
+                        desc = desc.substring(0, 8000);
+                    }
+                    String due = "";
+                    try {
+                        due = tempCard.getString("due").substring(0, 10);
+                    } catch (Exception e) {
+                        Calendar cal = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        due = sdf.format(cal.getTime());
+                    }
+//                    System.out.println(due);
+                    String cardId = tempCard.getString("id");
+//                    System.out.println("assignby " + assignby);
+
+                    
+                    //tcList.add(new TrelloCard(cardId, name, due, desc));
+                    Person pm = PersonDAO.retrieveUser(assignby);
+                    String url = "";
+                    try {
+                        URL photoUrl = new URL("https://api.trello.com/1/cards/" + cardId + "/attachments?fields=url&key=" + pm.getTrelloKey() + "&token=" + pm.getToken());
+                        //System.out.println(memberUrl);
+
+                        URLConnection con1 = photoUrl.openConnection();
+                        InputStream is1 = con1.getInputStream();
+                        BufferedReader br1 = new BufferedReader(new InputStreamReader(is1));
+
+                        String line1 = null;
+                        String jsonOutput2 = "";
+
+                        // read each line and throw string into JSONObject
+                        while ((line1 = br1.readLine()) != null) {
+                            jsonOutput2 += line1;
+
+                        }
+
+                        JSONArray obj1 = new JSONArray(jsonOutput2);
+                        //masterboardID - id for masterboard need this for the URL
+                        
+//            for (int i = 0; i < obj.length(); i++) {
+                        JSONObject jobj = obj1.getJSONObject(0);
+                        url = jobj.getString("url");
+
+//            }
+                        System.out.println("url " + url);
+                        ProjectDAO.addURL(name, url);
+                        
+                    } catch (Exception e) {
+
+                    }
+                    success = ProjectDAO.updateCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated", 30, url);
+                    //get current developers allocated to this project
+                    ArrayList<String> devListForProj = ProjectAllocationDAO.retrieveDev(name);
+                    if (!devToAdd.isEmpty()) {
+                        for (String devusername : devToAdd) {
+                            if(!devListForProj.contains(devusername)){
+                                ProjectAllocationDAO.addBasicAllocation(name, devusername);
+                            }
+                            
+                        }
+
+                    }
+                    if (!success) {
+                        errList.add(name + " could not be added to the Database, please try again later");
+                    }
                 }
 
             }
         }
         RequestDispatcher rd = null;
-        if(page.equals("viewAllTrelloCards")){
+        if (page.equals("viewAllTrelloCards")) {
             rd = request.getRequestDispatcher("viewAllTrelloCards.jsp");
-        }else if(page.equals("viewCompletedProjects")){
+        } else if (page.equals("viewCompletedProjects")) {
             rd = request.getRequestDispatcher("viewCompletedProjects.jsp");
-        }else{
+        } else {
             rd = request.getRequestDispatcher("viewTrelloCards.jsp");
         }
-        
+
         if (errList.isEmpty()) {
             request.setAttribute("sucess", "Database successfully synced with Trello");
             rd.forward(request, response);

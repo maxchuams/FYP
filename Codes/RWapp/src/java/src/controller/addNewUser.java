@@ -50,6 +50,7 @@ public class addNewUser extends HttpServlet {
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
         Person p4 = (Person) sess.getAttribute("loggedInTester");
+        Person p5 = (Person) sess.getAttribute("loggedInSudo");
         Person currUser = null;
 
         if (p1 != null) {
@@ -63,8 +64,12 @@ public class addNewUser extends HttpServlet {
 
         } else if (p4 != null) {
             currUser = p4;
-        } else {
+        } else if (p5 != null){
+            currUser = p5;
+            
+        }else {
             response.sendRedirect("login.jsp");
+            return;
         }
 
         String username = request.getParameter("username");
@@ -145,6 +150,7 @@ public class addNewUser extends HttpServlet {
                     request.setAttribute("err", "User could not be added into the database");
                 }
                 rd.forward(request, response);
+                return;
             } else {
                 Person toAdd = new Person(username, hash, type, trellokey, trellotoken);
                 boolean sucess = PersonDAO.addPerson(toAdd);
@@ -154,6 +160,7 @@ public class addNewUser extends HttpServlet {
                     request.setAttribute("err", "User could not be added into the database");
                 }
                 rd.forward(request, response);
+                return;
             }
 
         } else {
@@ -161,6 +168,7 @@ public class addNewUser extends HttpServlet {
             toReturn.replace(",", "");
             request.setAttribute("err", toReturn);
             rd.forward(request, response);
+            return;
         }
     }
 
