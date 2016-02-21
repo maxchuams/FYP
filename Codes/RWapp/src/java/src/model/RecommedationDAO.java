@@ -331,7 +331,6 @@ public class RecommedationDAO {
             res.add(new ArrayList<Integer>(item));
             return;
         }
-
         for (int i = start; i <= n; i++) {
             item.add(i);
             dfs(n, k, i + 1, item, res);
