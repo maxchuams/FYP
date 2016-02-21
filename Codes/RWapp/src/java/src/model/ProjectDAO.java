@@ -95,6 +95,36 @@ public class ProjectDAO {
 
     }
 
+    
+        public static ArrayList<String> retrieveAllSkillTypes() {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct skill from developerskill;");
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+    
+    
+    
+    
     public static boolean add(Project p) {
         Connection conn = null;
         PreparedStatement pstmt = null;

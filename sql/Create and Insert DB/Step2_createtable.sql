@@ -49,7 +49,7 @@ create table projectallocation(
     actualend date,
     iscomplete int NOT NULL DEFAULT 0,
     constraint pallo_pk primary key (projectname, developerusername, dateallocated), 
-	constraint pallo_fk foreign key (projectname) references project(projectname) ,
+	constraint pallo_fk foreign key (projectname) references project(projectname) ON DELETE CASCADE  ,
 	constraint pallo_fk2 foreign key (developerusername) references developer(username) ON DELETE CASCADE
 );
 
@@ -91,6 +91,13 @@ CREATE TABLE ztable (
   zvalue DECIMAL(14,2) NOT NULL,
   pvalue DECIMAL(14,4) NULL,
   PRIMARY KEY (zvalue)
+);
+
+create table cron(
+	cronid int NOT NULL AUTO_INCREMENT,
+    updatetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    state int,
+	constraint cron_pk primary key (cronid)
 );
 
 create table notifications(
