@@ -73,6 +73,33 @@ public class GanttDAO {
 
     }
     
+     public static ArrayList<Gnatt> retrieveGnattAll() {
+        //System.out.println(name);
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Gnatt> toReturn = new ArrayList<Gnatt>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("SELECT projectname,developerusername,planstart,planend FROM projectallocation");
+            
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Gnatt gnatt = null;
+                gnatt = new Gnatt(rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getTimestamp(4));
+                toReturn.add(gnatt);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+    
     
     public static ArrayList<String> retrieveDeveloper() {
 

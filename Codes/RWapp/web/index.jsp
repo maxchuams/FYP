@@ -57,7 +57,6 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <%
-                                if (pm != null || dev != null) {
         //Person pop = (Person)session.getAttribute("loggedInPm");
                                     //String name = pop.getUsername();
                                     JsonObject jO = new JsonObject();
@@ -147,7 +146,7 @@
                                             jO.addProperty("canWrite", true);
                                             jO.addProperty("canWriteOnParent", true);
                                         }
-                                    } else {
+                                    } else if (dev !=null) {
                                         Person p = (Person) session.getAttribute("loggedInDev");
 
                                         ArrayList<Gnatt> ff = gdao.retrieveGnattDev(p.getUsername());
@@ -184,6 +183,93 @@
                                             jO.addProperty("canWrite", true);
                                             jO.addProperty("canWriteOnParent", true);
                                         }
+                                    }else{
+                                    
+                                        //admin and tester views all schedule -- 
+                                        ArrayList<Gnatt> ff = gdao.retrieveGnattAll();
+                                        ArrayList<String> developer = gdao.retrieveDeveloper();
+                                        if (!ff.isEmpty()) {
+                                            JsonArray jA = new JsonArray();
+                                            String deve = "";
+                                            int count = -1;
+                                            JsonObject jj = new JsonObject();
+                                            for (String a : developer) {
+                                                deve = a;
+                                                Date start = ff.get(0).getPlanstart();
+                                                Date end = ff.get(0).getPlanend();;
+                                                for (int i = 0; i < ff.size(); i++) {
+                                                    if (ff.get(i).getDeveloperName().equalsIgnoreCase(deve)) {
+                                                        start = ff.get(i).getPlanstart();
+
+                                                        end = ff.get(i).getPlanend();
+                                                    }
+                                                }
+                                                if (start == null) {
+                                                    //tochange
+                                                    start = new Date();
+                                                }
+                                                if (end == null) {
+                                                    end = new Date();
+                                                }
+                                                Date today = new Date();
+                                                for (int i = 0; i < ff.size(); i++) {
+                                                    if (ff.get(i).getPlanstart() != null && ff.get(i).getDeveloperName().equalsIgnoreCase(deve)) {
+                                                        if (start.getTime() > ff.get(i).getPlanstart().getTime()) {
+                                                            start = ff.get(i).getPlanstart();
+                                                        }
+
+                                                        if (ff.get(i).getPlanend() != null && end.getTime() < ff.get(i).getPlanend().getTime()) {
+                                                            end = ff.get(i).getPlanend();
+                                                        }
+                                                    }
+                                                }
+                                                long duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+                                                jj = new JsonObject();
+                                                jj.addProperty("id", count);
+                                                jj.addProperty("name", a);
+                                                jj.addProperty("Code", "");
+                                                jj.addProperty("level", 0);
+                                                jj.addProperty("status", "STATUS_COMPLETED");
+                                                jj.addProperty("canWrite", true);
+                                                jj.addProperty("start", start.getTime());
+                                                jj.addProperty("duration", duration);
+                                                jj.addProperty("end", end.getTime());
+                                                jj.addProperty("startISMilestone", true);
+                                                jj.addProperty("endISMilestone", false);
+                                                jj.addProperty("collapsed", false);
+                                                jj.addProperty("hasChild", true);
+                                                count = count - 1;
+                                                jA.add(jj);
+                                                for (Gnatt cb : ff) {
+                                                    jj = new JsonObject();
+                                                    //long duration = (cb.getPlanend().getTime() - cb.getPlanstart().getTime())/1000*60*60*24;
+                                                    if (cb.getPlanstart() != null && deve.equals(cb.getDeveloperName())) {
+                                                        long duration1 = (cb.getPlanend().getTime() - cb.getPlanstart().getTime()) / (1000 * 60 * 60 * 24);
+                                                        jj.addProperty("id", count);
+                                                        jj.addProperty("name", cb.getProjectName());
+                                                        jj.addProperty("Code", "");
+                                                        jj.addProperty("level", 1);
+                                                        jj.addProperty("status", "STATUS_ACTIVE");
+                                                        jj.addProperty("canWrite", false);
+                                                        jj.addProperty("start", cb.getPlanstart().getTime());
+                                                        jj.addProperty("duration", duration1);
+                                                        jj.addProperty("end", cb.getPlanend().getTime());
+                                                        jj.addProperty("startISMilestone", true);
+                                                        jj.addProperty("endISMilestone", false);
+                                                        jj.addProperty("collapsed", true);
+                                                        jj.addProperty("hasChild", false);
+                                                        jA.add(jj);
+                                                        count = count - 1;
+                                                    }
+
+                                                }
+                                            }
+                                            jO.add("tasks", jA);
+                                            jO.addProperty("selectedRow", 0);
+                                            jO.addProperty("canWrite", true);
+                                            jO.addProperty("canWriteOnParent", true);
+                                        }
+                                        
                                     }
                             %>
 
@@ -748,7 +834,7 @@
 
                                 });
                             </script>
-                            <%}%>
+                          
                         </section>
                     </div>
                 </div>
