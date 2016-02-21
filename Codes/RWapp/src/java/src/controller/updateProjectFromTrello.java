@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import src.model.ConnectionManager;
+import src.model.CronDAO;
 import src.model.Person;
 import src.model.PersonDAO;
 import src.model.Project;
@@ -389,6 +390,7 @@ public class updateProjectFromTrello extends HttpServlet {
         }
 
         if (errList.isEmpty()) {
+            CronDAO.addTime(1);
             request.setAttribute("sucess", "Database successfully synced with Trello");
             rd.forward(request, response);
             return;
