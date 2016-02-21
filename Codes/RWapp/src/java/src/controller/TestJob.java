@@ -24,6 +24,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import src.model.ConnectionManager;
+import src.model.CronDAO;
 import src.model.Person;
 import src.model.PersonDAO;
 import src.model.ProjectAllocationDAO;
@@ -349,6 +350,7 @@ public class TestJob implements Job {
         } catch (Exception e) {
             System.out.println(e);
         }
+        CronDAO.addTime(1);
         System.out.println("Trello sync done.");
     }
 
