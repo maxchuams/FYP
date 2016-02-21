@@ -146,8 +146,8 @@
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project status</label>
                                         <div class="col-lg-6">
                                             <select name="iscomplete" class="form-control m-bot12">
-                                                <option value="0">Developer not yet done</option>
-                                                <option value="1">Developer has completed the task</option>
+                                                <option value="0">Project not completed</option>
+                                                <option value="1">Project has been completed</option>
                                             </select>
                                         </div>
                                     </div>

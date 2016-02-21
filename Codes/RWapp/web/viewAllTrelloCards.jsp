@@ -120,7 +120,7 @@
                                 <div class="col-md-4">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            Project <%=t.getName()%>
+                                            <%=t.getName()%>
                                             <span class="tools pull-right">
                                             </span>
                                         </div>
