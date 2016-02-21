@@ -155,7 +155,11 @@
                                             JsonArray jA = new JsonArray();
                                             JsonObject jj = new JsonObject();
                                             int count = -1;
+                                            
+                                            
+                                            
                                             for (Gnatt cb : ff) {
+                                                if(cb.getPlanend()!=null && cb.getPlanstart()!=null){
                                                 long duration = (cb.getPlanend().getTime() - cb.getPlanstart().getTime()) / (1000 * 60 * 60 * 24);
                                                 jj = new JsonObject();
                                                 jj.addProperty("id", count);
@@ -173,6 +177,7 @@
                                                 jj.addProperty("hasChild", false);
                                                 count = count - 1;
                                                 jA.add(jj);
+                                                }
                                             }
                                             jO.add("tasks", jA);
                                             jO.addProperty("selectedRow", 0);
