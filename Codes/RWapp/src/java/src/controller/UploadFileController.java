@@ -83,7 +83,14 @@ public class UploadFileController extends HttpServlet {
                     rd.forward(request, response);
                     return;
                 }
-
+                
+                if (filePart.getSize()> 15000000){
+                    RequestDispatcher rd = request.getRequestDispatcher("profilePage.jsp");
+                    request.setAttribute("err", "Please use a smaller picture. (1.5Mb)");
+                    rd.forward(request, response);
+                    return;
+                }
+                
                 //check blank photo
                 if (filePart.getSize() == 0) {
                     RequestDispatcher rd = request.getRequestDispatcher("profilePage.jsp");
