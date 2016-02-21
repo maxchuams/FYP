@@ -105,6 +105,7 @@ public class assignRecommendation extends HttpServlet {
             String type = request.getParameter("type");
             if ("Others".equals(type)) {
                 type = request.getParameter("inputType");
+                if(type == null) type="";
             }
             //get todays date
             String sDate = request.getParameter("sDate");
