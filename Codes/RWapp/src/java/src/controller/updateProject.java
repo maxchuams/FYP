@@ -104,6 +104,9 @@ HttpSession sess = request.getSession();
             String days = request.getParameter("days");
             int dInt = Integer.parseInt(days);
             String type = request.getParameter("type");
+            if ("Others".equalsIgnoreCase(type)){
+                type = request.getParameter("otherType");
+            }
 
             boolean success = ProjectDAO.updateProject(assignedby, due, pInt, cInt, dInt, type, pname);
             if (success) {
