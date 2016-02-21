@@ -44,7 +44,7 @@ public class ManageProfile extends HttpServlet {
             Person p1 = (Person) sess.getAttribute("loggedInDev");
             Person p2 = (Person) sess.getAttribute("loggedInDesg");
             Person p3 = (Person) sess.getAttribute("loggedInPm");
-
+            Person p4 = (Person) sess.getAttribute("loggedInTester");
             Person sudo = (Person) sess.getAttribute("loggedInSudo");
 
             String type = null;
@@ -62,6 +62,9 @@ public class ManageProfile extends HttpServlet {
             } else if (sudo != null) {
                 currUser = sudo;
                 type = "sudo";
+            } else if (p4 !=null){
+                currUser = p4;
+                type = "tester";
             }
 
             String password1 = request.getParameter("password1");
@@ -73,18 +76,24 @@ public class ManageProfile extends HttpServlet {
 
                 if (type.equals("dev")) {
                     rd = request.getRequestDispatcher("manageDevProfile.jsp");
-
+                    
                 } else if (type.equals("pm")) {
                     rd = request.getRequestDispatcher("managePmProfile.jsp");
+                    
                 } else if (type.equals("desg")) {
                     rd = request.getRequestDispatcher("manageDesgProfile.jsp");
+                   
                 } else if (type.equals("sudo")) {
                     rd = request.getRequestDispatcher("manageSudoProfile.jsp");
+                   
+                } else if (type.equals("tester")){
+                    rd = request.getRequestDispatcher("manageTesterProfile.jsp");
+                    
                 }
 
                 request.setAttribute("err", "Fields are empty");
                 rd.forward(request, response);
-
+                return;
             } else {
                 if (password1 != null && password2 != null && password1.length() > 0) {
                     if (password1.equals(password2)) {
@@ -116,9 +125,12 @@ public class ManageProfile extends HttpServlet {
                             rd = request.getRequestDispatcher("manageDesgProfile.jsp");
                         } else if (type.equals("sudo")) {
                             rd = request.getRequestDispatcher("manageSudoProfile.jsp");
+                        } else if (type.equals("tester")){
+                            rd = request.getRequestDispatcher("manageTesterProfile.jsp");
                         }
                         request.setAttribute("sucess", "Changes sucessfully updated!");
                         rd.forward(request, response);
+                        return;
                     } else {
 
                         if (type.equals("dev")) {
@@ -130,9 +142,12 @@ public class ManageProfile extends HttpServlet {
                             rd = request.getRequestDispatcher("manageDesgProfile.jsp");
                         } else if (type.equals("sudo")) {
                             rd = request.getRequestDispatcher("manageSudoProfile.jsp");
+                        } else if (type.equals("tester")){
+                            rd = request.getRequestDispatcher("manageTesterProfile.jsp");
                         }
                         request.setAttribute("err", "Passwords do not match");
                         rd.forward(request, response);
+                        return;
                     }
                 }
 
