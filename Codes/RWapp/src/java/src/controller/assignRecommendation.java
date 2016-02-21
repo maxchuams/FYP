@@ -15,6 +15,7 @@ import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -292,7 +293,15 @@ public class assignRecommendation extends HttpServlet {
                 String cardId = tempCard.getString("id");
                 if (idList.equals(listId) && cardId.equals(projName)) {
                     String name = tempCard.getString("name");
-                    String due = tempCard.getString("due").substring(0, 10);
+                    String due = "";
+                    try {
+                            due = tempCard.getString("due").substring(0, 10);
+                        } catch (Exception de) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            due = sdf.format(cal.getTime());
+                        }
+                    
                     String desc = tempCard.getString("desc").replace("**", "");
                     if (desc.length() >= 100) {
                         desc = desc.substring(0, 100);

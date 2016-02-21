@@ -108,7 +108,7 @@
                                     for (String stamp : timestamps) {
                                 %>
                                 <tr><td>
-                                <div class="col-lg-2"><img src='DefectScreenshotServlet?defectid=<%=idDef%>&updatetime=<%=stamp%>' align="center"/></div>
+                                <div class="col-lg-2"><img style="height:75px;width:75px" src='DefectScreenshotServlet?defectid=<%=idDef%>&updatetime=<%=stamp%>' align="center"/></div>
                                 <div class="col-lg-10"></div>
                                 <br/><br/>
                                 <!--Defect ID: -->

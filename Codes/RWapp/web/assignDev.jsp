@@ -23,10 +23,10 @@
 
 
                 <!--kw code-->
-                <div class="row">
+<!--                <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
+                            <div class="panel-body">-->
                                 <%
                                     ArrayList<ArrayList<Recommendation>> rlist = (ArrayList<ArrayList<Recommendation>>) request.getAttribute("rList");
                                     session.setAttribute("rList",rlist);
@@ -43,8 +43,8 @@
                                 
                                                                     <button type="submit">submit!</button>
                                                                 </form>-->
-
-                                <form action="processRecommendation" method="GET" class="form-horizontal" role="form">
+                                
+                                <form id="myform" action="processRecommendation" method="GET" class="form-horizontal" role="form">
 
                                     <%
                                         //System.out.println(rlist.size());
@@ -61,13 +61,16 @@
 
 
                                     %>
-                                    <input type="radio" name="dev" value='<%=count%>,<%=devDetails%>'/> 
+                                    <div class="row">
+                            <div class="col-sm-12">
+                                    <section class="panel">
+                                        <div class="panel-body" id="<%=count%>">
+                                    <input id="ddl" type="radio" name="dev" value='<%=count%>,<%=devDetails%>'/> 
                                    <b> Choice Ranking: <%=count%>.</b>
                                    <br><br>
                                     <% for (Recommendation r : recommendations) { %>
                                     
                                     
-                                    <table>
 
                                         
                                         <b> <%=r.getUsername()%></b></br>
@@ -107,9 +110,11 @@
                                         
                                            
                                         
-                                    </table>
-                                    </br>
-
+                                    
+                                    </div>
+                            </section>
+                            </div>
+                                    </div>
                                     <%
                                                 
                                             }
@@ -142,7 +147,22 @@
                     </div> 
                 </div>
 
-
+                <script>
+                    var fchar = "";
+                    $( "#myform" ).change(function() {
+			alert($('input[name="dev"]:checked', '#myform').val());
+                        var first = $('input[name="dev"]:checked', '#myform').val();
+                        fchar = first.charAt(0);
+                        alert(fchar);
+			
+                    $("#"+fchar).addClass('active');
+                    });
+                </script>
+                <style>
+                    
+                    .active{border:1px solid red;}
+                    
+                </style>
                 <!--kw code-->
 
             </section>

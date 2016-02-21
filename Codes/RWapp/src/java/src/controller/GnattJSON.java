@@ -67,7 +67,7 @@ public class GnattJSON extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
 
             GanttDAO gdao = new GanttDAO();
-            ArrayList<Gnatt> ff = gdao.retrieveGnatt("xx");
+            ArrayList<Gnatt> ff = gdao.retrieveGnattPm("xx");
 
             JsonObject jO = new JsonObject();
             JsonArray jA = new JsonArray();

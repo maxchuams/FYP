@@ -57,12 +57,16 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <%
+                            if(pm != null || dev!=null){
         //Person pop = (Person)session.getAttribute("loggedInPm");
                                 //String name = pop.getUsername();
-                                GanttDAO gdao = new GanttDAO();
-                                ArrayList<Gnatt> ff = gdao.retrieveGnatt("kaiwen12");
-                                ArrayList<String> developer = gdao.retrieveDeveloper();
                                 JsonObject jO = new JsonObject();
+                                GanttDAO gdao = new GanttDAO();
+                                if(pm!=null){
+                                Person p = (Person)session.getAttribute("loggedInPm");
+                                ArrayList<Gnatt> ff = gdao.retrieveGnattPm(p.getUsername());
+                                ArrayList<String> developer = gdao.retrieveDeveloper();
+                                if(!ff.isEmpty()){
                                 JsonArray jA = new JsonArray();
                                 String deve = "";
                                 int count = -1;
@@ -74,7 +78,7 @@
                                     for (int i = 0; i < ff.size(); i++) {
                                         if (ff.get(i).getDeveloperName().equalsIgnoreCase(deve)) {
                                             start = ff.get(i).getPlanstart();
-
+                                            
                                             end = ff.get(i).getPlanend();
                                         }
                                     }
@@ -97,18 +101,14 @@
                                             }
                                         }
                                     }
-                                    //System.out.println("end: " + end);
-                                    //System.out.println("start: " + start);
-                                    //System.out.println("start: " + start.getTime());
-                                    //System.out.println("end: " + end.getTime());
                                     long duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
                                     jj = new JsonObject();
                                     jj.addProperty("id", count);
                                     jj.addProperty("name", a);
                                     jj.addProperty("Code", "");
                                     jj.addProperty("level", 0);
-                                    jj.addProperty("status", "STATUS_ACTIVE");
-                                    jj.addProperty("canWrite", false);
+                                    jj.addProperty("status", "STATUS_COMPLETED");
+                                    jj.addProperty("canWrite", true);
                                     jj.addProperty("start", start.getTime());
                                     jj.addProperty("duration", duration);
                                     jj.addProperty("end", end.getTime());
@@ -134,7 +134,7 @@
                                             jj.addProperty("end", cb.getPlanend().getTime());
                                             jj.addProperty("startISMilestone", true);
                                             jj.addProperty("endISMilestone", false);
-                                            jj.addProperty("collapsed", false);
+                                            jj.addProperty("collapsed", true);
                                             jj.addProperty("hasChild", false);
                                             jA.add(jj);
                                             count = count - 1;
@@ -146,13 +146,43 @@
                                 jO.addProperty("selectedRow", 0);
                                 jO.addProperty("canWrite", true);
                                 jO.addProperty("canWriteOnParent", true);
-
+                                }
+                                }else{
+                                    Person p = (Person)session.getAttribute("loggedInDev");
+                                    ArrayList<Gnatt> ff = gdao.retrieveGnattDev(p.getUsername());
+                                    JsonArray jA = new JsonArray();
+                                    JsonObject jj = new JsonObject();
+                                    int count = -1;
+                                    for(Gnatt cb:ff){
+                                    long duration = (cb.getPlanend().getTime() - cb.getPlanstart().getTime()) / (1000 * 60 * 60 * 24);
+                                    jj = new JsonObject();
+                                    jj.addProperty("id", count);
+                                    jj.addProperty("name", cb.getProjectName());
+                                    jj.addProperty("Code", "");
+                                    jj.addProperty("level", 0);
+                                    jj.addProperty("status", "STATUS_COMPLETED");
+                                    jj.addProperty("canWrite", true);
+                                    jj.addProperty("start", cb.getPlanstart().getTime());
+                                    jj.addProperty("duration", duration);
+                                    jj.addProperty("end", cb.getPlanend().getTime());
+                                    jj.addProperty("startISMilestone", true);
+                                    jj.addProperty("endISMilestone", false);
+                                    jj.addProperty("collapsed", false);
+                                    jj.addProperty("hasChild", false);
+                                    count = count - 1;
+                                    jA.add(jj);
+                                    }
+                                    jO.add("tasks", jA);
+                                    jO.addProperty("selectedRow", 0);
+                                    jO.addProperty("canWrite", true);
+                                    jO.addProperty("canWriteOnParent", true);
+                                }
                             %>
 
-                            <div id="workSpace" style="padding:0px; overflow-y:auto; overflow-x:hidden;border:1px solid #e5e5e5;position:relative;margin:0 5px"></div>
+                            <div id="workSpace" style="padding:0px; overflow-y:auto; overflow-x:hidden;border:1px solid #e5e5e5;position:relative;margin:0 1px"></div>
 
                             <div id="taZone" style="display:none;" class="noprint">
-                                <textarea rows="8" cols="150" id="ta">
+                                <textarea rows="99" cols="100" id="ta">
                                     <%=jO%>
                                 </textarea>
 
@@ -710,6 +740,7 @@
 
                                 });
                             </script>
+                            <%}%>
                         </section>
                     </div>
                 </div>

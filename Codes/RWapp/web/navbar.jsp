@@ -179,7 +179,7 @@
                                             <%}%>
                                     </ul>
                             </li><%}%>
-                            <%if (pm != null) {%>
+                            <%if (pm != null || tester != null) {%>
                             <li class="sub-menu">
                                 <% if (thisPage.equals("manageDefects") || thisPage.equals("sortedDefects") || thisPage.equals("addDefect")) { %>
                                 <a class="active" href="manageDefects.jsp"> <% } else { %>
@@ -190,12 +190,12 @@
 
 
                                     <ul class="sub">
-                                        <%if (pm != null) {%>
+                                        <%if (pm != null || tester!=null) {%>
                                         <% if (thisPage.equals("manageDefects") || thisPage.equals("sortedDefects")) { %>
                                         <li class="active"><a href="manageDefects.jsp">View Defects</a></li><% } else { %>
                                         <li><a href="manageDefects.jsp">View Defects</a></li><% } %>
                                             <%}%>
-                                            <%if (pm != null) {%>
+                                            <%if (pm != null || tester!=null) {%>
                                             <% if (thisPage.equals("addDefect")) { %>
                                         <li class="active"><a href="addDefect.jsp">Add Defects</a></li><% } else { %>
                                         <li><a href="addDefect.jsp">Add Defects</a></li><% } %>
