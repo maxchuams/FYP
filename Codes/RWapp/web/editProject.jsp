@@ -61,14 +61,14 @@
                                   
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=toEdit.getPsize()%>" required/>
                                         </div>
                                     </div>
                                         
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <%if ("0".equals(toEdit.getPriortiy())){%>
                                                 <select name='priority' class="form-control m-bot12">
                                                 <option value='0' selected>Standard Project</option>
@@ -88,7 +88,7 @@
                                     %>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <select name='type' class="form-control m-bot15" id="role">
                                                 <%
                                                     for (String s : pTypeList) {
@@ -105,7 +105,7 @@
                                         </div>
                                         <div id='devOnly'>
                                             <label for="inputType" class="col-lg-2 control-label">Project Type </label>
-                                            <div class="col-lg-9">
+                                            <div class="col-lg-10">
                                                 <input type='text' name='otherType' class="form-control"/>
                                             </div>
                                         </div>
@@ -113,7 +113,7 @@
                                                 
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project manager</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <select name="assignedby" class="form-control m-bot12">
                                         <%
                                             for (Person p : pmList) {
@@ -137,14 +137,14 @@
                                     
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Due date</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <input class="form-control m-bot12" type="date" name="duedate" min=1 value="<%=toEdit.getDuedate()%>" required/>
                                         </div>
                                     </div>
                                         
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project status</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <select name="iscomplete" class="form-control m-bot12">
                                                 <option value="0">Project not completed</option>
                                                 <option value="1">Project has been completed</option>
