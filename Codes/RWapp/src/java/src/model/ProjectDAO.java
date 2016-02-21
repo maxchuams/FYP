@@ -410,8 +410,8 @@ public class ProjectDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            pstmt = conn.prepareStatement("UPDATE project  set trellokey=? description=? assignby=? duedate-? priority=? type= ?"
-                    + "psize=? trellophoto=? WHERE projectname=?");
+            pstmt = conn.prepareStatement("UPDATE project  set trellokey=?, description=?, assignby=?, duedate=?, priority=?, type=?,"
+                    + "psize=?, trellophoto=? WHERE projectname=?;");
             
             pstmt.setString(1, cardId);
             pstmt.setString(2, desc);
