@@ -90,7 +90,7 @@ public class ProjectAllocationDAO {
         ProjectAllocation pA = null;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select distinct developerusername from projectallocation where projectname = ?");
+            pstmt = conn.prepareStatement("select distinct assignto from projectallocation where projectname = ?");
             pstmt.setString(1, projectname);
             
             rs = pstmt.executeQuery();
