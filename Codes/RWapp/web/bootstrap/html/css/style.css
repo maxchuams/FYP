@@ -4371,7 +4371,7 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
     border-radius:5px 5px 0 0;
     -webkit-border-radius:5px 5px 0 0;
     position:relative;
-    height:170px;
+    height:50px;
 }
 .most-popular .pricing-quote,.most-popular ul li i {
     color:#1fb5ad;
@@ -4399,12 +4399,12 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
     border-radius:5px 5px 0 0;
     -webkit-border-radius:5px 5px 0 0;
     position:relative;
-    height:170px;
+    height:50px;
 }
 .pricing-head h1 {
-    font-size:24px;
+    font-size:18px;
     font-weight:300;
-    padding-top:30px;
+    padding-top:15px;
     color:#fff;
     text-transform:uppercase;
 }
@@ -4436,12 +4436,12 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
     top:75px;
 }
 .pricing-table ul {
-    margin:120px 0 50px;
+    margin:0px 0 50px;
     padding:0;
 }
 .pricing-table ul li {
     margin:0 2em;
-    padding:1em 0;
+    padding:0.5em 0;
     text-align:left;
     font-weight:300;
 }

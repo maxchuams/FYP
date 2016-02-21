@@ -76,32 +76,35 @@
                 <%   errorMsg = (String) request.getAttribute("err");
                     sucess = (String) request.getAttribute("sucess");
 
-                    if (errorMsg != null) {
                 %>
+                <%if (sucess != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-danger"><%=errorMsg%></div>
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    }
-                    if (sucess != null) {%>
+                <%}%>
+                <%if (errorMsg != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-success"><%=sucess%></div>
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=errorMsg%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    }
-                %>
+                <%}%>
 
 
                 <!--End of error/success display--> 
@@ -112,30 +115,24 @@
                         <section class="panel">
                             <div class="panel-body">
                                 Assign Developer to Project <%=name%><br/><br/>
-                                <!--                                <form action="ManageProfile" method="POST">
-                                                                    Password: <input type="password" name="password1" /> </br>
-                                                                    Confirm password again: <input type="password" name="password2" /> </br>
-                                
-                                                                    <button type="submit">submit!</button>
-                                                                </form>-->
 
                                 <form action="assignRecommendation" method="POST" class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Start Date</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <input type="date" class="form-control m-bot12" name="sDate"  required/>
                                         </div>
 
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <input class="form-control m-bot12" type="number" name="days" min=1 required/><p></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <%if ("0".equals(intensity)){%>
                                                 <select name='priority' class="form-control m-bot12">
                                                 <option value='0' selected>Standard Project</option>
@@ -152,7 +149,7 @@
 
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Developer Count</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <%if ("1".equals(devCountStr)){%>
                                                 <select name='devCount' class="form-control m-bot12">
                                                 <option value='1' selected>1</option>
@@ -191,7 +188,7 @@
                                                 <option value='8'>8</option>
                                                 <option value='9'>9</option>
                                                 <option value='10'>10</option>
-                                            </select>
+                                            </select><!--
                                             <%} else if ("4".equals(devCountStr)){%>
                                                 <select name='devCount' class="form-control m-bot12">
                                                 <option value='1'>1</option>
@@ -282,19 +279,13 @@
                                                 <option value='8'>8</option>
                                                 <option value='9'>9</option>
                                                 <option value='10' selected>10</option>
-                                            </select>
+                                            </select>-->
                                             <%} else {%>
                                             <select name='devCount' class="form-control m-bot12">
                                                 <option value='1'>1</option>
                                                 <option value='2'>2</option>
                                                 <option value='3'>3</option>
-                                                <option value='4'>4</option>
-                                                <option value='5'>5</option>
-                                                <option value='6'>6</option>
-                                                <option value='7'>7</option>
-                                                <option value='8'>8</option>
-                                                <option value='9'>9</option>
-                                                <option value='10' >10</option>
+                                                
                                             </select>
                                             <% } %>
                                             
@@ -307,7 +298,7 @@
                                     %>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-10">
                                             <select name='type' class="form-control m-bot15" id="role">
                                                 <%
                                                 for (String s : pTypeList){
@@ -322,10 +313,10 @@
                                                 <option value="Others">Others</option>
                                             </select>
                                         </div>
-                                                <p></p>
+                                                <p></p><p></p>
                                         <div id='devOnly'>
-                                            <label for="inputType" class="col-lg-2 control-label">Project Type </label>
-                                             <div class="col-lg-9">
+                                            <label for="inputType" class="col-lg-2 control-label">Add New Project Type </label>
+                                             <div class="col-lg-10">
                                                 <input type='text' name='otherType' class="form-control"/><p></p>
                                              </div>
                                         </div>

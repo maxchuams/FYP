@@ -24,46 +24,36 @@
                     String err = (String) request.getAttribute("err");
                     ArrayList<String> errList = (ArrayList<String>) request.getAttribute("errList");
 
-                    if (err != null) {
+                   
                 %>
+                <%if (success != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-danger"><%=err%></div>
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=success%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    }
-                    if (success != null) {%>
+                <%}%>
+                <%if (err != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-success"><%=success%></div>
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=err%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    }
-                    if (errList != null && !errList.isEmpty()) { %>
-                <div class="row">
-                    <div class="col-md-12">
-                        <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-danger">
-                                    <% for (int i = 0; i < errList.size(); i++) {
-                                            out.println(errList.get(i)+"<br/>");
-                                        }%></div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                <% }
-                %>
+                <%}%>
                 <!--End of error/success display--> 
 
                 <div class="row">
