@@ -194,7 +194,7 @@
                                             
                         <!--kaiwen codes-->
                         <%
-                            ArrayList<Defect> dList = DefectDAO.retrieveDev(dev.getUsername());
+                            ArrayList<Defect> dList = DefectDAO.retrieveAllocatedDev(dev.getUsername());
                         %>
 
                         <%for (Project p : pList) {%><!--5 project-->
