@@ -95,7 +95,7 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <label class='pull-left top-menu'>Viewing all my projects
+                                <label class='pull-left top-menu'>Viewing my projects
                                 </br>Last update time: <%=CronDAO.retrieveTime()%></label>
                                 <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewTrelloCards"/>
@@ -116,7 +116,7 @@
 
                                 <%
                                     for (Project t : tList) {
-                                        if(t.getIsComplete() == 0){
+                                        if(t.getIsComplete() >= 0){
                                         
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
