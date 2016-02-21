@@ -165,10 +165,14 @@
                                                                 <td><%if (size == 0) {%>NIL
                                                                     <%} else {%>
                                                                     <div class="fbphotobox">
-                                                                        <a><img style="height:75px;width:75px" class="photo" fbphotobox-src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:22" src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:22"/></a>
-                                                                        <a><img style="height:75px;width:75px" class="photo" fbphotobox-src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:22" src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:55"/></a>
-                                                                        <a><img style="height:75px;width:75px" class="photo" fbphotobox-src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:37:22" src="DefectScreenshotServlet?defectid=2&updatetime=2016-01-05 13:41:51"/></a>
-                                                                    </div>
+                                                                        <%  ArrayList<String> screenshotTime = DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId());
+                                                                            for (String time : screenshotTime) {
+                                                                        %>
+                                                                        <a><img style="height:75px;width:75px" class="photo" fbphotobox-src="DefectScreenshotServlet?defectid=<%=d.getId()%>&updatetime=<%=time%>" src="DefectScreenshotServlet?defectid=<%=d.getId()%>&updatetime=<%=time%>"/></a>
+
+                                                                        <%
+                                                                            }
+                                                                        %>
                                                         <%}%></a></td>
                                         </tr>
                                 </table>
