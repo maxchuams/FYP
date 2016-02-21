@@ -81,7 +81,7 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                                 <i class="fa fa-bell-o"></i>
-                                <span class="badge bg-warning">3</span>
+                                <span class="badge bg-warning"><!--enter notif number here--></span>
                             </a>
                             <ul class="dropdown-menu extended notification">
                                 <li>
@@ -213,17 +213,17 @@
                                     </a>
                                     <ul class="sub">
                                         <% if (thisPage.equals("viewTrelloCards")) { %>
-                                        <li class="active"><a href="viewTrelloCards.jsp">View Projects</a></li> <% } else { %>
-                                        <li><a href="viewTrelloCards.jsp">View My Projects</a></li><% } %>
+                                        <li class="active"><a href="viewTrelloCards.jsp">View All My Projects</a></li> <% } else { %>
+                                        <li><a href="viewTrelloCards.jsp">View All My Projects</a></li><% } %>
                                             <%if (pm != null) {%>
-
-                                        <% if (thisPage.equals("viewCompletedProjects")) { %>
-                                        <li class="active"><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } else { %>
-                                        <li><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } %>
 
                                         <% if (thisPage.equals("viewAllTrelloCards")) { %>
                                         <li class="active"><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } else { %>
                                         <li><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } %>
+                                        
+                                        <% if (thisPage.equals("viewCompletedProjects")) { %>
+                                        <li class="active"><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } else { %>
+                                        <li><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } %>
 
                                         <% if (thisPage.equals("viewUnassignedCards")) { %>
                                         <li class="active"><a href="assignProject">View Unassigned Projects</a></li><% } else { %>

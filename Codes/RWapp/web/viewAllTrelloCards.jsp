@@ -4,6 +4,7 @@
     Author     : Kaiwen
 --%>
 
+<%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@page import="src.model.Project"%>
 <%@page import="src.model.TrelloCardDAO"%>
@@ -41,56 +42,61 @@
                 <!--Error/success display-->
                 <%  String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
+                    String success = (String) request.getAttribute("success");
                     ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
 
-                    if (errorMsg != null) {
                 %>
+                <%if (errorMsg != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-danger"><%=errorMsg%></div>
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=errorMsg%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    }
-                    if (sucess != null) {%>
+                <%}%>
+                <%if (success != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-success"><%=sucess%></div>
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=success%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    } if (errorList != null && !errorList.isEmpty()) { %>
-                        <div class="row">
+                <%}%>
+                <%if (sucess != null) {%>
+                <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-success">
-                                    <% for(int i=0; i<errorList.size(); i++){
-                                    out.println(errorList.get(i));
-                                }%></div>
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
                             </div>
                         </section>
                     </div>
                 </div>
-                    <% }
-                %>
-
-
+                <%}%>
                 <!--End of error/success display-->
+                
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
                                 <label class='pull-left top-menu'>Viewing all projects</label>
                                 <form action="updateProjectFromTrello">
+                                    <input type="hidden" name="page" value="viewAllTrelloCards"/>
                                     <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
                                         Sync Projects
                                     </button>
@@ -99,58 +105,7 @@
                         </section>
                     </div>
                 </div>
-                <!--kw code-->
-                <!--                <div class="row">
-                                    <div class="col-sm-12">
-                                        <section class="panel">
-                                            <header class="panel-heading">
-                                                View All Projects
-                                                <span class="tools pull-right">
-                                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                                </span>
-                                            </header>
-                                            <div class="panel-body">
-                                                <table class="table  table-hover general-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Project Name</th>
-                                                            <th>type</th>
-                                                            <th>Due Date</th>
-                <% if (dev != null && pm == null) {%>
-            <th>Assigned By</th>
-                <%}%>
-            <th>Members</th>
-        </tr>
-    </thead>
-    <tbody>
-                <%
-                    for (Project t : tList) {
-                %> 
-                <tr>
-                    <td><%=t.getName()%></td>
-                    <td><%=t.getType()%></td>
-                    <td><%=t.getDuedate()%></td>
-                <% if (dev != null && pm == null) {%>
-                <td><%=t.getAssignedBy()%></td>
-                <%}%>
-
-                <td>
-                <%//ArrayList<Person> memberList = t.getMembers(); 
-                    //for(Person p : memberList){
-                    //   p.getUsername();
-                    //}%>
-                </td>
-            </tr>
-                <% 
-                    }
-                %>
-            </tbody>
-        </table>
-    </div>
-</section>
-</div>-->
-                <!--kw code-->
-
+                
                 <div class="row">
                     <div class="col-sm-12">
                         
@@ -171,10 +126,29 @@
                                         </div>
                                         <div class="panel-body">
                                             <ul class="nav nav-pills nav-stacked">
-                                                <li> <span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li>
+                                                <div class="col-md-2 col-xs-2">
+                                                    <div class="tm-avatar">
+                                                        <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
+                                                    </div>
+                                                </div>
+                                                    
                                                 <span class="pull-right">
+                                                    <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li><br/><br/>
                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
                                                     <li> <b>PM:</b> <%=t.getAssignedBy()%></li>
+                                                    <li> <b>Developer:</b>
+                                                        <% 
+                                            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(t.getName());
+                                            if(getDev.size()==1){
+                                                for (String developer : getDev){
+                                                    out.println(developer+"<br/>");
+                                                }
+                                            }else{
+                                                out.println("2 Developers");
+                                            }
+                                            
+                                            %>
+                                                    </li>
                                                 </span>
                                             </ul>
                                         </div>

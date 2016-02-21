@@ -62,7 +62,7 @@ public class updateProjectFromTrello extends HttpServlet {
             throws ServletException, IOException {
         HttpSession sess = request.getSession();
        
-        
+        String page = request.getParameter("page");
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -312,8 +312,15 @@ public class updateProjectFromTrello extends HttpServlet {
 
             }
         }
-
-        RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp");
+        RequestDispatcher rd = null;
+        if(page.equals("viewAllTrelloCards")){
+            rd = request.getRequestDispatcher("viewAllTrelloCards.jsp");
+        }else if(page.equals("viewCompletedProjects")){
+            rd = request.getRequestDispatcher("viewCompletedProjects.jsp");
+        }else{
+            rd = request.getRequestDispatcher("viewTrelloCards.jsp");
+        }
+        
         if (errList.isEmpty()) {
             request.setAttribute("sucess", "Database successfully synced with Trello");
             rd.forward(request, response);
