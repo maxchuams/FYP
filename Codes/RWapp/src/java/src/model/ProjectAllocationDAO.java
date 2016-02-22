@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  * @author maxchua
  */
 public class ProjectAllocationDAO {
+
     public static boolean addAllocation(String projName, String dev, String planStart, String planEnd, String actualStart) {
 
         Connection conn = null;
@@ -32,9 +33,9 @@ public class ProjectAllocationDAO {
             pstmt.setString(3, planStart);
             pstmt.setString(4, planEnd);
             pstmt.setString(5, actualStart);
-      
+
             pstmt.executeUpdate();
-          
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,9 +46,9 @@ public class ProjectAllocationDAO {
 
         }
     }
-     
-    public static ArrayList<ProjectAllocation> returnProject(){
-        
+
+    public static ArrayList<ProjectAllocation> returnProject() {
+
         ArrayList<ProjectAllocation> pAllocate = new ArrayList<ProjectAllocation>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -59,14 +60,14 @@ public class ProjectAllocationDAO {
             //pstmt.setString(1, projName);
             //pstmt.setString(2, dev);
             //pstmt.setString(3, dateAllocated);
-      
+
             rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                pA = new ProjectAllocation(rs.getString(1),rs.getTimestamp(2),rs.getTimestamp(3),rs.getString(4));
+
+            while (rs.next()) {
+                pA = new ProjectAllocation(rs.getString(1), rs.getTimestamp(2), rs.getTimestamp(3), rs.getString(4));
                 pAllocate.add(pA);
             }
-            
+
             //return true;
         } catch (SQLException ex) {
             Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,30 +77,34 @@ public class ProjectAllocationDAO {
             ConnectionManager.close(conn, pstmt, rs);
 
         }
-        
+
         return pAllocate;
-    } 
-    
+    }
+
     //SELECT distinct developerusername FROM projectallocation WHERE projectname = "candy"
-    public static ArrayList<String> retrieveDev(String projectname){
+    public static ArrayList<String> retrieveDev(String projectname) {
         ArrayList<String> toReturn = new ArrayList<String>();
-                
+
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ProjectAllocation pA = null;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select distinct developerusername from projectallocation where projectname = ?");
+            pstmt = conn.prepareStatement("Select developerusername "
+                    + "from projectallocation "
+                    + "where iscomplete=0 and projectname=? "
+                    + "group by projectname, developerusername "
+                    + "having max(dateallocated);");
             pstmt.setString(1, projectname);
-            
+
             rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                
+
+            while (rs.next()) {
+
                 toReturn.add(rs.getString(1));
             }
-            
+
             //return true;
         } catch (SQLException ex) {
             Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,14 +114,12 @@ public class ProjectAllocationDAO {
             ConnectionManager.close(conn, pstmt, rs);
 
         }
-        
+
         return toReturn;
     }
-    
-    
-     
+
     public static boolean delete(String username, String projname) {
-          Connection conn = null;
+        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
@@ -128,7 +131,6 @@ public class ProjectAllocationDAO {
 
             pstmt.setString(1, projname);
             pstmt.setString(2, username);
-            
 
             pstmt.executeUpdate();
             return true;
@@ -139,8 +141,10 @@ public class ProjectAllocationDAO {
             ConnectionManager.close(conn, pstmt);
         }
     }
-     //setIsComplete
-     public static boolean setIsComplete(String projectname, String username, int isComplete) {
+
+    //setIsComplete
+
+    public static boolean setIsComplete(String projectname, String username, int isComplete) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -154,7 +158,6 @@ public class ProjectAllocationDAO {
             pstmt.setInt(1, isComplete);
             pstmt.setString(2, projectname);
             pstmt.setString(3, username);
-           
 
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
             pstmt.executeUpdate();
@@ -168,8 +171,8 @@ public class ProjectAllocationDAO {
         }
         return true;
     }
-     
-     public static boolean addBasicAllocation(String projName, String dev) {
+
+    public static boolean addBasicAllocation(String projName, String dev) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -180,10 +183,9 @@ public class ProjectAllocationDAO {
             pstmt = conn.prepareStatement("insert into projectallocation (projectname, developerusername) values (?,?)");
             pstmt.setString(1, projName);
             pstmt.setString(2, dev);
-          
-      
+
             pstmt.executeUpdate();
-          
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
