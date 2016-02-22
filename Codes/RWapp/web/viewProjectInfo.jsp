@@ -30,7 +30,7 @@
             String projectName = request.getParameter("projectName");
             Project p = ProjectDAO.retrieveProjectByProjectName(projectName);
             ArrayList<String> arr = ProjectDAO.retrievePlanActualEnd(projectName);
-            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(p.getName());
+            
             if(arr==null){
                 Date newD = new Date();
                 arr.add(newD.toString());
@@ -134,7 +134,7 @@
                                             </td>
                                             <td>
                                                 <%
-                                                    
+                                                    ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(p.getName());
                                                     for (String developer : getDev) {
                                                         out.println(developer + " ");
                                                     }

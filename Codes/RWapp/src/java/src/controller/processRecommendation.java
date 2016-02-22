@@ -75,10 +75,10 @@ public class processRecommendation extends HttpServlet {
         }
         ArrayList<String> errList = new ArrayList<String>();
         String devList = request.getParameter("dev");
-        
+
         ArrayList<ArrayList<Recommendation>> rlist = (ArrayList<ArrayList<Recommendation>>) sess.getAttribute("rList");
         sess.removeAttribute("rList");
-        
+
         String[] dev = devList.split(",");
 
         String projName = request.getParameter("projName");
@@ -147,7 +147,9 @@ public class processRecommendation extends HttpServlet {
                 //update project allocation DAO
                 //HOLD: Need to figure out plan start and plan end
                 //String projName, String dev, String dateAllocated, String planStart, String planEnd, String actualStart) {
+
                 updateAllocationDAO = ProjectAllocationDAO.addAllocation(projName, dev[i], dev[i + 1], dev[i + 2], dev[i + 1]);
+
             }
             if (updateAllocationDAO) {
                 //update trello
@@ -232,10 +234,10 @@ public class processRecommendation extends HttpServlet {
                 errList.add("Project could not be allocated to the selected Developer");
             }
         }
-        System.out.println("projectname: " +projName );
+        System.out.println("projectname: " + projName);
         RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
         if (errList.isEmpty()) {
-            RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0])), projName ,Integer.parseInt(dev[0]));
+            RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0])), projName, Integer.parseInt(dev[0]));
             request.setAttribute("sucess", "Project sucessfully assigned!");
             rd.forward(request, response);
             return;
