@@ -61,8 +61,7 @@ public class assignRecommendation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sess = request.getSession();
-       
-        
+
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -89,7 +88,6 @@ public class assignRecommendation extends HttpServlet {
             Properties props = new Properties();
             props.load(is4);
 
-          
             mainboard = props.getProperty("trello.mainboard").trim();
             devList = props.getProperty("trello.developmentList").trim();
             //adminUsername = props.getProperty("trello.admin");
@@ -101,48 +99,49 @@ public class assignRecommendation extends HttpServlet {
             throw new RuntimeException(message, ex);
         }
         try {
-            String projName = request.getParameter("card"); 
+            String projName = request.getParameter("card");
             String intensity = request.getParameter("priority");
             String type = request.getParameter("type");
             if ("Others".equals(type)) {
                 type = request.getParameter("inputType");
-                if(type == null) type="";
+                if (type == null) {
+                    type = "";
+                }
             }
             //get todays date
             String sDate = request.getParameter("sDate");
             String daysstr = request.getParameter("days");
-            String devCountStr= request.getParameter("devCount");
+            String devCountStr = request.getParameter("devCount");
             String kStr = request.getParameter("k");
-            String experienceFactorStr= request.getParameter("experienceFactor");
-            String defectFactorStr= request.getParameter("defectFactor");
-            String scheduleFactorStr= request.getParameter("scheduleFactor");
+            String experienceFactorStr = request.getParameter("experienceFactor");
+            String defectFactorStr = request.getParameter("defectFactor");
+            String scheduleFactorStr = request.getParameter("scheduleFactor");
             String nameForRequestObj = request.getParameter("name");
             String id = request.getParameter("id");
-            
-            
+
             //Setting attriute to pass back to previous page if needed 
-            request.setAttribute("card", projName); 
-            request.setAttribute("priority",intensity);
-            request.setAttribute("type",type);
-            request.setAttribute("sDate", sDate );
-            request.setAttribute("days",daysstr);
-            request.setAttribute("devCount",devCountStr);
-            request.setAttribute("k",kStr);
-            request.setAttribute("experienceFactor",experienceFactorStr);
-            request.setAttribute("defectFactor",defectFactorStr);
-            request.setAttribute("scheduleFactor",scheduleFactorStr);
-            request.setAttribute("name",nameForRequestObj );
-            request.setAttribute("id",id);
-            
-            if(projName==null || intensity==null || type==null || sDate==null || daysstr==null || 
-                    devCountStr==null || experienceFactorStr==null || defectFactorStr==null 
-                    ||scheduleFactorStr==null||kStr==null){
+            request.setAttribute("card", projName);
+            request.setAttribute("priority", intensity);
+            request.setAttribute("type", type);
+            request.setAttribute("sDate", sDate);
+            request.setAttribute("days", daysstr);
+            request.setAttribute("devCount", devCountStr);
+            request.setAttribute("k", kStr);
+            request.setAttribute("experienceFactor", experienceFactorStr);
+            request.setAttribute("defectFactor", defectFactorStr);
+            request.setAttribute("scheduleFactor", scheduleFactorStr);
+            request.setAttribute("name", nameForRequestObj);
+            request.setAttribute("id", id);
+
+            if (projName == null || intensity == null || type == null || sDate == null || daysstr == null
+                    || devCountStr == null || experienceFactorStr == null || defectFactorStr == null
+                    || scheduleFactorStr == null || kStr == null) {
                 response.sendRedirect("login.jsp");
                 //request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            
-            int priority = Integer.parseInt(intensity); 
+
+            int priority = Integer.parseInt(intensity);
             int days = Integer.parseInt(daysstr);
             int devCount = Integer.parseInt(devCountStr);
             int k = Integer.parseInt(kStr);
@@ -166,7 +165,7 @@ public class assignRecommendation extends HttpServlet {
             }
             try {
                 boolean valid = validDate(sDate);
-                
+
                 if (!valid) {
                     request.setAttribute("err", "Please set the start date today/after today.");
                     view.forward(request, response);
@@ -179,9 +178,6 @@ public class assignRecommendation extends HttpServlet {
                 return;
             }
 
-            
-            
-            
             String username = currUser.getUsername();
             String key = TrelloDetailsDAO.retrieveTrelloKey(username);
             String token = TrelloDetailsDAO.retrieveTrelloToken(username);
@@ -286,6 +282,7 @@ public class assignRecommendation extends HttpServlet {
 
             //get the card, add to arraylist
             JSONArray cardsArr = new JSONArray(jsonOutput);
+            System.out.println(jsonOutput + "xxxxx");
             TrelloCard toAssign = null;
             for (int i = 0; i < cardsArr.length(); i++) {
                 JSONObject tempCard = cardsArr.getJSONObject(i);
@@ -297,13 +294,13 @@ public class assignRecommendation extends HttpServlet {
                     String name = tempCard.getString("name");
                     String due = "";
                     try {
-                            due = tempCard.getString("due").substring(0, 10);
-                        } catch (Exception de) {
-                            Calendar cal = Calendar.getInstance();
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                            due = sdf.format(cal.getTime());
-                        }
-                    
+                        due = tempCard.getString("due").substring(0, 10);
+                    } catch (Exception de) {
+                        Calendar cal = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        due = sdf.format(cal.getTime());
+                    }
+
                     String desc = tempCard.getString("desc").replace("**", "");
                     if (desc.length() >= 100) {
                         desc = desc.substring(0, 100);
@@ -311,7 +308,18 @@ public class assignRecommendation extends HttpServlet {
                     toAssign = new TrelloCard(name, projName, desc, due, priority, type);
                 }
             }
+            //String dateToFormat = "";
+            //if (toAssign.getDue() == null) {
+              //  Calendar cal = Calendar.getInstance();
+                //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                //dateToFormat = sdf.format(cal.getTime());
+            //} else {
+                // dateToFormat = toAssign.getDue();
+            //}
+            
             String dateToFormat = toAssign.getDue();
+            
+            
             //System.out.println(toAssign.toString());
 
             //validate project size
@@ -326,15 +334,14 @@ public class assignRecommendation extends HttpServlet {
                 view.forward(request, response);
                 return;
             }
-             //validate project size
-            if (k < 1 || k >10) {
+            //validate project size
+            if (k < 1 || k > 10) {
                 request.setAttribute("err", "The top K selection must be between 1 to 10!");
                 view.forward(request, response);
                 return;
             }
 
-
-            ArrayList<ArrayList<Recommendation>> rList = RecommedationDAO.getRecommendation(type, sDate, days, priority, devCount, experienceFactor, defectFactor, scheduleFactor,k);
+            ArrayList<ArrayList<Recommendation>> rList = RecommedationDAO.getRecommendation(type, sDate, days, priority, devCount, experienceFactor, defectFactor, scheduleFactor, k);
 
             RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp?name=" + toAssign.getName());
             request.setAttribute("rList", rList);
@@ -365,7 +372,6 @@ public class assignRecommendation extends HttpServlet {
     }
 
     //check if 1st param date is after second param date, return true
-
     private boolean validDate2(String date, String sDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
@@ -377,7 +383,6 @@ public class assignRecommendation extends HttpServlet {
     }
 
     //check if 1st param date is after second param date, return true
-
     private boolean validDate3(String cDate, String eDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
