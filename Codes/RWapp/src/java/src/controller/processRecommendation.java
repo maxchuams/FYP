@@ -232,17 +232,19 @@ public class processRecommendation extends HttpServlet {
                 errList.add("Project could not be allocated to the selected Developer");
             }
         }
-
+        System.out.println("projectname: " +projName );
         RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
         if (errList.isEmpty()) {
             RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0])), projName ,Integer.parseInt(dev[0]));
             request.setAttribute("sucess", "Project sucessfully assigned!");
             rd.forward(request, response);
+            return;
 
         } else {
 
             request.setAttribute("errList", errList);
             rd.forward(request, response);
+            return;
         }
 
     }
