@@ -54,7 +54,7 @@
         <section id="main-content">
             <section class="wrapper">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 no-padding">
                         <section class="panel">
                             <%
         //Person pop = (Person)session.getAttribute("loggedInPm");
