@@ -90,13 +90,13 @@
                 </div>
                 <%}%>
                 <!--End of error/success display-->
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
                                 <label class='pull-left top-menu'>Viewing all projects
-                                </br>Last update time: <%=CronDAO.retrieveTime()%></label>
+                                    </br>Last update time: <%=CronDAO.retrieveTime()%></label>
                                 <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewAllTrelloCards"/>
                                     <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
@@ -107,13 +107,13 @@
                         </section>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-sm-12">
-                        
+
                         <div class="row-fluid" id="draggable_portlets">
                             <div class="row">
-                                
+
                                 <%
                                     for (Project t : tList) {
                                 %> 
@@ -133,23 +133,24 @@
                                                         <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
                                                     </div>
                                                 </div>
-                                                    
+
                                                 <span class="pull-right">
                                                     <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li><br/><br/>
                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
                                                     <li> <b>PM:</b> <%=t.getAssignedBy()%></li>
                                                     <li> <b>Developer:</b>
-                                                        <% 
-                                            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(t.getName());
-                                            if(getDev.size()==1){
-                                                for (String developer : getDev){
-                                                    out.println(developer+"<br/>");
-                                                }
-                                            }else{
-                                                out.println("2 Developers");
-                                            }
-                                            
-                                            %>
+                                                        <%
+                                                            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(t.getName());
+                                                            if (getDev.size() == 1) {
+                                                                for (String developer : getDev) {
+                                                                    out.println(developer);
+                                                                }
+                                                            } else if (getDev.size() > 0) {
+                                                                out.println(getDev.size() + " Developers");
+                                                            } else {
+                                                                out.println("No Developer");
+                                                            }
+                                                        %>
                                                     </li>
                                                 </span>
                                             </ul>
