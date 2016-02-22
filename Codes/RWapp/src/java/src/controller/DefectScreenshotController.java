@@ -95,7 +95,7 @@ public class DefectScreenshotController extends HttpServlet {
                 if (!("image/png".equals(filePart.getContentType()) 
                         || "image/jpeg".equals(filePart.getContentType()))) {
                     RequestDispatcher rd = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
-                    request.setAttribute("err", "Sorry. Image can only be JPEG or PNG format.");
+                    request.setAttribute("err", "Please upload only JPEG or PNG format image");
                     rd.forward(request, response);
                     return;
                 }
@@ -133,14 +133,14 @@ public class DefectScreenshotController extends HttpServlet {
                 int row = statement.executeUpdate();
                 if (row > 0) {
                     conn.close();
-                    request.setAttribute("sucess", "Image successfully uploaded.");
+                    request.setAttribute("sucess", "Image successfully uploaded");
                     RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
                     rs.include(request, response);
                 } else {
                     conn.close();
 
                     RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
-                    request.setAttribute("err", "Sorry, image could not be updated due to database issue.");
+                    request.setAttribute("err", "Sorry, image could not be updated due to database issue, please try again");
                     rs.include(request, response);
                 }
             } catch (Exception e) {
