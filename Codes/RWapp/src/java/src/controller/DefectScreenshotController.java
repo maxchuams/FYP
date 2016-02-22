@@ -134,7 +134,7 @@ public class DefectScreenshotController extends HttpServlet {
                 if (row > 0) {
                     conn.close();
                     request.setAttribute("sucess", "Image successfully uploaded");
-                    RequestDispatcher rs = request.getRequestDispatcher("defectscreenshot.jsp?id=" + defectid);
+                    RequestDispatcher rs = request.getRequestDispatcher("viewDefectInfo.jsp?defectId=" + defectid);
                     rs.include(request, response);
                 } else {
                     conn.close();

@@ -39,6 +39,28 @@
         %>
         <section id="main-content">
             <section class="wrapper">
+                <!--Error/success display-->
+                <%  
+                    String sucess = (String) request.getAttribute("sucess");
+                    ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+
+                %>
+                
+                <%if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%}%>
+                <!--End of error/success display-->
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">

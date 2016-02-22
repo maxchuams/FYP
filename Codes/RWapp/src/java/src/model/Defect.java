@@ -89,6 +89,10 @@ public class Defect {
         return id;
     }
     
+    public int getId(String defectName) {
+        return id;
+    }
+    
         public Date getDuedate() {
         return duedate;
     }

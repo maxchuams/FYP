@@ -177,6 +177,31 @@ public class DefectDAO {
         return toReturn;
 
     }
+    
+    public static ArrayList<Defect> retrieveAllByProject(String projectname) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Defect> toReturn = new ArrayList<Defect>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto from defect where projectname = ?");
+            pstmt.setString(1, projectname);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
 
     public static boolean deleteDefect(int id) {
         Connection conn = null;
@@ -339,6 +364,32 @@ public class DefectDAO {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime, iscomplete,severity,duedate, assignto from defect where defectid=?");
             pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn = new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8),rs.getDate(9), rs.getString(10));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+    
+    public static Defect retrieveDefectByName(String defectname) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Defect toReturn = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime, iscomplete,severity,duedate, assignto from defect where defectname=? order by updatetime desc");
+            pstmt.setString(1, defectname);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {

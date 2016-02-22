@@ -82,12 +82,63 @@
         %>
         <section id="main-content">
             <section class="wrapper">
+                <!--Error/success display-->
+                <%  String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
+                    String success = (String) request.getAttribute("success");
+                    ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+
+                %>
+                <%if (errorMsg != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=errorMsg%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%}%>
+                <%if (success != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=success%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%}%>
+                <%if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%}%>
+                <!--End of error/success display-->
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
                             <header class="panel-heading">
                                 Viewing: Defect <%=d.getDefectName()%> 
                                 <span class="tools pull-right">
+                                    <% if(pm!=null){ %>
                                     <a href="defectscreenshot.jsp?id=<%=d.getId()%>">
                                         <i class="fa fa-picture-o"></i>
                                         <span>Add Screenshot</span>
@@ -97,7 +148,7 @@
                                         <span>Edit</span>
                                     </a>
                                         
-                                    <% if(pm!=null){ %>
+                                    
                                     <a href="removeDefect?id=<%=d.getId()%>" onclick="return confirm('Confirm delete?')"><i class="fa fa-minus-circle"></i><span> Delete</span></a>
                                     <% } %>
                                     
