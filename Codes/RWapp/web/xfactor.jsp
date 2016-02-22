@@ -138,9 +138,9 @@
                                 </span>
                             </header>
                             <div class="panel-body">
-                                <div class="c100 p25 red big" style="align:center;">
+                                <div class="c100 p<%=xf5%> red big" style="align:center;">
 
-                                    <span><%=xf4%>%</span>
+                                    <span><%=xf5%>%</span>
 
                                     <div class="slice">
 
