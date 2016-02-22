@@ -22,60 +22,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- gx i removed this line below to make the nav bar work properly, please check if its messing up anything-->
         <!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
-        <link href="./bootstrap/fbphotobox.css" rel="stylesheet" type="text/css" />
-        <script src="./bootstrap/fbphotobox.js"></script>
+        <link href="./css/lightbox.css" rel="stylesheet"></link>
+       
         <title>View Defect Info</title>
     </head>
     <body>
 
-        <%--- JS ----%>
-        <script>
-            $(document).ready(function () {
-                $(".fbphotobox img").fbPhotoBox({
-                    rightWidth: 360,
-                    leftBgColor: "black",
-                    rightBgColor: "white",
-                    footerBgColor: "black",
-                    overlayBgColor: "#222",
-                    containerClassName: 'fbphotobox',
-                    imageClassName: 'photo',
-                    onImageShow: function () {
-                        $(".fbphotobox img").fbPhotoBox("addTags",
-                                [{x: 0.3, y: 0.3, w: 0.3, h: 0.3}]
-                                );
-                        
-                    }
-                });
-
-                $("button").click(function () {
-                    $(".fbphotobox").append('<img class="photo" fbphotobox-src="./images/dummy-1760x990-Mosque.jpg" src="./images/dummy-1760x990-Mosque.jpg"/><img class="photo" fbphotobox-src="./images/dummy-1920x2560-Goemetry.jpg" src="./images/dummy-1920x2560-Goemetry.jpg"/>');
-                });
-            });
-        </script>
-        <style>
-            body {
-                font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
-                font-size: 13px;
-                position: relative;
-            }
-
-            .fbphotobox img {
-                width:200px;
-                height:200px;
-                margin:10px;
-                border-radius:5px;
-            }
-
-            .fbphotobox img:hover {
-                box-sizing:border-box;
-                -moz-box-sizing:border-box;
-                -webkit-box-sizing:border-box;
-                border: 5px solid #4AE;
-            }
-        </style>
-        <%--- JS ----%>
+        
         <%
             String defectId = request.getParameter("defectId");
             Defect d = DefectDAO.retrieveDefect(Integer.parseInt(defectId));
@@ -219,12 +172,13 @@
                                                                         <%  ArrayList<String> screenshotTime = DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId());
                                                                             for (String time : screenshotTime) {
                                                                         %>
-                                                                        <a><img style="height:75px;width:75px" class="photo" fbphotobox-src="DefectScreenshotServlet?defectid=<%=d.getId()%>&updatetime=<%=time%>" src="DefectScreenshotServlet?defectid=<%=d.getId()%>&updatetime=<%=time%>"/></a>
-
+                                                                        
+                                                                        <a class="example-image-link" href="DefectScreenshotServlet?defectid=<%=d.getId()%>&updatetime=<%=time%>" data-lightbox="example-set" data-title="Click anywhere outside the image or the X to the right to close."><img style="height:75px;width:75px" class="example-image" src="DefectScreenshotServlet?defectid=<%=d.getId()%>&updatetime=<%=time%>" alt="" /></a>
                                                                         <%
                                                                             }
                                                                         %>
-                                                        <%}%></a></td>
+                                                        <script src="./js/lightbox.js"></script>
+                                                                        <%}%></td>
                                         </tr>
                                 </table>
                             </div>
