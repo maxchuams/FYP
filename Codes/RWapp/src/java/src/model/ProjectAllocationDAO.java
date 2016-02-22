@@ -118,6 +118,37 @@ public class ProjectAllocationDAO {
         return toReturn;
     }
 
+    public static ArrayList<String> retrieveInProgress() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ProjectAllocation pA = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct projectname as name from projectallocation where iscomplete=0;");
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(rs.getString("name"));
+            }
+
+            //return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+
+        return toReturn;
+    }
+
     public static boolean delete(String username, String projname) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -143,7 +174,6 @@ public class ProjectAllocationDAO {
     }
 
     //setIsComplete
-
     public static boolean setIsComplete(String projectname, String username, int isComplete) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -196,8 +226,8 @@ public class ProjectAllocationDAO {
 
         }
     }
-    
-     public static boolean checkIfExist(String projName) {
+
+    public static boolean checkIfExist(String projName) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -208,14 +238,14 @@ public class ProjectAllocationDAO {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select projectname from projectallocation where projectname =?;");
             pstmt.setString(1, projName);
-        
-              while (rs.next()) {
+
+            while (rs.next()) {
 
                 toReturn.add(rs.getString(1));
             }
             pstmt.executeQuery();
-            
-            if(toReturn.size() > 0){
+
+            if (toReturn.size() > 0) {
                 return true;
             } else {
                 return false;
@@ -229,7 +259,5 @@ public class ProjectAllocationDAO {
 
         }
     }
-     
-    
-    
+
 }

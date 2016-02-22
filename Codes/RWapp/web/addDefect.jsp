@@ -3,6 +3,7 @@
     Created on : Dec 10, 2015, 8:54:13 PM
     Author     : maxchua
 --%>
+<%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.DeveloperDAO"%>
 <%@page import="src.model.Developer"%>
 <%@page import="src.model.Defect"%>
@@ -149,13 +150,17 @@
                     }else{
                         per = (Person)session.getAttribute("loggedInTester");
                     }
-                                                ArrayList<Project> pList = ProjectDAO.retrieveInProgress();
-                                                for (Project p : pList) {
-                                                    if (name != null && name.equalsIgnoreCase(p.getName())) {%>
-                                            <option value='<%=p.getName()%>' selected><%=p.getName()%></option>
+                                                ArrayList<String> pList = ProjectAllocationDAO.retrieveInProgress();
+                                                
+                                                
+                                                
+                                                
+                                                for (String p : pList) {
+                                                    if (name != null && name.equalsIgnoreCase(p)) {%>
+                                            <option value='<%=p%>' selected><%=p%></option>
                                             <%} else {
                                             %>
-                                            <option value='<%=p.getName()%>'><%=p.getName()%></option>
+                                            <option value='<%=p%>'><%=p%></option>
                                             <%
                                                     }
                                                 }
