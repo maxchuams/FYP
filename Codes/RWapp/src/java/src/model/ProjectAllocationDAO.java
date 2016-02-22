@@ -196,4 +196,40 @@ public class ProjectAllocationDAO {
 
         }
     }
+    
+     public static boolean checkIfExist(String projName) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<String> toReturn = new ArrayList<String>();
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select projectname from projectallocation where projectname =?;");
+            pstmt.setString(1, projName);
+        
+              while (rs.next()) {
+
+                toReturn.add(rs.getString(1));
+            }
+            pstmt.executeQuery();
+            
+            if(toReturn.size() > 0){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+    }
+     
+    
+    
 }

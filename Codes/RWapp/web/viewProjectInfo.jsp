@@ -3,6 +3,7 @@
     Created on : Jan 21, 2016, 4:29:41 PM
     Author     : Kaiwen
 --%>
+<%@page import="java.util.Date"%>
 <%@page import="src.model.DefectDAO"%>
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.ProjectAllocation"%>
@@ -29,6 +30,13 @@
             String projectName = request.getParameter("projectName");
             Project p = ProjectDAO.retrieveProjectByProjectName(projectName);
             ArrayList<String> arr = ProjectDAO.retrievePlanActualEnd(projectName);
+            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(p.getName());
+            if(arr==null){
+                Date newD = new Date();
+                arr.add(newD.toString());
+                arr.add(newD.toString());
+            }
+            System.out.println(arr.get(0));
             ArrayList<Defect> dList = null;
             if (pm != null) {
                 dList = DefectDAO.retrievePm(pm.getUsername());
@@ -126,7 +134,7 @@
                                             </td>
                                             <td>
                                                 <%
-                                                    ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(p.getName());
+                                                    
                                                     for (String developer : getDev) {
                                                         out.println(developer + " ");
                                                     }
