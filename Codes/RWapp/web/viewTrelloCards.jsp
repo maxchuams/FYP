@@ -120,11 +120,18 @@
 
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
-                                <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");%>
+                                <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");
+                                String pName;
+                                    if(t.getName().length()>25){
+                                        pName=t.getName().substring(0,25)+"...";
+                                    }else{
+                                        pName = t.getName();
+                                    }
+                                %>
                                 <div class="col-md-4">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            <%=t.getName()%>
+                                            <%=pName%>
                                             <span class="tools pull-right">
                                             </span>
                                         </div>
