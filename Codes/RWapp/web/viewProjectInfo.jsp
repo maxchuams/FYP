@@ -223,7 +223,7 @@
                                                         }
                                                     }
                                                     if (count == 0) {
-                                                        out.println("<a href='addDefect.jsp?name=" + p.getName() + "'>No defects found <i>yet</i>. <br/>Add one?</a>");
+                                                        out.println("<a href='addDefect.jsp?name=" + p.getName() + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
                                                     }
 
                                                     count = 0;

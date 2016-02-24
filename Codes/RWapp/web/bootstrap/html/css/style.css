@@ -335,6 +335,14 @@ ul.sidebar-menu li a.active i {
     width:100%;
 
 }
+
+.wrapper1 {
+    display:inline-block;
+    margin-top:80px;
+    padding-left:15px;
+    width:100%;
+
+}
 .brand {
     background:#1fb5ad;
     float:left;
@@ -753,6 +761,14 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     color:rgba(0,0,0,0.3);
 }
 .toggle-right-box .fa-bars {
+    cursor:pointer;
+    display:inline-block;
+    font-size:15px;
+    padding:10px;
+    color: #bfbfc1;
+}
+
+.toggle-right-box .fa-refresh {
     cursor:pointer;
     display:inline-block;
     font-size:15px;
@@ -2543,11 +2559,11 @@ ul.inbox-pagination li {
 .prf-box {
     display:inline-block;
     width:100%;
-    margin-bottom:30px;
+    
 }
 .prf-border-head {
     color:#1fb5ad;
-    border-bottom:1px solid #f1f2f7;
+    border-bottom:0px solid #f1f2f7;
     font-size:16px;
     font-weight:bold;
     padding-bottom:10px;

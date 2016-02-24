@@ -9,7 +9,7 @@
 <%@page import="src.model.SkillDAO"%>
 <%@page import="src.model.PersonDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@include file="protectSudo.jsp" %>
+<%@include file="protectPMandSudo.jsp" %>
 <%String thisPage = "manageUser"; //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -31,31 +31,35 @@
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-danger"><%=errorMsg%></div>
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=errorMsg%>
                             </div>
                         </section>
                     </div>
                 </div>
                 <%
-                    }
-                    if (sucess != null) {%>
+                    }%>
+                    <%if (sucess != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-success"><%=sucess%></div>
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    }
-                %>
-
+                <%}%>
 
                 <!--End of error/success display-->
                 <!--Kaiwen's Code-->
+                <% if(sudo!=null){ %>
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
@@ -70,7 +74,7 @@
                                 <table class="table  table-hover general-table">
                                     <thead>
                                         <tr>
-                                            <th>Username</th>
+                                            <th colspan="2">Username</th>
                                             <th>Number of on-going projects</th>
                                             <th>Edit</th>
                                         </tr>
@@ -86,6 +90,11 @@
                                         <%for (Person p : usersList) {
                                                 if (p.getType().equals("p")) {%>
                                         <tr>
+                                            <td>
+                                                <div class="tm-avatar">
+                                                        <img src="ImageServlet?imageid=<%=p.getUsername()%>" alt=""/>
+                                                        </div>
+                                            </td>
                                             <td><a href="#"> <%=p.getUsername()%></a></td>
                                             <td> <% 
                                             if (p.getType().equals("p")){
@@ -105,7 +114,7 @@
                         </section>
                     </div>
                 </div>
-
+                <% }%>
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -121,10 +130,13 @@
                                 <table class="table  table-hover general-table">
                                     <thead>
                                         <tr>
-                                            <th>Username</th>
+                                            <th colspan="2">User</th>
                                             <th>Country</th>
                                             <th>Number of on-going projects</th>
+                                            <% if(sudo!=null){ %>
                                             <th>Edit</th>
+                                            <%}%>
+                                            <th>View Stats</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,13 +150,21 @@
                                         <%for (Person p : usersList1) {
                                                 if (p.getType().equals("c")) {%>
                                         <tr>
-                                            <td><a href="#"> <%=p.getUsername()%></a></td>
+                                            <td>
+                                                <div class="tm-avatar">
+                                                        <img src="ImageServlet?imageid=<%=p.getUsername()%>" alt=""/>
+                                                </div>
+                                            </td>
+                                            <td><%=p.getUsername()%></td>
                                             <td> <% 
                                                 String d = DeveloperDAO.retrieveDevCountry(p.getUsername());
                                                 out.println(d);
                                             %></td>
                                             <td></td>
-                                            <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
+                                            <% if(sudo!=null){ %>
+                                            <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-info btn-xs">Edit</button></a></td>
+                                            <% } %>
+                                            <td><a href="statistics.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">View</button></a></td>
                                         </tr>
                                         <%}%>
                                         <%}

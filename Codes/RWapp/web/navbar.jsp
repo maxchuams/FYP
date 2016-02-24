@@ -62,7 +62,6 @@
             <header class="header fixed-top clearfix">
                 <!--logo start-->
                 <div class="brand">
-
                     <a href="index.jsp" class="logo">
                         <img src="bootstrap/html/images/ReccoWhite.svg" onerror="this.onerror=null; this.src='bootstrap/html/images/ReccoWhite.png'" width="168" height="32" alt="" title="" />
                     </a>
@@ -123,7 +122,10 @@
                     <!--search & user info start-->
                     <ul class="nav pull-right top-menu">
                         <li>
-                            <span class="form-control search" onclick="javascript:SubmitSearch()" style="cursor: pointer;"></span>
+                            <form action="search.jsp">
+                                <!--<span class="form-control search" onclick="javascript:SubmitSearch()" style="cursor: pointer;"></span>-->
+                                <input type="text" class="form-control search" placeholder=" Search" id="searchText" name="searchText">
+                            </form>
                         </li>
                         <!-- user login dropdown start-->
                         <li class="dropdown">
@@ -139,7 +141,12 @@
                             </ul>
                         </li>
                         <!-- user login dropdown end -->
-
+                        <!--<li>
+                            <div class="toggle-right-box"><a href="">
+                                    <div class="fa fa-refresh"></div>
+                                </a>
+                            </div>
+                        </li>-->
 
                     </ul>
                     <!--search & user info end-->
@@ -158,7 +165,7 @@
                                 <% if (thisPage.equals("index") || thisPage.equals("sudo")) { %>
                                 <a class="active" href="index.jsp"> <% } else { %>
                                     <a href="index.jsp"> <% } %>
-                                        <i class="fa fa-dashboard"></i>
+                                        <i class="fa fa-calendar"></i>
                                         <span>Dashboard</span>
                                     </a>
                             </li>
@@ -190,12 +197,12 @@
 
 
                                     <ul class="sub">
-                                        <%if (pm != null || tester!=null) {%>
+                                        <%if (pm != null || tester != null) {%>
                                         <% if (thisPage.equals("manageDefects") || thisPage.equals("sortedDefects")) { %>
                                         <li class="active"><a href="manageDefects.jsp">View Defects</a></li><% } else { %>
                                         <li><a href="manageDefects.jsp">View Defects</a></li><% } %>
                                             <%}%>
-                                            <%if (pm != null || tester!=null) {%>
+                                            <%if (pm != null || tester != null) {%>
                                             <% if (thisPage.equals("addDefect")) { %>
                                         <li class="active"><a href="addDefect.jsp">Add Defects</a></li><% } else { %>
                                         <li><a href="addDefect.jsp">Add Defects</a></li><% } %>
@@ -220,7 +227,7 @@
                                         <% if (thisPage.equals("viewAllTrelloCards")) { %>
                                         <li class="active"><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } else { %>
                                         <li><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } %>
-                                        
+
                                         <% if (thisPage.equals("viewCompletedProjects")) { %>
                                         <li class="active"><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } else { %>
                                         <li><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } %>
@@ -238,16 +245,16 @@
                                     </ul>
                             </li>
                             <%}%>
-                            <%if (sudo != null) {%>
+                            <%if (sudo != null || pm !=null) {%>
                             <li>
                                 <% if (thisPage.equals("manageUser") || thisPage.equals("manageDevProfile")) {%>
                                 <a class="active" href="manageUser.jsp"> <% } else { %>
                                     <a href="manageUser.jsp"> <% }%>
                                         <i class="fa fa-users"></i>
-                                        <span>Manage users</span>
+                                        <span><%if (sudo!=null){%>Manage Users<%}if(pm!=null){%>Manage Developers<%}%></span>
                                     </a>
                             </li>
-
+<%} if(sudo!=null){%>
                             <li class="sub-menu">
                                 <% if (thisPage.equals("addUsers")) {%>
                                 <a class="active" href="addUsers.jsp"><% } else { %>

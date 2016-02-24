@@ -116,10 +116,12 @@
                                         <div class="col-lg-10">
                                             <select name="assignedby" class="form-control m-bot12">
                                         <%
+                                            Project proj = ProjectDAO.retrieveProjectByProjectName(toEdit.getName());
+                                            String pmOfProj = proj.getAssignedBy();
                                             for (Person p : pmList) {
-                                                if (p.getUsername().equals(toEdit.getName())) {
+                                                if (p.getUsername().equals(pmOfProj)) {
                                         %>
-                                        <option value="<%=p.getUsername()%>" selected><%=p.getUsername()%></option>
+                                        <option value="<%=pmOfProj%>" selected><%=pmOfProj%></option>
 
                                         <%
                                         } else {

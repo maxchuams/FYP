@@ -42,6 +42,7 @@ public class UploadFileController extends HttpServlet {
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
         Person p4 = (Person) sess.getAttribute("loggedInTester");
+        Person p5 = (Person) sess.getAttribute("loggedInSudo");
         Person currUser = null;
 
         if (p1 != null) {
@@ -55,7 +56,9 @@ public class UploadFileController extends HttpServlet {
 
         } else if (p4 != null) {
             currUser = p4;
-        } else {
+        } else if (p5 != null){
+            currUser = p5;
+        }else {
             response.sendRedirect("login.jsp");
             return;
         }
@@ -79,14 +82,14 @@ public class UploadFileController extends HttpServlet {
                 if (!("image/png".equals(filePart.getContentType()) 
                         || "image/jpeg".equals(filePart.getContentType()))) {
                     RequestDispatcher rd = request.getRequestDispatcher("profilePage.jsp");
-                    request.setAttribute("err", "Sorry. Image can only be JPEG or PNG format.");
+                    request.setAttribute("err", "Sorry. Image can only be JPEG or PNG format");
                     rd.forward(request, response);
                     return;
                 }
                 
                 if (filePart.getSize()> 15000000){
                     RequestDispatcher rd = request.getRequestDispatcher("profilePage.jsp");
-                    request.setAttribute("err", "Please use a smaller picture. (1.5Mb)");
+                    request.setAttribute("err", "Please use a smaller picture (1.5Mb)");
                     rd.forward(request, response);
                     return;
                 }
@@ -122,7 +125,8 @@ public class UploadFileController extends HttpServlet {
                 if (row > 0) {
                     conn.close();
                     RequestDispatcher rs = request.getRequestDispatcher("profilePage.jsp");
-                    rs.include(request, response);
+                    request.setAttribute("sucess", "Image uploaded successfully!");
+                    rs.forward(request, response);
                 } else {
                     conn.close();
 

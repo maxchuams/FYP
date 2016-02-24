@@ -20,10 +20,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Defects</title>
-        
+
         <script type="text/javascript">
             $(document).ready(function () {
-              $('#pname').hide(); //hide field on start
+                $('#pname').hide(); //hide field on start
                 $('#severity').hide();
                 $('#completed').hide();
                 $('#role').change(function () {
@@ -39,7 +39,7 @@
                         $('#completed').hide();
                         $('#severity').show();//this field is hidden
                     }
-                    if($('#role').val() == 'iscomplete') { //if this value is NOT selected
+                    if ($('#role').val() == 'iscomplete') { //if this value is NOT selected
                         $('#pname').hide();
                         $('#completed').show();
                         $('#severity').hide();//this field is hidden
@@ -99,20 +99,20 @@
                 %>
 
                 <!--End of error/success display-->
-                
+
                 <div class="row">
                     <div class="col-lg-12">
                         <%
                             ArrayList<Defect> dList = DefectDAO.retrieveAllocatedDev(dev.getUsername());
                         %>
                         <%for (Project p : pList) {
-                            if (DefectDAO.retrieveAllByProject(p.getName()).size()!=0){
+                                if (DefectDAO.retrieveAllByProject(p.getName()).size() != 0) {
                         %>
                         <div class="row">
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Project <%=p.getName()%> 
+                                        <%=p.getName()%> 
                                         <span class="tools pull-right">
                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                                         </span>
@@ -131,93 +131,97 @@
                                                     severity = "High";
                                                 }
                                                 if (p.getName().equalsIgnoreCase(d.getProjectName())) {
-                                                    
-                                                        out.println("<a href='viewDefectInfo.jsp?defectId="+d.getId()+"'>");  
-                                                        if (d.getIsComplete() == 2){ %>
+
+                                                    out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
+                                                    if (d.getIsComplete() == 2) { %>
+                                        <div class='col-lg-4 col-sm-4'> 
+                                            <div class="alert alert-success fade in"> 
+                                                <% } else if (d.getIsComplete() == 1) {
+                                                %> 
+                                                <div class='col-lg-4 col-sm-4'> 
+                                                    <div class="alert alert-warning fade in"> 
+                                                        <% } else if (d.getIsComplete() == 0) { %>
                                                         <div class='col-lg-4 col-sm-4'> 
-                                                        <div class="alert alert-success fade in"> 
-                                                        <% }
-                                                        else if (d.getIsComplete() == 1) {
-                                                    %> 
-                                                    <div class='col-lg-4 col-sm-4'> 
-                                                        <div class="alert alert-warning fade in"> 
-                                                            <% }
-                                                        else if (d.getIsComplete() == 0) { %>
-                                                        <div class='col-lg-4 col-sm-4'> 
-                                                        <div class="alert alert-danger fade in"> 
-                                                        <% }
-                                                        %>
-                                                            <%
-                                                            out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> "+d.getDefectName()+"</td></tr>");
-                                                                out.println("<tr><td><b>Severity: </b></td><td> "+severity+ "</td></tr>");
-                                                                out.println("<tr><td><b>Date: </b></td><td> "+d.getUpdateTime().subSequence(0, 16) +"</td></tr>");
-                                                                out.println("</table>");
-                                                    
-                                                            %> 
+                                                            <div class="alert alert-danger fade in"> 
+                                                                <% }
+                                                                %>
+                                                                <%
+                                                                    String dName;
+                                                                    if (d.getDefectName().length() > 20) {
+                                                                        dName = d.getDefectName().substring(0, 20) + "...";
+                                                                    } else {
+                                                                        dName = d.getDefectName();
+                                                                    }
+                                                                    out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
+                                                                    out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");
+                                                                    out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
+                                                                    out.println("</table>");
+
+                                                                %> 
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                         </a>
-                                                    <%
-                                                    count++;
+                                                        <%                                                                count++;
+                                                                }
+                                                            }
+                                                            if (count == 0) {
+                                                                out.println("<a href='addDefect.jsp'>No defects found <i>yet</i>. <br/>Add one?</a>");
+                                                            }
+
+                                                            count = 0;
+
+                                                        %>
+                                                    </div>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                            <% }
                                                 }
-                                            }
-                                            if (count == 0) {
-                                                out.println("<a href='addDefect.jsp'>No defects found <i>yet</i>. <br/>Add one?</a>");
-                                            }
-                                            
-                                            count = 0;
-                                            
-                                        %>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <% } }
-                            %>
+                                            %>
 
-                        <!--end of kw codes-->
+                                            <!--end of kw codes-->
 
-                                            
 
-                        
 
-                        <%
-                            for (Defect d : dList) {
-                                int sev = d.getSeverity();
-                                String severity = "";
-                                if (sev == 1) {
-                                    severity = "Low";
-                                } else if (sev == 2) {
-                                    severity = "Medium";
-                                } else if (sev == 3) {
-                                    severity = "High";
-                                }
-                        %>
-<!--                        <section class="panel">
-                            <div class="panel-body">
-                                <table class="table  table-hover general-table">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2">Project <%=d.getProjectName()%></th>
-                                        </tr>
-                                    </thead>
-                                    <tr>
-                                        <td>Defect name: </td>
-                                        <td><%=d.getDefectName()%></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Severity: </td>
-                                        <td><%=severity%></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Description: </td>
-                                        <td><%=d.getDesc()%></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Screenshots uploaded: </td>
-                                        <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" +d.getId()).size(); %>
-                                        <td><%if (size==0){%>NIL
-                                            <%}else{%>
+
+
+                                            <%
+                                                for (Defect d : dList) {
+                                                    int sev = d.getSeverity();
+                                                    String severity = "";
+                                                    if (sev == 1) {
+                                                        severity = "Low";
+                                                    } else if (sev == 2) {
+                                                        severity = "Medium";
+                                                    } else if (sev == 3) {
+                                                        severity = "High";
+                                                    }
+                                            %>
+                                            <!--                        <section class="panel">
+                                                                        <div class="panel-body">
+                                                                            <table class="table  table-hover general-table">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th colspan="2">Project <%=d.getProjectName()%></th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tr>
+                                                                                    <td>Defect name: </td>
+                                                                                    <td><%=d.getDefectName()%></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Severity: </td>
+                                                                                    <td><%=severity%></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Description: </td>
+                                                                                    <td><%=d.getDesc()%></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Screenshots uploaded: </td>
+                                            <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size(); %>
+                                            <td><%if (size == 0) {%>NIL
+                                            <%} else {%>
                                         <a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size()%><%}%></a></td>
                                     
                                     </tr>
@@ -227,32 +231,32 @@
                                     </tr>
                                     <tr>
                                         <td>Last updated time: </td>
-                                        <td><% out.println(d.getUpdateTime().subSequence(0,16)); %></td>
+                                        <td><% out.println(d.getUpdateTime().subSequence(0, 16)); %></td>
                                     </tr>
-                                    <%
+                                            <%
 
-                                        if (dev != null && d.getIsComplete() == 0) {
-                                    %>
-                                    <tr>
-                                        <td>Defect status:</td>
-                                        <td><a href='defectComplete?id=<%=d.getId()%>&case=2'><span class="label label-success label-mini">Defect completed, click to mark complete</span></a></td>
-                                       
-                                    </tr>
-                                    <%
-                                        }
-                                    %>
-
+                                                if (dev != null && d.getIsComplete() == 0) {
+                                            %>
+                                            <tr>
+                                                <td>Defect status:</td>
+                                                <td><a href='defectComplete?id=<%=d.getId()%>&case=2'><span class="label label-success label-mini">Defect completed, click to mark complete</span></a></td>
+                                               
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+        
+                                        </table>
+                                    </div>
+                                </section>-->
+                                            <%
+                                                }
+                                            %>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </section>
+                                </section>
                                 </table>
-                            </div>
-                        </section>-->
-                        <%
-                            }
-                        %>
-                    </section>
-                    </div>
-                </div>
-            </section>
-        </section>
-    </table>
-</body>
-</html>
+                                </body>
+                                </html>

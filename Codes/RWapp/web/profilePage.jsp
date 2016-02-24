@@ -97,6 +97,9 @@
                                                         if (p.getType().equals("c")) {
                                                             out.println("Developer");%></span><%
                                                                                                    }
+                                                        if (p.getType().equals("t")) {
+                                                            out.println("Tester");%></span><%
+                                                                                                   }
                                     %>
 
                                 </div>
@@ -506,8 +509,8 @@
                                                     <div class="location-info">
 
                                                         <form action='modifyCountry' class="form-horizontal">
-                                                            <label class="col-lg-3 control-label">Change Country</label>
-                                                            <div class="col-lg-9">
+                                                            <label class="col-lg-4 control-label">Change Country</label>
+                                                            <div class="col-lg-8">
                                                                 <select name="country" class="countrySelect2 form-control m-bot15" style="width: 300px">
                                                                     <option value="">Country...</option>
                                                                     <option value="Singapore">Singapore</option>
@@ -760,13 +763,15 @@
                                                                     <option value="Zimbabwe">Zimbabwe</option>
                                                                 </select>
                                                             </div>
+                                                            <br/>
                                                             <%
                                                                 String devName = null;
                                                                 if (dev != null) {
                                                                     devName = dev.getUsername();
                                                                 }%>
-                                                            <input type="hidden" name="user" value="<%=devName%>"/>
-                                                            <div class="col-lg-offset-3 col-lg-9">
+                                                                <input type="hidden" name="user" value="<%=devName%>"/>
+                                                                </br></br>
+                                                                <div class="col-lg-offset-4 col-lg-8">
                                                                 <button class="btn btn-danger" type="submit">Submit</button>
                                                             </div>
                                                         </form>

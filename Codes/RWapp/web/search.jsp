@@ -21,6 +21,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <%
+        String searchText = request.getParameter("searchText");
+        %>
         <!--    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
                 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
         <script type="text/javascript">
@@ -34,16 +37,29 @@
             $(document).ready(function () {
                 var $rows = $("tr");
 
-                $("#search").keyup(function () {
-                    var val = $.trim(this.value);
+                function doSearch(element) {
+                    var val = $.trim(element.value);
                     if (val === "")
                         $rows.show();
                     else {
                         $rows.hide();
                         $rows.has("td:contains(" + val + ")").show();
                     }
+                }
+                
+                $("#search").keyup(function () {
+                    doSearch(this);
+                    
                 });
+                
+                
+                if ($('#search').val() != '') {   
+                    doSearch($('#search')[0]);
+                }
+                
             });
+                
+                
         </script>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -106,7 +122,15 @@
                                 <label class="control-label col-lg-2" for="inputSuccess">Search for:</label>
 
                                 <div class="col-lg-3">
+                                    <%
+                                
+                                if(searchText!=null){%>
+                                <form name="myform2">
+                                    <input id="search" name="searchText" value="<%=searchText%>" type="text" class="form-control">
+                                </form>
+                                    <%}else{%>
                                     <input id="search" type="text" class="form-control">
+                                    <%}%>
                                 </div>
                                 <div class="col-lg-3">
                                     <select id="role" name="category" class="form-control">
@@ -187,22 +211,29 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <div class="panel-body">
-                                            <table class="table table-striped table-hover table-bordered">
-
+                                            <table class="table table-hover">
+                                                <div class="prf-box">
+                                                    <h3 class="prf-border-head">developers</h3>
                                                 <% for (Person p : devList) {
                                                 %>
                                                 <tr>
-
-                                                    <td><%=p.getUsername()%></td>
+                                                    <td>
+                                                        <div class="tm-avatar">
+                                                        <img src="ImageServlet?imageid=<%=p.getUsername()%>" alt=""/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <%=p.getUsername()%>
+                                                    </td>
                                                     <%
                                                         String d = DeveloperDAO.retrieveDevCountry(p.getUsername());%>
                                                     <td><%=d%></td>
-
+                                                    
                                                 </tr>
                                                 <%
                                                     }
-
                                                 %>
+                                                    </div>
                                             </table>
                                         </div>
                                     </section>

@@ -257,8 +257,13 @@
                                                             <div class="alert alert-danger fade in"> 
                                                                 <% }
                                                                 %>
-                                                                <%
-                                                                        out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + d.getDefectName() + "</td></tr>");
+                                                                <%String dName;
+                                                                    if (d.getDefectName().length() > 20) {
+                                                                        dName = d.getDefectName().substring(0, 20) + "...";
+                                                                    } else {
+                                                                        dName = d.getDefectName();
+                                                                    }
+                                                                        out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
                                                                         out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");
                                                                         out.println("<tr><td><b>Creation date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
                                                                         out.println("<tr><td><b>Duedate: </b></td><td> " + d.getDuedate() + "</td></tr>");                                                                        
@@ -273,7 +278,7 @@
                                                                 }
                                                             }
                                                             if (count == 0) {
-                                                                out.println("<a href='addDefect.jsp?name=" + p.getName() + "'>No defects found <i>yet</i>. <br/>Add one?</a>");
+                                                                out.println("<a href='addDefect.jsp?name=" + p.getName() + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
                                                             }
 
                                                             count = 0;

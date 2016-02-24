@@ -116,14 +116,13 @@
 
                                 <%
                                     for (Project t : tList) {
-                                        if (t.getIsComplete() >= 0) {
-
+                                        if (t.getIsComplete() == 0) {
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
                                 <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");
                                 String pName;
-                                    if(t.getName().length()>25){
-                                        pName=t.getName().substring(0,25)+"...";
+                                    if(t.getName().length()>30){
+                                        pName=t.getName().substring(0,30)+"...";
                                     }else{
                                         pName = t.getName();
                                     }
@@ -139,7 +138,20 @@
                                             <ul class="nav nav-pills nav-stacked">
                                                 <div class="col-md-2 col-xs-2">
                                                     <div class="tm-avatar">
-                                                        <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
+                                                        <% if(ProjectDAO.retrieveTrelloPhoto(t.getName())==null){
+                                                            %><img src="bootstrap/html/images/tempProj.png" alt=""/>
+                                                        <%
+                                                        }else{
+                                                            String photo = ProjectDAO.retrieveTrelloPhoto(t.getName());
+                                                            String photoExt = "";
+                                                            if(photo.length()>=3){
+                                                                photoExt = photo.substring(photo.length() - 3);
+                                                            }
+                                                            if(photoExt.equals("jpg") || photoExt.equals("png")){%>
+                                                                <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
+                                                            <%} else{  %>
+                                                            <img src="bootstrap/html/images/tempProj.png" alt=""/>
+                                                        <%}}%>
                                                     </div>
                                                 </div>
 

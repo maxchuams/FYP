@@ -218,10 +218,17 @@ HttpSession sess = request.getSession();
                     rd.forward(request, response);
                     return;
                 }
-                RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp?pname=" + pname);
-                request.setAttribute("success", "Project successfully updated");
-                rd.forward(request, response);
-                return;
+                if(cInt==1){
+                    RequestDispatcher rd = request.getRequestDispatcher("viewCompletedProjects.jsp?pname=" + pname);
+                    request.setAttribute("success", "Project marked as completed");
+                    rd.forward(request, response);
+                    return;
+                }else{
+                    RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp?pname=" + pname);
+                    request.setAttribute("success", "Project successfully updated");
+                    rd.forward(request, response);
+                    return;
+                }
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("editProject.jsp?pname=" + pname);
                 request.setAttribute("err", "Project could not be updated. Please try again!");

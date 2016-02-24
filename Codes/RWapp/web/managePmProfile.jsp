@@ -21,59 +21,55 @@
                 <%  String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
 
-                    if (errorMsg != null) {
-                %>
+                    %>
+                    <%if (errorMsg != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-danger"><%=errorMsg%></div>
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=errorMsg%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    }
-                    if (sucess != null) {%>
+                <%}%>
+                    <%if (sucess != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="panel-body">
-                                <div class="text-success"><%=sucess%></div>
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
                             </div>
                         </section>
                     </div>
                 </div>
-                <%
-                    }
-                %>
-
-
+                <%}%>
                 <!--End of error/success display--> 
 
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                Change Project Manager Password:<br/><br/>
-                                <!--                                <form action="ManageProfile" method="POST">
-                                                                    Password: <input type="password" name="password1" /> </br>
-                                                                    Confirm password again: <input type="password" name="password2" /> </br>
-                                
-                                                                    <button type="submit">submit!</button>
-                                                                </form>-->
+                                Change <%=pm.getUsername()%>'s password:<br/><br/>
 
                                 <form action="ManageProfile" method="POST" class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Password</label>
-                                        <div class="col-lg-10">
+                                        <div class="input-group col-lg-8">
+                                            <span class="input-group-addon btn-white"><i class="fa fa-key"></i></span>
                                             <input type="password" name="password1" class="form-control" id="inputEmail1" placeholder="Password">
-                                            <p></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Confirm Password</label>
-                                        <div class="col-lg-10">
+                                        <div class=" input-group col-lg-8">
+                                            <span class="input-group-addon btn-white"><i class="fa fa-key"></i></span>
                                             <input type="password" name="password2" class="form-control" id="inputPassword1" placeholder="Confirm Password">
                                         </div>
                                     </div>

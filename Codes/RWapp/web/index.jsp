@@ -52,7 +52,7 @@
     </head>
     <body>
         <section id="main-content">
-            <section class="wrapper">
+            <section class="wrapper1">
                 <div class="row">
                     <div class="col-md-12 no-padding">
                         <section class="panel">

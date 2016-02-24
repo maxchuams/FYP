@@ -69,7 +69,7 @@ public class modifyCountry extends HttpServlet {
         }
         RequestDispatcher rd = request.getRequestDispatcher("profilePage.jsp");
         if(success){
-            request.setAttribute("sucess", "Updated Country!");
+            request.setAttribute("sucess", "Country updated!");
             rd.forward(request, response);
             return;
         } else {

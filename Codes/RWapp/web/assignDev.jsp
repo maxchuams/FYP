@@ -16,6 +16,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Recco</title>
+        <script type="text/javascript">
+        jQuery(function(){
+    jQuery(".panel-body").click(function(){          
+        $('input[type=radio]', this).prop("checked",true);
+    });
+});
+        </script>
     </head>
     <body>
         <%
@@ -62,10 +69,9 @@
                                                     Choice <%=count%>
                                                 </header>
                                                 <div class="panel-body">
-
-                                                    <input id="ddl" type="radio" name="dev" value='<%=count%>,<%=devDetails%>'/> 
-                                                    <b> Choose choice # <%=count%></b>
-                                                    <br><br>
+                                                    <center>
+                                                    <input type="radio" id="ddl" name="dev" value='<%=count%>,<%=devDetails%>'/>
+                                                    <br/>
                                                     <% for (Recommendation r : recommendations) {%>
 
                                                     <!--kaiwen code-->
@@ -98,6 +104,7 @@
                                                                     </ul>
                                                                 </div>
                                                             </div>
+                                                                        
                                                             <!--kaiwen code end-->
 
                                                             <%
