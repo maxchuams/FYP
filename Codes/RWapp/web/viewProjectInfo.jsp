@@ -85,7 +85,20 @@
                                 <div class="panel-body profile-information">
                                     <div class="col-md-3">
                                         <div class="profile-pic">
-                                            <img src="<%=ProjectDAO.retrieveTrelloPhoto(p.getName())%>" alt=""/>
+                                            <% if(ProjectDAO.retrieveTrelloPhoto(p.getName())==null){
+                                                            %><img src="bootstrap/html/images/tempProj.png" alt=""/>
+                                                        <%
+                                                        }else{
+                                                            String photo = ProjectDAO.retrieveTrelloPhoto(p.getName());
+                                                            String photoExt = "";
+                                                            if(photo.length()>=3){
+                                                                photoExt = photo.substring(photo.length() - 3);
+                                                            }
+                                                            if(photoExt.equals("jpg") || photoExt.equals("png")){%>
+                                                                <img src="<%=ProjectDAO.retrieveTrelloPhoto(p.getName())%>" alt=""/>
+                                                            <%} else{  %>
+                                                            <img src="bootstrap/html/images/tempProj.png" alt=""/>
+                                                        <%}}%>
 
                                         </div>
                                     </div>
@@ -150,6 +163,22 @@
                                             </td>
                                             <td>
                                                 <%=p.getType()%>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Project priority
+                                            </td>
+                                            <td>
+                                                <%
+                                                int pInt = p.getPriortiy();
+                                                if(pInt==1){
+                                                    out.println("High Priority");
+                                                }else{
+                                                    out.println("Standard Priority");
+                                                }
+                                                %>
                                             </td>
                                             <td></td>
                                         </tr>

@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
                                         <div class="col-lg-10">
-                                            <%if ("0".equals(toEdit.getPriortiy())){%>
+                                            <%if (0==toEdit.getPriortiy()){%>
                                                 <select name='priority' class="form-control m-bot12">
                                                 <option value='0' selected>Standard Project</option>
                                                 <option value='1'>High Priority Project</option>
@@ -86,30 +86,6 @@
                                     <%
                                         ArrayList<String> pTypeList = ProjectDAO.retrieveAllSkillTypes();
                                     %>
-                                    <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
-                                        <div class="col-lg-10">
-                                            <select name='type' class="form-control m-bot15" id="role">
-                                                <%
-                                                    for (String s : pTypeList) {
-                                                        if (!"to be updated".equals(s)) {
-                                                %>
-                                                <option value='<%=s%>'><%=s%></option>
-                                                <%
-                                                        }
-                                                    }
-                                                %>
-
-                                                <option value="Others">Others</option>
-                                            </select>
-                                        </div>
-                                        <div id='devOnly'>
-                                            <label for="inputType" class="col-lg-2 control-label">Project Type </label>
-                                            <div class="col-lg-10">
-                                                <input type='text' name='otherType' class="form-control"/>
-                                            </div>
-                                        </div>
-                                    </div>
                                                 
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project manager</label>
@@ -151,6 +127,38 @@
                                                 <option value="0">Project not completed</option>
                                                 <option value="1">Project has been completed</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="form-group">
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project Type</label>
+                                        <div class="col-lg-10">
+                                            <select name='type' class="form-control m-bot15" id="role">
+                                                <%
+                                                if(toEdit.getType()!=null){
+                                                    if("to be updated".equals(toEdit.getType())){
+                                                        for (String s : pTypeList) {%>
+                                                          <option value='<%=s%>'><%=s%></option>  
+                                                        <%}
+                                                    }else{
+                                                        for (String s : pTypeList) {
+                                                            if(toEdit.getType().equals(s)){%>
+                                                                <option value='<%=s%>'><%=s%></option>  
+                                                            <%}
+                                                        }
+                                                    }
+                                                }
+                                                    
+                                                %>
+
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </div>
+                                        <div id='devOnly'>
+                                            <label for="inputType" class="col-lg-2 control-label">Project Type </label>
+                                            <div class="col-lg-10">
+                                                <input type='text' name='otherType' class="form-control"/>
+                                            </div>
                                         </div>
                                     </div>
                                     
