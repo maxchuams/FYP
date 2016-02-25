@@ -138,10 +138,40 @@ public class ProjectAllocationDAO {
 
             //return true;
         } catch (SQLException ex) {
-            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
             //return false;
         } finally {
 
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+
+        return toReturn;
+    }
+
+    public static ArrayList<String> retrieveDevInProgress(String dev) {
+        ArrayList<String> toReturn = new ArrayList<String>();
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ProjectAllocation pA = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct projectname as name from projectallocation where iscomplete=0 and developerusername=?;");
+            pstmt.setString(1, dev);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(rs.getString("name"));
+            }
+
+            //return true;
+        } catch (SQLException ex) {
+            //Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //return false;
+        } finally {
             ConnectionManager.close(conn, pstmt, rs);
 
         }
