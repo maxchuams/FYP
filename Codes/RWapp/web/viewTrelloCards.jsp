@@ -89,8 +89,8 @@
                     </div>
                 </div>
                 <%}%>
-
                 <!--End of error/success display-->
+                
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
