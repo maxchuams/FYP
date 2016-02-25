@@ -59,12 +59,12 @@
 <!--                                    Type: <%=toEdit.getType()%> </br>-->
 
                                   
-                                    <div class="form-group">
+                                    <!--<div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
                                         <div class="col-lg-10">
                                             <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=toEdit.getPsize()%>" required/>
                                         </div>
-                                    </div>
+                                    </div>-->
                                         
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
