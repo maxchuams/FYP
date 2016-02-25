@@ -27,6 +27,7 @@ import src.model.ConnectionManager;
 import src.model.CronDAO;
 import src.model.Person;
 import src.model.PersonDAO;
+import src.model.Project;
 import src.model.ProjectAllocationDAO;
 import src.model.ProjectDAO;
 import src.model.TrelloBoard;
@@ -175,6 +176,7 @@ public class TestJob implements Job {
             JSONArray cardsArr = new JSONArray(jsonOutput);
             ArrayList<Person> pmList = PersonDAO.retrievAllPM();
             ArrayList<String> errList = new ArrayList<String>();
+            
             for (int i = 0; i < cardsArr.length(); i++) {
 
                 JSONObject tempCard = cardsArr.getJSONObject(i);
@@ -213,8 +215,7 @@ public class TestJob implements Job {
                 boolean success = true;
                 if (idList.equals(listId) && !unassigned && assignby.length() > 0) {
                     String name = tempCard.getString("name");
-                    if (!projList.contains(name)) {
-                        String desc = tempCard.getString("desc").replace("**", "");
+                    String desc = tempCard.getString("desc").replace("**", "");
                         if (desc.length() >= 8000) {
                             desc = desc.substring(0, 8000);
                         }
@@ -228,7 +229,10 @@ public class TestJob implements Job {
                         }
                         String cardId = tempCard.getString("id");
                         System.out.println("assignby " + assignby);
-
+                        Project proj = ProjectDAO.retrieveProjectById(cardId);
+                  
+                    if (!projList.contains(name)) {
+                        
                         success = ProjectDAO.addCardFromTrello(name, assignby, cardId, desc, due, 2, "to be updated", 30);
                         //tcList.add(new TrelloCard(cardId, name, due, desc));
                         Person pm = PersonDAO.retrieveUser(assignby);
@@ -271,26 +275,8 @@ public class TestJob implements Job {
                         if (!success) {
                             errList.add(name + " could not be added to the Database, please try again later");
                         }
-                    }else {
-                    //get values and update
-                    String desc = tempCard.getString("desc").replace("**", "");
-                    if (desc.length() >= 8000) {
-                        desc = desc.substring(0, 8000);
-                    }
-                    String due = "";
-                    try {
-                        due = tempCard.getString("due").substring(0, 10);
-                    } catch (Exception e) {
-                        Calendar cal = Calendar.getInstance();
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        due = sdf.format(cal.getTime());
-                    }
-//                    System.out.println(due);
-                    String cardId = tempCard.getString("id");
-//                    System.out.println("assignby " + assignby);
-
-                    
-                    //tcList.add(new TrelloCard(cardId, name, due, desc));
+                    }else if (proj != null && proj.getName().equals(name)) {
+                  
                     Person pm = PersonDAO.retrieveUser(assignby);
                     String url = "";
                     try {
@@ -339,7 +325,9 @@ public class TestJob implements Job {
                     if (!success) {
                         errList.add(name + " could not be added to the Database, please try again later");
                     }
-                }
+                } else {
+                        errList.add("Duplicate entry for " + name);
+                    }
 
                 } 
 //                else if (){
