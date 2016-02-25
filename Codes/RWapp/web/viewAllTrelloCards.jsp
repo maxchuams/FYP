@@ -99,8 +99,8 @@
                                     </br>Last update time: <%=CronDAO.retrieveTime()%></label>
                                 <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewAllTrelloCards"/>
-                                    <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
-                                        Sync Projects
+                                    <button type="submit" class="btn btn-info pull-right top-menu" onClick="updateProjectFromTrello">
+                                        Pull Assigned Projects From Trello
                                     </button>
                                 </form>
                             </div>

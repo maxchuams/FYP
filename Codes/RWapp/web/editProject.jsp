@@ -131,7 +131,7 @@
                                     </div>
                                         
                                     <%
-                                        ArrayList<String> pTypeList = ProjectDAO.retrieveAllSkillTypes();
+                                        ArrayList<String> pTypeList = ProjectDAO.retrieveAllTypes();
                                     %>
                                                 
                                     <div class="form-group">
