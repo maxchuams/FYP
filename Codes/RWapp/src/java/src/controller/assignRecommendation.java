@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import src.model.ConnectionManager;
 import src.model.Person;
 import src.model.PersonDAO;
+import src.model.ProjectDAO;
 import src.model.RecommedationDAO;
 import src.model.Recommendation;
 import src.model.TrelloBoard;
@@ -100,6 +101,15 @@ public class assignRecommendation extends HttpServlet {
         }
         try {
             String projName = request.getParameter("card");
+            String nameForRequestObj = request.getParameter("name");
+            ArrayList<String> pList = ProjectDAO.retrieveAllProjectNames();
+            if(pList.contains(nameForRequestObj)){
+                String err = "Duplicate name for project. There is already a project with the same name in the database";
+                 RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp?name="+ nameForRequestObj + "&id=" + projName);
+                 request.setAttribute("err", err);
+                    view.forward(request, response);
+                    return;
+            }
             String intensity = request.getParameter("priority");
             String type = request.getParameter("type");
             String otherType = request.getParameter("otherType");
@@ -117,7 +127,7 @@ public class assignRecommendation extends HttpServlet {
             String experienceFactorStr = request.getParameter("experienceFactor");
             String defectFactorStr = request.getParameter("defectFactor");
             String scheduleFactorStr = request.getParameter("scheduleFactor");
-            String nameForRequestObj = request.getParameter("name");
+            
             String id = request.getParameter("id");
 
             //Setting attriute to pass back to previous page if needed 
@@ -150,7 +160,7 @@ public class assignRecommendation extends HttpServlet {
             double defectFactor = Double.parseDouble(defectFactorStr);
             double scheduleFactor = Double.parseDouble(scheduleFactorStr);
 
-            RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp?name="+ nameForRequestObj + "&id=" + projName);
             try {
                 boolean valid = validDate(sDate);
                 if (!valid) {
