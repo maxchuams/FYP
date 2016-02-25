@@ -63,6 +63,9 @@ public class updateDevSkill extends HttpServlet {
         }
         String user = request.getParameter("user");
         String skill = request.getParameter("skills");
+        if("others".equalsIgnoreCase(skill)){
+            skill = request.getParameter("otherType");
+        }
 
         Person p = PersonDAO.retrieveUser(user);
         if (skill != null && skill.length() > 0) {

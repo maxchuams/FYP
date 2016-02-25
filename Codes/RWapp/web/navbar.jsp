@@ -161,6 +161,7 @@
                     <!-- sidebar menu start-->
                     <div class="leftside-navigation">
                         <ul class="sidebar-menu" id="nav-accordion">
+                            <!--DASHBOARD-->
                             <li>
                                 <% if (thisPage.equals("index") || thisPage.equals("sudo")) { %>
                                 <a class="active" href="index.jsp"> <% } else { %>
@@ -169,6 +170,25 @@
                                         <span>Dashboard</span>
                                     </a>
                             </li>
+                            <!--END DASHBOARD-->
+                            
+                            
+                            <!--TRELLO PROPERTIES-->
+                            <% if(sudo!=null){ %>
+                            <li>
+                                <% if (thisPage.equals("trelloProperties")) { %>
+                                <a class="active" href="trelloProperties.jsp"> <% } else { %>
+                                    <a href="trelloProperties.jsp"> <% } %>
+                                        <i class="fa fa-trello"></i>
+                                        <span>Edit Trello Details</span>
+                                    </a>
+                            </li>
+                            <% } %>
+                            <!--END TRELLO PROPERTIES-->
+                            
+                            
+                            
+                            <!--MANAGE DEFECT DEV-->
                             <%if (dev != null) {%>
                             <li class="sub-menu">
                                 <% if (thisPage.equals("viewDefects") || thisPage.equals("viewSortedDefects")) { %>
@@ -186,6 +206,9 @@
                                             <%}%>
                                     </ul>
                             </li><%}%>
+                            <!--MANAGE DEFECT DEV-->
+                            
+                            <!--MANAGE DEFECTS PM TESTER-->
                             <%if (pm != null || tester != null) {%>
                             <li class="sub-menu">
                                 <% if (thisPage.equals("manageDefects") || thisPage.equals("sortedDefects") || thisPage.equals("addDefect")) { %>
@@ -194,7 +217,6 @@
                                         <i class="fa fa-bug"></i>
                                         <span>Defects</span>
                                     </a>
-
 
                                     <ul class="sub">
                                         <%if (pm != null || tester != null) {%>
@@ -210,6 +232,9 @@
                                     </ul>
 
                             </li><%}%>
+                            <!--END MANAGE DEFECTS PM TESTER-->
+                            
+                            <!-- MANAGE PROJECT-->
                             <%if (sudo == null) {%>
                             <li class="sub-menu">
                                 <% if (thisPage.equals("viewTrelloCards") || thisPage.equals("viewCompletedProjects") || thisPage.equals("viewAllTrelloCards") || thisPage.equals("updateProjectType") || thisPage.equals("viewUnassignedCards")) { %>
@@ -241,29 +266,61 @@
                                         <li class="active"><a href="updateProjectType.jsp">Update Project Type</a></li><% } else { %>
                                         <li><a href="updateProjectType.jsp">Update Project Type</a></li><% } %>
                                             <%}%>
-
                                     </ul>
                             </li>
                             <%}%>
-                            <%if (sudo != null || pm !=null) {%>
-                            <li>
-                                <% if (thisPage.equals("manageUser") || thisPage.equals("manageDevProfile")) {%>
-                                <a class="active" href="manageUser.jsp"> <% } else { %>
-                                    <a href="manageUser.jsp"> <% }%>
-                                        <i class="fa fa-users"></i>
-                                        <span><%if (sudo!=null){%>Manage Users<%}if(pm!=null){%>Manage Developers<%}%></span>
-                                    </a>
-                            </li>
-<%} if(sudo!=null){%>
+                            <!--END MANAGE PROJECTS-->
+                           
+                            <!-- MANAGE USERS SUDO-->
+                            <% if (sudo!=null){ %>
                             <li class="sub-menu">
-                                <% if (thisPage.equals("addUsers")) {%>
-                                <a class="active" href="addUsers.jsp"><% } else { %>
-                                    <a href="addUsers.jsp"> <% }%>
-                                        <i class="fa fa-plus-circle"></i>
-                                        <span>Create Account</span>
+                                <% if (thisPage.equals("addUsers") || thisPage.equals("managePM") || thisPage.equals("manageDevProfile") || thisPage.equals("manageUser")) { %>
+                                <a href="javascript:;" class="active"> <% } else { %>
+                                    <a href="javascript:;"> <% } %>
+                                        <i class="fa fa-users"></i>
+                                        <span>Manage Team</span>
                                     </a>
+
+                                    <ul class="sub">
+                                        <% if (thisPage.equals("addUsers")) {%>
+                                        <li class="active"><a class="active" href="addUsers.jsp">Create Account</a></li><% } else { %>
+                                        <li><a href="addUsers.jsp">Create Account</a></li><% }%>
+                                           
+                                        
+                                        <% if (thisPage.equals("managePM")) {%>
+                                        <li class="active"><a class="active" href="managePM.jsp">Manage Project Managers</a></li> <% } else { %>
+                                        <li><a href="managePM.jsp">Manage Project Managers</a></li><% }%>
+                                        
+                                        <% if (thisPage.equals("manageUser") || thisPage.equals("manageDevProfile")) {%>
+                                        <li class="active"><a class="active" href="manageUser.jsp">Manage Developers</a></li> <% } else { %>
+                                        <li><a href="manageUser.jsp">Manage Developers</a></li><% }%>
+                                    </ul>
                             </li>
-                            <%}%>
+                            <% } %>
+                            <!-- END MANAGE USERS SUDO-->
+                            
+                            
+                            <!-- MANAGE USERS PM-->
+                            <% if(pm!=null){ %>
+                            <li class="sub-menu">
+                                <% if (thisPage.equals("addUsers") || thisPage.equals("managePM") || thisPage.equals("manageDevProfile") || thisPage.equals("manageUser")) { %>
+                                <a href="javascript:;" class="active"> <% } else { %>
+                                    <a href="javascript:;"> <% } %>
+                                        <i class="fa fa-users"></i>
+                                        <span>Manage Team</span>
+                                    </a>
+                                    <ul class="sub">
+                                    <% if (thisPage.equals("manageUser") || thisPage.equals("manageDevProfile")) {%>
+                                        <li class="active"><a class="active" href="manageUser.jsp">Manage Developers</a></li> <% } else { %>
+                                        <li><a href="manageUser.jsp">Manage Developers</a></li><% }%>
+                                    </ul>
+                            </li>
+                            <% } %>
+                            <!-- END MANAGE USERS PM-->
+                            
+                            
+                            
+                            
                         </ul>            
                     </div>
                     <!-- sidebar menu end-->

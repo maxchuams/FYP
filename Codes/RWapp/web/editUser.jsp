@@ -16,6 +16,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Recco</title>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#devOnly').hide(); //hide field on start
+
+                $('#skills').change(function () {
+
+                    var $index = $('#skills').index(this);
+                    if ($('#skills').val() != 'Others') { //if this value is NOT selected
+                        $('#devOnly').hide(); //this field is hidden
+                    }
+                    else {
+                        $('#devOnly').show();//else it is shown
+
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         <%
@@ -107,9 +124,9 @@
                                             </div>
                                         </div>
                                         <input type="hidden" name="user" value="<%=p.getUsername()%>"/>
-                                        <div class="col-lg-offset-11 col-lg-1">
+                                        <div class="col-lg-offset-3 col-lg-9">
                                             <p></p>
-                                            <input type="submit" class="btn btn-primary btn-xs" value="Update"></input>
+                                            <input type="submit" class="btn btn-primary" value="Update"></input>
                                         </div>
                                     </form>
                                 </div>
@@ -131,15 +148,17 @@
                                             </div>
                                         </div>
                                         <input type="hidden" name="user" value="<%=p.getUsername()%>"/>
-                                        <div class="col-lg-offset-11 col-lg-1">
+                                        <div class="col-lg-offset-3 col-lg-9">
                                             <p></p>
-                                            <input type="submit" class="btn btn-primary btn-xs" value="Change"></input>
+                                            <input type="submit" class="btn btn-primary" value="Change"></input>
                                         </div>
                                     </form>
                                 </div>
                                 <%
                                     if (p.getType().equals("c")) {
                                         ArrayList<Skill> sList = SkillDAO.retrieveDevSkill(p.getUsername());
+                                        ArrayList<String> sListString = SkillDAO.retrieveDevSkillString(p.getUsername());
+                                        ArrayList<String> allSkills = SkillDAO.retrieveAllSkill();
 
                                 %><div class="panel-body"><form action="updateDevSkill" method="GET"><hr/>
                                         <i class="fa fa-pencil-square-o"></i> Update Developer Skills
@@ -157,18 +176,33 @@
                                             %></div>
 
                                         <label for="inputEmail1" class="col-lg-12 col-sm-12 control-label"></label>
+                                        <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Add New Skill</label>
                                         <div class="col-lg-9">
-                                            <select name="skills" class="form-control m-bot15">
-                                                <option value="Wordpress">Wordpress</option>
-                                                <option value="eCommerce">eCommerce</option>
-                                                <option value="Custom">Custom</option>
+                                            <select name="skills" id="skills" class="form-control m-bot15">
+                                                <% for(String s : allSkills){ 
+                                                    if(!sListString.contains(s)){%>
+                                                        <option value="<%=s%>"><%=s%></option>
+                                                    <%}
+                                                %>
+                                                <% } %>
+                                                
+                                            <option value="Others">Others</option>
                                             </select>
                                         </div>
-
+                                        <div id='devOnly'>
+                                            <label for="inputType" class="col-lg-3 control-label">Project Type </label>
+                                            <div class="col-lg-9">
+                                                <input type='text' name='otherType' class="form-control"/>
+                                            </div>
+                                            
+                                        </div>
+                                        </div>
+                                        <p></p><label for="inputEmail1" class="col-lg-12 col-sm-12 control-label"></label><br/>
                                         <input type="hidden" name="user" value="<%=p.getUsername()%>"/>
-                                        <div class="col-lg-offset-11 col-lg-1">
-                                            <input type="submit" class="btn btn-primary btn-xs" value="Add"></input>
+                                        
+                                        <div class="col-lg-offset-3 col-lg-9">
+                                            <input type="submit" class="btn btn-primary" value="Add"></input>
                                         </div>
                                     </form>
                                 </div>
@@ -178,14 +212,14 @@
                                         <label for="inputEmail1" class="col-lg-3 col-sm-3 control-label">Delete Skill</label>
                                         <div class="col-lg-9">
                                             <select name="skill" class="form-control m-bot15">
-                                                <option value="Wordpress">Wordpress</option>
-                                                <option value="eCommerce">eCommerce</option>
-                                                <option value="Custom">Custom</option>
+                                                <% for(Skill s : sList){ %>
+                                                <option value="<%=s.getSkill()%>"><%=s.getSkill()%></option>
+                                                <% } %>
                                             </select>
                                         </div>
                                         <input type="hidden" name="user" value="<%=p.getUsername()%>"/>
-                                        <div class="col-lg-offset-11 col-lg-1">
-                                            <input type="submit" class="btn btn-primary btn-xs" value="Delete"></input>
+                                        <div class="col-lg-offset-3 col-lg-9">
+                                            <input type="submit" class="btn btn-primary" value="Delete"></input>
                                         </div>
                                     </form>
                                 </div>

@@ -18,7 +18,34 @@ import java.util.logging.Logger;
  * @author admin
  */
 public class SkillDAO {
+    
+    public static ArrayList<String> retrieveDevSkillString(String username) {
 
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Person user = null;
+
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select skill from developerskill where username like ?");
+            pstmt.setString(1, username);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            ConnectionManager.close(conn,pstmt,rs);
+            return toReturn;
+        }
+        
+
+    }
+    
     public static ArrayList<Skill> retrieveDevSkill(String username) {
 
         Connection conn = null;
@@ -36,6 +63,31 @@ public class SkillDAO {
             while (rs.next()) {
                 Skill toAdd = new Skill(rs.getString(1), rs.getString(2));
                 toReturn.add(toAdd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            ConnectionManager.close(conn,pstmt,rs);
+            return toReturn;
+        }
+        
+
+    }
+    
+    public static ArrayList<String> retrieveAllSkill() {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct skill from developerskill");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(rs.getString(1));
             }
         } catch (SQLException ex) {
             Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
