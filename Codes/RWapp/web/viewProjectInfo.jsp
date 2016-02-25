@@ -31,12 +31,7 @@
             Project p = ProjectDAO.retrieveProjectByProjectName(projectName);
             ArrayList<String> arr = ProjectDAO.retrievePlanActualEnd(projectName);
             
-            if(arr==null){
-                Date newD = new Date();
-                arr.add(newD.toString());
-                arr.add(newD.toString());
-            }
-            System.out.println(arr.get(0));
+           
             ArrayList<Defect> dList = null;
             if (pm != null) {
                 dList = DefectDAO.retrievePm(pm.getUsername());

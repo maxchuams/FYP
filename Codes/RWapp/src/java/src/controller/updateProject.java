@@ -37,10 +37,12 @@ import src.model.TrelloBoard;
  * @author maxchua
  */
 public class updateProject extends HttpServlet {
+
     private static final String PROPS_FILENAME = "/trello.properties";
     private static String mainboard;
     private static String devList;
     private static String postDevList;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,9 +54,8 @@ public class updateProject extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-HttpSession sess = request.getSession();
-       
-        
+        HttpSession sess = request.getSession();
+
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -82,7 +83,6 @@ HttpSession sess = request.getSession();
             Properties props = new Properties();
             props.load(is4);
 
-          
             mainboard = props.getProperty("trello.mainboard").trim();
             devList = props.getProperty("trello.developmentList").trim();
             postDevList = props.getProperty("trello.postdevlist");
@@ -96,19 +96,27 @@ HttpSession sess = request.getSession();
 
         try {
             String assignedby = request.getParameter("assignedby");
+//            System.out.println("assigned by "  + assignedby);
             String due = request.getParameter("duedate");
+//            System.out.println("due " + due);
             String priority = request.getParameter("priority");
+//            System.out.println("priority " + priority);
             int pInt = Integer.parseInt(priority);
             String iscomplete = request.getParameter("iscomplete");
+//            System.out.println("iscomplete" + iscomplete);
             int cInt = Integer.parseInt(iscomplete);
             String days = request.getParameter("days");
+//            System.out.println("days " + days);
             int dInt = Integer.parseInt(days);
             String type = request.getParameter("type");
-            if ("Others".equalsIgnoreCase(type)){
+            if ("Others".equalsIgnoreCase(type)) {
                 type = request.getParameter("otherType");
             }
+//            System.out.println("type " + type);
 
             boolean success = ProjectDAO.updateProject(assignedby, due, pInt, cInt, dInt, type, pname);
+
+//            System.out.println("success " + success);
             if (success) {
                 try {
                     if (cInt == 1) {
@@ -171,10 +179,10 @@ HttpSession sess = request.getSession();
                         }
                         Project cardToUpdate = ProjectDAO.retrieveProjectByProjectName(pname);
                         String id = cardToUpdate.getTrelloKey();
-                        
+
                         System.out.println("list id : " + listId + "  ** card id = " + id);
 
-                        String url = "https://api.trello.com/1/cards/"+ id + "/idList?";
+                        String url = "https://api.trello.com/1/cards/" + id + "/idList?";
                         URL moveToTrello = new URL(url);
                         HttpsURLConnection con1 = (HttpsURLConnection) moveToTrello.openConnection();
 
@@ -184,7 +192,7 @@ HttpSession sess = request.getSession();
                         con1.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
                         con1.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                        String urlParameters = "value="+ listId +"&key=" +key + "&token=" + token;
+                        String urlParameters = "value=" + listId + "&key=" + key + "&token=" + token;
 
                         // Send post request
                         con1.setDoOutput(true);
@@ -218,12 +226,12 @@ HttpSession sess = request.getSession();
                     rd.forward(request, response);
                     return;
                 }
-                if(cInt==1){
+                if (cInt == 1) {
                     RequestDispatcher rd = request.getRequestDispatcher("viewCompletedProjects.jsp?pname=" + pname);
                     request.setAttribute("success", "Project marked as completed");
                     rd.forward(request, response);
                     return;
-                }else{
+                } else {
                     RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp?pname=" + pname);
                     request.setAttribute("success", "Project successfully updated");
                     rd.forward(request, response);

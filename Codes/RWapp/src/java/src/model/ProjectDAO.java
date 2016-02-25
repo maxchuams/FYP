@@ -348,6 +348,7 @@ public class ProjectDAO {
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
             return false;
         } finally {
 

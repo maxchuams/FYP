@@ -112,7 +112,7 @@
                                             <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=toEdit.getPsize()%>" required/>
                                         </div>
                                     </div>-->
-                                        
+                                       <input type="hidden" name="days" value="<%=toEdit.getPsize()%>"/>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Priority</label>
                                         <div class="col-lg-10">
