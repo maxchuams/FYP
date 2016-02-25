@@ -107,32 +107,36 @@ public class addNewDefect extends HttpServlet {
             ArrayList<String> devList = ProjectAllocationDAO.retrieveDev(projname);
             if (devList.size() > 1 && filter.equals("yes")) {
                 //return error
-               RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
                 request.setAttribute("err", "Project selected contains more than 1 developer. Please select no and select a developer as well.");
                 rd.forward(request, response);
                 return;
-            } else if ("yes".equals(filter)){
-                int severity = Integer.parseInt(sev);
-                success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr,devList.get(0));
-            } else if ("no".equals(filter)){
+                
+            }  else if ("no".equals(filter) || devList.size()==0 ) {
                 String devname = request.getParameter("devname");
-                if (devname == null){
+                if (devname == null) {
                     errList.add("Please select a developer");
-                } else {
+                } else if(devList.size()==0){
+                    errList.add("No developer pre-assign to this project. Manually select one");
+                }else {
                     int severity = Integer.parseInt(sev);
-                    success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr,devname);
+                    success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr, devname);
                 }
+            } else if ("yes".equals(filter)) {
+                int severity = Integer.parseInt(sev);
+                success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr, devList.get(0));
             }
 
             if (success) {
                 Defect d = DefectDAO.retrieveDefectByName(defname);
                 int id = d.getId();
-                RequestDispatcher rd = request.getRequestDispatcher("viewDefectInfo.jsp?defectId="+id);
+                RequestDispatcher rd = request.getRequestDispatcher("viewDefectInfo.jsp?defectId=" + id);
                 request.setAttribute("sucess", "Defect " + defname + "  from Project " + projname + " has been successfully added into the system");
                 rd.forward(request, response);
                 return;
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
+                request.setAttribute("err1", errList);
                 request.setAttribute("err", "Database Error: Defect could not be added into the system");
                 rd.forward(request, response);
                 return;

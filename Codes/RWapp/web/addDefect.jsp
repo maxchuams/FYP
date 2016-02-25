@@ -150,17 +150,18 @@
                     }else{
                         per = (Person)session.getAttribute("loggedInTester");
                     }
-                                                ArrayList<String> pList = ProjectAllocationDAO.retrieveInProgress();
+                                                //ArrayList<String> pList = ProjectAllocationDAO.retrieveInProgress();
+                                                 ArrayList<Project> pList = ProjectDAO.retrieveAll();
                                                 
                                                 
                                                 
                                                 
-                                                for (String p : pList) {
-                                                    if (name != null && name.equalsIgnoreCase(p)) {%>
-                                            <option value='<%=p%>' selected><%=p%></option>
+                                                for (Project p : pList) {
+                                                    if (name != null && name.equalsIgnoreCase(p.getName())) {%>
+                                            <option value='<%=p.getName()%>' selected><%=p.getName()%></option>
                                             <%} else {
                                             %>
-                                            <option value='<%=p%>'><%=p%></option>
+                                            <option value='<%=p.getName()%>'><%=p.getName()%></option>
                                             <%
                                                     }
                                                 }
