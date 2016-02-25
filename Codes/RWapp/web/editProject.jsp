@@ -190,7 +190,9 @@
                                                     }else{
                                                         for (String s : pTypeList) {
                                                             if(toEdit.getType().equals(s)){%>
-                                                                <option value='<%=s%>'><%=s%></option>  
+                                                                <option value='<%=s%>' selected><%=s%></option>  
+                                                            <%}else{%>
+                                                                <option value='<%=s%>' ><%=s%></option>
                                                             <%}
                                                         }
                                                     }
