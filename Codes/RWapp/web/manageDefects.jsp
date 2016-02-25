@@ -119,102 +119,16 @@
                 %>
                 <div class="row">
                     <div class="col-lg-12">
-                        <!--                        <section class="panel">
-                                                    <header class="panel-heading tab-bg-dark-navy-blue ">
-                                                        <ul class="nav nav-tabs">
-                                                            <li class="active">
-                                                                <a data-toggle="tab" href="#home">Sort defects</a>
-                                                            </li>
-                                                            <li class="">
-                                                                <a data-toggle="tab" href="#about">Filter Defects</a>
-                                                            </li>
-                                                        </ul>
-                                                    </header>
-                                                    <div class="panel-body">
-                                                        <div class="tab-content">
-                                                            <div id="home" class="tab-pane active">
-                                                                <form action="sortData" class="form-group">
-                                                                    <label class="control-label col-lg-2" for="inputSuccess">Sort by:</label>
-                                                                    <div class="col-lg-3">
-                                                                        <select name="sortby" class="form-control m-bot15">
-                                                                            <option value=''>Select one...</option>
-                                                                            <option value="projectname">Project Name</option>
-                                                                            <option value="defectname">Defect Name</option>
-                                                                            <option value="updatetime">Update Time</option>
-                                                                        </select>
-                                                                        <input type="hidden"  name='username' value='<%=per.getUsername()%>'/>
-                                                                        <input type='hidden' value='' name='inputText'/>
-                                                                        <input type='hidden' value='' name='filter'/>
-                                                                        <input type='hidden' value='pm' name='case'/>
-                                                                    </div>
-                                                                    <div class="col-lg-3">
-                                                                        <button type="submit" class="btn btn-primary">Sort</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                            <div id="about" class="tab-pane" class="form-control m-bot15">
-                                                                <form action="sortData" class="form-group">
-                                                                    <label class="control-label col-lg-2" for="inputSuccess">Filter by:</label>
-                                                                    <div class="col-lg-3">
-                                                                        <select name="filter" id="role" class="form-control m-bot15">
-                                                                            <option>Select one..</option>
-                                                                            <option value="projectname">Project Name</option>
-                                                                            <option value="defectname">Defect Name</option>
-                                                                            <option value="severity">Severity</option>
-                                                                            <option value="iscomplete">Completion status</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div id="pname">
-                        <%
-                            ArrayList<Project> pList = ProjectDAO.retrieveAll();
-                        %>
-                        <div class="col-lg-3">
-                            <select name="inputP" class="form-control m-bot15">
-                        <%for (Project p : pList) {%>
-                        <option value='<%=p.getName()%>'><%=p.getName()%></option>
-                        <%}%>
-                    </select>
-                </div>
-            </div>
-            <div id="severity">
-                <div class="col-lg-3">
-                    <select name="inputS" class="form-control m-bot15">
-                        <option value="1">Low</option>
-                        <option value="2">Medium</option>
-                        <option value="3">High</option>
-                    </select>
-                </div>
-            </div>
-            <div id="completed">
-                <div class="col-lg-3">
-                    <select name="inputC" class="form-control m-bot15">
-                        <option value="0">Developer has not yet complete</option>
-                        <option value="1">Developer has marked as completed</option>
-                        <option value="2">Defect has been resolved</option>
-                    </select>
-                </div>
-            </div>
-
-            <input type="hidden" name='username' value='<%=per.getUsername()%>'/>
-            <input type='hidden' name='sortby' value=''/>
-            <input type='hidden' value='pm' name='case'/>
-
-            <div class="col-lg-1">
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </div>
-        </form>
-    </div>
-</div>
-</div>
-</section>-->
                         <!--kaiwen codes-->
 
                         <%
+                            ArrayList<Project> pList = ProjectDAO.retrieveAll();
                             ArrayList<Defect> dList = null;
                             if(pm!=null){
-                            dList = DefectDAO.retrievePm(pm.getUsername());
+                                //dList = DefectDAO.retrievePm(pm.getUsername());
+                                dList = DefectDAO.retrieveAll();
                             }else{
-                            dList = DefectDAO.retrieveTester();
+                                dList = DefectDAO.retrieveTester();
                             }
                         %>
 
