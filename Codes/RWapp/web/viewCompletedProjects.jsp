@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <%}%>
-                <%if (errorList!=null && errorList.size()!=0) {%>
+                <%if (errorList != null && errorList.size() != 0) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
@@ -68,9 +68,9 @@
                                 <button data-dismiss="alert" class="close close-sm" type="button">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <%for(String e : errorList){
-                                    out.println(e);
-                                }%>
+                                <%for (String e : errorList) {
+                                        out.println(e);
+                                    }%>
                             </div>
                         </section>
                     </div>
@@ -106,15 +106,16 @@
                 <%}%>
 
                 <!--End of error/success display-->
-                
+
                 <!-- if no projects!-->
                 <% int count = 0;
                     for (Project t : tList) {
-                   if(t.getIsComplete() == 1){ 
-                       count++;
-                   }}
-                    if(count==0){
-   %> 
+                        if (t.getIsComplete() == 1) {
+                            count++;
+                        }
+                    }
+                    if (count == 0) {
+                %> 
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
@@ -129,7 +130,7 @@
                 </div>
                 <% } %>      
                 <!-- if no projects end !-->
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
@@ -145,16 +146,16 @@
                         </section>
                     </div>
                 </div>
-                
-                
+
+
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row-fluid" id="draggable_portlets">
                             <div class="row">
                                 <%
                                     for (Project t : tList) {
-                                        if(t.getIsComplete() == 1){%>
-                                            <!-- BEGIN Portlet PORTLET-->
+                                        if (t.getIsComplete() == 1) {%>
+                                <!-- BEGIN Portlet PORTLET-->
                                 <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");%>
                                 <div class="col-md-4">
                                     <div class="panel panel-default">
@@ -170,24 +171,24 @@
                                                         <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
                                                     </div>
                                                 </div>
-                                                    
+
                                                 <span class="pull-right">
                                                     <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li><br/><br/>
                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
                                                         <% if (dev != null && pm == null) {%>
                                                     <li> <b>Assigned by:</b> <%=t.getAssignedBy()%> <%}%></li>
                                                     <li> <b>Developer:</b>
-                                                        <% 
-                                            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(t.getName());
-                                            if(getDev.size()==1){
-                                                for (String developer : getDev){
-                                                    out.println(developer+"<br/>");
-                                                }
-                                            }else{
-                                                out.println("2 Developers");
-                                            }
-                                            
-                                            %>
+                                                        <%
+                                                            ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(t.getName());
+                                                            if (getDev.size() == 1) {
+                                                                for (String developer : getDev) {
+                                                                    out.println(developer + "<br/>");
+                                                                }
+                                                            } else {
+                                                                out.println("2 Developers");
+                                                            }
+
+                                                        %>
                                                     </li>
                                                 </span>
                                             </ul>
@@ -196,8 +197,8 @@
                                 </div>
                                 </a>
                                 <!-- END Portlet PORTLET-->
-                                    <%    }
-                                    }%>
+                                <%    }
+                                        }%>
                             </div>
                         </div>
                     </div>

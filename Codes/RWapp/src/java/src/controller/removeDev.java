@@ -135,6 +135,13 @@ public class removeDev extends HttpServlet {
                     if(!alter){
                         errList.add(d + " cannot be deleted!");
                     }
+                    ArrayList<String> devList = ProjectAllocationDAO.retrieveDev(proj.getName());
+                    if(devList.size() == 0){
+                        boolean setComplete = ProjectDAO.setIsComplete(proj.getName(), -1);
+                        if(!setComplete){
+                            errList.add("Project state could not be changed in the Database. Please contact System administrator.");
+                        }
+                    }
                 } catch (Exception e) {
                     errList.add("System cannot send details to Trello, please try again later!");
                     //route back to the deletepage

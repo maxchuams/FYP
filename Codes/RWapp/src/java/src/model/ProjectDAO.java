@@ -466,5 +466,33 @@ public class ProjectDAO {
         }
 
     }
+    
+     public static boolean setIsComplete(String projectname, int isComplete) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
+
+            String sql = "UPDATE project set iscomplete=? where projectname=?";
+
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, isComplete);
+            pstmt.setString(2, projectname);
+           
+
+            //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionManager.close(conn, pstmt);
+        }
+        return true;
+    }
 
 }
