@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <%}%>
-                <%if (sucess != null) {%>
+                <%if (errorList != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
@@ -83,7 +83,9 @@
                                 <button data-dismiss="alert" class="close close-sm" type="button">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <%=sucess%>
+                                <%for(int i=0; i < errorList.size(); i++){
+                                    out.println((i+1) + ". " + errorList.get(i) + "<br/>");
+                                }%>
                             </div>
                         </section>
                     </div>
