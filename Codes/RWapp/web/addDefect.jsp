@@ -214,9 +214,7 @@
                                             <input type="date" class="form-control m-bot12" name="duedate" required/>
                                             <p></p>
                                         </div>
-
                                     </div>   
-
 
 
                                     <div class="form-group">

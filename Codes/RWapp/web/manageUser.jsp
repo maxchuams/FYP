@@ -3,6 +3,7 @@
     Created on : Sep 14, 2015, 12:28:56 PM
     Author     : admin
 --%>
+<%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.DeveloperDAO"%>
 <%@page import="src.model.Developer"%>
 <%@page import="src.model.Skill"%>
@@ -160,7 +161,10 @@
                                                 String d = DeveloperDAO.retrieveDevCountry(p.getUsername());
                                                 out.println(d);
                                             %></td>
-                                            <td></td>
+                                            <td>
+                                                <%ArrayList<String> getNumberAllocated = ProjectAllocationDAO.retrieveDevInProgress(p.getUsername());%>
+                                                <%=getNumberAllocated.size()%>
+                                            </td>
                                             <% if(sudo!=null){ %>
                                             <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-info btn-xs">Edit</button></a></td>
                                             <% } %>
