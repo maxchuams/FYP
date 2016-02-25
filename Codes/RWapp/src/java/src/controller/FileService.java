@@ -15,8 +15,6 @@ import java.io.OutputStream;
  * @author KIANLAM
  */
 public abstract class FileService{
-
-
  public static void exportBuffer(byte[] buffer,OutputStream out){
 
      ByteArrayInputStream input = null;  

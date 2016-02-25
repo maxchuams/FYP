@@ -76,7 +76,7 @@ public class ImageServlet extends HttpServlet{
            //System.out.println("Image size: " +ibto.getImageBuffer().length );
            
           
-          if(ibto.getImageBuffer().length == 0){
+          if(ibto.getImageBuffer() == null || ibto.getImageBuffer().length == 0){
                //replace with some nice photo
                //System.out.println(imageName);
                 HashGeneratorInterface hashGenerator = new MessageDigestHashGenerator("MD5");
