@@ -20,25 +20,15 @@
     <body>
         <% ArrayList<TrelloCard> tb = (ArrayList<TrelloCard>) session.getAttribute("tc");
 
-            String errorMsg = (String) request.getAttribute("err");
-            String sucess = (String) request.getAttribute("sucess");
-            if (errorMsg == null) {
-                errorMsg = "";
-            }
-
-            if (sucess == null) {
-                sucess = "";
-            }
-
 
         %>
         <section id="main-content">
             <section class="wrapper">
 
                 <!--Error/success display-->
-                <%   errorMsg = (String) request.getAttribute("err");
-                    sucess = (String) request.getAttribute("sucess");
-
+                <%  String errorMsg = (String) request.getAttribute("err");
+                    String sucess = (String) request.getAttribute("sucess");
+                    ArrayList<String> errList = (ArrayList<String>) request.getAttribute("errList");
                     if (errorMsg != null) {
                 %>
                 <div class="row">
@@ -58,6 +48,20 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <div class="text-success"><%=sucess%></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%
+                    }
+                    if (errList != null) {
+                %>
+              
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="text-success"><%=errList%></div>
                             </div>
                         </section>
                     </div>
@@ -92,7 +96,10 @@
                                             </thead>
                                             <tbody>
                                             
-                <% if (tb != null) {
+                <% if (tb
+
+                    
+                        != null) {
                         for (TrelloCard t : tb) {
                 %> 
                 <tr>

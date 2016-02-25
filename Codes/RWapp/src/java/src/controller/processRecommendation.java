@@ -96,8 +96,15 @@ public class processRecommendation extends HttpServlet {
         Person pm = PersonDAO.retrieveUser(pmname);
         if (errList.isEmpty()) {
             //to add in code to check if project exist
+            ArrayList<String> pList = ProjectDAO.retrieveAllProjectNames();
             Project toAdd = new Project(projName, id, desc, pmname, due, Integer.parseInt(priority), 0, type, Integer.parseInt(psize));
-            success = ProjectDAO.add(toAdd);
+            if (pList.contains(projName)){
+               success =  ProjectDAO.updateProject(pmname, due, Integer.parseInt(priority), 0, Integer.parseInt(psize), type, projName);
+            } else {
+                success = ProjectDAO.add(toAdd);
+            }
+            
+            
             try {
                 URL memberUrl = new URL("https://api.trello.com/1/cards/" + id + "/attachments?fields=url&key=" + pm.getTrelloKey() + "&token=" + pm.getToken());
                 //System.out.println(memberUrl);
@@ -235,16 +242,16 @@ public class processRecommendation extends HttpServlet {
             }
         }
         System.out.println("projectname: " + projName);
-        RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
+        
         if (errList.isEmpty()) {
-     
+            RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
             RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim())-1);
             request.setAttribute("sucess", "Project sucessfully assigned!");
             rd.forward(request, response);
             return;
 
         } else {
-
+            RequestDispatcher rd = request.getRequestDispatcher("viewUnassignedCards.jsp");
             request.setAttribute("errList", errList);
             rd.forward(request, response);
             return;
