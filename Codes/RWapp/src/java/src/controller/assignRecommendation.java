@@ -102,6 +102,7 @@ public class assignRecommendation extends HttpServlet {
             String projName = request.getParameter("card");
             String intensity = request.getParameter("priority");
             String type = request.getParameter("type");
+            String otherType = request.getParameter("otherType");
             if ("Others".equals(type)) {
                 type = request.getParameter("inputType");
                 if (type == null) {
@@ -343,7 +344,18 @@ public class assignRecommendation extends HttpServlet {
 
             ArrayList<ArrayList<Recommendation>> rList = RecommedationDAO.getRecommendation(type, sDate, days, priority, devCount, experienceFactor, defectFactor, scheduleFactor, k);
 
-            RequestDispatcher rd = request.getRequestDispatcher("assignDev.jsp?name=" + toAssign.getName());
+            RequestDispatcher rd = null;
+            if(rList.size()==0){
+                rd = request.getRequestDispatcher("editTrelloCard.jsp?name=" + toAssign.getName());
+                request.setAttribute("err", "There is no developer with skill '" + otherType + "', please reselect the project type or add a developer with the skill");
+                request.setAttribute("otherType",otherType);
+                request.setAttribute("sDate", sDate);
+                request.setAttribute("days", daysstr);
+                request.setAttribute("devCount", devCountStr);
+                request.setAttribute("priority", intensity);
+            }else{
+                rd = request.getRequestDispatcher("assignDev.jsp?name=" + toAssign.getName());
+            }
             request.setAttribute("rList", rList);
             request.setAttribute("project", toAssign);
             request.setAttribute("days", days);

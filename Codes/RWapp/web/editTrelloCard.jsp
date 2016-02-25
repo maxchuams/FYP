@@ -37,7 +37,6 @@
     </head>
     <body>
         <%
-        
             //for form filling
             String projName = request.getParameter("card"); 
             String intensity = request.getParameter("priority");
@@ -49,7 +48,7 @@
             String experienceFactorStr= request.getParameter("experienceFactor");
             String defectFactorStr= request.getParameter("defectFactor");
             String scheduleFactorStr= request.getParameter("scheduleFactor");
-        
+            String otherType = request.getParameter("otherType");
 
             String name = request.getParameter("name");
             String id = request.getParameter("id");
@@ -120,14 +119,22 @@
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Start Date</label>
                                         <div class="col-lg-10">
+                                            <%if(sDate!=null){%>
+                                            <input type="date" class="form-control m-bot12" name="sDate"  value="<%=sDate%>" required/>
+                                            <%}else{%>
                                             <input type="date" class="form-control m-bot12" name="sDate"  required/>
+                                            <%}%>
                                         </div>
 
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
                                         <div class="col-lg-10">
-                                            <input class="form-control m-bot12" type="number" name="days" min=1 required/><p></p>
+                                            <%if(daysstr!=null){%>
+                                            <input class="form-control m-bot12" type="number" name="days" min=1 value="<%=daysstr%>" required/>
+                                            <%}else{%>
+                                            <input class="form-control m-bot12" type="number" name="days" min=1 required/>
+                                            <%}%>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -138,10 +145,15 @@
                                                 <option value='0' selected>Standard Project</option>
                                                 <option value='1'>High Priority Project</option>
                                                 </select>
-                                            <%}else{%>
+                                            <%}else if("1".equals(intensity)){%>
                                             <select name='priority' class="form-control m-bot12">
                                                 <option value='0'>Standard Project</option>
                                                 <option value='1' selected>High Priority Project</option>
+                                            </select>
+                                            <%}else{%>
+                                            <select name='priority' class="form-control m-bot12">
+                                                <option value='0'>Standard Project</option>
+                                                <option value='1'>High Priority Project</option>
                                             </select>
                                             <%}%>
                                         </div>
@@ -155,40 +167,19 @@
                                                 <option value='1' selected>1</option>
                                                 <option value='2'>2</option>
                                                 <option value='3'>3</option>
-                                                <option value='4'>4</option>
-                                                <option value='5'>5</option>
-                                                <option value='6'>6</option>
-                                                <option value='7'>7</option>
-                                                <option value='8'>8</option>
-                                                <option value='9'>9</option>
-                                                <option value='10'>10</option>
                                             </select>
                                             <%} else if ("2".equals(devCountStr)){%>
                                                 <select name='devCount' class="form-control m-bot12">
                                                 <option value='1'>1</option>
                                                 <option value='2' selected>2</option>
                                                 <option value='3'>3</option>
-                                                <option value='4'>4</option>
-                                                <option value='5'>5</option>
-                                                <option value='6'>6</option>
-                                                <option value='7'>7</option>
-                                                <option value='8'>8</option>
-                                                <option value='9'>9</option>
-                                                <option value='10'>10</option>
                                             </select>
                                             <%} else if ("3".equals(devCountStr)){%>
                                                 <select name='devCount' class="form-control m-bot12">
                                                 <option value='1' >1</option>
                                                 <option value='2'>2</option>
                                                 <option value='3' selected>3</option>
-                                                <option value='4'>4</option>
-                                                <option value='5'>5</option>
-                                                <option value='6'>6</option>
-                                                <option value='7'>7</option>
-                                                <option value='8'>8</option>
-                                                <option value='9'>9</option>
-                                                <option value='10'>10</option>
-                                            </select><!--
+                                            </select>
                                             <%} else if ("4".equals(devCountStr)){%>
                                                 <select name='devCount' class="form-control m-bot12">
                                                 <option value='1'>1</option>
@@ -285,10 +276,8 @@
                                                 <option value='1'>1</option>
                                                 <option value='2'>2</option>
                                                 <option value='3'>3</option>
-                                                
                                             </select>
                                             <% } %>
-                                            
                                         </div>
                                     </div>
                                     
@@ -309,7 +298,7 @@
                                                     }
                                                 }
                                                 %>
-                                               
+                                                
                                                 <option value="Others">Others</option>
                                             </select>
                                         </div>
