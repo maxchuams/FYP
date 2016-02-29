@@ -89,7 +89,7 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <header class="panel-heading">
-                                Viewing: Defect <%=d.getDefectName()%> 
+                                Viewing Defect: <%=d.getDefectName()%> 
                                 <span class="tools pull-right">
                                     <% if(pm!=null){ %>
                                     <a href="defectscreenshot.jsp?id=<%=d.getId()%>">

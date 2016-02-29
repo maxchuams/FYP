@@ -137,7 +137,7 @@
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Project <%=p.getName()%>
+                                        <%=p.getName()%>
                                         <span class="tools pull-right">
                                             <a href="addDefect.jsp?name=<%=p.getName()%>" class="fa fa-plus-circle"></a>
                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
