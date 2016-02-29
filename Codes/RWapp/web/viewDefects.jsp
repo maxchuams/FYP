@@ -20,7 +20,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Defects</title>
-
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#pname').hide(); //hide field on start
@@ -151,11 +150,15 @@
                                                                         dName = d.getDefectName().substring(0, 20) + "...";
                                                                     } else {
                                                                         dName = d.getDefectName();
-                                                                    }
-                                                                    out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
+                                                                    }%>
+                                                                    
+                                                                    <%out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
                                                                     out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");
-                                                                    out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
-                                                                    out.println("</table>");
+                                                                    //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
+                                                                    %>
+                                                                    <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span>
+
+                                                                    <%out.println("</table>");
 
                                                                 %> 
                                                             </div>
@@ -180,78 +183,6 @@
                                             %>
 
                                             <!--end of kw codes-->
-
-
-
-
-
-                                            <%
-                                                for (Defect d : dList) {
-                                                    int sev = d.getSeverity();
-                                                    String severity = "";
-                                                    if (sev == 1) {
-                                                        severity = "Low";
-                                                    } else if (sev == 2) {
-                                                        severity = "Medium";
-                                                    } else if (sev == 3) {
-                                                        severity = "High";
-                                                    }
-                                            %>
-                                            <!--                        <section class="panel">
-                                                                        <div class="panel-body">
-                                                                            <table class="table  table-hover general-table">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th colspan="2">Project <%=d.getProjectName()%></th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tr>
-                                                                                    <td>Defect name: </td>
-                                                                                    <td><%=d.getDefectName()%></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Severity: </td>
-                                                                                    <td><%=severity%></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Description: </td>
-                                                                                    <td><%=d.getDesc()%></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Screenshots uploaded: </td>
-                                            <% int size = DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size(); %>
-                                            <td><%if (size == 0) {%>NIL
-                                            <%} else {%>
-                                        <a href="viewScreenshot.jsp?id=<%=d.getId()%>&updatetime=<%=d.getUpdateTime()%>"><%=DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId()).size()%><%}%></a></td>
-                                    
-                                    </tr>
-                                    <tr>
-                                        <td>Reported by: </td>
-                                        <td><%=d.getReportedBy()%></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Last updated time: </td>
-                                        <td><% out.println(d.getUpdateTime().subSequence(0, 16)); %></td>
-                                    </tr>
-                                            <%
-
-                                                if (dev != null && d.getIsComplete() == 0) {
-                                            %>
-                                            <tr>
-                                                <td>Defect status:</td>
-                                                <td><a href='defectComplete?id=<%=d.getId()%>&case=2'><span class="label label-success label-mini">Defect completed, click to mark complete</span></a></td>
-                                               
-                                            </tr>
-                                            <%
-                                                }
-                                            %>
-        
-                                        </table>
-                                    </div>
-                                </section>-->
-                                            <%
-                                                }
-                                            %>
                                             </section>
                                         </div>
                                     </div>
@@ -260,3 +191,15 @@
                                 </table>
                                 </body>
                                 </html>
+                                <script>
+$(document).ready(function() {
+    $('.time').each(function() {
+        var $this = $(this),
+            dt = moment($this.data('datetime')),
+            format = $this.data('format'),
+            formatted = dt.format(format);
+            
+            $this.html('<span class="time">' + formatted + '</span>');
+    });
+});
+</script>

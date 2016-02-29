@@ -21,7 +21,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Trello</title>
+        <title>Recco</title>
+        <script src="js/moment.js"></script>
+        <script>
+            moment().format();
+        </script>
     </head>
     <body>
         <%
@@ -97,8 +101,12 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <label class='pull-left top-menu'>Viewing all projects
-                                    </br>Last update time: <%=CronDAO.retrieveTime()%></label>
+                                <label class='pull-left top-menu'>Viewing all projects</br>
+                                    <script>
+            var m = moment("<%=CronDAO.retrieveTime()%>");
+            document.write('Last Sync: '+m.fromNow());
+        </script></label>
+<!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
                                 <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewAllTrelloCards"/>
                                     <button type="submit" class="btn btn-info pull-right top-menu" onClick="updateProjectFromTrello">
