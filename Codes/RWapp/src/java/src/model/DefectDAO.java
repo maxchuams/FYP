@@ -380,7 +380,7 @@ public class DefectDAO {
 
     }
     
-    public static Defect retrieveDefectByName(String defectname) {
+    public static Defect retrieveDefectByName(String defectname, String projectname) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -388,8 +388,9 @@ public class DefectDAO {
         Defect toReturn = null;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime, iscomplete,severity,duedate, assignto from defect where defectname=? order by updatetime desc");
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime, iscomplete,severity,duedate, assignto from defect where defectname=? and projectname=? order by updatetime desc limit 1");
             pstmt.setString(1, defectname);
+            pstmt.setString(2, projectname);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
