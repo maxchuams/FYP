@@ -226,7 +226,7 @@ public class TestJob implements Job {
                             due = sdf.format(cal.getTime());
                         }
                         String cardId = tempCard.getString("id");
-                        System.out.println("assignby " + assignby);
+//                        System.out.println("assignby " + assignby);
                         Project proj = ProjectDAO.retrieveProjectById(cardId);
 
                         if (!projList.contains(name)) {
