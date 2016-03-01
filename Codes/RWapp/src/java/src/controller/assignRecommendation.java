@@ -103,12 +103,12 @@ public class assignRecommendation extends HttpServlet {
             String projName = request.getParameter("card");
             String nameForRequestObj = request.getParameter("name");
             ArrayList<String> pList = ProjectDAO.retrieveAllProjectNames();
-            if(pList.contains(nameForRequestObj)){
+            if (pList.contains(nameForRequestObj)) {
                 String err = "Duplicate name for project. There is already a project with the same name in the database";
-                 RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp?name="+ nameForRequestObj + "&id=" + projName);
-                 request.setAttribute("err", err);
-                    view.forward(request, response);
-                    return;
+                RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp?name=" + nameForRequestObj + "&id=" + projName);
+                request.setAttribute("err", err);
+                view.forward(request, response);
+                return;
             }
             String intensity = request.getParameter("priority");
             String type = request.getParameter("type");
@@ -124,10 +124,12 @@ public class assignRecommendation extends HttpServlet {
             String daysstr = request.getParameter("days");
             String devCountStr = request.getParameter("devCount");
             String kStr = request.getParameter("k");
-            String experienceFactorStr = request.getParameter("experienceFactor");
-            String defectFactorStr = request.getParameter("defectFactor");
-            String scheduleFactorStr = request.getParameter("scheduleFactor");
-            
+
+            String factor = request.getParameter("factor");
+
+            // String experienceFactorStr = request.getParameter("experienceFactor");
+            //String defectFactorStr = request.getParameter("defectFactor");
+            //String scheduleFactorStr = request.getParameter("scheduleFactor");
             String id = request.getParameter("id");
 
             //Setting attriute to pass back to previous page if needed 
@@ -138,15 +140,15 @@ public class assignRecommendation extends HttpServlet {
             request.setAttribute("days", daysstr);
             request.setAttribute("devCount", devCountStr);
             request.setAttribute("k", kStr);
-            request.setAttribute("experienceFactor", experienceFactorStr);
-            request.setAttribute("defectFactor", defectFactorStr);
-            request.setAttribute("scheduleFactor", scheduleFactorStr);
+            request.setAttribute("factor", factor);
+            //request.setAttribute("experienceFactor", experienceFactorStr);
+            //request.setAttribute("defectFactor", defectFactorStr);
+            //request.setAttribute("scheduleFactor", scheduleFactorStr);
             request.setAttribute("name", nameForRequestObj);
             request.setAttribute("id", id);
 
             if (projName == null || intensity == null || type == null || sDate == null || daysstr == null
-                    || devCountStr == null || experienceFactorStr == null || defectFactorStr == null
-                    || scheduleFactorStr == null || kStr == null) {
+                    || devCountStr == null || factor == null || kStr == null) {
                 response.sendRedirect("login.jsp");
                 //request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
@@ -156,11 +158,12 @@ public class assignRecommendation extends HttpServlet {
             int days = Integer.parseInt(daysstr);
             int devCount = Integer.parseInt(devCountStr);
             int k = Integer.parseInt(kStr);
-            double experienceFactor = Double.parseDouble(experienceFactorStr);
-            double defectFactor = Double.parseDouble(defectFactorStr);
-            double scheduleFactor = Double.parseDouble(scheduleFactorStr);
 
-            RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp?name="+ nameForRequestObj + "&id=" + projName);
+            double experienceFactor = getExp(factor);
+            double defectFactor = getDef(factor);
+            double scheduleFactor = getSch(factor);
+
+            RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp?name=" + nameForRequestObj + "&id=" + projName);
             try {
                 boolean valid = validDate(sDate);
                 if (!valid) {
@@ -321,18 +324,17 @@ public class assignRecommendation extends HttpServlet {
             }
             //String dateToFormat = "";
             //if (toAssign.getDue() == null) {
-              //  Calendar cal = Calendar.getInstance();
-                //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                //dateToFormat = sdf.format(cal.getTime());
+            //  Calendar cal = Calendar.getInstance();
+            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            //dateToFormat = sdf.format(cal.getTime());
             //} else {
-                // dateToFormat = toAssign.getDue();
+            // dateToFormat = toAssign.getDue();
             //}
-            
+
 //            String dateToFormat = toAssign.getDue();
 //            System.out.println("date " + dateToFormat);
 //            
             //System.out.println(toAssign.toString());
-
             //validate project size
             if (days < 1) {
                 request.setAttribute("err", "Project size must be greater than zero days!");
@@ -355,15 +357,15 @@ public class assignRecommendation extends HttpServlet {
             ArrayList<ArrayList<Recommendation>> rList = RecommedationDAO.getRecommendation(type, sDate, days, priority, devCount, experienceFactor, defectFactor, scheduleFactor, k);
 
             RequestDispatcher rd = null;
-            if(rList.size()==0){
+            if (rList.size() == 0) {
                 rd = request.getRequestDispatcher("editTrelloCard.jsp?name=" + toAssign.getName());
                 request.setAttribute("err", "There is no developer with skill '" + otherType + "', please reselect the project type or add a developer with the skill");
-                request.setAttribute("otherType",otherType);
+                request.setAttribute("otherType", otherType);
                 request.setAttribute("sDate", sDate);
                 request.setAttribute("days", daysstr);
                 request.setAttribute("devCount", devCountStr);
                 request.setAttribute("priority", intensity);
-            }else{
+            } else {
                 rd = request.getRequestDispatcher("assignDev.jsp?name=" + toAssign.getName());
             }
             request.setAttribute("rList", rList);
@@ -412,10 +414,39 @@ public class assignRecommendation extends HttpServlet {
         Date validate = sdf.parse(cDate);
         Date start = sdf.parse(eDate);
         return validate.after(start);
-
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+    private double getExp(String factor) {
+        if ("bal".equals(factor)) {
+            return 0.33;
+        }
+        if ("exp".equals(factor)) {
+            return 0.50;
+        }
+        return 0.25;
+    }
+
+    private double getDef(String factor) {
+        if ("bal".equals(factor)) {
+            return 0.33;
+        }
+        if ("def".equals(factor)) {
+            return 0.50;
+        }
+        return 0.25;
+    }
+
+    private double getSch(String factor) {
+        if ("bal".equals(factor)) {
+            return 0.33;
+        }
+        if ("sch".equals(factor)) {
+            return 0.50;
+        }
+        return 0.25;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
