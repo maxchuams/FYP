@@ -29,14 +29,16 @@ import src.model.TrelloBoard;
 import src.model.TrelloCard;
 import src.model.TrelloDetailsDAO;
 import src.model.TrelloCardDAO;
+import src.model.TrelloConfigDAO;
 import src.model.TrelloMember;
+import src.model.TrelloProperties;
 
 /**
  *
  * @author admin
  */
 public class getTrelloData extends HttpServlet {
-    private static final String PROPS_FILENAME = "/trello.properties";
+    
     private static String mainboard;
     private static String devList;
     private static String adminUsername;
@@ -85,22 +87,11 @@ public class getTrelloData extends HttpServlet {
         String token = TrelloDetailsDAO.retrieveTrelloToken(username);
         System.out.println("KEY:  " + key + " TOKEN : " + token);
         //first url to call the user's boards
-        try {
-            InputStream is4 = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
-            Properties props = new Properties();
-            props.load(is4);
-
+        TrelloProperties tp = TrelloConfigDAO.retrieveConfig();
           
-            mainboard = props.getProperty("trello.mainboard").trim();
-            devList = props.getProperty("trello.developmentList").trim();
-            adminUsername = props.getProperty("trello.admin");
-        } catch (Exception ex) {
-            // unable to load properties file
-            String message = "Unable to load '" + PROPS_FILENAME + "'.";
-            // System.out.println(message);
-            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
-            throw new RuntimeException(message, ex);
-        }
+            mainboard = tp.getMainboard();
+            devList = tp.getDevelopmentList();
+            adminUsername = tp.getAdmin();
         URL memberUrl = new URL("https://api.trello.com/1/members/" + username + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + key + "&token=" + token);
         //System.out.println(memberUrl);
 

@@ -119,3 +119,11 @@ projectname varchar(1000),
 choice int DEFAULT 0,
 updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
+
+create table trelloconfig(
+mainboard varchar(100) not null primary key,
+developmentlist varchar(100) not null,
+postdevlist varchar(100) not null,
+admin varchar(200) not null,
+constraint trelloconfig_fk foreign key (admin) references user (username)
+);

@@ -29,14 +29,16 @@ import src.model.PersonDAO;
 import src.model.TrelloBoard;
 import src.model.TrelloCard;
 import src.model.TrelloCardDAO;
+import src.model.TrelloConfigDAO;
 import src.model.TrelloDetailsDAO;
+import src.model.TrelloProperties;
 
 /**
  *
  * @author maxchua
  */
 public class assignProject extends HttpServlet {
-    private static final String PROPS_FILENAME = "/trello.properties";
+    
     private static String mainboard;
     private static String devList;
     //private static String adminUsername;
@@ -78,22 +80,14 @@ public class assignProject extends HttpServlet {
             return;
         }
         
-        try {
-            InputStream is4 = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
-            Properties props = new Properties();
-            props.load(is4);
-
+      TrelloProperties tp = TrelloConfigDAO.retrieveConfig();
           
-            mainboard = props.getProperty("trello.mainboard").trim();
-            devList = props.getProperty("trello.developmentList").trim();
+            mainboard = tp.getMainboard();
+            devList = tp.getDevelopmentList();
+//            adminUsername = tp.getAdmin();
+            
             //adminUsername = props.getProperty("trello.admin");
-        } catch (Exception ex) {
-            // unable to load properties file
-            String message = "Unable to load '" + PROPS_FILENAME + "'.";
-            // System.out.println(message);
-            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
-            throw new RuntimeException(message, ex);
-        }
+      
         //truncate trello data
 //        TrelloCardDAO.clearData();
         //get the trello details

@@ -36,7 +36,9 @@ import src.model.RecommedationDAO;
 import src.model.Recommendation;
 import src.model.TrelloBoard;
 import src.model.TrelloCard;
+import src.model.TrelloConfigDAO;
 import src.model.TrelloDetailsDAO;
+import src.model.TrelloProperties;
 
 /**
  *
@@ -45,7 +47,7 @@ import src.model.TrelloDetailsDAO;
 public class assignRecommendation extends HttpServlet {
 
     private Object RecommendationDAO;
-    private static final String PROPS_FILENAME = "/trello.properties";
+   
     private static String mainboard;
     private static String devList;
     private static String adminUsername;
@@ -84,21 +86,11 @@ public class assignRecommendation extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-        try {
-            InputStream is4 = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
-            Properties props = new Properties();
-            props.load(is4);
-
-            mainboard = props.getProperty("trello.mainboard").trim();
-            devList = props.getProperty("trello.developmentList").trim();
-            //adminUsername = props.getProperty("trello.admin");
-        } catch (Exception ex) {
-            // unable to load properties file
-            String message = "Unable to load '" + PROPS_FILENAME + "'.";
-            // System.out.println(message);
-            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
-            throw new RuntimeException(message, ex);
-        }
+         TrelloProperties tp = TrelloConfigDAO.retrieveConfig();
+          
+            mainboard = tp.getMainboard();
+            devList = tp.getDevelopmentList();
+            adminUsername = tp.getAdmin();
         try {
             String projName = request.getParameter("card");
             String nameForRequestObj = request.getParameter("name");

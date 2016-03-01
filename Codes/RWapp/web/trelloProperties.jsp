@@ -4,9 +4,9 @@
     Author     : Kaiwen
 --%>
 
+<%@page import="src.model.TrelloConfigDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="src.model.TrelloProperties"%>
-<%@page import="src.model.TrelloPropertiesDAO"%>
 <%@page import="src.model.TrelloBoard"%>
 <%@include file="protectSudo.jsp" %>
 <%String thisPage = "trelloProperties"; //This is to change the highlight in Navigation Bar%>
@@ -63,7 +63,7 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <%
-                                    TrelloProperties tb = TrelloPropertiesDAO.retrieveProperty();
+                                    TrelloProperties tb = TrelloConfigDAO.retrieveConfig();
                                 %>
                                 <h3 class="prf-border-head">Current Trello Details</h3>
                                 Trello board: <%=tb.getMainboard()%><br/>
