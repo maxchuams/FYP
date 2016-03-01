@@ -128,7 +128,7 @@ public class addNewDefect extends HttpServlet {
             }
 
             if (success) {
-                Defect d = DefectDAO.retrieveDefectByName(defname);
+                Defect d = DefectDAO.retrieveDefectByName(defname,projname);
                 int id = d.getId();
                 RequestDispatcher rd = request.getRequestDispatcher("viewDefectInfo.jsp?defectId=" + id);
                 request.setAttribute("sucess", "Defect " + defname + "  from Project " + projname + " has been successfully added into the system");

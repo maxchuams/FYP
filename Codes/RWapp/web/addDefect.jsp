@@ -237,11 +237,6 @@
                                     <div class="col-lg-1">
                                         <input type='radio' name='severity' value='3'/> High <br/> 
                                     </div>
-                                    <!--                                        <select name="severity" class="form-control m-bot15">
-                                                                                <option value='1'>Low</option>
-                                                                                <option value='2'>Medium</option>
-                                                                                <option value='3'>High</option>
-                                                                            </select>-->
 
                                     <input type='hidden' name='pmName' value='<%=per.getUsername()%>'/>
                                     
