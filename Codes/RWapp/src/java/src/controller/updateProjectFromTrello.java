@@ -415,7 +415,7 @@ public class updateProjectFromTrello extends HttpServlet {
             return;
         } else {
             CronDAO.addTime(1);
-            Set<String> hs = new HashSet<>();
+            Set<String> hs = new HashSet<String>();
             hs.addAll(errList);
             errList.clear();
             errList.addAll(hs);
