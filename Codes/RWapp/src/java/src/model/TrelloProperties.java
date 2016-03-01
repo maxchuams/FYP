@@ -53,6 +53,12 @@ public class TrelloProperties {
     public void setAdmin(String admin) {
         this.admin = admin;
     }
-           
+
+    @Override
+    public String toString() {
+        return "TrelloProperties{" + "mainboard=" + mainboard + ", developmentList=" + developmentList + ", postdevlist=" + postdevlist + ", admin=" + admin + '}';
+    }
+         
+    
     
 }
