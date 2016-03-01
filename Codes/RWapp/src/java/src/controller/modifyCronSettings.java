@@ -29,6 +29,7 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
+import src.model.TrelloConfigDAO;
 
 /**
  *
@@ -49,7 +50,9 @@ public class modifyCronSettings extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<String> errList = new ArrayList<String>();
         String cronex = "";
+        String crondetails = "";
         String updateby = request.getParameter("updateby");
+        
         if (updateby == null || updateby.length() == 0) {
             errList.add("Please select an update by method");
             RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");
@@ -68,18 +71,20 @@ public class modifyCronSettings extends HttpServlet {
                 errList.add("Please select a number from 0 - 59");
             }
             if (errList.isEmpty()) {
-                URL cronurl = new URL("http://www.cronmaker.com/rest/minutes/" + minutes);
-                //System.out.println(memberUrl);
-
-                URLConnection con = cronurl.openConnection();
-                InputStream is = con.getInputStream();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                String line = null;
-
-                while ((line = br.readLine()) != null) {
-                    cronex += line;
-                }
+//                URL cronurl = new URL("http://www.cronmaker.com/rest/minutes/" + minutes);
+//                //System.out.println(memberUrl);
+//
+//                URLConnection con = cronurl.openConnection();
+//                InputStream is = con.getInputStream();
+//                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//                String line = null;
+//
+//                while ((line = br.readLine()) != null) {
+//                    cronex += line;
+//                }
+                cronex = "0 0/" + minutes +" * 1/1 * ? *";
                 System.out.println(cronex);
+                crondetails = "Cron job is scheduled at every " + minutes + " minute(s).";
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");
                 request.setAttribute("errList", errList);
@@ -101,18 +106,20 @@ public class modifyCronSettings extends HttpServlet {
                 errList.add("Please select number from 0 - 23");
             }
             if (errList.isEmpty()) {
-                URL cronurl = new URL("http://www.cronmaker.com/rest/hourly/every/" + hour);
-                //System.out.println(memberUrl);
-
-                URLConnection con = cronurl.openConnection();
-                InputStream is = con.getInputStream();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                String line = null;
-
-                while ((line = br.readLine()) != null) {
-                    cronex += line;
-                }
+//                URL cronurl = new URL("http://www.cronmaker.com/rest/hourly/every/" + hour);
+//                //System.out.println(memberUrl);
+//
+//                URLConnection con = cronurl.openConnection();
+//                InputStream is = con.getInputStream();
+//                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//                String line = null;
+//
+//                while ((line = br.readLine()) != null) {
+//                    cronex += line;
+//                }
+                cronex = "0 0 0/" + hour + " 1/1 * ? *";
                 System.out.println(cronex);
+                crondetails = "Cron job is scheduled at every " + hour + " hour(s).";
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");
                 request.setAttribute("errList", errList);
@@ -125,6 +132,7 @@ public class modifyCronSettings extends HttpServlet {
             if (day == null) {
                 errList.add("please select an option");
             } else if ("0".equals(day)) {
+                
                 String daynum = request.getParameter("daynum");
                 int dayNum = -1;
                 try {
@@ -158,18 +166,23 @@ public class modifyCronSettings extends HttpServlet {
                     errList.add("Please select number from 0 - 59");
                 }
                 if (errList.isEmpty()) {
-                    URL cronurl = new URL("http://www.cronmaker.com/rest/daily/everyDay?hour=" + hourvalue + "&minute=" + minvalue);
-                    //System.out.println(memberUrl);
-
-                    URLConnection con = cronurl.openConnection();
-                    InputStream is = con.getInputStream();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                    String line = null;
-
-                    while ((line = br.readLine()) != null) {
-                        cronex += line;
-                    }
+//                    URL cronurl = new URL("http://www.cronmaker.com/rest/daily/everyDay?hour=" + hourvalue + "&minute=" + minvalue);
+//                    //System.out.println(memberUrl);
+//
+//                    URLConnection con = cronurl.openConnection();
+//                    InputStream is = con.getInputStream();
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//                    String line = null;
+//
+//                    while ((line = br.readLine()) != null) {
+//                        cronex += line;
+//                    }
+                    cronex = "0 " +minvalue+" "+hourvalue+" 1/"+daynum +" * ? *";
                     System.out.println(cronex);
+                    if(minvaluenum <10){
+                        minvalue = "0"+minvalue;
+                    }
+                    crondetails = "Cron job is scheduled every "+ daynum+ " day(s) at " + hourvalue + ":" + minvalue;
                 } else {
                     RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");
                     request.setAttribute("errList", errList);
@@ -200,18 +213,23 @@ public class modifyCronSettings extends HttpServlet {
                     errList.add("Please select number from 0 - 59");
                 }
                 if (errList.isEmpty()) {
-                    URL cronurl = new URL("http://www.cronmaker.com/rest/daily/weekdays?hour=" + hourvalue + "&minute=" + minvalue);
-                    //System.out.println(memberUrl);
-
-                    URLConnection con = cronurl.openConnection();
-                    InputStream is = con.getInputStream();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                    String line = null;
-
-                    while ((line = br.readLine()) != null) {
-                        cronex += line;
-                    }
+//                    URL cronurl = new URL("http://www.cronmaker.com/rest/daily/weekdays?hour=" + hourvalue + "&minute=" + minvalue);
+//                    //System.out.println(memberUrl);
+//
+//                    URLConnection con = cronurl.openConnection();
+//                    InputStream is = con.getInputStream();
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//                    String line = null;
+//
+//                    while ((line = br.readLine()) != null) {
+//                        cronex += line;
+//                    }
+                    cronex = "0 "+minvalue+" "+hourvalue+" ? * MON-FRI *";
                     System.out.println(cronex);
+                    if(minvaluenum <10){
+                        minvalue = "0"+minvalue;
+                    }
+                    crondetails = "Cron job is scheduled every week day at " + hourvalue + ":" + minvalue;
                 } else {
                     RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");
                     request.setAttribute("errList", errList);
@@ -228,7 +246,7 @@ public class modifyCronSettings extends HttpServlet {
 
             String hourvaluew = request.getParameter("hourvaluew");
             String minvaluew = request.getParameter("minvaluew");
-
+            System.out.println(minvaluew);
             int hourvaluenumw = -1;
             try {
                 hourvaluenumw = Integer.parseInt(hourvaluew);
@@ -244,6 +262,7 @@ public class modifyCronSettings extends HttpServlet {
             } catch (Exception e) {
                 errList.add("Please enter a number");
             }
+            System.out.println(minvaluenumw);
             if (minvaluenumw < 0 || minvaluenumw > 59) {
                 errList.add("Please select number from 0 - 59");
             }
@@ -257,18 +276,23 @@ public class modifyCronSettings extends HttpServlet {
             }
 
             if (errList.isEmpty()) {
-                URL cronurl = new URL("http://www.cronmaker.com/rest/weekly?days=" + toappend + "&hour=" + hourvaluew + "&minute=" + minvaluew);
-                //System.out.println(memberUrl);
-
-                URLConnection con = cronurl.openConnection();
-                InputStream is = con.getInputStream();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                String line = null;
-
-                while ((line = br.readLine()) != null) {
-                    cronex += line;
-                }
+//                URL cronurl = new URL("http://www.cronmaker.com/rest/weekly?days=" + toappend + "&hour=" + hourvaluew + "&minute=" + minvaluew);
+//                //System.out.println(memberUrl);
+//
+//                URLConnection con = cronurl.openConnection();
+//                InputStream is = con.getInputStream();
+//                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//                String line = null;
+//
+//                while ((line = br.readLine()) != null) {
+//                    cronex += line;
+//                }
+                cronex = "0 "+minvaluew+" "+hourvaluew+" ? * "+toappend+" *";
                 System.out.println(cronex);
+                if(minvaluenumw <10){
+                        minvaluew = "0"+minvaluew;
+                    }
+                crondetails = "Cron job is scheduled on " + toappend + " at" + hourvaluew + ":" + minvaluew;
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");
                 request.setAttribute("errList", errList);
@@ -294,6 +318,10 @@ public class modifyCronSettings extends HttpServlet {
         } catch (SchedulerException ex) {
             errList.add("Error updating scheduler");
             Logger.getLogger(modifyCronSettings.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        boolean success = TrelloConfigDAO.updateCronDetails(crondetails);
+        if(!success){
+            errList.add("Cron details could not be pushed to database. Please try again.");
         }
         if (errList.isEmpty()) {
             RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");

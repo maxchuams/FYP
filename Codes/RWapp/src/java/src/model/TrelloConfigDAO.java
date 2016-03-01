@@ -148,4 +148,30 @@ public class TrelloConfigDAO {
         return toReturn;
 
     }
+    public static boolean updateCronDetails(String update) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+
+            pstmt = conn.prepareStatement("UPDATE trelloconfig  set crondetails=?");
+
+            pstmt.setString(1, update);
+           
+
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt);
+
+        }
+
+    }
+    
 }

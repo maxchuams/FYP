@@ -93,10 +93,11 @@
                 </br><input type='submit' value='submit'/>
             </div>
             <div id='daily'>
-                <input type='radio' name='day' value='0'> Every <input type='number' name='daynum' min='1' max='30'/> days(s) </br>
-                <input type='radio' name='day' value='1'> Every Week day at 
+                <input type='radio' name='day' value='0'> Every <input type='number' name='daynum' min='1' max='30'/> day(s), or </br>
+                <input type='radio' name='day' value='1'> Every Week day
+                </br> at: 
                 <input type='number' name='hourvalue' min='0' max='23'>Hr 
-                <input type='number' value='minvalue' min='00' max='59'>Min
+                <input type='number' name='minvalue' min='0' max='59'>Min
                 </br><input type='submit' value='submit'/>
             </div>
             <div id='weekly'>
@@ -110,7 +111,7 @@
 
                 Start time: 
                 <input type='number' name='hourvaluew' min='0' max='23'>Hr 
-                <input type='number' value='minvaluew' min='00' max='59'>Min
+                <input type='number' name='minvaluew' min='0' max='59'>Min
                 </br><input type='submit' value='submit'/>
             </div>
 
