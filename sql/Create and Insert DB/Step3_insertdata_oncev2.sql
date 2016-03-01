@@ -216,6 +216,24 @@ INSERT INTO `defect` (`defectid`, `projectname`, `defectname`, `description`, `r
 INSERT INTO trelloconfig (`mainboard`, `developmentlist`,`postdevlist`,`admin`,`cronpause`) 
 VALUES ('Recco Master Board', 'Development', 'UAT', 'teamPJsudo',0);
 
+INSERT INTO color(`id`,`color`) VALUES 
+(0,'#878BB6'),
+(1,'#4ACAB4'),
+(2,'#FF8153'),
+(3,'#B6B6B4'),
+(4,'#98AFC7'),
+(5,'#EDE275'),
+(6,'#C58917'),
+(7,'#C12267'),
+(8,'#E55451'),
+(9,'#E56E94'),
+(10,'#E0B0FF'),
+(11,'#FFEA88'),
+(12,'#FF7F50'),
+(13,'#7D0552'),
+(14,'#FFF5EE'),
+(15,'#E9CFEC');
+
 
 INSERT INTO ztable(zvalue,pvalue) VALUES 
 (-3.49,0.0002),

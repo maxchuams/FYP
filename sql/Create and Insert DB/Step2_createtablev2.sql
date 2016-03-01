@@ -135,3 +135,9 @@ postdevlist varchar(100) not null,
 admin varchar(200) not null,
 cronpause int(1) not null
 );
+
+CREATE TABLE color (
+  id INT NOT NULL,
+  color VARCHAR(7) NULL,
+  PRIMARY KEY (`id`)
+);
