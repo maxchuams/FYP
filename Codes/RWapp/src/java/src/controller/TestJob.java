@@ -62,10 +62,11 @@ public class TestJob implements Job {
             System.out.println("Cron starts here");
             try {
                 //1. get all trello board data
-                System.out.println("try  here");
+//                System.out.println("try  here");
                 String key = TrelloDetailsDAO.retrieveTrelloKey(adminUsername);
                 String token = TrelloDetailsDAO.retrieveTrelloToken(adminUsername);
-            //System.out.println("KEY:  " + key + " TOKEN : " + token);
+//            System.out.println("KEY:  " + key + " TOKEN : " + token);
+//            System.out.println(tp);
                 //first url to call the user's boards
 
                 URL memberUrl = new URL("https://api.trello.com/1/members/" + adminUsername + "?fields=username,fullName,url&boards=all&board_fields=name&organizations=all&organization_fields=displayName&key=" + key + "&token=" + token);

@@ -16,7 +16,7 @@ INSERT INTO `user` (`username`,`password`,`type`,`trellokey`,`trellotoken`,`phot
 ('rain76','81dc9bdb52d04dc20036dbd8313ed055','t','aafd6e4eeafed1934133730d1a2c2028','7cdb24794e2ff895caaa6d067ab06ec86c056bbc22f73d048e2a66f972c2b590',NULL,NULL),
 ('roy1','81dc9bdb52d04dc20036dbd8313ed055','c','aafd6e4eeafed1934133730d1a2c2028','9421c9e1afb605cac0c63dc4d5599ee5b201c4afb20585e00346bb401c95b729',NULL,NULL),
 ('sirachon','81dc9bdb52d04dc20036dbd8313ed055','c','aafd6e4eeafed1934133730d1a2c2028','f15c1f0cff793b571dee4ea28e2ececc3023878bd51cafdfcd4a438d7b82407c',NULL,NULL),
-('teamPJsudo','81dc9bdb52d04dc20036dbd8313ed055','s','aafd6e4eeafed1934133730d1a2c2028','2cf8018d2c8e43ea41ba9c369ae2babb84a5b70364b96e0c719089d1ad0b8370\r\n',NULL,NULL),
+('teampjsudo','81dc9bdb52d04dc20036dbd8313ed055','s','aafd6e4eeafed1934133730d1a2c2028','2cf8018d2c8e43ea41ba9c369ae2babb84a5b70364b96e0c719089d1ad0b8370\r\n',NULL,NULL),
 ('vandavedecio','81dc9bdb52d04dc20036dbd8313ed055','c','aafd6e4eeafed1934133730d1a2c2028','1db5106c8388fa0ee71ad3591ca752d8e7f6734c8d6b09f75bc48325b5b3ce90',NULL,NULL),
 ('zripplewerkz','81dc9bdb52d04dc20036dbd8313ed055','c','aafd6e4eeafed1934133730d1a2c2028','61e75700a541de7b58ffce02df3a0f1787073e595baf071c6be0c1ce47ad0fc6',NULL,NULL);
 
@@ -213,8 +213,8 @@ INSERT INTO `defect` (`defectid`, `projectname`, `defectname`, `description`, `r
 (24, '1036liveseafood.com [Design only]', 'Wordpress theme needs update', 'Please update wordpress plugins and themes for client as the old theme has errors in the UI', 'markconderw', '2016-02-22 21:07:18', 0, 3, '2016-03-26', 'zripplewerkz'),
 (25, '(2) Association of Funeral Directors (AFDS)', 'Image Transparency', 'Support for transparent image for project view', 'markconderw', '2016-02-22 21:09:02', 0, 1, '2016-03-16', 'debe2');
 
-INSERT INTO trelloconfig (`mainboard`, `developmentlist`,`postdevlist`,`admin`,`cronpause`) 
-VALUES ('Recco Master Board', 'Development', 'UAT', 'teamPJsudo',0);
+INSERT INTO trelloconfig (`mainboard`, `developmentlist`,`postdevlist`,`admin`,`cronpause`, `crondetails`) 
+VALUES ('Recco Master Board', 'Development', 'UAT', 'teampjsudo',0,'Cron job is scheduled at 8am every week day.');
 
 INSERT INTO color(`id`,`color`) VALUES 
 (0,'#878BB6'),

@@ -4,6 +4,8 @@
     Author     : maxchua
 --%>
 
+<%@page import="src.model.TrelloConfigDAO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -54,6 +56,23 @@
         </script>
     </head>
     <body>
+        <%
+
+            String errorMsg = (String) request.getAttribute("err");
+            String sucess = (String) request.getAttribute("sucess");
+            ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("errList");
+            if (sucess != null) {
+                out.println(sucess);
+            }
+            if (errorArr != null) {
+                out.println(errorArr);
+            }
+            
+            String crondetails = TrelloConfigDAO.retrieveCronDetails();
+        %>
+
+
+        <%=crondetails%>
         <form action='modifyCronSettings'>
             Update by:
             <select name='updateby' id='updateby'>
@@ -74,24 +93,24 @@
                 </br><input type='submit' value='submit'/>
             </div>
             <div id='daily'>
-                <input type='radio' name='day' value='1'> Every <input type='number' name='minutes' min='1' max='30'/> days(s) </br>
-                <input type='radio' name='day' value='1-5'> Every Week day at 
+                <input type='radio' name='day' value='0'> Every <input type='number' name='daynum' min='1' max='30'/> days(s) </br>
+                <input type='radio' name='day' value='1'> Every Week day at 
                 <input type='number' name='hourvalue' min='0' max='23'>Hr 
-                <input type='number' value='minvalue' min='0' max='59'>Min
+                <input type='number' value='minvalue' min='00' max='59'>Min
                 </br><input type='submit' value='submit'/>
             </div>
             <div id='weekly'>
-                <input type='checkbox' name='days' value='Monday'>Monday</br>
-                <input type='checkbox' name='days' value='Tuesday'>Tuesday</br>
-                <input type='checkbox' name='days' value='Wednesday'>Wednesday</br>
-                <input type='checkbox' name='days' value='Thursday'>Thursday</br>
-                <input type='checkbox' name='days' value='Friday'>Friday</br>
-                <input type='checkbox' name='days' value='Saturday'>Saturday</br>
-                <input type='checkbox' name='days' value='Sunday'>Sunday</br>
+                <input type='checkbox' name='weeks' value='Mon'>Monday</br>
+                <input type='checkbox' name='weeks' value='Tue'>Tuesday</br>
+                <input type='checkbox' name='weeks' value='Wed'>Wednesday</br>
+                <input type='checkbox' name='weeks' value='Thu'>Thursday</br>
+                <input type='checkbox' name='weeks' value='Fri'>Friday</br>
+                <input type='checkbox' name='weeks' value='Sat'>Saturday</br>
+                <input type='checkbox' name='weeks' value='Sun'>Sunday</br>
 
                 Start time: 
                 <input type='number' name='hourvaluew' min='0' max='23'>Hr 
-                <input type='number' value='minvaluew' min='0' max='59'>Min
+                <input type='number' value='minvaluew' min='00' max='59'>Min
                 </br><input type='submit' value='submit'/>
             </div>
 

@@ -123,4 +123,29 @@ public class TrelloConfigDAO {
         }
 
     }
+    public static String retrieveCronDetails() {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String toReturn = "";
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select crondetails from trelloconfig");
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+        return toReturn;
+
+    }
 }
