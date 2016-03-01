@@ -87,6 +87,14 @@ create table defectscreenshot(
     constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE
 );
 
+create table defectscreenshot(
+	defectid int not null,
+	committedby varchar(200) not null,
+	constraint defects_pk primary key (defectid,committedby),
+	constraint defects_fk2 foreign key (committedby) references user (username),
+    constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE
+);
+
 CREATE TABLE ztable (
   zvalue DECIMAL(14,2) NOT NULL,
   pvalue DECIMAL(14,4) NULL,
@@ -124,6 +132,5 @@ create table trelloconfig(
 mainboard varchar(100) not null primary key,
 developmentlist varchar(100) not null,
 postdevlist varchar(100) not null,
-admin varchar(200) not null,
-constraint trelloconfig_fk foreign key (admin) references user (username)
+admin varchar(200) not null
 );
