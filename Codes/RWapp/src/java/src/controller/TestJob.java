@@ -31,7 +31,9 @@ import src.model.Project;
 import src.model.ProjectAllocationDAO;
 import src.model.ProjectDAO;
 import src.model.TrelloBoard;
+import src.model.TrelloConfigDAO;
 import src.model.TrelloDetailsDAO;
+import src.model.TrelloProperties;
 
 /**
  *
@@ -39,7 +41,6 @@ import src.model.TrelloDetailsDAO;
  */
 public class TestJob implements Job {
 
-    private static final String PROPS_FILENAME = "/trello.properties";
     private static String mainboard;
     private static String devList;
     private static String adminUsername;
@@ -47,21 +48,11 @@ public class TestJob implements Job {
     @Override
     public void execute(final JobExecutionContext ctx)
             throws JobExecutionException {
-        try {
-            InputStream is4 = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
-            Properties props = new Properties();
-            props.load(is4);
-
-            mainboard = props.getProperty("trello.mainboard").trim();
-            devList = props.getProperty("trello.developmentList").trim();
-            adminUsername = props.getProperty("trello.admin");
-        } catch (Exception ex) {
-            // unable to load properties file
-            String message = "Unable to load '" + PROPS_FILENAME + "'.";
-            // System.out.println(message);
-            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
-            throw new RuntimeException(message, ex);
-        }
+        TrelloProperties tp = TrelloConfigDAO.retrieveConfig();
+          
+            mainboard = tp.getMainboard();
+            devList = tp.getDevelopmentList();
+            adminUsername = tp.getAdmin();
         System.out.println("Cron starts here");
         try {
             //1. get all trello board data

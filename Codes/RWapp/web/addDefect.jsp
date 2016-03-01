@@ -58,6 +58,7 @@
             function jsFunction(){
                 var myselect = document.getElementById("projectname");
                 var toCompare = myselect.options[myselect.selectedIndex].value;
+                alert(toCompare);
                 var indexofP = "";
                 for(var i=0;i<jsArray.length;i++){
                     if(jsArray[i]==toCompare){
@@ -83,7 +84,7 @@
         <script>
             $(function () {
                 // turn the element to select2 select style
-                $('select').select2();
+//                $('select').select2();
 
                 $(".devSelect2").select2(
                         {
@@ -182,7 +183,7 @@
                                 <form action="addNewDefect" id='main'>
                                     <label for="inputType" class="col-lg-3 control-label">Project name</label>
                                     <div class="col-lg-9">
-                                        <select name="projectname" class="devSelect2 form-control m-bot15">
+                                        <select name="projectname" id='projectname' class="devSelect2 form-control m-bot15" onchange="jsFunction()">
                                             <%
                     Person per = null;
                     if(session.getAttribute("loggedInPm")!=null){
