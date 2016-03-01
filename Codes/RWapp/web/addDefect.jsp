@@ -70,11 +70,13 @@
                 var toPut = jjArray[indexofP];
                 var putput = toPut.split(",");
                 for(var j=0;j<putput.length;j++){
-                var opt = document.getElementById('test1').options[j];
+                var opt = document.getElementById('test1');
                 opt.value = putput[j];
-                opt.text = putput[j];
-                }
-                
+//                opt.innerHTML = "aaa";
+                //}
+                var labelvar = document.getElementById('yesnos');
+                labelvar.innerHTML = putput[j];
+            }
 //                var opt= document.getElementById('test1').options[1];
 //                opt.value = 'sex';
 //                opt.text = 'sex';
@@ -183,7 +185,7 @@
                                 <form action="addNewDefect" id='main'>
                                     <label for="inputType" class="col-lg-3 control-label">Project name</label>
                                     <div class="col-lg-9">
-                                        <select name="projectname" id='projectname' class="devSelect2 form-control m-bot15" onchange="jsFunction()">
+                                        <select name="projectname" id='projectname' class="projectSelect2 form-control m-bot15" onchange="jsFunction()">
                                             <%
                     Person per = null;
                     if(session.getAttribute("loggedInPm")!=null){
@@ -195,11 +197,11 @@
                                                  ArrayList<Project> pList = ProjectDAO.retrieveAll();
                                                 
                                                 
-                                                
+                                                %><option selected="selected"><%
                                                 
                                                 for (Project p : pList) {
                                                     if (name != null && name.equalsIgnoreCase(p.getName())) {%>
-                                            <option value='<%=p.getName()%>' selected><%=p.getName()%></option>
+                                            <option value='<%=p.getName()%>'><%=p.getName()%></option>
                                             <%} else {
                                             %>
                                             <option value='<%=p.getName()%>'><%=p.getName()%></option>
@@ -213,14 +215,17 @@
                                     <div id='test'>
                                      <label id="xxxx" for="xx" class="col-lg-3 control-label">Developer's Fault </label>
                                     <div class="col-lg-9">
-                                        <select name="xx" class="form-control" id="test1">
+                                        <input type="checkbox" id="test1" name="vehicle" value="Bike"><label name="yesnos" id="yesnos">No</label>
+                                        <input type="checkbox" id="test2" name="vehicle" value="Bike"><label name="yesnos" id="yesno">No</label>
+                                        <input type="checkbox" id="test3" name="vehicle" value="Bike"><label name="yesnos" id="yesnoss">No</label>
+<!--                                        <select name="xx" class="form-control" id="test1">
                                             <option value='max'>max</option>
                                             <option value ='penis'>penis</option>
                                            <option value ='sex'>sex</option>
-                                        </select>
+                                        </select>-->
                                     </div>   
                                     </div>
-		
+                                    <br/><br/>
                                     <label for="inputType" class="col-lg-3 control-label">Use pre-assigned developer? </label>
                                     <div class="col-lg-9">
                                         <select name="filter" id="role" class="form-control m-bot15">
