@@ -414,7 +414,7 @@ public class updateProjectFromTrello extends HttpServlet {
             rd.forward(request, response);
             return;
         } else {
-           
+            CronDAO.addTime(1);
             Set<String> hs = new HashSet<>();
             hs.addAll(errList);
             errList.clear();
