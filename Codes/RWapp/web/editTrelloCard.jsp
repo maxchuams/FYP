@@ -314,16 +314,16 @@
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label"> Method </label>
                                         <div class="col-lg-10">
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label  class="btn btn-default active">
+                                                <label  class="btn btn-primary active">
                                                     <input type="radio" name="factor" value="bal" CHECKED> Balanced 
                                                 </label>
-                                                <label class="btn btn-default">
+                                                <label class="btn btn-primary">
                                                     <input type="radio" name="factor" value="exp"> Most Experienced
                                                 </label>
-                                                <label class="btn btn-default">
+                                                <label class="btn btn-primary">
                                                     <input type="radio" name="factor" value="def"> Least Defects
                                                 </label>
-                                                <label class="btn btn-default">
+                                                <label class="btn btn-primary">
                                                     <input type="radio" name="factor" value="sch"> Punctuality
                                                 </label>
                                             </div>
