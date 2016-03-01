@@ -420,8 +420,12 @@ public class RecommedationDAO {
         } catch (SQLException ex) {
             System.out.println("Error on xfactor DAO method.");
         } finally {
+            ConnectionManager.close(conn, pstmt1, rs1);
+            ConnectionManager.close(conn, pstmt2, rs2);
+            ConnectionManager.close(conn, pstmt3, rs3);
+            ConnectionManager.close(conn, pstmt4, rs4);
             ConnectionManager.close(conn, pstmt5, rs5);
-   
+
         }
 
         return xfs;
