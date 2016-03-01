@@ -22,23 +22,63 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Defect</title>
         <script src="res/select2/js/select2.js"></script>
-        <script>
-            $(function () {
-                // turn the element to select2 select style
-                $('select').select2();
+       <script>
+            <% 
+            
+            ProjectDAO pp = new ProjectDAO();
+            ProjectAllocationDAO aa = new ProjectAllocationDAO();
+            ArrayList<Project> allp = pp.retrieveAll();
+            ArrayList<String> zz = new ArrayList<String>();
+            ArrayList<String> yy = new ArrayList<String>();
+            for(Project cheebye: allp){
+                ArrayList<String> dd = aa.retrieveDev(cheebye.getName());
+                String toR = "";
+                if(dd.size()>1){
+                    for(int i=0;i<dd.size()-1;i++){
+                        toR = toR +"," +dd.get(i);
+                    }
+                    zz.add(cheebye.getName());
+                    yy.add(toR);
+                }else if(dd.size()==1){
+                    toR = dd.get(0);
+                    zz.add(cheebye.getName());
+                    yy.add(toR);
+                }
+            }
+            
+//            List<String> strList = new ArrayList<String>();
+//            strList.add("one");
+//            strList.add("two");
+//            strList.add("three"); 
+            %>
 
-                $(".devSelect2").select2(
-                        {
-                            placeholder: "Select a developer"
-                        }
-                );
-
-                $(".projectSelect2").select2(
-                        {
-                            placeholder: "Select a projecr"
-                        }
-                );
-            });
+            var jsArray = [<% for (int i = 0; i < zz.size(); i++) { %>"<%= zz.get(i) %>"<%= i + 1 < zz.size() ? ",":"" %><% } %>];
+            var jjArray = [<% for (int i = 0; i < yy.size(); i++) { %>"<%= yy.get(i) %>"<%= i + 1 < yy.size() ? ",":"" %><% } %>];
+            
+            function jsFunction(){
+                var myselect = document.getElementById("projectname");
+                var toCompare = myselect.options[myselect.selectedIndex].value;
+                var indexofP = "";
+                for(var i=0;i<jsArray.length;i++){
+                    if(jsArray[i]==toCompare){
+                        indexofP = i;
+//                        alert(indexofP);
+//                        alert(toCompare);
+                    }
+                }
+                var toPut = jjArray[indexofP];
+                var putput = toPut.split(",");
+                for(var j=0;j<putput.length;j++){
+                var opt = document.getElementById('test1').options[j];
+                opt.value = putput[j];
+                opt.text = putput[j];
+                }
+                
+//                var opt= document.getElementById('test1').options[1];
+//                opt.value = 'sex';
+//                opt.text = 'sex';
+            };
+            
         </script>
         <script>
             $(function () {
@@ -169,6 +209,17 @@
                                         </select>
                                     </div>
                                     <p></p><br/><br/>
+                                    <div id='test'>
+                                     <label id="xxxx" for="xx" class="col-lg-3 control-label">Developer's Fault </label>
+                                    <div class="col-lg-9">
+                                        <select name="xx" class="form-control" id="test1">
+                                            <option value='max'>max</option>
+                                            <option value ='penis'>penis</option>
+                                           <option value ='sex'>sex</option>
+                                        </select>
+                                    </div>   
+                                    </div>
+		
                                     <label for="inputType" class="col-lg-3 control-label">Use pre-assigned developer? </label>
                                     <div class="col-lg-9">
                                         <select name="filter" id="role" class="form-control m-bot15">

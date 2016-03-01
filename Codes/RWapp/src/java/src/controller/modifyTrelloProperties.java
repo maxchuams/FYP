@@ -7,10 +7,14 @@ package src.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import src.model.TrelloProperties;
+import src.model.TrelloPropertiesDAO;
 
 /**
  *
@@ -29,11 +33,36 @@ public class modifyTrelloProperties extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ArrayList<String> errList = new ArrayList<String>();
         String mainboard = request.getParameter("mainboard");
+        if (mainboard == null){
+            errList.add("Main board field cannot be empty");
+        }
         String developmentlist = request.getParameter("developmentlist");
+        if(developmentlist == null){
+            errList.add("Development List field cannot be empty");
+        }
         String postdevlist = request.getParameter("postdevlist");
+        if (postdevlist == null){
+            errList.add("Post development list field cannot be empty");
+        }
         String admin = request.getParameter("admin");
-                
+        if(admin == null){
+            errList.add("Admin list cannot be empty");
+        }
+        RequestDispatcher rd = request.getRequestDispatcher("trelloProperties.jsp");
+        if (errList.isEmpty()){
+            TrelloProperties tp = new TrelloProperties(mainboard,developmentlist,postdevlist,admin);
+            TrelloPropertiesDAO.updateProperty(tp);
+            request.setAttribute("success", "Properties file successfully updated");
+            rd.forward(request, response);
+            return;
+        } else {
+            request.setAttribute("errList", errList);
+            rd.forward(request, response);
+            return;
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
