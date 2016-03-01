@@ -132,5 +132,6 @@ create table trelloconfig(
 mainboard varchar(100) not null primary key,
 developmentlist varchar(100) not null,
 postdevlist varchar(100) not null,
-admin varchar(200) not null
+admin varchar(200) not null,
+cronpause int(1) not null
 );

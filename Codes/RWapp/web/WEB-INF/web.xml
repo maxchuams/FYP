@@ -124,6 +124,14 @@
         <servlet-name>modifyTrelloProperties</servlet-name>
         <servlet-class>src.controller.modifyTrelloProperties</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>modifyCronSettings</servlet-name>
+        <servlet-class>src.controller.modifyCronSettings</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateCronActivity</servlet-name>
+        <servlet-class>src.controller.updateCronActivity</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -247,6 +255,14 @@
     <servlet-mapping>
         <servlet-name>modifyTrelloProperties</servlet-name>
         <url-pattern>/modifyTrelloProperties</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modifyCronSettings</servlet-name>
+        <url-pattern>/modifyCronSettings</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateCronActivity</servlet-name>
+        <url-pattern>/updateCronActivity</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

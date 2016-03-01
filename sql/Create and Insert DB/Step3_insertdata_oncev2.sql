@@ -213,8 +213,8 @@ INSERT INTO `defect` (`defectid`, `projectname`, `defectname`, `description`, `r
 (24, '1036liveseafood.com [Design only]', 'Wordpress theme needs update', 'Please update wordpress plugins and themes for client as the old theme has errors in the UI', 'markconderw', '2016-02-22 21:07:18', 0, 3, '2016-03-26', 'zripplewerkz'),
 (25, '(2) Association of Funeral Directors (AFDS)', 'Image Transparency', 'Support for transparent image for project view', 'markconderw', '2016-02-22 21:09:02', 0, 1, '2016-03-16', 'debe2');
 
-INSERT INTO trelloconfig (`mainboard`, `developmentlist`,`postdevlist`,`admin`) 
-VALUES ('Recco Master Board', 'Development', 'UAT', 'teamPJsudo');
+INSERT INTO trelloconfig (`mainboard`, `developmentlist`,`postdevlist`,`admin`,`cronpause`) 
+VALUES ('Recco Master Board', 'Development', 'UAT', 'teamPJsudo',0);
 
 
 INSERT INTO ztable(zvalue,pvalue) VALUES 

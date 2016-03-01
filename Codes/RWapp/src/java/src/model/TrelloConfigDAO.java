@@ -71,5 +71,56 @@ public class TrelloConfigDAO {
         }
 
     }
+    
+    public static int retrieveCronPause() {
 
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        int toReturn = -1;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select cronpause from trelloconfig");
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+        return toReturn;
+
+    }
+
+    public static boolean updateCronPause(int update) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+
+            pstmt = conn.prepareStatement("UPDATE trelloconfig  set cronpause=?");
+
+            pstmt.setInt(1, update);
+           
+
+            pstmt.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+
+            ConnectionManager.close(conn, pstmt);
+
+        }
+
+    }
 }
