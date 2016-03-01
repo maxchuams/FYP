@@ -90,9 +90,9 @@ create table defectscreenshot(
 create table defectcommitby(
 	defectid int not null,
 	committedby varchar(200) not null,
-	constraint defects_pk primary key (defectid,committedby),
-	constraint defects_fk2 foreign key (committedby) references user (username),
-    constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE
+	constraint defectc_pk primary key (defectid,committedby),
+	constraint defectc_fk2 foreign key (committedby) references user (username),
+    constraint defectc_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE
 );
 
 CREATE TABLE ztable (
