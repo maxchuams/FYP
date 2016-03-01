@@ -87,7 +87,7 @@ create table defectscreenshot(
     constraint defects_fk foreign key (defectid) references defect (defectid) ON DELETE CASCADE
 );
 
-create table defectscreenshot(
+create table defectcommitby(
 	defectid int not null,
 	committedby varchar(200) not null,
 	constraint defects_pk primary key (defectid,committedby),
