@@ -131,6 +131,14 @@
                                 </div>
                                 <hr/>
                                 <h3 class="prf-border-head">Update Cron Settings</h3>
+                                <%
+                                int pause = TrelloConfigDAO.retrieveCronPause();
+                                if(pause == 0){
+                                   out.println("Cron job is active");
+                                } else {
+                                    out.println("Cron job is inactive");
+                                }
+                                %>
                                 <form action='updateCronActivity' class="form-horizontal form-inline">
                                     <input type='radio' name='active' value='0' checked/> On cron job
                                     <input type='radio' name='active' value='1'/> Off cron job
@@ -175,8 +183,8 @@
                                             <input type='radio' name='day' value='0'> <label>Every</label> <input type='number' class="form-control" name='daynum' min='1' max='30'/> <label>&nbsp;day(s), or</label> </br>
                                             <input type='radio' name='day' value='1'> <label>Every Week day </label><br/><br/>
                                             <label>At</label>
-                                            <input type='number' class="form-control" name='hourvalue' min='0' max='23'><label>&nbsp;Hr </label>
-                                            <input type='number' class="form-control" name='minvalue' min='0' max='59'><label>&nbsp;Min </label><br/>
+                                            <input type='number' class="form-control" name='hourvalue' value='12' min='0' max='23'><label>&nbsp;Hr </label>
+                                            <input type='number' class="form-control" name='minvalue' value='30'  min='0' max='59'><label>&nbsp;Min </label><br/>
                                             <div class="form-group">
                                                 <div class="col-lg-offset-0 col-lg-11">
                                                     <p></p>
@@ -195,8 +203,8 @@
                                             <input type='checkbox' name='weeks' value='Sun'>&nbsp;Sunday</br>
                                             <br/>
                                             <div id='daily' class="form-group col-sm-10 form-inline">
-                                            <label>At</label> <input type='number' name='hourvaluew' min='0' max='23' class="form-control"><label>&nbsp;Hr </label>
-                                            <input type='number' name='minvaluew' min='0' max='59' class="form-control"><label>&nbsp;Min</label><br/><br/>
+                                            <label>At</label> <input type='number' name='hourvaluew' min='0' max='23' value='12' class="form-control"><label>&nbsp;Hr </label>
+                                            <input type='number' name='minvaluew' min='0' max='59' value='30' class="form-control"><label>&nbsp;Min</label><br/><br/>
                                             <div class="form-group">
                                                 <div class="col-lg-offset-0 col-lg-11">
                                                     <p></p>
