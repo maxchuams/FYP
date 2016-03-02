@@ -4,6 +4,9 @@
     Author     : maxchua
 --%>
 
+<%@page import="src.model.ProjectAllocationDAO"%>
+<%@page import="src.model.DefectCommitBy"%>
+<%@page import="src.model.DefectCommitByDAO"%>
 <%@page import="src.model.Developer"%>
 <%@page import="src.model.DeveloperDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -119,6 +122,28 @@
                                             <p></p>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-2 control-label">Caused by</label>
+                                        <div class="col-lg-9">
+                                            <%
+                                            ArrayList<String> dcbList = DefectCommitByDAO.retrieveBlamedDevForDefect(toEdit.getId());
+                                            ArrayList<String> devList = ProjectAllocationDAO.retrieveDev(toEdit.getProjectName());
+                                            for(String devForProj: devList){
+                                                if(dcbList.contains(devForProj)){
+                                                    %>
+                                                    <input type="checkbox" name="dcbname" checked class="form-control" value="<%=devForProj%>" ><%=devForProj%>
+                                                    <%
+                                                } else {
+                                                    %>
+                                                    <input type="checkbox" name="dcbname" class="form-control" value="<%=devForProj%>"><%=devForProj%> 
+                                                    <%
+                                                }
+                                            }
+                                            %>
+                                            
+                                            <p></p>
+                                        </div>
+                                    </div>        
                                     <label for="inputEmail1" class="col-lg-2 control-label">Developer</label>
                                     <div class="col-lg-9">
                                         <select name="devname" class="devSelect2 form-control m-bot15">

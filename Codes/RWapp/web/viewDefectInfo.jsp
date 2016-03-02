@@ -3,6 +3,8 @@
     Created on : Jan 15, 2016, 1:12:03 PM
     Author     : Kaiwen
 --%>
+<%@page import="src.model.DefectCommitBy"%>
+<%@page import="src.model.DefectCommitByDAO"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.ProjectAllocation"%>
 <%@page import="src.model.Project"%>
@@ -141,6 +143,19 @@
                                                             <tr>
                                                                 <td>Reported by</td>
                                                                 <td><%=d.getReportedBy()%></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Caused by</td>
+                                                                <td>
+                                                                <%
+                                                                   ArrayList<DefectCommitBy> defCList = DefectCommitByDAO.retrieveBlameForDefect(d.getId());
+                                                                   for(DefectCommitBy dcb : defCList){
+                                                                %>
+                                                                <%=dcb.getUsername()%> 
+                                                                <%
+                                                                   }
+                                                                %>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Project done by</td>

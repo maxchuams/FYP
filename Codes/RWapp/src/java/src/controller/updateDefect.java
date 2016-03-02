@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import src.model.Defect;
+import src.model.DefectCommitBy;
+import src.model.DefectCommitByDAO;
 import src.model.DefectDAO;
 import src.model.Person;
 
@@ -38,8 +40,7 @@ public class updateDefect extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sess = request.getSession();
-       
-        
+
         Person p1 = (Person) sess.getAttribute("loggedInDev");
         Person p2 = (Person) sess.getAttribute("loggedInDesg");
         Person p3 = (Person) sess.getAttribute("loggedInPm");
@@ -73,6 +74,7 @@ public class updateDefect extends HttpServlet {
         String pm = request.getParameter("pmname");
         String duedateStr = request.getParameter("duedate");
         String devname = request.getParameter("devname");
+        String[] dcbArr = request.getParameterValues("dcbname");
 
         ArrayList<String> errList = new ArrayList<String>();
 
@@ -108,21 +110,37 @@ public class updateDefect extends HttpServlet {
         } else {
             sev = Integer.parseInt(severity);
         }
-        if (devname == null){
+        if (devname == null) {
             errList.add("Please assign a developer");
         }
-
+        if (dcbArr == null || dcbArr.length == 0) {
+            errList.add("Please select a developer that commit the defect");
+        }
         boolean success = false;
 
         if (errList.size() == 0) {
 
             success = DefectDAO.updateDefect(id, dname, desc, pm, isComplete, sev, duedateStr, devname);
+            
+            DefectCommitByDAO.delete(id);
+            System.out.println(id);
+            for (String dev : dcbArr) {
+                boolean safe = DefectCommitByDAO.addBlame(new DefectCommitBy(id, dev));
+                if (!safe) {
+                    RequestDispatcher rd = request.getRequestDispatcher("editDefect.jsp");
+                    request.setAttribute("sucess", "Details successfully changed, but unable to update Caused by. Please try again later");
+                    request.setAttribute("id", defid);
+                    request.setAttribute("err1", errList);
+                    rd.forward(request, response);
+                    return;
+                }
+            }
             if (success) {
                 RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
                 request.setAttribute("sucess", "Details successfully changed!");
                 rd.forward(request, response);
                 return;
-            }else{
+            } else {
                 RequestDispatcher rd = request.getRequestDispatcher("editDefect.jsp");
                 request.setAttribute("id", defid);
                 request.setAttribute("err", "Database Error: Defect could not be added into the system");
@@ -137,7 +155,6 @@ public class updateDefect extends HttpServlet {
             return;
 
         }
- 
 
     }
 

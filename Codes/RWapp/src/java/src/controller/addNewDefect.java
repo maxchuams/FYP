@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import src.model.Defect;
+import src.model.DefectCommitBy;
+import src.model.DefectCommitByDAO;
 import src.model.DefectDAO;
 import src.model.Person;
 import src.model.ProjectAllocationDAO;
@@ -72,10 +74,14 @@ public class addNewDefect extends HttpServlet {
         Date duedate = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
-
+        String[] blameArr = request.getParameterValues("blame");
         ArrayList<String> errList = new ArrayList<String>();
         if (projname == null) {
             errList.add("Please fill in a project name");
+        }
+        
+        if(blameArr == null || blameArr.length == 0){
+            errList.add("Please select a developer that commit the defect");
         }
 
         //validate date to be after today
@@ -121,10 +127,28 @@ public class addNewDefect extends HttpServlet {
                 }else {
                     int severity = Integer.parseInt(sev);
                     success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr, devname);
+                    if(success){
+                        int id = DefectDAO.retrieveDefectByName(defname, projname).getId();
+                        for(String b : blameArr){
+                            boolean blameSuccess = DefectCommitByDAO.addBlame(new DefectCommitBy(id,b));
+                            if(!blameSuccess){
+                                errList.add("Defect cannot be blamed, please try again later");
+                            }
+                        }
+                    }
                 }
             } else if ("yes".equals(filter)) {
                 int severity = Integer.parseInt(sev);
                 success = DefectDAO.addDefect(projname, defname, desc, pmname, severity, duedateStr, devList.get(0));
+                if(success){
+                        int id = DefectDAO.retrieveDefectByName(defname, projname).getId();
+                        for(String b : blameArr){
+                            boolean blameSuccess = DefectCommitByDAO.addBlame(new DefectCommitBy(id,b));
+                            if(!blameSuccess){
+                                errList.add("Defect cannot be blamed, please try again later");
+                            }
+                        }
+                    }
             }
 
             if (success) {
