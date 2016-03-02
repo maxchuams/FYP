@@ -62,10 +62,12 @@ public class defectComplete extends HttpServlet {
         String casenum = request.getParameter("case");
         String status = "";
         boolean  success = false;
+        RequestDispatcher rd = null;
         if (casenum.equals("1")){
             //pm marks complete
             success = DefectDAO.markComplete(id);
             status = "marked as complete by PM";
+            rd = request.getRequestDispatcher("viewCompletedDefects.jsp");
         } else if (casenum.equals("0")){
             //pm deletes defect
             success = DefectDAO.deleteDefect(id);
@@ -77,11 +79,9 @@ public class defectComplete extends HttpServlet {
         
         }
         
-        
-        RequestDispatcher rd = null;
         if (casenum.equals("2")){
             rd = request.getRequestDispatcher("viewDefects.jsp");
-        } else {
+        } else if (casenum.equals("0")) {
             rd = request.getRequestDispatcher("manageDefects.jsp");
         }
         

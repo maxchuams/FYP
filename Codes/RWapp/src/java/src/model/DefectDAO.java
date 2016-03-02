@@ -175,7 +175,6 @@ public class DefectDAO {
         }
 
         return toReturn;
-
     }
     
     public static ArrayList<Defect> retrieveAllByProject(String projectname) {
@@ -512,6 +511,83 @@ public class DefectDAO {
             while (rs.next()) {
 
                 toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(12),rs.getString(13)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+    
+    public static ArrayList<String> retrieveDistinctCompletedProject() {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct projectname from defect where isComplete=2");
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
+    
+    public static ArrayList<String> retrieveDistinctCompletedProjectByDev(String devUsername) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct projectname from defect where isComplete=2 and assignto=?");
+            pstmt.setString(1, devUsername);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
+    
+    public static ArrayList<Defect> retrieveAllocatedDevIsComplete(String username) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Defect> toReturn = new ArrayList<Defect>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto "
+                    + "from defect d "
+                    + "where d.assignto = ? and isComplete=2;");
+
+            pstmt.setString(1, username);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9),rs.getString(10)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);

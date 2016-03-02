@@ -191,7 +191,7 @@
                             <!--MANAGE DEFECT DEV-->
                             <%if (dev != null) {%>
                             <li class="sub-menu">
-                                <% if (thisPage.equals("viewDefects") || thisPage.equals("viewSortedDefects")) { %>
+                                <% if (thisPage.equals("viewDefects") || thisPage.equals("viewSortedDefects") || thisPage.equals("viewCompletedDefects")) { %>
                                 <a class="active" href="viewDefects.jsp"> <% } else { %>
                                     <a href="viewDefects.jsp"> <% } %>
                                         <i class="fa fa-bug"></i>
@@ -203,6 +203,10 @@
                                         <% if (thisPage.equals("viewDefects") || thisPage.equals("viewSortedDefects")) { %>
                                         <li class="active"><a href="viewDefects.jsp">View Defects</a></li><% } else { %>
                                         <li><a href="viewDefects.jsp">View Defects</a></li><% } %>
+                                        
+                                        <% if (thisPage.equals("viewCompletedDefects") || thisPage.equals("viewCompletedDefects")) { %>
+                                        <li class="active"><a href="viewCompletedDefects.jsp">View Completed Defects</a></li><% } else { %>
+                                        <li><a href="viewCompletedDefects.jsp">View Completed Defects</a></li><% } %>
                                             <%}%>
                                     </ul>
                             </li><%}%>
@@ -211,7 +215,7 @@
                             <!--MANAGE DEFECTS PM TESTER-->
                             <%if (pm != null || tester != null) {%>
                             <li class="sub-menu">
-                                <% if (thisPage.equals("manageDefects") || thisPage.equals("sortedDefects") || thisPage.equals("addDefect")) { %>
+                                <% if (thisPage.equals("manageDefects") || thisPage.equals("sortedDefects") || thisPage.equals("addDefect") || thisPage.equals("viewCompletedDefects")) { %>
                                 <a class="active" href="manageDefects.jsp"> <% } else { %>
                                     <a href="manageDefects.jsp"> <% } %>
                                         <i class="fa fa-bug"></i>
@@ -228,6 +232,10 @@
                                             <% if (thisPage.equals("addDefect")) { %>
                                         <li class="active"><a href="addDefect.jsp">Add Defects</a></li><% } else { %>
                                         <li><a href="addDefect.jsp">Add Defects</a></li><% } %>
+                                        
+                                        <% if (thisPage.equals("viewCompletedDefects")) { %>
+                                        <li class="active"><a href="viewCompletedDefects.jsp">View Completed Defects</a></li><% } else { %>
+                                        <li><a href="viewCompletedDefects.jsp">View Completed Defects</a></li><% } %>
                                             <%}%>
                                     </ul>
 

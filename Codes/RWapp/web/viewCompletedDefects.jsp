@@ -10,8 +10,8 @@
 <%@page import="src.model.Defect"%>
 <%@page import="src.model.DefectDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@include file="protectPMandTester.jsp" %>
-<%String thisPage = "manageDefects"; //This is to change the highlight in Navigation Bar%>
+<%@include file="protect.jsp" %>
+<%String thisPage = "viewCompletedDefects"; //This is to change the highlight in Navigation Bar%>
 <%String selected = null;%>
 <%@include file="navbar.jsp"%>
 
@@ -92,7 +92,7 @@
                                 <button data-dismiss="alert" class="close close-sm" type="button">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <%=errorMsg1%>
+                                <%=errorMsg%>
                             </div>
                         </section>
                     </div>
@@ -114,10 +114,10 @@
                 <%}%>
                 <%
                     Person per = null;
-                    if(session.getAttribute("loggedInPm")!=null){
-                        per = (Person)session.getAttribute("loggedInPm");
-                    }else{
-                        per = (Person)session.getAttribute("loggedInTester");
+                    if (session.getAttribute("loggedInPm") != null) {
+                        per = (Person) session.getAttribute("loggedInPm");
+                    } else {
+                        per = (Person) session.getAttribute("loggedInTester");
                     }
                 %>
                 <div class="row">
@@ -126,23 +126,28 @@
 
                         <%
                             ArrayList<Project> pList = ProjectDAO.retrieveAll();
+                            ArrayList<String> pListString = null;
+                            if (pm != null || tester != null) {
+                                pListString = DefectDAO.retrieveDistinctCompletedProject();
+                            } else {
+                                pListString = DefectDAO.retrieveDistinctCompletedProjectByDev(dev.getUsername());
+                            }
                             ArrayList<Defect> dList = null;
-                            if(pm!=null){
-                                //dList = DefectDAO.retrievePm(pm.getUsername());
-                                dList = DefectDAO.retrieveAll();
-                            }else{
-                                dList = DefectDAO.retrieveTester();
+                            if (pm != null || tester != null) {
+                                dList = DefectDAO.retrieveAll(); //pm and tester can see ALL defects
+                            } else {
+                                dList = DefectDAO.retrieveAllocatedDevIsComplete(dev.getUsername());
                             }
                         %>
 
-                        <%for (Project p : pList) {%>
+                        <%for (String s : pListString) {%>
                         <div class="row">
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <%=p.getName()%>
+                                        <%=s%>
                                         <span class="tools pull-right">
-                                            <a href="addDefect.jsp?name=<%=p.getName()%>" class="fa fa-plus-circle"></a>
+                                            <a href="addDefect.jsp?name=<%=s%>" class="fa fa-plus-circle"></a>
                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                                         </span>
                                     </header>
@@ -159,8 +164,9 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (p.getName().equalsIgnoreCase(d.getProjectName())) {
-                                                    if (pm != null) {
+                                                
+                                                if (s.equalsIgnoreCase(d.getProjectName()) && d.getIsComplete() == 2) {
+                                                    
                                                         out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
                                                         if (d.getIsComplete() == 2) { %>
                                         <div class='col-lg-4 col-sm-4'> 
@@ -180,14 +186,14 @@
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }
-                                                                        out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
-                                                                        out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");%>
-                                                                        <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span>
-                                                                        <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span>
-                                                                                
+                                                                    out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
+                                                                    out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");%>
+                                                                <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span>
+                                                                <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span>
+
                                                                         <%out.println("</table>");
-                                                                    }
-                                                                %> 
+                                                                            
+                                                                        %> 
                                                             </div>
                                                         </div>
                                                         </a>
@@ -196,9 +202,8 @@
                                                                 }
                                                             }
                                                             if (count == 0) {
-                                                                out.println("<a href='addDefect.jsp?name=" + p.getName() + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
+                                                                out.println("<a href='addDefect.jsp?name=" + s + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
                                                             }
-
                                                             count = 0;
 
                                                         %>
@@ -206,7 +211,7 @@
                                                     </section>
                                                 </div>
                                             </div>
-                                            <% } %>
+                                            <% }%>
 
                                             <!--end of kw codes-->
 
@@ -218,15 +223,15 @@
                                 </table>
                                 </body>
                                 </html>
-<script>
-$(document).ready(function() {
-    $('.time').each(function() {
-        var $this = $(this),
-            dt = moment($this.data('datetime')),
-            format = $this.data('format'),
-            formatted = dt.format(format);
-            
-            $this.html('<span class="time">' + formatted + '</span>');
-    });
-});
-</script>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('.time').each(function () {
+                                            var $this = $(this),
+                                                    dt = moment($this.data('datetime')),
+                                                    format = $this.data('format'),
+                                                    formatted = dt.format(format);
+
+                                            $this.html('<span class="time">' + formatted + '</span>');
+                                        });
+                                    });
+                                </script>
