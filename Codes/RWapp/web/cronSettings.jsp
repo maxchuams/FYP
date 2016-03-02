@@ -15,6 +15,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cron settings</title>
+        
         <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
         <script type="text/javascript">
@@ -79,11 +80,11 @@
                     </div>
                 </div>
                 <%}
-                if (errorArr != null) {%>
+                    if (errorArr != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="alert alert-success fade in">
+                            <div class="alert alert-block alert-danger fade in">
                                 <button data-dismiss="alert" class="close close-sm" type="button">
                                     <i class="fa fa-times"></i>
                                 </button>
@@ -95,11 +96,11 @@
                     </div>
                 </div>
                 <% }
-                if (errorMsg != null) {%>
+                    if (errorMsg != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
-                            <div class="alert alert-success fade in">
+                            <div class="lert alert-block alert-danger fade in">
                                 <button data-dismiss="alert" class="close close-sm" type="button">
                                     <i class="fa fa-times"></i>
                                 </button>
@@ -109,7 +110,6 @@
                     </div>
                 </div>
                 <%}
-
                     String crondetails = TrelloConfigDAO.retrieveCronDetails();
                 %>
 
@@ -117,58 +117,97 @@
                     <div class="col-sm-12">
                         <section class="panel">
                             <div class="panel-body">
+                                <h3 class="prf-border-head">Current cron settings</h3>
+                                <div class="alert alert-info clearfix ">
+                                    <span class="alert-icon"><i class="fa fa-refresh"></i></span>
+                                    <div class="notification-info">
+                                        <ul class="clearfix notification-meta">
+                                            <li class="pull-left notification-sender">Current Cron Settings:</li>
+                                        </ul>
+                                        <p style="color: black">
+                                            <b><%=crondetails%></b>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr/>
                                 <h3 class="prf-border-head">Update Cron Settings</h3>
-                                <%=crondetails%>
-                                <form action='modifyCronSettings'>
-                                    Update by:
-                                    <select name='updateby' id='updateby'>
-                                        <option value=''>Please select an option</option>
-                                        <option value='mins'>Minutes</option>
-                                        <option value='hourly'>Hourly</option>
-                                        <option value='daily'>Daily</option>
-                                        <option value='weekly'>Weekly</option>
-                                        <!--                <option value='monthly'>Monthly</option>
-                                                        <option value='yearly'>Yearly</option>-->
-                                    </select>
-                                    <div id='mins'>
-                                        Every <input type='number' name='minutes' min='1' max='59'/> minute(s)
-                                        </br><input type='submit' value='submit'/>
-                                    </div>
-                                    <div id='hourly'>
-                                        Every <input type='number' name='hour' min='1' max='23'/> hour(s)
-                                        </br><input type='submit' value='submit'/>
-                                    </div>
-                                    <div id='daily'>
-                                        <input type='radio' name='day' value='0'> Every <input type='number' name='daynum' min='1' max='30'/> day(s), or </br>
-                                        <input type='radio' name='day' value='1'> Every Week day
-                                        </br> at: 
-                                        <input type='number' name='hourvalue' min='0' max='23'>Hr 
-                                        <input type='number' name='minvalue' min='0' max='59'>Min
-                                        </br><input type='submit' value='submit'/>
-                                    </div>
-                                    <div id='weekly'>
-                                        <input type='checkbox' name='weeks' value='Mon'>Monday</br>
-                                        <input type='checkbox' name='weeks' value='Tue'>Tuesday</br>
-                                        <input type='checkbox' name='weeks' value='Wed'>Wednesday</br>
-                                        <input type='checkbox' name='weeks' value='Thu'>Thursday</br>
-                                        <input type='checkbox' name='weeks' value='Fri'>Friday</br>
-                                        <input type='checkbox' name='weeks' value='Sat'>Saturday</br>
-                                        <input type='checkbox' name='weeks' value='Sun'>Sunday</br>
+                                <form action='updateCronActivity' class="form-horizontal form-inline">
+                                    <input type='radio' name='active' value='0' checked/> On cron job
+                                    <input type='radio' name='active' value='1'/> Off cron job
+                                    <button type="submit" value='submit' class="btn btn-primary">Submit</button>
+                                   
+                                </form>
+                                <hr/>
+                                <form action='modifyCronSettings' class="form-horizontal">
+                                    <label for="inputEmail1" class="col-sm-1 control-label">Schedule:</label>
+                                    <div class="col-sm-11">
+                                        <select name="updateby" id='updateby' class="devSelect2 form-control m-bot15">
+                                            <option value=''>Please select an option</option>
+                                            <option value='mins'>Minutes</option>
+                                            <option value='hourly'>Hourly</option>
+                                            <option value='daily'>Daily</option>
+                                            <option value='weekly'>Weekly</option>
+                                        </select>
 
-                                        Start time: 
-                                        <input type='number' name='hourvaluew' min='0' max='23'>Hr 
-                                        <input type='number' name='minvaluew' min='0' max='59'>Min
-                                        </br><input type='submit' value='submit'/>
-                                    </div>
+                                        <div id='mins' class="form-group col-sm-10 form-inline">
+                                            <label>Every</label> <input type='number' class="form-control" name='minutes' min='1' max='59'><label>&nbsp; minute(s)</label>
+                                            <br/><br/><p></p>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-0 col-lg-11">
+                                                    <p></p>
+                                                    <button type="submit" value='submit' class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div id='hourly' class="form-group col-sm-10 form-inline">
+                                            <label>Every</label> <input type='number' name='hour' min='1' max='23' class="form-control"/> <label> hour(s)</label>
+                                            <br/><br/><p></p>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-0 col-lg-11">
+                                                    <p></p>
+                                                    <button type="submit" value='submit' class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div id='daily' class="form-group col-sm-10 form-inline">
+                                            <input type='radio' name='day' value='0'> <label>Every</label> <input type='number' class="form-control" name='daynum' min='1' max='30'/> <label>&nbsp;day(s), or</label> </br>
+                                            <input type='radio' name='day' value='1'> <label>Every Week day </label><br/><br/>
+                                            <label>At</label>
+                                            <input type='number' class="form-control" name='hourvalue' min='0' max='23'><label>&nbsp;Hr </label>
+                                            <input type='number' class="form-control" name='minvalue' min='0' max='59'><label>&nbsp;Min </label><br/>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-0 col-lg-11">
+                                                    <p></p>
+                                                    <button type="submit" value='submit' class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div id='weekly' class="form-horizontal">
+                                            <input type='checkbox' name='weeks' value='Mon'>&nbsp;Monday</br>
+                                            <input type='checkbox' name='weeks' value='Tue'>&nbsp;Tuesday</br>
+                                            <input type='checkbox' name='weeks' value='Wed'>&nbsp;Wednesday</br>
+                                            <input type='checkbox' name='weeks' value='Thu'>&nbsp;Thursday</br>
+                                            <input type='checkbox' name='weeks' value='Fri'>&nbsp;Friday</br>
+                                            <input type='checkbox' name='weeks' value='Sat'>&nbsp;Saturday</br>
+                                            <input type='checkbox' name='weeks' value='Sun'>&nbsp;Sunday</br>
+                                            <br/>
+                                            <div id='daily' class="form-group col-sm-10 form-inline">
+                                            <label>At</label> <input type='number' name='hourvaluew' min='0' max='23' class="form-control"><label>&nbsp;Hr </label>
+                                            <input type='number' name='minvaluew' min='0' max='59' class="form-control"><label>&nbsp;Min</label><br/><br/>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-0 col-lg-11">
+                                                    <p></p>
+                                                    <button type="submit" value='submit' class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
 
                                 </form>
                                 </br>
-                                <form action='updateCronActivity'>
-                                    Set active:
-                                    <input type='radio' name='active' value='0' checked/> Yes
-                                    <input type='radio' name='active' value='1'/> No
-                                    <input type='submit' value='submit'/>
-                                </form>
                             </div>
                         </section>
                     </div>

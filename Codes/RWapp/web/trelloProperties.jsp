@@ -28,6 +28,20 @@
                     ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
 
                 %>
+                <%if (sucess != null) {%>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="alert alert-success fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <%=sucess%>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <%}%>
                 <%if (success != null) {%>
                 <div class="row">
                     <div class="col-md-12">
@@ -66,11 +80,22 @@
                                     TrelloProperties tb = TrelloConfigDAO.retrieveConfig();
                                 %>
                                 <h3 class="prf-border-head">Current Trello Details</h3>
-                                Trello board: <%=tb.getMainboard()%><br/>
-                                Trello admin username: <%=tb.getAdmin()%><br/>
-                                Trello development list name: <%=tb.getDevelopmentList()%><br/>
-                                Trello post development list name: <%=tb.getPostdevlist()%><br/>
-                                <p></p>
+                                
+                                <div class="alert alert-info clearfix ">
+                                    <span class="alert-icon"><i class="fa fa-trello"></i></span>
+                                    <div class="notification-info">
+                                        <ul class="clearfix notification-meta">
+                                            <li class="pull-left notification-sender">Current Trello Details:</li>
+                                        </ul>
+                                        <p style="color: black">
+                                            <b>Trello board:</b> <%=tb.getMainboard()%><br/>
+                                <b>Trello admin username:</b> <%=tb.getAdmin()%><br/>
+                                <b>Trello development list name:</b> <%=tb.getDevelopmentList()%><br/>
+                                <b>Trello post development list name:</b> <%=tb.getPostdevlist()%><br/>
+                                        </p>
+                                    </div>
+                                </div>
+                                
                                 <hr/>
                                 <h3 class="prf-border-head">Edit Trello Details</h3>
                                 <form action="modifyTrelloProperties" method="POST" class="form-horizontal" role="form">
