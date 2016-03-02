@@ -125,7 +125,8 @@
                         <!--kaiwen codes-->
 
                         <%
-                            ArrayList<Project> pList = ProjectDAO.retrieveAll();
+                            //ArrayList<Project> pList = ProjectDAO.retrieveAll();
+                            ArrayList<String> pListString = DefectDAO.retrieveDistinctProject();
                             ArrayList<Defect> dList = null;
                             if(pm!=null){
                                 //dList = DefectDAO.retrievePm(pm.getUsername());
@@ -135,14 +136,14 @@
                             }
                         %>
 
-                        <%for (Project p : pList) {%>
+                        <%for (String s : pListString) {%>
                         <div class="row">
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <%=p.getName()%>
+                                        <%=s%>
                                         <span class="tools pull-right">
-                                            <a href="addDefect.jsp?name=<%=p.getName()%>" class="fa fa-plus-circle"></a>
+                                            <a href="addDefect.jsp?name=<%=s%>" class="fa fa-plus-circle"></a>
                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                                         </span>
                                     </header>
@@ -159,7 +160,7 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (p.getName().equalsIgnoreCase(d.getProjectName())) {
+                                                if (s.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete()==0 || d.getIsComplete()==1)) {
                                                     if (pm != null) {
                                                         out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
                                                         if (d.getIsComplete() == 2) { %>
@@ -196,7 +197,7 @@
                                                                 }
                                                             }
                                                             if (count == 0) {
-                                                                out.println("<a href='addDefect.jsp?name=" + p.getName() + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
+                                                                out.println("<a href='addDefect.jsp?name=" + s + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
                                                             }
 
                                                             count = 0;

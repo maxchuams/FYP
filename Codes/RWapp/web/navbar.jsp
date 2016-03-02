@@ -201,8 +201,8 @@
                                     <ul class="sub">
                                         <%if (dev != null) {%>
                                         <% if (thisPage.equals("viewDefects") || thisPage.equals("viewSortedDefects")) { %>
-                                        <li class="active"><a href="viewDefects.jsp">View Defects</a></li><% } else { %>
-                                        <li><a href="viewDefects.jsp">View Defects</a></li><% } %>
+                                        <li class="active"><a href="viewDefects.jsp">View Defects In-progress</a></li><% } else { %>
+                                        <li><a href="viewDefects.jsp">View Defects In-progress</a></li><% } %>
                                         
                                         <% if (thisPage.equals("viewCompletedDefects") || thisPage.equals("viewCompletedDefects")) { %>
                                         <li class="active"><a href="viewCompletedDefects.jsp">View Completed Defects</a></li><% } else { %>
@@ -225,8 +225,8 @@
                                     <ul class="sub">
                                         <%if (pm != null || tester != null) {%>
                                         <% if (thisPage.equals("manageDefects") || thisPage.equals("sortedDefects")) { %>
-                                        <li class="active"><a href="manageDefects.jsp">View Defects</a></li><% } else { %>
-                                        <li><a href="manageDefects.jsp">View Defects</a></li><% } %>
+                                        <li class="active"><a href="manageDefects.jsp">View Defects In Progress</a></li><% } else { %>
+                                        <li><a href="manageDefects.jsp">View Defects In Progress</a></li><% } %>
                                             <%}%>
                                             <%if (pm != null || tester != null) {%>
                                             <% if (thisPage.equals("addDefect")) { %>
