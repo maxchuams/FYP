@@ -51,7 +51,8 @@
         <section id="main-content">
             <section class="wrapper">
                 <!--Error/success display-->
-                <%  ArrayList<Project> pList = ProjectDAO.retrieveAll();
+                <%  
+                    ArrayList<String> pListString = DefectDAO.retrieveDevDistinctProject(dev.getUsername());
                     String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
                     ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
@@ -109,14 +110,14 @@
                         <%
                             ArrayList<Defect> dList = DefectDAO.retrieveAllocatedDev(dev.getUsername());
                         %>
-                        <%for (Project p : pList) {
-                                if (DefectDAO.retrieveAllByProject(p.getName()).size() != 0) {
+                        <%for (String p : pListString) {
+                                if (DefectDAO.retrieveAllByProject(p).size() != 0) {
                         %>
                         <div class="row">
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <%=p.getName()%> 
+                                        <%=p%> 
                                         <span class="tools pull-right">
                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                                         </span>
@@ -134,7 +135,7 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (p.getName().equalsIgnoreCase(d.getProjectName())) {
+                                                if (p.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete()==1 || d.getIsComplete()==0)) {
 
                                                     out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
                                                     if (d.getIsComplete() == 2) { %>

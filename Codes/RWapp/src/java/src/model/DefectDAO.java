@@ -598,4 +598,28 @@ public class DefectDAO {
         return toReturn;
 
     }
+    
+    public static ArrayList<String> retrieveDevDistinctProject(String devUsername) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<String> toReturn = new ArrayList<String>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select distinct projectname from defect where assignto=? and (isComplete=1 or isComplete=0)");
+            pstmt.setString(1, devUsername);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
 }
