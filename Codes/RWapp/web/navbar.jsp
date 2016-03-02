@@ -180,11 +180,20 @@
                                 <a class="active" href="trelloProperties.jsp"> <% } else { %>
                                     <a href="trelloProperties.jsp"> <% } %>
                                         <i class="fa fa-trello"></i>
-                                        <span>Edit Trello Details</span>
+                                        <span>Trello Details</span>
+                                    </a>
+                            <!--END TRELLO PROPERTIES-->  
+                              
+                            <!--CRON SETTINGS-->
+                                <% if (thisPage.equals("cronSettings")) { %>
+                                <a class="active" href="cronSettings.jsp"> <% } else { %>
+                                    <a href="cronSettings.jsp"> <% } %>
+                                        <i class="fa fa-refresh"></i>
+                                        <span>Cron Settings</span>
                                     </a>
                             </li>
                             <% } %>
-                            <!--END TRELLO PROPERTIES-->
+                             <!--END CRON SETTINGS-->
                             
                             
                             
