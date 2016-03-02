@@ -162,7 +162,8 @@
                                                                     out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");
                                                                     //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
                                                                     %>
-                                                                    <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span>
+                                                                    <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                    <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
 
                                                                     <%out.println("</table>");
 

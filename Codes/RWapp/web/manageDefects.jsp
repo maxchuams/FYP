@@ -183,8 +183,11 @@
                                                                     }
                                                                         out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
                                                                         out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");%>
-                                                                        <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span>
-                                                                        <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span>
+                                                                        <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                        <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                        <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
+                                                                        <tr><td><b>Assigned to:</b></td><td><%=d.getAssignto()%></td></tr>
+                                                                                
                                                                                 
                                                                         <%out.println("</table>");
                                                                     }
