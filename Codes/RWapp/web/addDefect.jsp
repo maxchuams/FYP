@@ -34,7 +34,8 @@
                 ArrayList<String> dd = aa.retrieveDev(cheebye.getName());
                 String toR = "";
                 if(dd.size()>1){
-                    for(int i=0;i<dd.size()-1;i++){
+                        toR = dd.get(0);
+                    for(int i=1;i<dd.size();i++){
                         toR = toR +"," +dd.get(i);
                     }
                     zz.add(cheebye.getName());
@@ -44,6 +45,7 @@
                     zz.add(cheebye.getName());
                     yy.add(toR);
                 }
+                //System.out.println(dd);
             }
             
 //            List<String> strList = new ArrayList<String>();
@@ -58,24 +60,45 @@
             function jsFunction(){
                 var myselect = document.getElementById("projectname");
                 var toCompare = myselect.options[myselect.selectedIndex].value;
-                alert(toCompare);
+                //alert(toCompare);
                 var indexofP = "";
+                var myNode = document.getElementById("test1");
+                while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+                }
                 for(var i=0;i<jsArray.length;i++){
-                    if(jsArray[i]==toCompare){
+                    if(jsArray[i]===toCompare){
                         indexofP = i;
 //                        alert(indexofP);
 //                        alert(toCompare);
                     }
                 }
                 var toPut = jjArray[indexofP];
+                //alert(jsArray);
                 var putput = toPut.split(",");
+                //alert(putput);
                 for(var j=0;j<putput.length;j++){
-                var opt = document.getElementById('test1');
-                opt.value = putput[j];
+                   // alert(putput[j]);
+                var divdiv = document.getElementById('test1');
+                var cb = document.createElement('input');
+                cb.type = 'checkbox';
+                divdiv.appendChild(cb);
+                cb.name = "blame";
+                cb.value = putput[j];
+                cb.id = 'x';
+                var label = document.createElement('label')
+                label.htmlFor = "blame";
+                label.id = 'y'
+                label.appendChild(document.createTextNode(putput[j]));
+                divdiv.appendChild(label);
+                var foo = document.createTextNode("\u00A0");
+                divdiv.appendChild(foo);
+                //cb.appendChild(document.createTextNode(putput[j]));
+                //opt.value = putput[j];
 //                opt.innerHTML = "aaa";
                 //}
-                var labelvar = document.getElementById('yesnos');
-                labelvar.innerHTML = putput[j];
+//                var labelvar = document.getElementById('yesnos');
+//                labelvar.innerHTML = putput[j];
             }
 //                var opt= document.getElementById('test1').options[1];
 //                opt.value = 'sex';
@@ -214,10 +237,8 @@
                                     <p></p><br/><br/>
                                     <div id='test'>
                                      <label id="xxxx" for="xx" class="col-lg-3 control-label">Developer's Fault </label>
-                                    <div class="col-lg-9">
-                                        <input type="checkbox" id="test1" name="vehicle" value="Bike"><label name="yesnos" id="yesnos">No</label>
-                                        <input type="checkbox" id="test2" name="vehicle" value="Bike"><label name="yesnos" id="yesno">No</label>
-                                        <input type="checkbox" id="test3" name="vehicle" value="Bike"><label name="yesnos" id="yesnoss">No</label>
+                                    <div class="col-lg-9" id="test1">
+                                        
 <!--                                        <select name="xx" class="form-control" id="test1">
                                             <option value='max'>max</option>
                                             <option value ='penis'>penis</option>
