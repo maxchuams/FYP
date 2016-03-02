@@ -1,9 +1,3 @@
-<%-- 
-    Document   : profilePage
-    Created on : Oct 31, 2015, 3:28:18 PM
-    Author     : calvin
---%>
-
 <%@page import="java.util.ArrayList"%>
 <%@page import="src.model.PersonDAO"%>
 <%@page import="src.model.DeveloperDAO"%>
@@ -83,7 +77,7 @@
     <body>
         <%  String err = (String) request.getAttribute("err");
             String sucess = (String) request.getAttribute("sucess");
-            String devname = request.getParameter("devname");
+            String devusername = request.getParameter("devusername");
             ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
         %>
         <!--main content start-->
@@ -127,12 +121,12 @@
 
                                 <div class="col-md-3">
                                     <div class="profile-pic">
-                                        <img src="ImageServlet?imageid=<%=devname%>" alt="" align="center"/>
+                                        <img src="ImageServlet?imageid=<%=devusername%>" alt="" align="center"/>
                                     </div>
                                 </div>
                                 <div class="col-md-9">
                                     <h1 ><b>Developer Statistic Page</b></h1>
-                                    <h3>Username: <font color='Green'><%=devname%></font></h3>
+                                    <h3>Username: <font color='Green'><%=devusername%></font></h3>
                                     <h3>Role: <font color='Green'>Developer</font></h3>
                                 </div>
                             </div>
@@ -180,10 +174,10 @@
                                     <div class="chartJS" style="height: 410;">
 
 
-                                        <canvas id="countries" width="400" height="400"></canvas>
+                                        <canvas id="exppie" width="400" height="400"></canvas>
 
                                     </div>
-                                    <div id="countriesLegend"></div>
+                                    <div id="exppieLegend"></div>
 
                                 </div>
                             </section>
@@ -248,15 +242,11 @@
 
                 </div>
 
-
-
-
-
-
                 <!-- page end-->
             </section>
         </section>
         <!--main content end-->
+
 
         <script>
             // line chart data
@@ -277,41 +267,90 @@
             // draw line chart
             new Chart(buyers).Line(buyerData);
 
-            // pie chart data
-            var pieData = [
-                {
-                    value: 0,
-                    color: "#878BB6",
-                    label: 'Wordpress'
+        </script>
+
+
+
+        <!-- start of pie chart data script -->
+        <script type="text/javascript">
+
+
+            $.ajax({
+                type: "GET",
+                url: "ChartJSON",
+                cache: false,
+                data: {
+                    devusername: "<%=devusername%>",
+                    chart: "exppie"
                 },
-                {
-                    value: 0,
-                    color: "#4ACAB4",
-                    label: 'E-commerce'
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    alert(JSON.stringify(response));
+                    var responsePIE = jQuery.parseJSON(JSON.stringify(response));
+                    var pieOptions = {
+                        segmentShowStroke: false,
+                        animateScale: true
+                    }
+
+                    var exppie = document.getElementById("exppie").getContext("2d")
+                    var pieChart = new Chart(exppie).Pie(responsePIE, pieOptions);
+                    legend(document.getElementById("exppieLegend"), responsePIE, pieChart);
+                    
+                    
                 },
-                {
-                    value: 0,
-                    color: "#FF8153",
-                    label: 'Customized'
-                },
-                {
-                    value: 0,
-                    color: "#FFEA88",
-                    label: 'Android Development'
+                error: function (response) {
+                    alert('Error while request..');
+
                 }
-            ];
-            // pie chart options
-            var pieOptions = {
-                segmentShowStroke: false,
-                animateScale: true
-            }
-            // get pie chart canvas
-            var countries = document.getElementById("countries").getContext("2d");
-            // draw pie chart
-            var pieChart = new Chart(countries).Pie(pieData, pieOptions);
+
+            });
 
 
-            legend(document.getElementById("countriesLegend"), pieData, pieChart);
+
+        </script>
+
+
+        <script>
+
+            /*
+             // pie chart data
+             var pieData = [
+             {
+             value: 0,
+             color: "#878BB6",
+             label: 'Wordpress'
+             },
+             {
+             value: 0,
+             color: "#4ACAB4",
+             label: 'E-commerce'
+             },
+             {
+             value: 0,
+             color: "#FF8153",
+             label: 'Customized'
+             },
+             {
+             value: 0,
+             color: "#FFEA88",
+             label: 'Android Development'
+             }
+             ];
+             // pie chart options
+             var pieOptions = {
+             segmentShowStroke: false,
+             animateScale: true
+             }
+             // get pie chart canvas
+             var exptype = document.getElementById("exptype").getContext("2d");
+             // draw pie chart
+             var pieChart = new Chart(exptype).Pie(pieData, pieOptions);
+             legend(document.getElementById("exptypeLegend"), pieData, pieChart);
+             */
+
+        </script>
+
+        <script>
 
 
             // bar chart data
@@ -339,6 +378,10 @@
             var incomeChart = new Chart(income).Bar(barData)
             legend(document.getElementById("incomeLegend"), barData, incomeChart);
 
+        </script>
+
+
+        <script>
 
             var radarChartData = {
                 labels: ["Team Work", "Defects Factor", "Timeliness Factor", "Quality Factor", "Project Manamgement", "Load Factor"],
@@ -371,6 +414,8 @@
                 responsive: false
             })
             legend(document.getElementById("radarLegend"), radarChartData, zaiChart);
+
+
         </script>
 
 

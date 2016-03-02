@@ -112,7 +112,7 @@
                                             <% if(sudo!=null){ %>
                                             <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-info btn-xs">Edit</button></a></td>
                                             <% } %>
-                                            <td><a href="statdemo.jsp?devname=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">View</button></a></td>
+                                            <td><a href="statdemo.jsp?devusername=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">View</button></a></td>
                                         </tr>
                                         <%}%>
                                         <%}
