@@ -33,10 +33,20 @@ public class updateCronActivity extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String active = request.getParameter("active");
-        ArrayList<String> errList = new ArrayList<String>();
+        
         int pause=-1;
+        String switch2 = request.getParameter("switch2");
+        System.out.println(switch2);
+        if(switch2==null){
+            pause=1;
+        }else if(switch2.equals("true")){
+            pause=0;
+        }
+        
+        ArrayList<String> errList = new ArrayList<String>();
+        
         try{
-            pause = Integer.parseInt(active);
+            //pause = Integer.parseInt(active);
         } catch (Exception e){
             errList.add("Please select an option");
         }
