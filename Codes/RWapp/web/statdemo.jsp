@@ -1,3 +1,8 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="com.google.gson.GsonBuilder"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="src.model.ChartJSDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="src.model.PersonDAO"%>
 <%@page import="src.model.DeveloperDAO"%>
@@ -74,125 +79,72 @@
             }
         </style>
     </head>
-    <body>
-        <%  String err = (String) request.getAttribute("err");
-            String sucess = (String) request.getAttribute("sucess");
-            String devusername = request.getParameter("devusername");
-            ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
-        %>
-        <!--main content start-->
-        <section id="main-content">
-            <section class="wrapper">
-                <%if (err != null) {%>
-                <div class="row">
-                    <div class="col-md-12">
-                        <section class="panel">
-                            <div class="alert alert-block alert-danger fade in">
-                                <button data-dismiss="alert" class="close close-sm" type="button">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                <%=err%>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                <%}%>
-                <%if (sucess != null) {%>
-                <div class="row">
-                    <div class="col-md-12">
-                        <section class="panel">
-                            <div class="alert alert-success fade in">
-                                <button data-dismiss="alert" class="close close-sm" type="button">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                <%=sucess%>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                <%}%>
-                <!-- page start-->
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <section class="panel">
-                            <div class="panel-body profile-information">
-
-
-                                <div class="col-md-3">
-                                    <div class="profile-pic">
-                                        <img src="ImageServlet?imageid=<%=devusername%>" alt="" align="center"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <h1 ><b>Developer Statistic Page</b></h1>
-                                    <h3>Username: <font color='Green'><%=devusername%></font></h3>
-                                    <h3>Role: <font color='Green'>Developer</font></h3>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <section class="panel">
-                                <header class="panel-heading">
-                                    Developer Statistic
-                                    <span class="tools pull-right">
-                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                        <a href="javascript:;" class="fa fa-cog"></a>
-                                        <a href="javascript:;" class="fa fa-times"></a>
-                                    </span>
-                                </header>
-                                <div class="panel-body">
-
-
-                                    <div class="chartJS" style="height:420;">
-
-                                        <canvas id="radarChart" width="400" height="430"></canvas>
-
-                                    </div>
-                                    <div id="radarLegend"></div>
-                                </div>
-                            </section>
+    <%  String err = (String) request.getAttribute("err");
+        String sucess = (String) request.getAttribute("sucess");
+        String devusername = request.getParameter("devusername");
+        ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+    %>
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <%if (err != null) {%>
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="panel">
+                        <div class="alert alert-block alert-danger fade in">
+                            <button data-dismiss="alert" class="close close-sm" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <%=err%>
                         </div>
-                        <div class="col-md-6">
-                            <section class="panel">
-                                <header class="panel-heading">
-                                    Experience by Project Type
-                                    <span class="tools pull-right">
-                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                        <a href="javascript:;" class="fa fa-cog"></a>
-                                        <a href="javascript:;" class="fa fa-times"></a>
-                                    </span>
-                                </header>
-                                <div class="panel-body">
-
-
-                                    <div class="chartJS" style="height: 410;">
-
-
-                                        <canvas id="exppie" width="400" height="400"></canvas>
-
-                                    </div>
-                                    <div id="exppieLegend"></div>
-
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-
-
+                    </section>
                 </div>
+            </div>
+            <%}%>
+            <%if (sucess != null) {%>
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="panel">
+                        <div class="alert alert-success fade in">
+                            <button data-dismiss="alert" class="close close-sm" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <%=sucess%>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <%}%>
+            <!-- page start-->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="panel">
+                        <div class="panel-body profile-information">
 
 
-                <div class="row">
-                    <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="profile-pic">
+                                    <img src="ImageServlet?imageid=<%=devusername%>" alt="" align="center"/>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <h1 ><b>Developer Statistic Page</b></h1>
+                                <h3>Username: <font color='Green'><%=devusername%></font></h3>
+                                <h3>Role: <font color='Green'>Developer</font></h3>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
                         <section class="panel">
                             <header class="panel-heading">
-                                Developer's Timeliness for Past 6 Months
+                                Developer Statistic
                                 <span class="tools pull-right">
                                     <a href="javascript:;" class="fa fa-chevron-down"></a>
                                     <a href="javascript:;" class="fa fa-cog"></a>
@@ -202,23 +154,19 @@
                             <div class="panel-body">
 
 
-                                <div class="chartJS" style="height: 310;">
+                                <div class="chartJS" style="height:420;">
 
-                                    <canvas id="buyers" height="300" width="920"></canvas>
-
+                                    <canvas id="radarChart" width="400" height="430"></canvas>
 
                                 </div>
-
+                                <div id="radarLegend"></div>
                             </div>
                         </section>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <section class="panel">
                             <header class="panel-heading">
-                                Load Factor Comparison
+                                Experience by Project Type
                                 <span class="tools pull-right">
                                     <a href="javascript:;" class="fa fa-chevron-down"></a>
                                     <a href="javascript:;" class="fa fa-cog"></a>
@@ -228,197 +176,349 @@
                             <div class="panel-body">
 
 
-                                <div class="chartJS" style="height: 210;">
+                                <div class="chartJS" style="height: 410;">
 
-                                    <canvas id="income" width="920" height="200"></canvas>
 
+                                    <canvas id="exppie" width="400" height="400"></canvas>
 
                                 </div>
-                                <div id="incomeLegend"></div>
+                                <div id="exppieLegend"></div>
 
                             </div>
                         </section>
                     </div>
-
                 </div>
 
-                <!-- page end-->
-            </section>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Developer's Timeliness for Past 6 Months
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                <a href="javascript:;" class="fa fa-cog"></a>
+                                <a href="javascript:;" class="fa fa-times"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+
+
+                            <div class="chartJS" style="height: 310;">
+
+                                <canvas id="timeliness" height="300" width="920"></canvas>
+
+
+                            </div>
+
+                            <div id="timelinessLegend"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Load Factor Comparison
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                <a href="javascript:;" class="fa fa-cog"></a>
+                                <a href="javascript:;" class="fa fa-times"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+                            <div class="chartJS" style="height: 210;">
+                                <canvas id="load" width="920" height="200"></canvas>
+                            </div>
+                            <div id="loadLegend"></div>
+
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+
+            <!-- page end-->
         </section>
-        <!--main content end-->
+    </section>
+    <!--main content end-->
 
 
-        <script>
-            // line chart data
-            var buyerData = {
-                labels: ["January", "February", "March", "April", "May", "June"],
-                datasets: [
-                    {
-                        fillColor: "rgba(172,194,132,0.4)",
-                        strokeColor: "#ACC26D",
-                        pointColor: "#fff",
-                        pointStrokeColor: "#9DB86D",
-                        data: [203, 156, 99, 251, 305, 247]
-                    }
-                ]
+
+
+
+
+
+
+    <%
+
+        ArrayList<String> monthList = ChartJSDAO.getSixMonth();
+        ArrayList<Double> devTimeList = new ArrayList<Double>();
+        ArrayList<Double> rwTimeList = new ArrayList<Double>();
+
+        HashMap<String, Double> devmap = ChartJSDAO.getTimelinessDev(devusername);
+        HashMap<String, Double> rwmap = ChartJSDAO.getTimelinessRW();
+
+        for (String i : monthList) {
+            Double timelinessdev = devmap.get(i);
+            Double timelinessrw = rwmap.get(i);
+            if (timelinessdev == null) {
+                timelinessdev = 0.0;
             }
-            // get line chart canvas
-            var buyers = document.getElementById('buyers').getContext('2d');
-            // draw line chart
-            new Chart(buyers).Line(buyerData);
+            if (timelinessrw == null) {
+                timelinessrw = 0.0;
+            }
+            devTimeList.add(timelinessdev);
+            rwTimeList.add(timelinessrw);
+        }
+        //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new Gson();
+        String months = gson.toJson(monthList);
+        String timelinessDev = gson.toJson(devTimeList);
+        String timelinessRW = gson.toJson(rwTimeList);
 
-        </script>
 
+    %>
+    <script>
+        // line chart data
 
-
-        <!-- start of pie chart data script -->
-        <script type="text/javascript">
-
-
-            $.ajax({
-                type: "GET",
-                url: "ChartJSON",
-                cache: false,
-                data: {
-                    devusername: "<%=devusername%>",
-                    chart: "exppie"
+        
+        var timeData = {
+            labels: <%=months%>,
+            datasets: [
+                {
+                    label: "RippleWerkz",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: <%=timelinessRW%>
                 },
-                contentType: "application/json; charset=utf-8",
-                success: function (response) {
-                    alert(JSON.stringify(response));
-                    var responsePIE = jQuery.parseJSON(JSON.stringify(response));
-                    var pieOptions = {
-                        segmentShowStroke: false,
-                        animateScale: true
-                    }
-
-                    var exppie = document.getElementById("exppie").getContext("2d")
-                    var pieChart = new Chart(exppie).Pie(responsePIE, pieOptions);
-                    legend(document.getElementById("exppieLegend"), responsePIE, pieChart);
-                    
-                    
-                },
-                error: function (response) {
-                    alert('Error while request..');
-
+                {
+                    label: "<%=devusername%>",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: <%=timelinessDev%>
                 }
+            ]
+        }
+        // get line chart canvas
+        var timec = document.getElementById('timeliness').getContext('2d');
+        // draw line chart
+        var timechart = new Chart(timec).Line(timeData);
+        legend(document.getElementById('timelinessLegend'), timeData, timechart);
 
-            });
-
-
-
-        </script>
-
-
-        <script>
-
-            /*
-             // pie chart data
-             var pieData = [
-             {
-             value: 0,
-             color: "#878BB6",
-             label: 'Wordpress'
-             },
-             {
-             value: 0,
-             color: "#4ACAB4",
-             label: 'E-commerce'
-             },
-             {
-             value: 0,
-             color: "#FF8153",
-             label: 'Customized'
-             },
-             {
-             value: 0,
-             color: "#FFEA88",
-             label: 'Android Development'
-             }
-             ];
-             // pie chart options
-             var pieOptions = {
-             segmentShowStroke: false,
-             animateScale: true
-             }
-             // get pie chart canvas
-             var exptype = document.getElementById("exptype").getContext("2d");
-             // draw pie chart
-             var pieChart = new Chart(exptype).Pie(pieData, pieOptions);
-             legend(document.getElementById("exptypeLegend"), pieData, pieChart);
-             */
-
-        </script>
-
-        <script>
+    </script>
 
 
-            // bar chart data
-            var barData = {
-                labels: ["January", "February", "March", "April", "May", "June"],
-                datasets: [
-                    {
-                        fillColor: "#48A497",
-                        strokeColor: "#48A4D1",
-                        data: [456, 479, 324, 569, 702, 600],
-                        label: 'Tan Kai Wen'
 
-                    },
-                    {
-                        fillColor: "rgba(73,188,170,0.4)",
-                        strokeColor: "rgba(72,174,209,0.4)",
-                        data: [364, 504, 605, 400, 345, 320],
-                        label: 'Ripplwerkz Standard'
-                    }
-                ]
+
+
+
+
+
+
+
+
+
+    <!-- start of pie chart data script -->
+    <script type="text/javascript">
+        $.ajax({
+            type: "GET",
+            url: "ChartJSON",
+            cache: false,
+            data: {
+                devusername: "<%=devusername%>",
+                chart: "exppie"
+            },
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                var responsePIE = jQuery.parseJSON(JSON.stringify(response));
+                var pieOptions = {
+                    segmentShowStroke: false, animateScale: true
+                }
+                var exppie = document.getElementById("exppie").getContext("2d")
+                var pieChart = new Chart(exppie).Pie(responsePIE, pieOptions);
+                legend(document.getElementById("exppieLegend"), responsePIE, pieChart);
+            },
+            error: function (response) {
+                alert('Error while request..');
+            }});
+    </script>
+    <!-- End of pie Chart for experience -->
+
+
+
+
+
+
+
+
+
+
+
+    <!--
+    <script>
+        /*
+         // pie chart data
+         var pieData = [
+         {
+         value: 0,
+         color: "#878BB6",
+         label: 'Wordpress'
+         },
+         {
+         value: 0,
+         color: "#4ACAB4",
+         label: 'E-commerce'
+         },
+         {
+         value: 0,
+         color: "#FF8153",
+         label: 'Customized'
+         },
+         {
+         value: 0,
+         color: "#FFEA88",
+         label: 'Android Development'
+         }
+         ];
+         // pie chart options
+         var pieOptions = {
+         segmentShowStroke: false,
+         animateScale: true
+         }
+         // get pie chart canvas
+         var exptype = document.getElementById("exptype").getContext("2d");
+         // draw pie chart
+         var pieChart = new Chart(exptype).Pie(pieData, pieOptions);
+         legend(document.getElementById("exptypeLegend"), pieData, pieChart);
+         */
+    </script>
+    -->
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <%
+
+
+        ArrayList<Double> devloadList = new ArrayList<Double>();
+        ArrayList<Double> rwloadList = new ArrayList<Double>();
+
+        HashMap<String, Double> devloadmap = ChartJSDAO.getLoadDev(devusername);
+        HashMap<String, Double> rwloadmap = ChartJSDAO.getLoadRW();
+
+        for (String i : monthList) {
+            Double loaddev = devloadmap.get(i);
+            Double loadrw = rwloadmap.get(i);
+            if (loaddev == null) {
+                loaddev = 0.0;
             }
-            // get bar chart canvas
-            var income = document.getElementById("income").getContext("2d");
-            // draw bar chart
-            var incomeChart = new Chart(income).Bar(barData)
-            legend(document.getElementById("incomeLegend"), barData, incomeChart);
-
-        </script>
-
-
-        <script>
-
-            var radarChartData = {
-                labels: ["Team Work", "Defects Factor", "Timeliness Factor", "Quality Factor", "Project Manamgement", "Load Factor"],
-                datasets: [
-                    {
-                        label: "Developer Tan Kai Wen",
-                        fillColor: "rgba(220,220,220,0.2)",
-                        strokeColor: "rgba(220,220,220,1)",
-                        pointColor: "rgba(220,220,220,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [65, 59, 90, 81, 56, 55]
-                    },
-                    {
-                        label: "Developer Kian Lam",
-                        fillColor: "rgba(151,187,205,0.2)",
-                        strokeColor: "rgba(151,187,205,1)",
-                        pointColor: "rgba(151,187,205,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(151,187,205,1)",
-                        data: [28, 48, 40, 19, 96, 27]
-                    }
-                ]
+            if (loadrw == null) {
+                loadrw = 0.0;
             }
+            devloadList.add(loaddev);
+            rwloadList.add(loadrw);
+        }
 
-            var zainess = document.getElementById("radarChart").getContext("2d")
-            var zaiChart = new Chart(zainess).Radar(radarChartData, {
-                responsive: false
-            })
-            legend(document.getElementById("radarLegend"), radarChartData, zaiChart);
-
-
-        </script>
+        String loadDev = gson.toJson(devloadList);
+        String loadRW = gson.toJson(rwloadList);
 
 
+    %>
+    
+    
+    <script>
 
-    </body>
+
+        // bar chart data
+        var loadData = {
+            labels: <%=months%>,
+            datasets: [
+                {
+                    fillColor: "#48A497",
+                    strokeColor: "#48A4D1",
+                    data: <%=loadDev%>,
+                    label: '<%=devusername%>'
+
+                },
+                {
+                    fillColor: "rgba(73,188,170,0.4)",
+                    strokeColor: "rgba(72,174,209,0.4)",
+                    data: <%=loadRW%>,
+                    label: 'Ripplwerkz Standard'
+                }
+            ]
+        }
+        // get bar chart canvas
+        var load = document.getElementById("load").getContext("2d");
+        // draw bar chart
+        var loadChart = new Chart(load).Bar(loadData)
+        legend(document.getElementById("loadLegend"), loadData, loadChart);
+
+    </script>
+
+
+    <script>
+
+        var radarChartData = {
+            labels: ["Timeliness Factor", "Experience Factor", "Skillset","Quality Factor"],
+            datasets: [
+                {
+                    label: "Developer Tan Kai Wen",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1,1)",
+                    data: [65, 59, -2.2, 8]
+                },
+                {
+                    label: "Developer Kian Lam",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1,1)",
+                    data: [28, 48, 40, 19]
+                }
+            ]
+        }
+
+        var zainess = document.getElementById("radarChart").getContext("2d")
+        var zaiChart = new Chart(zainess).Radar(radarChartData, {
+            responsive: false
+        })
+        legend(document.getElementById("radarLegend"), radarChartData, zaiChart);
+
+
+    </script>
+
+
+
+
 </html>

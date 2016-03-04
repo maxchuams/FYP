@@ -15,6 +15,7 @@
 
         <meta charset="utf-8" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.4.0/jQuery.print.min.js"></script>
         <script src="res/chart/Chart.js"></script>
         <script src="res/chart/legend.js"></script>
 
@@ -75,18 +76,11 @@
                 margin-right: 0.5em;
             }
         </style>
-
-
-
-
-
-
-
-
     </head>
     <body>
-        <h1 align="center"><b>Developer Statistic Page</b></h1>
-
+       
+            <h1 align="center"><b>Developer Statistic Page</b></h1>
+        
         <div class="panel-body profile-information">
 
             <div class="profile-pic text-center">
@@ -96,32 +90,118 @@
 
             </div>
         </div >
+        <div class="container">
 
-        <div align="center">
-            <h4><b>Developer Statistic</b></h4>
-            <!-- Radar Chart -->
-            <canvas id="radarChart" width="600" height="400"></canvas>
-            <div id="radarLegend"></div>
-            <br><br>
-            <h4><b>Developer's Timeliness for Past 6 Months</b></h4>
-            <!-- line chart canvas element -->
-            <canvas id="buyers" width="600" height="400" ></canvas>
-            <div id="buyerLegend"></div>
-            <br><br>
-            <h4><b>Developer Experience by Type</b></h4>
-            <!-- pie chart canvas element -->
-            <canvas id="countries" width="600" height="400"></canvas>
-            <div id="countriesLegend"></div>
-            <br><br>
-            <h4><b>Load Factor Comparison</b></h4>
-            <!-- bar chart canvas element -->
-            <canvas id="income" width="600" height="400"></canvas>
-            <div id="incomeLegend"></div>
-            <br><br>
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Developer Statistic
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                <a href="javascript:;" class="fa fa-cog"></a>
+                                <a href="javascript:;" class="fa fa-times"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+
+
+                            <div class="chartJS" style="height:420;">
+
+                                <canvas id="radarChart" width="500" height="430"></canvas>
+
+                            </div>
+                            <div id="radarLegend"></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-sm-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Experience by Project Type
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                <a href="javascript:;" class="fa fa-cog"></a>
+                                <a href="javascript:;" class="fa fa-times"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+
+
+                            <div class="chartJS" style="height: 410;">
+
+
+                                <canvas id="countries" width="500" height="400"></canvas>
+
+                            </div>
+                            <div id="countriesLegend"></div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Developer's Timeliness for Past 6 Months
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                <a href="javascript:;" class="fa fa-cog"></a>
+                                <a href="javascript:;" class="fa fa-times"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+
+
+                            <div class="chartJS" style="height: 310;">
+
+                                <canvas id="buyers" height="300" width="1100"></canvas>
+
+
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Load Factor Comparison
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                <a href="javascript:;" class="fa fa-cog"></a>
+                                <a href="javascript:;" class="fa fa-times"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+
+
+                            <div class="chartJS" style="height: 210;">
+
+                                <canvas id="income" width="1100" height="200"></canvas>
+
+
+                            </div>
+                            <div id="incomeLegend"></div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+
 
         </div>
-
-
         <script>
             // line chart data
             var buyerData = {
@@ -205,7 +285,7 @@
 
 
             var radarChartData = {
-                labels: ["Timeliness Factor", "Defects Factor", "Timeliness Factor", "Quality Factor", "Project Manamgement", "Load Factor"],
+                labels: ["Team Work", "Defects Factor", "Timeliness Factor", "Quality Factor", "Project Manamgement", "Load Factor"],
                 datasets: [
                     {
                         label: "Developer Tan Kai Wen",
@@ -237,29 +317,28 @@
             legend(document.getElementById("radarLegend"), radarChartData, zaiChart);
         </script>
 
-<br/>
 
-        <!-- Web2PDF Converter Button BEGIN -->
-        
-        <script type="text/javascript">
-            var
-                    pdfbuttonlabel = "Save As PDF"
-        </script>
-        <div id='pdfbuttonlabel' align='center'>
-        <script src="http://www.web2pdfconvert.com/pdfbutton2.js" id="Web2PDF" type="text/javascript" ></script>
-        <!-- Web2PDF Converter Button END -->
-        
+
+
+
+
+        <br/>
+
+        <div>
+            <form>
+
+           <input type="button" value="Print Div" onclick="PrintElem('#printableArea')" />
+            </form>
+
+
         </div>
-        
-        
-        
-        
-        
-        
-        
+
     </body>
 
 </html>
+
+
+
 
 
 

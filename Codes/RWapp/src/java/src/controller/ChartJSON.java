@@ -55,15 +55,7 @@ public class ChartJSON extends HttpServlet {
             
 
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
+           
             
             
             
@@ -86,19 +78,11 @@ public class ChartJSON extends HttpServlet {
                     pieDataSet.add(piedata);
                 }
                 String jsonString = gson.toJson(pieDataSet);
-                System.out.println(jsonString);
+                
                 response.setContentType("application/json");
                 response.getWriter().write(jsonString);
             }
             //end of pieexp
-            
-            
-            
-            
-            
-            
-            
-            
             
             
 
