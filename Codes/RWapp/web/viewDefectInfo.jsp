@@ -14,7 +14,11 @@
 <%@page import="src.model.DefectDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectPMandDev.jsp" %>
-<%String thisPage = "manageDefects"; //This is to change the highlight in Navigation Bar%>
+<% String thisPage = ""; 
+if(pm!=null){ 
+thisPage = "manageDefects";
+}else{%>
+<%thisPage = "viewDefects"; } //This is to change the highlight in Navigation Bar %>
 <%String selected = null;%>
 <%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

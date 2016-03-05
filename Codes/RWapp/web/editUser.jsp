@@ -8,7 +8,15 @@
 <%@page import="src.model.PersonDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectSudo.jsp" %>
-<%String thisPage = "manageUser"; //This is to change the highlight in Navigation Bar%>
+<% String username2 = request.getParameter("username");
+Person p2 = PersonDAO.retrieveUser(username2);
+String pType = p2.getType();
+String thisPage = "";
+if(pType.equals("p")){
+    thisPage="managePM";
+}else{
+%>
+<%thisPage = "manageUser";} //This is to change the highlight in Navigation Bar%>
 <%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -39,12 +47,9 @@
             ArrayList<Person> users = (ArrayList<Person>) request.getAttribute("users");
             String username1 = request.getParameter("username");
             if (users == null) {
-
                 users = PersonDAO.retrieveUsers();
-
             }
             if (users != null) {
-
                 Person p = PersonDAO.retrieveUser(username1);
         %>
         <section id="main-content">
@@ -53,7 +58,6 @@
                 <!--Error/success display-->
                 <%  String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
-
                     if (errorMsg != null) {
                 %>
                 <div class="row">
@@ -86,8 +90,6 @@
                 <%
                     }
                 %>
-
-
                 <!--End of error/success display--> 
 
                 <!--Kaiwen's Code-->
@@ -100,8 +102,6 @@
                                     <a href="#">
                                         <img alt="" src="ImageServlet?imageid=<%=username1%>">
                                     </a>
-
-
                                     <h1><font color="white"><%=p.getUsername()%></font></h1>
                                         <p><font color="white"><% String type = p.getType();
                                         if (type.equals("p")) {  %>Project Manager <% } else if (type.equals("c")) { %>Developer <% } else if (type.equals("d")) { %>Designer<% }%></font></p>

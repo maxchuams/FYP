@@ -3,6 +3,8 @@
     Created on : Sep 14, 2015, 12:28:56 PM
     Author     : admin
 --%>
+<%@page import="src.model.Project"%>
+<%@page import="src.model.ProjectDAO"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.DeveloperDAO"%>
 <%@page import="src.model.Developer"%>
@@ -98,11 +100,8 @@
                                             </td>
                                             <td><a href="#"> <%=p.getUsername()%></a></td>
                                             <td> <% 
-                                            if (p.getType().equals("p")){
-                                                out.println("Project Manager");
-                                            } else if (p.getType().equals("c")){
-                                                out.println("Developer");
-                                            }
+                                            ArrayList<Project> pmProj = ProjectDAO.retrieveInProgressByPM(p.getUsername());
+                                            out.println(pmProj.size());
                                             %></td>
                                             <td><a href="editUser.jsp?username=<%=p.getUsername()%>"><button type="button" class="btn btn-primary btn-xs">Edit</button></a></td>
                                         </tr>

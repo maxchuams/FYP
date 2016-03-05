@@ -15,6 +15,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cron settings</title>
+        <link href="js/skins/minimal/green.css" rel="stylesheet">
+        <link href="js/skins/square/green.css" rel="stylesheet">
+        <link href="js/skins/flat/green.css" rel="stylesheet">
+        <script src="js/icheck.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat',
+                    radioClass: 'iradio_flat'
+                });
+            });
+        </script>
 
         <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
@@ -248,5 +260,13 @@
             </section>
         </section>
         <script src="js/bootstrap-switch.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+            });
+        </script>
     </body>
 </html>
