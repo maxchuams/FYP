@@ -33,16 +33,16 @@ public class updateCronActivity extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String active = request.getParameter("active");
-        
+        String passSwitch2 = "nothing";
         int pause=-1;
         String switch2 = request.getParameter("switch2");
-        System.out.println(switch2);
         if(switch2==null){
             pause=1;
-        }else if(switch2.equals("true")){
+            passSwitch2="off";
+        }else if(switch2.equals("on")){
             pause=0;
+            passSwitch2="on";
         }
-        
         ArrayList<String> errList = new ArrayList<String>();
         
         try{
@@ -51,15 +51,16 @@ public class updateCronActivity extends HttpServlet {
             errList.add("Please select an option");
         }
         boolean success = TrelloConfigDAO.updateCronPause(pause);
-        RequestDispatcher rd=  request.getRequestDispatcher("cronSettings.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");
         if (success){
             String toreturn = "";
             if(pause == 0 ){
-                toreturn = "unpaused.";
+                toreturn = "on";
             } else {
-                toreturn = "paused.";
+                toreturn = "off";
             }
-            request.setAttribute("success","Cron has successfully " +  toreturn);
+            request.setAttribute("passSwitch2",passSwitch2);
+            request.setAttribute("success","Cron is now " +  toreturn);
             rd.forward(request, response);
             return;
         }else {
