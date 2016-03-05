@@ -122,9 +122,7 @@
                 </div>
                 <%}
                     String crondetails = TrelloConfigDAO.retrieveCronDetails();
-
                     int pause = TrelloConfigDAO.retrieveCronPause();
-
                 %>
 
                 <div class="row">
@@ -140,28 +138,28 @@
                                                     out.println("<b>Status: Active</b>");
                                                 } else {
                                                     out.println("<b>Status: Inactive</b>");
-                                            }%><br/>
+                                                }%><br/>
                                                 <%=crondetails%>
                                             </li>
                                             <li class='pull-right notification-time'>
                                                 <form action='updateCronActivity' class="form-horizontal form-inline" id='submitForm'>
-                                    <%if ("off".equals(passSwitch2)) {%>
-                                    <input id="toggle-event" name="switch2" type="checkbox" data-toggle="toggle">
-                                    <%} else {%>
-                                    <input id="toggle-event" name="switch2" type="checkbox" data-toggle="toggle" checked/>
-                                    <%}%>
-                                    <div id="console-event"></div>
-                                    <script>
-                                      $(function() {
-                                        $('#toggle-event').change(function() {
-                                            setTimeout(function() {
-                                                $('#submitForm').submit();
-                                             }, 500);
-                                        });
-                                      });
-                                        document.getElementById("#toggle-event").value = $(this).prop('checked');
-                                    </script>
-                                </form>
+                                                    <%if (pause==0) {%>
+                                                    <input id="toggle-event" name="switch2" type="checkbox" data-toggle="toggle" checked>
+                                                    <%} else {%>
+                                                    <input id="toggle-event" name="switch2" type="checkbox" data-toggle="toggle"/>
+                                                    <%}%>
+                                                    <div id="console-event"></div>
+                                                    <script>
+                                                        $(function () {
+                                                            $('#toggle-event').change(function () {
+                                                                setTimeout(function () {
+                                                                    $('#submitForm').submit();
+                                                                }, 500);
+                                                            });
+                                                        });
+                                                        document.getElementById("#toggle-event").value = $(this).prop('checked');
+                                                    </script>
+                                                </form>
                                             </li>
                                         </ul>
                                         <p style="color: black">

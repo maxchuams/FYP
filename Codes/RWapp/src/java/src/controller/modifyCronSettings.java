@@ -292,7 +292,7 @@ public class modifyCronSettings extends HttpServlet {
                 if(minvaluenumw <10){
                         minvaluew = "0"+minvaluew;
                     }
-                crondetails = "Cron job is scheduled on " + toappend + " at" + hourvaluew + ":" + minvaluew;
+                crondetails = "Cron job is scheduled on " + toappend + " at " + hourvaluew + ":" + minvaluew;
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("cronSettings.jsp");
                 request.setAttribute("errList", errList);
