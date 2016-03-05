@@ -16,8 +16,6 @@
         <title>View Developer Statistic Page</title>
 
         <meta charset="utf-8" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.4.0/jQuery.print.min.js"></script>
         <script src="res/chart/Chart.js"></script>
         <script src="res/chart/legend.js"></script>
 
@@ -242,14 +240,22 @@
                 </div>
 
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div align="center">
+                <button type="button" class="btn btn-info" onClick="window.print()"><i class="fa fa-print"></i> Print </button>
+</div>
+                </div>
+            </div>
+
+
+
+
 
             <!-- page end-->
         </section>
     </section>
     <!--main content end-->
-
-
-
 
 
 
@@ -287,7 +293,7 @@
     <script>
         // line chart data
 
-        
+
         var timeData = {
             labels: <%=months%>,
             datasets: [
@@ -409,20 +415,19 @@
     </script>
     -->
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <%
 
+
+
+
+
+
+
+
+
+
+
+
+    <%
 
         ArrayList<Double> devloadList = new ArrayList<Double>();
         ArrayList<Double> rwloadList = new ArrayList<Double>();
@@ -448,8 +453,8 @@
 
 
     %>
-    
-    
+
+
     <script>
 
 
@@ -481,30 +486,50 @@
     </script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <%
+
+        String radarDev = gson.toJson(ChartJSDAO.getDevStats(devusername));
+        String radarRw = gson.toJson(ChartJSDAO.getRWstats());
+
+
+    %>
     <script>
 
         var radarChartData = {
-            labels: ["Timeliness Factor", "Experience Factor", "Skillset","Quality Factor"],
+            labels: ["Timeliness Factor", "Experience Factor", "Skillset", "Quality Factor"],
             datasets: [
                 {
-                    label: "Developer Tan Kai Wen",
+                    label: "Ripplewerkz Average",
                     fillColor: "rgba(220,220,220,0.2)",
                     strokeColor: "rgba(220,220,220,1)",
                     pointColor: "rgba(220,220,220,1)",
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(220,220,220,1,1)",
-                    data: [65, 59, -2.2, 8]
+                    data: <%=radarDev%>
                 },
                 {
-                    label: "Developer Kian Lam",
+                    label: "<%=devusername%>",
                     fillColor: "rgba(151,187,205,0.2)",
                     strokeColor: "rgba(151,187,205,1)",
                     pointColor: "rgba(151,187,205,1)",
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(151,187,205,1,1)",
-                    data: [28, 48, 40, 19]
+                    data: <%=radarRw%>
                 }
             ]
         }

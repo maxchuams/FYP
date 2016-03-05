@@ -269,7 +269,14 @@ public class ChartJSDAO {
         Double toReturn = 0.0;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select color from color where id=?");
+            pstmt = conn.prepareStatement("select format(ifnull(if(points<=20,0.8*points/20,0.8 +(0.2/points*(points-20))),0),2) as experiencefactor "
+                    + "from( "
+                    + "select developerusername, sum((1*priority)) as points "
+                    + "	from projectallocation pa, project p "
+                    + "	where pa.projectname = p.projectname "
+                    + "	and actualend is not null "
+                    + "	group by developerusername "
+                    + "    having developerusername=?) as devopoints;");
             pstmt.setString(1, devusername);
 
             rs = pstmt.executeQuery();
@@ -293,7 +300,14 @@ public class ChartJSDAO {
         Double toReturn = 0.0;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select color from color where id=?");
+            pstmt = conn.prepareStatement("select format(avg(ifnull(if(points<=20,0.8*points/20,0.8 +(0.2/points*(points-20))),0)),2) as experiencefactor "
+                    + "from( "
+                    + "select developerusername, sum((1*priority)) as points "
+                    + "	from projectallocation pa, project p "
+                    + "	where pa.projectname = p.projectname "
+                    + "	and actualend is not null "
+                    + "	group by developerusername "
+                    + "    ) as devopoints;");
 
             rs = pstmt.executeQuery();
 
@@ -316,7 +330,12 @@ public class ChartJSDAO {
         Double toReturn = 0.0;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select color from color where id=?");
+            pstmt = conn.prepareStatement("select format(1-log(avg(datediff(actualend,actualstart)/datediff(planend,planstart))),2) as schedulefactor "
+                    + "	from projectallocation pa, project p "
+                    + "	where pa.projectname=p.projectname "
+                    + "	and actualend is not null "
+                    + "	group by developerusername "
+                    + "	having developerusername=?;");
             pstmt.setString(1, devusername);
 
             rs = pstmt.executeQuery();
@@ -340,7 +359,12 @@ public class ChartJSDAO {
         Double toReturn = 0.0;
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select color from color where id=?");
+            pstmt = conn.prepareStatement("select format(avg(schedulefactor),2) as schedulefactor from( "
+                    + "select developerusername, 1-log(avg(datediff(actualend,actualstart)/datediff(planend,planstart))) as schedulefactor "
+                    + "	from projectallocation pa, project p "
+                    + "	where pa.projectname=p.projectname "
+                    + "	and actualend is not null "
+                    + "	group by developerusername) as timelinesstemp;");
 
             rs = pstmt.executeQuery();
 
@@ -385,12 +409,10 @@ public class ChartJSDAO {
     public static Double[] getRWstats() {
         return new Double[]{getTimelinessScoreRW(), getTimelinessScoreRW(), getAvgSkillPerDevRW(), getDefectScoreRW()};
     }
-    
-    
-        //[ Timeliness, Experience, Skillset,Defect Score(Quality)]
+
+    //[ Timeliness, Experience, Skillset,Defect Score(Quality)]
     public static Double[] getDevStats(String devusername) {
-        return new Double[]{getTimelinessScore(devusername), getExperienceScore(devusername),SkillDAO.retrieveDevSkillString(devusername).size()+0.0,getDefectScore(devusername)};
+        return new Double[]{getTimelinessScore(devusername), getExperienceScore(devusername), SkillDAO.retrieveDevSkillString(devusername).size() + 0.0, getDefectScore(devusername)};
     }
 
-    
 }
