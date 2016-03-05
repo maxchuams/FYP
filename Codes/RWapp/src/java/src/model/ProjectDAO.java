@@ -69,6 +69,31 @@ public class ProjectDAO {
         return toReturn;
     }
 
+    
+    
+       public static ArrayList<Project> retrieveInProgressByPM(String username) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Project> toReturn = new ArrayList<Project>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select projectname, trellokey, description, assignby, duedate, priority, iscomplete, type, psize from project where iscomplete = 0 and assignby=?");
+            pstmt.setString(1,username);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                toReturn.add(new Project(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getString(8), rs.getInt(9)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
     public static ArrayList<String> retrieveAllTypes() {
 
         Connection conn = null;
