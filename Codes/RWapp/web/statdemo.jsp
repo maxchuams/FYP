@@ -1,3 +1,4 @@
+<%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>
@@ -39,13 +40,8 @@
         <link href="bootstrap/html/css/style-responsive.css" rel="stylesheet"/>
         <!--to be removed-->
 
-
-
         <!-- This css is for the legend-->
         <style type="text/css">
-            body {
-                font-family: Sans-Serif;
-            }
 
             #fork {
                 position: absolute;
@@ -78,10 +74,12 @@
         </style>
     </head>
 
-    <%  String err = (String) request.getAttribute("err");
+    <%
+        String err = (String) request.getAttribute("err");
         String sucess = (String) request.getAttribute("sucess");
         String devusername = request.getParameter("devusername");
         ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+        ArrayList<String> getNumberAllocated = ProjectAllocationDAO.retrieveDevInProgress(devusername);
     %>
     <!--main content start-->
     <section id="main-content">
@@ -120,17 +118,21 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <div class="panel-body profile-information">
-
-
+                            
                             <div class="col-md-3">
                                 <div class="profile-pic">
                                     <img src="ImageServlet?imageid=<%=devusername%>" alt="" align="center"/>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <h1 ><b>Developer Statistic Page</b></h1>
-                                <h3>Username: <font color='Green'><%=devusername%></font></h3>
-                                <h3>Role: <font color='Green'>Developer</font></h3>
+                                <span class="pull-right"><button type="button" class="btn btn-info" onClick="window.print()"><i class="fa fa-print"></i> Print</button></span>
+                                <div class="profile-desk">
+                               <h1><%=devusername%></h1>
+                               <span class="text-muted">Developer</span><br/>
+                               <p>
+                                   Currently working on <%=getNumberAllocated.size()%> project(s)
+                               </p>
+                           </div>
                             </div>
                         </div>
                     </section>
@@ -138,7 +140,6 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
                     <div class="col-md-6">
                         <section class="panel">
                             <header class="panel-heading">
@@ -157,6 +158,19 @@
                                     <canvas id="radarChart" width="400" height="430"></canvas>
 
                                 </div>
+                                <!--Lam ge can you place your legend into this code:-->
+                                <ul class="clearfix location-earning-stats">
+                                    <li class="stat-divider">
+                                        <span class="first-city">$734503</span>
+                                        Rocky Mt,NC </li>
+                                    <li class="stat-divider">
+                                        <span class="second-city">$734503</span>
+                                        Dallas/FW,TX </li>
+                                    <li>
+                                        <span class="third-city">$734503</span>
+                                        Millville,NJ </li>
+                                </ul>
+                                <!--kw legend code end-->
                                 <div id="radarLegend"></div>
                             </div>
                         </section>
@@ -185,7 +199,6 @@
                             </div>
                         </section>
                     </div>
-                </div>
 
 
             </div>
@@ -239,13 +252,6 @@
                     </section>
                 </div>
 
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div align="center">
-                <button type="button" class="btn btn-info" onClick="window.print()"><i class="fa fa-print"></i> Print </button>
-</div>
-                </div>
             </div>
 
 

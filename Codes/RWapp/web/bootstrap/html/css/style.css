@@ -2349,7 +2349,7 @@ ul.inbox-pagination li {
     margin-top:20px;
 }
 .profile-information .profile-desk {
-    border-right:1px solid #ddd;
+    border-right:0px solid #ddd;
     padding-right:30px;
 }
 .profile-information .profile-desk h1 {
