@@ -32,7 +32,7 @@ public class updateCronActivity extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String active = request.getParameter("active");
+        //String active = request.getParameter("active");
         String passSwitch2 = "nothing";
         int pause=-1;
         String switch2 = request.getParameter("switch2");
