@@ -22,89 +22,100 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Defect</title>
         <script src="res/select2/js/select2.js"></script>
-       <script>
-            <% 
-            
-            ProjectDAO pp = new ProjectDAO();
-            ProjectAllocationDAO aa = new ProjectAllocationDAO();
-            ArrayList<Project> allp = pp.retrieveAll();
-            ArrayList<String> zz = new ArrayList<String>();
-            ArrayList<String> yy = new ArrayList<String>();
-            for(Project cheebye: allp){
-                ArrayList<String> dd = aa.retrieveDev(cheebye.getName());
-                String toR = "";
-                if(dd.size()>1){
+        <link href="js/skins/minimal/green.css" rel="stylesheet">
+        <link href="js/skins/square/green.css" rel="stylesheet">
+        <link href="js/skins/flat/green.css" rel="stylesheet">
+        <script src="js/icheck.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat',
+                    radioClass: 'iradio_flat'
+                });
+            });
+        </script>
+        <script>
+            <%
+                ProjectDAO pp = new ProjectDAO();
+                ProjectAllocationDAO aa = new ProjectAllocationDAO();
+                ArrayList<Project> allp = pp.retrieveAll();
+                ArrayList<String> zz = new ArrayList<String>();
+                ArrayList<String> yy = new ArrayList<String>();
+                for (Project cheebye : allp) {
+                    ArrayList<String> dd = aa.retrieveDev(cheebye.getName());
+                    String toR = "";
+                    if (dd.size() > 1) {
                         toR = dd.get(0);
-                    for(int i=1;i<dd.size();i++){
-                        toR = toR +"," +dd.get(i);
+                        for (int i = 1; i < dd.size(); i++) {
+                            toR = toR + "," + dd.get(i);
+                        }
+                        zz.add(cheebye.getName());
+                        yy.add(toR);
+                    } else if (dd.size() == 1) {
+                        toR = dd.get(0);
+                        zz.add(cheebye.getName());
+                        yy.add(toR);
                     }
-                    zz.add(cheebye.getName());
-                    yy.add(toR);
-                }else if(dd.size()==1){
-                    toR = dd.get(0);
-                    zz.add(cheebye.getName());
-                    yy.add(toR);
+                    //System.out.println(dd);
                 }
-                //System.out.println(dd);
-            }
-            
+
 //            List<String> strList = new ArrayList<String>();
 //            strList.add("one");
 //            strList.add("two");
 //            strList.add("three"); 
             %>
 
-            var jsArray = [<% for (int i = 0; i < zz.size(); i++) { %>"<%= zz.get(i) %>"<%= i + 1 < zz.size() ? ",":"" %><% } %>];
-            var jjArray = [<% for (int i = 0; i < yy.size(); i++) { %>"<%= yy.get(i) %>"<%= i + 1 < yy.size() ? ",":"" %><% } %>];
-            
-            function jsFunction(){
-                var myselect = document.getElementById("projectname");
-                var toCompare = myselect.options[myselect.selectedIndex].value;
-                //alert(toCompare);
-                var indexofP = "";
-                var myNode = document.getElementById("test1");
-                while (myNode.firstChild) {
-                myNode.removeChild(myNode.firstChild);
-                }
-                for(var i=0;i<jsArray.length;i++){
-                    if(jsArray[i]===toCompare){
-                        indexofP = i;
+            var jsArray = [<% for (int i = 0; i < zz.size(); i++) {%>"<%= zz.get(i)%>"<%= i + 1 < zz.size() ? "," : ""%><% } %>];
+                    var jjArray = [<% for (int i = 0; i < yy.size(); i++) {%>"<%= yy.get(i)%>"<%= i + 1 < yy.size() ? "," : ""%><% } %>];
+                    function jsFunction() {
+                        var myselect = document.getElementById("projectname");
+                        var toCompare = myselect.options[myselect.selectedIndex].value;
+                        //alert(toCompare);
+                        var indexofP = "";
+                        var myNode = document.getElementById("test1");
+                        while (myNode.firstChild) {
+                            myNode.removeChild(myNode.firstChild);
+                        }
+                        for (var i = 0; i < jsArray.length; i++) {
+                            if (jsArray[i] === toCompare) {
+                                indexofP = i;
 //                        alert(indexofP);
 //                        alert(toCompare);
-                    }
-                }
-                var toPut = jjArray[indexofP];
-                //alert(jsArray);
-                var putput = toPut.split(",");
-                //alert(putput);
-                for(var j=0;j<putput.length;j++){
-                   // alert(putput[j]);
-                var divdiv = document.getElementById('test1');
-                var cb = document.createElement('input');
-                cb.type = 'checkbox';
-                divdiv.appendChild(cb);
-                cb.name = "blame";
-                cb.value = putput[j];
-                cb.id = 'x';
-                var label = document.createElement('label')
-                label.htmlFor = "blame";
-                label.id = 'y'
-                label.appendChild(document.createTextNode(putput[j]));
-                divdiv.appendChild(label);
-                var foo = document.createTextNode("\u00A0");
-                divdiv.appendChild(foo);
-                //cb.appendChild(document.createTextNode(putput[j]));
-                //opt.value = putput[j];
+                            }
+                        }
+                        var toPut = jjArray[indexofP];
+                        //alert(jsArray);
+                        var putput = toPut.split(",");
+                        //alert(putput);
+                        for (var j = 0; j < putput.length; j++) {
+                            // alert(putput[j]);
+                            var divdiv = document.getElementById('test1');
+                            var cb = document.createElement('input');
+                            cb.type = 'checkbox';
+                            divdiv.appendChild(cb);
+                            cb.name = "blame";
+                            cb.value = putput[j];
+                            cb.id = 'x';
+                            var label = document.createElement('label')
+                            label.htmlFor = "blame";
+                            label.id = 'y'
+                            label.appendChild(document.createTextNode(putput[j]));
+                            divdiv.appendChild(label);
+                            var foo = document.createTextNode("\u00A0");
+                            divdiv.appendChild(foo);
+                            //cb.appendChild(document.createTextNode(putput[j]));
+                            //opt.value = putput[j];
 //                opt.innerHTML = "aaa";
-                //}
+                            //}
 //                var labelvar = document.getElementById('yesnos');
 //                labelvar.innerHTML = putput[j];
-            }
+                        }
 //                var opt= document.getElementById('test1').options[1];
 //                opt.value = 'sex';
 //                opt.text = 'sex';
-            };
-            
+                    }
+            ;
+
         </script>
         <script>
             $(function () {
@@ -210,19 +221,17 @@
                                     <div class="col-lg-9">
                                         <select name="projectname" id='projectname' class="projectSelect2 form-control m-bot15" onchange="jsFunction()">
                                             <%
-                    Person per = null;
-                    if(session.getAttribute("loggedInPm")!=null){
-                        per = (Person)session.getAttribute("loggedInPm");
-                    }else{
-                        per = (Person)session.getAttribute("loggedInTester");
-                    }
+                                                Person per = null;
+                                                if (session.getAttribute("loggedInPm") != null) {
+                                                    per = (Person) session.getAttribute("loggedInPm");
+                                                } else {
+                                                    per = (Person) session.getAttribute("loggedInTester");
+                                                }
                                                 //ArrayList<String> pList = ProjectAllocationDAO.retrieveInProgress();
-                                                 ArrayList<Project> pList = ProjectDAO.retrieveAll();
-                                                
-                                                
-                                                %><option selected="selected"><%
-                                                
-                                                for (Project p : pList) {
+                                                ArrayList<Project> pList = ProjectDAO.retrieveAll();
+
+
+                                            %><option selected="selected"><%                                                    for (Project p : pList) {
                                                     if (name != null && name.equalsIgnoreCase(p.getName())) {%>
                                             <option value='<%=p.getName()%>'><%=p.getName()%></option>
                                             <%} else {
@@ -236,15 +245,9 @@
                                     </div>
                                     <p></p><br/><br/>
                                     <div id='test'>
-                                     <label id="xxxx" for="xx" class="col-lg-3 control-label">Developer's Fault </label>
-                                    <div class="col-lg-9" id="test1">
-                                        
-<!--                                        <select name="xx" class="form-control" id="test1">
-                                            <option value='max'>max</option>
-                                            <option value ='penis'>penis</option>
-                                           <option value ='sex'>sex</option>
-                                        </select>-->
-                                    </div>   
+                                        <label id="xxxx" for="xx" class="col-lg-3 control-label">Developer's fault </label>
+                                        <div class="col-lg-9" id="test1">
+                                        </div>   
                                     </div>
                                     <br/><br/>
                                     <label for="inputType" class="col-lg-3 control-label">Use pre-assigned developer? </label>
@@ -256,26 +259,26 @@
                                         </select>
                                     </div>
                                     <p></p>
-                                    
+
                                     <div id="showdev">
                                         <br/><br/>
-                                            <label for="inputEmail1" class="col-lg-3 control-label">Developer</label>
-                                            <div class="col-lg-9">
-                                                <select name="devname" class="devSelect2 form-control m-bot15">
-                                                    <%
-                                                        ArrayList<Developer> dList = DeveloperDAO.retrieveDevelopers();
-                                                        for (Developer d : dList) {
-                                                            if (name != null && name.equalsIgnoreCase(d.getUsername())) {%>
-                                                    <option value='<%=d.getUsername()%>' selected><%=d.getUsername()%></option>
-                                                    <%} else {
-                                                    %>
-                                                    <option value='<%=d.getUsername()%>'><%=d.getUsername()%></option>
-                                                    <%
-                                                            }
+                                        <label for="inputEmail1" class="col-lg-3 control-label">Developer</label>
+                                        <div class="col-lg-9">
+                                            <select name="devname" class="devSelect2 form-control m-bot15">
+                                                <%
+                                                    ArrayList<Developer> dList = DeveloperDAO.retrieveDevelopers();
+                                                    for (Developer d : dList) {
+                                                        if (name != null && name.equalsIgnoreCase(d.getUsername())) {%>
+                                                <option value='<%=d.getUsername()%>' selected><%=d.getUsername()%></option>
+                                                <%} else {
+                                                %>
+                                                <option value='<%=d.getUsername()%>'><%=d.getUsername()%></option>
+                                                <%
                                                         }
-                                                    %>
-                                                </select>
-                                            </div>
+                                                    }
+                                                %>
+                                            </select>
+                                        </div>
                                     </div>
                                     <p></p><br/><br/>
 
@@ -317,13 +320,14 @@
                                     </div>
 
                                     <input type='hidden' name='pmName' value='<%=per.getUsername()%>'/>
-                                    
+
                                     <div class="form-group">
                                         <div class="col-lg-offset-3 col-lg-9">
                                             <p></p>
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
                         </section>
@@ -331,5 +335,13 @@
                 </div>
             </section>
         </section>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+            });
+        </script>
     </body>
 </html>

@@ -15,13 +15,25 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cron settings</title>
+        <link href="js/skins/minimal/green.css" rel="stylesheet">
+        <link href="js/skins/square/green.css" rel="stylesheet">
+        <link href="js/skins/flat/green.css" rel="stylesheet">
+        <script src="js/icheck.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat',
+                    radioClass: 'iradio_flat'
+                });
+            });
+        </script>
 
         <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
 
-       <link rel="stylesheet" type="text/css" href="http://getbootstrap.com/dist/css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css">
         <script type='text/javascript' src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
         <script type='text/javascript'>
             $(window).load(function () {
                 $("input.switch").bootstrapSwitch();
@@ -73,10 +85,11 @@
         <section id="main-content">
             <section class="wrapper">
                 <%
+                    String passSwitch2 = (String) request.getAttribute("passSwitch2");
                     String errorMsg = (String) request.getAttribute("err");
-                    String sucess = (String) request.getAttribute("sucess");
+                    String success = (String) request.getAttribute("success");
                     ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("errList");
-                    if (sucess != null) {%>
+                    if (success != null) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
@@ -84,7 +97,7 @@
                                 <button data-dismiss="alert" class="close close-sm" type="button">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <%=sucess%>
+                                <%=success%>
                             </div>
                         </section>
                     </div>
@@ -121,28 +134,48 @@
                 </div>
                 <%}
                     String crondetails = TrelloConfigDAO.retrieveCronDetails();
-
                     int pause = TrelloConfigDAO.retrieveCronPause();
-
                 %>
 
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <h3 class="prf-border-head">Current cron settings</h3>
+                                <h3 class="prf-border-head">Current Cron Settings</h3>
                                 <div class="alert alert-info clearfix ">
                                     <span class="alert-icon"><i class="fa fa-refresh"></i></span>
                                     <div class="notification-info">
                                         <ul class="clearfix notification-meta">
-                                            <li class="pull-left notification-sender">Current Cron Settings: <%if (pause == 0) {
-                                                    out.println("Active");
+                                            <li class="pull-left notification-sender" style='color:black'> <%if (pause == 0) {
+                                                    out.println("<b>Status: Active</b>");
                                                 } else {
-                                                    out.println("Inactive");
-                                                }%></li>
+                                                    out.println("<b>Status: Inactive</b>");
+                                                }%><br/>
+                                                <%=crondetails%>
+                                            </li>
+                                            <li class='pull-right notification-time'>
+                                                <form action='updateCronActivity' class="form-horizontal form-inline" id='submitForm'>
+                                                    <%if (pause==0) {%>
+                                                    <input id="toggle-event" name="switch2" type="checkbox" data-toggle="toggle" checked>
+                                                    <%} else {%>
+                                                    <input id="toggle-event" name="switch2" type="checkbox" data-toggle="toggle"/>
+                                                    <%}%>
+                                                    <div id="console-event"></div>
+                                                    <script>
+                                                        $(function () {
+                                                            $('#toggle-event').change(function () {
+                                                                setTimeout(function () {
+                                                                    $('#submitForm').submit();
+                                                                }, 500);
+                                                            });
+                                                        });
+                                                        document.getElementById("#toggle-event").value = $(this).prop('checked');
+                                                    </script>
+                                                </form>
+                                            </li>
                                         </ul>
                                         <p style="color: black">
-                                            <b><%=crondetails%></b>
+                                            <b></b>
                                         </p>
                                     </div>
                                 </div>
@@ -151,18 +184,6 @@
 
                                 <h3 class="prf-border-head">Update Cron Settings</h3>
 
-
-                                <form action='updateCronActivity' class="form-horizontal form-inline">
-                                    <!--<input type='radio' name='active' value='0' checked/> On cron job
-                                    <input type='radio' name='active' value='1'/> Off cron job-->
-
-                                    <input id="switch2" type='checkbox' name='switch2' class="switch" checked/>
-
-                                    <button type="submit" value='submit' class="btn btn-primary">Submit</button>
-
-                                </form>
-
-                                <hr/>
                                 <form action='modifyCronSettings' class="form-horizontal">
                                     <label for="inputEmail1" class="col-sm-1 control-label">Schedule:</label>
                                     <div class="col-sm-11">
@@ -238,10 +259,14 @@
                 </div>
             </section>
         </section>
-        <script language="javascript">
-            var s = $("input.switch").bootstrapSwitch('state');
-            document.getElementById("switch2").value = s;
-        </script>
         <script src="js/bootstrap-switch.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+            });
+        </script>
     </body>
 </html>

@@ -42,7 +42,7 @@ create table project(
 create table projectallocation(
 	projectname varchar(200) not null,
 	developerusername varchar(200) not null,
-    dateallocated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    dateallocated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	planstart date,
     planend date,
     actualstart date,
@@ -121,7 +121,7 @@ create table notifications(
 
 create table recommendationlog(
 id int not null primary key auto_increment,
-generated varchar(8000),
+`generated` varchar(8000),
 selected varchar(8000),
 projectname varchar(1000),
 choice int DEFAULT 0,

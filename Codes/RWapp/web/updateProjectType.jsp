@@ -15,6 +15,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Update Project Type</title>
+        <link href="js/skins/minimal/green.css" rel="stylesheet">
+        <link href="js/skins/square/green.css" rel="stylesheet">
+        <link href="js/skins/flat/green.css" rel="stylesheet">
+        <script src="js/icheck.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat',
+                    radioClass: 'iradio_flat'
+                });
+            });
+        </script>
     </head>
     <body>
         <section id="main-content">
@@ -24,7 +36,6 @@
                     String err = (String) request.getAttribute("err");
                     ArrayList<String> errList = (ArrayList<String>) request.getAttribute("errList");
 
-                   
                 %>
                 <%if (success != null) {%>
                 <div class="row">
@@ -86,7 +97,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">Or Replace with Existing Project Types:</label>
+                                        <label for="inputPassword1" class="col-lg-3 col-sm-3 control-label">OR Replace with Existing Types:</label>
                                         <div class="col-lg-9">
                                             <select name="typeOption" class="form-control">
                                                 <option value="">select...</option>
@@ -99,7 +110,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <div class="col-lg-offset-3 col-lg-9">
                                             <p></p>
@@ -114,5 +125,13 @@
                 </div>
             </section>
         </section>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+            });
+        </script>
     </body>
 </html>

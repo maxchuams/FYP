@@ -68,12 +68,14 @@
                         <section class="panel">
                             <header class="panel-heading">
                                 Viewing: Project <%=p.getName()%>
+                                <% if(pm!=null){ %>
                                 <span class="tools pull-right">
                                     <a href="editProject.jsp?pname=<%=p.getName()%>">
                                         <i class="fa fa-pencil-square-o"></i>
                                         <span>Edit</span>
                                     </a>
                                 </span>
+                                        <% } %>
                             </header>
                             <div class="panel-body">
                                 <div class="panel-body profile-information">
@@ -148,7 +150,9 @@
                                                 %>
                                             </td>
                                             <td>
+                                                <% if (pm!=null){ %>
                                                 <a href="removeDeveloperFromProject.jsp?id=<%=p.getTrelloKey()%>"><span class='label label-danger label-mini'>Remove developer</span></a>
+                                                <% } %>
                                             </td>
                                         </tr>
                                         <tr>
@@ -192,6 +196,7 @@
                         </section>
                     </div>
                 </div>
+                                            <% if(pm!=null){ %>
                 <!--show project's defect-->
                 <div class="row">
                     <div class="col-sm-12">
@@ -256,6 +261,7 @@
                                             </section>
                                         </div>
                                     </div>
+                                            <% } %>
                                     <!--end of proj's defect-->
                                     </section>
                                     </section>

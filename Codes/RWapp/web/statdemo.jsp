@@ -1,3 +1,4 @@
+<%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>
@@ -16,8 +17,6 @@
         <title>View Developer Statistic Page</title>
 
         <meta charset="utf-8" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.4.0/jQuery.print.min.js"></script>
         <script src="res/chart/Chart.js"></script>
         <script src="res/chart/legend.js"></script>
 
@@ -41,13 +40,8 @@
         <link href="bootstrap/html/css/style-responsive.css" rel="stylesheet"/>
         <!--to be removed-->
 
-
-
         <!-- This css is for the legend-->
         <style type="text/css">
-            body {
-                font-family: Sans-Serif;
-            }
 
             #fork {
                 position: absolute;
@@ -80,10 +74,12 @@
         </style>
     </head>
 
-    <%  String err = (String) request.getAttribute("err");
+    <%
+        String err = (String) request.getAttribute("err");
         String sucess = (String) request.getAttribute("sucess");
         String devusername = request.getParameter("devusername");
         ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
+        ArrayList<String> getNumberAllocated = ProjectAllocationDAO.retrieveDevInProgress(devusername);
     %>
     <!--main content start-->
     <section id="main-content">
@@ -122,17 +118,21 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <div class="panel-body profile-information">
-
-
+                            
                             <div class="col-md-3">
                                 <div class="profile-pic">
                                     <img src="ImageServlet?imageid=<%=devusername%>" alt="" align="center"/>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <h1 ><b>Developer Statistic Page</b></h1>
-                                <h3>Username: <font color='Green'><%=devusername%></font></h3>
-                                <h3>Role: <font color='Green'>Developer</font></h3>
+                                <span class="pull-right"><button type="button" class="btn btn-info" onClick="window.print()"><i class="fa fa-print"></i> Print</button></span>
+                                <div class="profile-desk">
+                               <h1><%=devusername%></h1>
+                               <span class="text-muted">Developer</span><br/>
+                               <p>
+                                   Currently working on <%=getNumberAllocated.size()%> project(s)
+                               </p>
+                           </div>
                             </div>
                         </div>
                     </section>
@@ -140,7 +140,6 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
                     <div class="col-md-6">
                         <section class="panel">
                             <header class="panel-heading">
@@ -159,6 +158,19 @@
                                     <canvas id="radarChart" width="400" height="430"></canvas>
 
                                 </div>
+                                <!--Lam ge can you place your legend into this code:-->
+                                <ul class="clearfix location-earning-stats">
+                                    <li class="stat-divider">
+                                        <span class="first-city">$734503</span>
+                                        Rocky Mt,NC </li>
+                                    <li class="stat-divider">
+                                        <span class="second-city">$734503</span>
+                                        Dallas/FW,TX </li>
+                                    <li>
+                                        <span class="third-city">$734503</span>
+                                        Millville,NJ </li>
+                                </ul>
+                                <!--kw legend code end-->
                                 <div id="radarLegend"></div>
                             </div>
                         </section>
@@ -187,7 +199,6 @@
                             </div>
                         </section>
                     </div>
-                </div>
 
 
             </div>
@@ -243,13 +254,14 @@
 
             </div>
 
+
+
+
+
             <!-- page end-->
         </section>
     </section>
     <!--main content end-->
-
-
-
 
 
 
@@ -287,7 +299,7 @@
     <script>
         // line chart data
 
-        
+
         var timeData = {
             labels: <%=months%>,
             datasets: [
@@ -409,20 +421,19 @@
     </script>
     -->
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <%
 
+
+
+
+
+
+
+
+
+
+
+
+    <%
 
         ArrayList<Double> devloadList = new ArrayList<Double>();
         ArrayList<Double> rwloadList = new ArrayList<Double>();
@@ -448,8 +459,8 @@
 
 
     %>
-    
-    
+
+
     <script>
 
 
@@ -481,30 +492,50 @@
     </script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <%
+
+        String radarDev = gson.toJson(ChartJSDAO.getDevStats(devusername));
+        String radarRw = gson.toJson(ChartJSDAO.getRWstats());
+
+
+    %>
     <script>
 
         var radarChartData = {
-            labels: ["Timeliness Factor", "Experience Factor", "Skillset","Quality Factor"],
+            labels: ["Timeliness Factor", "Experience Factor", "Skillset", "Quality Factor"],
             datasets: [
                 {
-                    label: "Developer Tan Kai Wen",
+                    label: "Ripplewerkz Average",
                     fillColor: "rgba(220,220,220,0.2)",
                     strokeColor: "rgba(220,220,220,1)",
                     pointColor: "rgba(220,220,220,1)",
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(220,220,220,1,1)",
-                    data: [65, 59, -2.2, 8]
+                    data: <%=radarDev%>
                 },
                 {
-                    label: "Developer Kian Lam",
+                    label: "<%=devusername%>",
                     fillColor: "rgba(151,187,205,0.2)",
                     strokeColor: "rgba(151,187,205,1)",
                     pointColor: "rgba(151,187,205,1)",
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(151,187,205,1,1)",
-                    data: [28, 48, 40, 19]
+                    data: <%=radarRw%>
                 }
             ]
         }

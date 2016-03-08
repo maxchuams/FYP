@@ -21,6 +21,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Defect</title>
+        <link href="js/skins/minimal/green.css" rel="stylesheet">
+        <link href="js/skins/square/green.css" rel="stylesheet">
+        <link href="js/skins/flat/green.css" rel="stylesheet">
+        <script src="js/icheck.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat',
+                    radioClass: 'iradio_flat'
+                });
+            });
+        </script>
     </head>
     <body>
         <section id="main-content">
@@ -122,33 +134,33 @@
                                             <p></p>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputEmail1" class="col-lg-2 control-label">Caused by</label>
-                                        <div class="col-lg-9">
-                                            <%
+
+
+                                    <label for="inputEmail1" class="col-lg-2 control-label">Caused by</label>
+                                    <div class="col-lg-10">
+                                        <%
                                             ArrayList<String> dcbList = DefectCommitByDAO.retrieveBlamedDevForDefect(toEdit.getId());
                                             ArrayList<String> devList = ProjectAllocationDAO.retrieveDev(toEdit.getProjectName());
-                                            for(String devForProj: devList){
-                                                if(dcbList.contains(devForProj)){
-                                                    %>
-                                                    <input type="checkbox" name="dcbname" checked class="form-control" value="<%=devForProj%>" ><%=devForProj%>
-                                                    <%
-                                                } else {
-                                                    %>
-                                                    <input type="checkbox" name="dcbname" class="form-control" value="<%=devForProj%>"><%=devForProj%> 
-                                                    <%
+                                            for (String devForProj : devList) {
+                                                if (dcbList.contains(devForProj)) {
+                                        %>
+                                        <input type="checkbox" name="dcbname" checked  value="<%=devForProj%>"> <%=devForProj%>
+                                        <%
+                                        } else {
+                                        %>
+                                        <input type="checkbox" name="dcbname"  value="<%=devForProj%>"> <%=devForProj%> 
+                                        <%
                                                 }
                                             }
-                                            %>
-                                            
-                                            <p></p>
-                                        </div>
-                                    </div>        
+
+                                        %>
+                                        <p></p>
+                                    </div>
+
                                     <label for="inputEmail1" class="col-lg-2 control-label">Developer</label>
                                     <div class="col-lg-9">
                                         <select name="devname" class="devSelect2 form-control m-bot15">
-                                            <%
-                                                ArrayList<Developer> dList = DeveloperDAO.retrieveDevelopers();
+                                            <%                                                ArrayList<Developer> dList = DeveloperDAO.retrieveDevelopers();
                                                 for (Developer d : dList) {
                                                     if (toEdit.getAssignto() != null && toEdit.getAssignto().equalsIgnoreCase(d.getUsername())) {%>
                                             <option value='<%=d.getUsername()%>' selected><%=d.getUsername()%></option>
@@ -226,5 +238,13 @@
                 </div>
             </section>
         </section>
+        <script>
+            $(document).ready(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+            });
+        </script>
     </body>
 </html>
