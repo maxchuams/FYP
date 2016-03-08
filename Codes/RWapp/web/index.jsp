@@ -81,13 +81,11 @@
                                                         end = ff.get(i).getPlanend();
                                                     }
                                                 }
-                                                if (start == null) {
+                                                if (start == null || end == null) {
                                                     //tochange
-                                                    start = new Date();
-                                                }
-                                                if (end == null) {
-                                                    end = new Date();
-                                                }
+                                                    developer.remove(a);
+                                                }else{
+                                                
                                                 Date today = new Date();
                                                 for (int i = 0; i < ff.size(); i++) {
                                                     if (ff.get(i).getPlanstart() != null && ff.get(i).getDeveloperName().equalsIgnoreCase(deve)) {
@@ -106,7 +104,7 @@
                                                 jj.addProperty("name", a);
                                                 jj.addProperty("Code", "");
                                                 jj.addProperty("level", 0);
-                                                jj.addProperty("status", "STATUS_COMPLETED");
+                                                jj.addProperty("status", "STATUS_ACTIVE");
                                                 jj.addProperty("canWrite", true);
                                                 jj.addProperty("start", start.getTime());
                                                 jj.addProperty("duration", duration);
@@ -126,7 +124,7 @@
                                                         jj.addProperty("name", cb.getProjectName());
                                                         jj.addProperty("Code", "");
                                                         jj.addProperty("level", 1);
-                                                        jj.addProperty("status", "STATUS_ACTIVE");
+                                                        jj.addProperty("status", "STATUS_COMPLETED");
                                                         jj.addProperty("canWrite", false);
                                                         jj.addProperty("start", cb.getPlanstart().getTime());
                                                         jj.addProperty("duration", duration1);
@@ -139,6 +137,7 @@
                                                         count = count - 1;
                                                     }
 
+                                                }
                                                 }
                                             }
                                             jO.add("tasks", jA);
@@ -204,13 +203,10 @@
                                                         end = ff.get(i).getPlanend();
                                                     }
                                                 }
-                                                if (start == null) {
+                                                if (start == null || end == null) {
                                                     //tochange
-                                                    start = new Date();
-                                                }
-                                                if (end == null) {
-                                                    end = new Date();
-                                                }
+                                                    developer.remove(a);
+                                                }else{
                                                 Date today = new Date();
                                                 for (int i = 0; i < ff.size(); i++) {
                                                     if (ff.get(i).getPlanstart() != null && ff.get(i).getDeveloperName().equalsIgnoreCase(deve)) {
@@ -262,6 +258,7 @@
                                                         count = count - 1;
                                                     }
 
+                                                }
                                                 }
                                             }
                                             jO.add("tasks", jA);
@@ -645,12 +642,12 @@
                                   <tr style="height:40px">
                                     <th class="gdfColHeader" style="width:35px;"></th>
                                     <th class="gdfColHeader" style="width:25px;"></th>
-                                    <th class="gdfColHeader gdfResizable" style="width:0px;">code/short name</th>
+                                    <th class="gdfColHeader gdfResizable" style="width:0px;">Code/short name</th>
                               
-                                    <th class="gdfColHeader gdfResizable" style="width:300px;">name</th>
-                                    <th class="gdfColHeader gdfResizable" style="width:80px;">start</th>
-                                    <th class="gdfColHeader gdfResizable" style="width:80px;">end</th>
-                                    <th class="gdfColHeader gdfResizable" style="width:50px;">dur.</th>
+                                    <th class="gdfColHeader gdfResizable" style="width:300px;">Name</th>
+                                    <th class="gdfColHeader gdfResizable" style="width:80px;">Start</th>
+                                    <th class="gdfColHeader gdfResizable" style="width:80px;">End</th>
+                                    <th class="gdfColHeader gdfResizable" style="width:50px;">Dur.</th>
                                     
                                   </tr>
                                   </thead>
@@ -720,13 +717,13 @@
                                     <td>
                                       <table cellpadding="5">
                                         <tr>
-                                          <td><label for="code">code/short name</label><br><input type="text" name="code" id="code" value="" class="formElements"></td>
+                                          <td><label for="code">Code/short name</label><br><input type="text" name="code" id="code" value="" class="formElements"></td>
                                          </tr><tr>
-                                          <td><label for="name">name</label><br><input type="text" name="name" id="name" value=""  size="35" class="formElements"></td>
+                                          <td><label for="name">Name</label><br><input type="text" name="name" id="name" value=""  size="35" class="formElements"></td>
                                         </tr>
                                         <tr></tr>
                                           <td>
-                                            <label for="description">description</label><br>
+                                            <label for="description">Description</label><br>
                                             <textarea rows="5" cols="30" id="description" name="description" class="formElements"></textarea>
                                           </td>
                                         </tr>
@@ -740,10 +737,10 @@
                                         <td colspan="2"><label for="progress">progress</label><br><input type="text" name="progress" id="progress" value="" size="3" class="formElements"></td>
                                         </tr>
                                         <tr>
-                                        <td><label for="start">start</label><br><input type="text" name="start" id="start"  value="" class="date" size="10" class="formElements"><input type="checkbox" id="startIsMilestone"> </td>
+                                        <td><label for="start">Start</label><br><input type="text" name="start" id="start"  value="" class="date" size="10" class="formElements"><input type="checkbox" id="startIsMilestone"> </td>
                                         <td rowspan="2" class="graph" style="padding-left:50px"><label for="duration">dur.</label><br><input type="text" name="duration" id="duration" value=""  size="5" class="formElements"></td>
                                       </tr><tr>
-                                        <td><label for="end">end</label><br><input type="text" name="end" id="end" value="" class="date"  size="10" class="formElements"><input type="checkbox" id="endIsMilestone"></td>
+                                        <td><label for="end">End</label><br><input type="text" name="end" id="end" value="" class="date"  size="10" class="formElements"><input type="checkbox" id="endIsMilestone"></td>
                                       </table>
                                     </td>
                                   </tr>

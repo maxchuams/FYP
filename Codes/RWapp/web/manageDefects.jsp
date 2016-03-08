@@ -61,6 +61,53 @@
                 }
             }
         </script>
+        
+        <script>
+            function fuck(){
+                var lowlow = [];
+                var medmed = [];
+                var highhigh = [];
+            var obj = document.getElementsByClassName("divClass");
+            for (var j = 0; j < obj.length; j++) {
+                var allDivTd = obj[j].getElementsByTagName("TD");
+                if(allDivTd[3].id == 'Low'){
+                    
+                    lowlow.push(obj[j].id);
+                }else if(allDivTd[3].id == 'Medium'){
+                    medmed.push(obj[j].id);
+                }else{
+                    //alert(allDivTd[3].id)
+                    highhigh.push(obj[j].id);
+                }
+//                for(var i = 0; i < allDivTd.length; i++){
+//                var td = allDivTd[i].id;
+//                if(td == 'Low'){
+//                            alert(obj[j].id +"" +td);
+//                }
+//                }
+//                alert('next');
+            }
+            alert(lowlow);
+            alert(medmed);
+            alert(highhigh);
+            var final1 = medmed.concat(highhigh);
+            var final2 = lowlow.concat(final1);
+            alert(final2);
+            
+            var myNode = document.getElementById('mainmain');
+//            while (myNode.firstChild) {
+//                myNode.removeChild(myNode.firstChild);
+//                }
+            
+            for(var i = 0; i < final2.length; i++){
+                var xx = document.getElementById(final2[i]);
+                myNode.appendChild(xx);
+                
+            }
+            
+        }
+        </script>
+        
     </head>
     <body>
 
@@ -121,7 +168,7 @@
                     }
                 %>
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" id="mainmain">
                         <!--kaiwen codes-->
 
                         <%
@@ -135,9 +182,9 @@
                                 dList = DefectDAO.retrieveTester();
                             }
                         %>
-
+                        <button onclick="fuck()">click</button>
                         <%for (String s : pListString) {%>
-                        <div class="row">
+                        <div class="row divClass" id="<%=s%>">
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
@@ -182,7 +229,7 @@
                                                                         dName = d.getDefectName();
                                                                     }
                                                                         out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
-                                                                        out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");%>
+                                                                        out.println("<tr><td><b>Severity: </b></td><td id='"+severity+"'> " + severity + "</td></tr>");%>
                                                                         <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
                                                                         <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
                                                                         <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
