@@ -34,7 +34,18 @@
             function SubmitSearch() {
                 window.location = "search.jsp";
             }
-        </script>    
+        </script>   
+    	<script type="text/javascript" src="JQueryAPI/jquery-1.4.2.min.js"></script>
+			<script type="text/javascript">
+                        
+			var auto = setInterval(	function ()
+			{
+                                 $('#reload').load('jquery.jsp' + ' #part1').fadeIn("slow");
+                                 $('#reload2').load('jquery.jsp' + ' #part2').fadeIn("slow");
+			}, 1000); 
+                        
+   
+		</script> 
     </head>
     <body>
         <%
@@ -80,37 +91,16 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                                 <i class="fa fa-bell-o"></i>
-                                <span class="badge bg-warning"><!--enter notif number here--></span>
+                                <span class="badge bg-warning"> <div id="reload"></div></span>
                             </a>
                             <ul class="dropdown-menu extended notification">
-                                <li>
-                                    <p>Notifications</p>
-                                </li>
-                                <li>
-                                    <div class="alert alert-info clearfix">
-                                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-                                        <div class="noti-info">
-                                            <a href="#"> Server #1 overloaded.</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="alert alert-danger clearfix">
-                                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-                                        <div class="noti-info">
-                                            <a href="#"> Server #2 overloaded.</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="alert alert-success clearfix">
-                                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-                                        <div class="noti-info">
-                                            <a href="#"> Server #3 overloaded.</a>
-                                        </div>
-                                    </div>
-                                </li>
 
+                                
+                                <div id="reload2"></div>   
+                            
+                                <li>
+                                    <h1><center><a href = "notifications.jsp">View All Notifications</a></center></h1>
+                                </li>
                             </ul>
                         </li>
                         <!-- notification dropdown end -->
