@@ -21,6 +21,7 @@ import src.model.DefectCommitBy;
 import src.model.DefectCommitByDAO;
 import src.model.DefectDAO;
 import src.model.Person;
+import src.model.NotificationDAO;
 
 /**
  *
@@ -119,7 +120,13 @@ public class updateDefect extends HttpServlet {
         boolean success = false;
 
         if (errList.size() == 0) {
-
+            //i start here
+            boolean defectRejected = false;
+            int status = DefectDAO.retrieveDefect(id).getIsComplete();
+            if(status ==1 && isComplete==0){
+                defectRejected = true;
+            }
+            //
             success = DefectDAO.updateDefect(id, dname, desc, pm, isComplete, sev, duedateStr, devname);
             
             DefectCommitByDAO.delete(id);
@@ -136,6 +143,10 @@ public class updateDefect extends HttpServlet {
                 }
             }
             if (success) {
+                if(defectRejected){
+                    NotificationDAO notifDAO = new NotificationDAO();
+                    notifDAO.addNotification(DefectDAO.retrieveDefect(id).getAssignto(),"rejectedDefect" + id,DefectDAO.retrieveDefect(id).getProjectName());
+                }
                 RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
                 request.setAttribute("sucess", "Details successfully changed!");
                 rd.forward(request, response);

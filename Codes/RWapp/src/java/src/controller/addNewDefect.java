@@ -11,6 +11,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import src.model.NotificationDAO;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -155,6 +157,10 @@ public class addNewDefect extends HttpServlet {
                 Defect d = DefectDAO.retrieveDefectByName(defname,projname);
                 int id = d.getId();
                 RequestDispatcher rd = request.getRequestDispatcher("viewDefectInfo.jsp?defectId=" + id);
+                // i start from here
+                   NotificationDAO notifDAO = new NotificationDAO();
+                   notifDAO.addNotification(d.getAssignto(), "assignedDefect" + id, d.getProjectName());
+                //
                 request.setAttribute("sucess", "Defect " + defname + "  from Project " + projname + " has been successfully added into the system");
                 rd.forward(request, response);
                 return;

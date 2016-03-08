@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import src.model.DefectDAO;
 import src.model.Person;
+import src.model.NotificationDAO;
+
 
 /**
  *
@@ -80,8 +82,12 @@ public class defectComplete extends HttpServlet {
         }
         
         if (casenum.equals("2")){
+    		// i start here
+            NotificationDAO notifDAO = new NotificationDAO();
+            notifDAO.addNotification(DefectDAO.retrieveDefect(id).getReportedBy(), "markCompletedDefect" + id,DefectDAO.retrieveDefect(id).getProjectName());
             rd = request.getRequestDispatcher("viewDefects.jsp");
-        } else if (casenum.equals("0")) {
+            //   
+    	     } else if (casenum.equals("0")) {
             rd = request.getRequestDispatcher("manageDefects.jsp");
         }
         

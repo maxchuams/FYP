@@ -28,6 +28,7 @@ import src.model.Project;
 import src.model.ProjectAllocationDAO;
 import src.model.RecommedationDAO;
 import src.model.ProjectDAO;
+import src.model.NotificationDAO;
 import src.model.Recommendation;
 import src.model.TrelloBoard;
 import src.model.TrelloCard;
@@ -244,6 +245,12 @@ public class processRecommendation extends HttpServlet {
         System.out.println("projectname: " + projName);
         
         if (errList.isEmpty()) {
+            //i start here
+            NotificationDAO notificationDAO = new NotificationDAO();
+            for (int i = 1; i < dev.length - 1; i += 3) {
+             notificationDAO.addNotification(dev[i], "assignedProject", projName);
+            }
+            //
             RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
             RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim())-1);
             request.setAttribute("sucess", "Project sucessfully assigned!");
