@@ -215,6 +215,8 @@
                 %>
                 <div class="row">
                     <div class="col-lg-12" id="mainmain">
+                        <section class="panel">
+                            <div class="panel-body">
                         <!--kaiwen codes-->
 
                         <%
@@ -227,9 +229,13 @@
                             }else{
                                 dList = DefectDAO.retrieveTester();
                             }
-                        %>
-                        <button onclick="fuck()">SortByDesc</button>
-                        <button onclick="suck()">SortByAsc</button>
+                        %><span class="pull-right top-menu">
+                        <button onclick="fuck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending</button> &nbsp;
+                        <button onclick="suck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-asc"></i> Sort Ascending</button>
+                        </span>
+                            </div>
+                        </section>
+                        
                         <%for (String s : pListString) {%>
                         <div class="row divClass" id="<%=s%>">
                             <div class="col-sm-12">

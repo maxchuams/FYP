@@ -14,13 +14,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="protect.jsp" %>
+<%String thisPage = "index"; //This is to change the highlight in Navigation Bar%>
+<%@include file="navbar.jsp"%>
 
 <html>
 <%
-
-
-                String username = "";
-            String url = "";
+            username = "";
+            url = "";
             if (dev != null) {
                 username = dev.getUsername();
                 url = "manageDevProfile.jsp";
@@ -36,12 +36,18 @@
             } else {
                 username = desg.getUsername();
                 url = "manageDesgProfile.jsp";
-            }
+            }%>
         
-            
-         NotificationDAO notifDAO = new NotificationDAO();
+            <section id="main-content">
+            <section class="wrapper">
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <h3 class="prf-border-head">Viewing All Your Notifications</h3>
+         <%NotificationDAO notifDAO = new NotificationDAO();
          ArrayList<Notification> notiList = notifDAO.retrieveAllFromUser(username);
-         out.println("<table>");
+         out.println("<table class='table table-hover general-table'>");
          for (Notification noti : notiList){
              out.println("<tr>");
              out.println("<td>");
@@ -52,13 +58,13 @@
              if(noti.getStatus().equals("T")){
              out.println("<form action=\"processReadNotif\" method=\"get\">");
              out.println("<input type=\"hidden\" name=\"defectid\" value=\""+ noti.getId()+"\">");
-             out.println("<button type=\"submit\" name=\"markas\" value=\"unread\">Mark As Unread</button>");
+             out.println("<button class='btn btn-round btn-primary btn-sm' type=\"submit\" name=\"markas\" value=\"unread\">Mark As Unread</button>");
              out.println("</form>");             
              }else{
              out.println("<form action=\"processReadNotif\" method=\"get\">");
                           out.println("<input type=\"hidden\" name=\"defectid\" value=\""+ noti.getId()+"\">");
 
-             out.println("<button type=\"submit\" name=\"markas\" value=\"read\">Mark As Read</button>");
+             out.println("<button class='btn btn-round btn-primary btn-sm' type=\"submit\" name=\"markas\" value=\"read\">Mark As Read</button>");
              
             out.println("</form>");
              }
@@ -71,4 +77,10 @@
          out.println("</table>");
     
 %>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+            </section>
 </html>

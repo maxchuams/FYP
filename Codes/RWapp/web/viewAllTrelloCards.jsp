@@ -103,10 +103,10 @@
                             <div class="panel-body">
                                 <label class='pull-left top-menu'>Viewing all projects</br>
                                     <script>
-            var m = moment("<%=CronDAO.retrieveTime()%>");
-            document.write('Last Sync: '+m.fromNow());
-        </script></label>
-<!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
+                            var m = moment("<%=CronDAO.retrieveTime()%>");
+                            document.write('Last Sync: '+m.fromNow());
+                        </script></label>
+                <!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
                                 <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewAllTrelloCards"/>
                                     <button type="submit" class="btn btn-info pull-right top-menu" onClick="updateProjectFromTrello">
