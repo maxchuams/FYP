@@ -87,12 +87,58 @@
 //                }
 //                alert('next');
             }
-            alert(lowlow);
-            alert(medmed);
-            alert(highhigh);
+            //alert(lowlow);
+//            alert(medmed);
+//            alert(highhigh);
             var final1 = medmed.concat(highhigh);
             var final2 = lowlow.concat(final1);
-            alert(final2);
+//            alert(final2);
+            
+            var myNode = document.getElementById('mainmain');
+//            while (myNode.firstChild) {
+//                myNode.removeChild(myNode.firstChild);
+//                }
+            
+            for(var i = 0; i < final2.length; i++){
+                var xx = document.getElementById(final2[i]);
+                myNode.appendChild(xx);
+                
+            }
+            
+        }
+        </script>
+        
+        <script>
+            function suck(){
+                var lowlow = [];
+                var medmed = [];
+                var highhigh = [];
+            var obj = document.getElementsByClassName("divClass");
+            for (var j = 0; j < obj.length; j++) {
+                var allDivTd = obj[j].getElementsByTagName("TD");
+                if(allDivTd[3].id == 'Low'){
+                    
+                    lowlow.push(obj[j].id);
+                }else if(allDivTd[3].id == 'Medium'){
+                    medmed.push(obj[j].id);
+                }else{
+                    //alert(allDivTd[3].id)
+                    highhigh.push(obj[j].id);
+                }
+//                for(var i = 0; i < allDivTd.length; i++){
+//                var td = allDivTd[i].id;
+//                if(td == 'Low'){
+//                            alert(obj[j].id +"" +td);
+//                }
+//                }
+//                alert('next');
+            }
+            //alert(lowlow);
+//            alert(medmed);
+//            alert(highhigh);
+            var final1 = medmed.concat(lowlow);
+            var final2 = highhigh.concat(final1);
+//            alert(final2);
             
             var myNode = document.getElementById('mainmain');
 //            while (myNode.firstChild) {
@@ -182,7 +228,8 @@
                                 dList = DefectDAO.retrieveTester();
                             }
                         %>
-                        <button onclick="fuck()">click</button>
+                        <button onclick="fuck()">SortByDesc</button>
+                        <button onclick="suck()">SortByAsc</button>
                         <%for (String s : pListString) {%>
                         <div class="row divClass" id="<%=s%>">
                             <div class="col-sm-12">

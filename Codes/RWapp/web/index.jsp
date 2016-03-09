@@ -83,7 +83,7 @@
                                                 }
                                                 if (start == null || end == null) {
                                                     //tochange
-                                                    developer.remove(a);
+                                                    //developer.remove(a);
                                                 }else{
                                                 
                                                 Date today = new Date();
