@@ -73,10 +73,10 @@ create table defect(
     severity int NOT NULL DEFAULT 2,
     duedate DATE NOT NULL,
     assignto varchar(200) not null,
-	constraint defects_pk primary key (defectid),
-    constraint defects_fk1 foreign key (projectname) references project (projectname),
-    constraint defects_fk2 foreign key (reportby) references user (username),
-    constraint defects_fk3 foreign key (assignto) references user (username) 
+	constraint defect_pk primary key (defectid),
+    constraint defect_fk1 foreign key (projectname) references project (projectname),
+    constraint defect_fk2 foreign key (reportby) references user (username),
+    constraint defect_fk3 foreign key (assignto) references user (username) 
 );
 
 create table defectscreenshot(
