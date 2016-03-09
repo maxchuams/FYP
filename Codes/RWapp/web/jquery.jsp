@@ -69,7 +69,9 @@
             }
         }
         if (fcounter != 0) {
+        	out.println("<span class=\"badge bg-warning\">");
             out.println(fcounter);
+			out.println("</span>");
         }
     %>
 

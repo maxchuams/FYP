@@ -91,7 +91,7 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                                 <i class="fa fa-bell-o"></i>
-                                <span class="badge bg-warning"><div id="reload"></div></span>
+                                <div id="reload"></div>
                             </a>
                             <ul class="dropdown-menu extended notification">
                             <li>
