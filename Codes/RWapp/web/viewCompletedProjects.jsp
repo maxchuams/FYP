@@ -136,12 +136,12 @@
                         <section class="panel">
                             <div class="panel-body">
                                 <label class='pull-left top-menu'>Viewing all my completed projects</label>
-                                <form action="updateProjectFromTrello">
+<!--                                <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewCompletedProjects"/>
                                     <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
-                                        Sync Projects
+                                        Pull Assigned Projects From Trello
                                     </button>
-                                </form>
+                                </form>-->
                             </div>
                         </section>
                     </div>

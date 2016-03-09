@@ -131,8 +131,8 @@
                                 <!-- BEGIN Portlet PORTLET-->
                                 <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");
                                     String pName;
-                                    if(t.getName().length()>30){
-                                        pName=t.getName().substring(0,30)+"...";
+                                    if(t.getName().length()>27){
+                                        pName=t.getName().substring(0,27)+"...";
                                     }else{
                                         pName = t.getName();
                                     }
@@ -170,7 +170,7 @@
                                                     <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li><br/><br/>
                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
                                                     <li> <b>PM:</b> <%=t.getAssignedBy()%></li>
-                                                    <li> <b>Developer:</b>
+                                                    <li> <b>Dev:</b>
                                                         <%
                                                             ArrayList<String> getDev = ProjectAllocationDAO.retrieveDev(t.getName());
                                                             if (getDev.size() == 1) {

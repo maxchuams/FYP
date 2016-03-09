@@ -69,71 +69,7 @@
                 <%
                     }
                 %>
-
-
                 <!--End of error/success display--> 
-
-                <!--kw code-->
-                <!--            <div class="row">
-                            <div class="col-sm-12">
-                                <section class="panel">
-                                    <header class="panel-heading">
-                                        View All Projects
-                                        <span class="tools pull-right">
-                                            <a href="assignProject" class="fa fa-refresh"></a>
-                                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                         </span>
-                                    </header>
-                                    <div class="panel-body">
-                                        <table class="table  table-hover general-table">
-                                            <thead>
-                                            <tr>
-                                                <th>Project Name</th>
-                                                <th>Due Date</th>
-                                                <th>Assign Developer</th>
-                                                <th>Members</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            
-                <% if (tb
-
-                    
-                        != null) {
-                        for (TrelloCard t : tb) {
-                %> 
-                <tr>
-                    <td><%=t.getName()%></td>
-                    <td><%=t.getDue()%></td>
-                    <td>
-                <%//ArrayList<Person> memberList = t.getMembers(); 
-                    //for(Person p : memberList){
-                    //   p.getUsername();
-                    //}%>
-                </td>
-                        <td><a href="editTrelloCard.jsp?name=<%=t.getName()%>&id=<%=t.getId()%>"><button type="button" class="btn btn-primary btn-xs">Assign</button></a></td>
-                    
-            </tr>
-                <%
-                        }
-                    }
-                %>
-            </tbody>
-        </table>
-            
-            <form action='assignProject' method='POST'id='main'>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <p></p>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </div>
-        </div>
-            </form>
-    </div>
-</section>
-</div>
-</div>-->
-                <!--kw code-->
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -154,7 +90,7 @@
                                             <ul class="nav nav-pills nav-stacked">
                                                 <li> <span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDue()%></span></li>
                                                 <span class="pull-right">
-                                                    <li> <a href="editTrelloCard.jsp?name=<%=t.getName()%>&id=<%=t.getId()%>"><button type="button" class="btn btn-primary btn-xs">Assign Developer to Project</button></a>
+                                                    <li> <a href="editTrelloCard.jsp?name=<%=t.getName()%>&id=<%=t.getId()%>"><button type="button" class="btn btn-primary btn-xs">Assign Developer</button></a>
                                                     </li><br/>
                                                 </span>
                                             </ul>

@@ -152,8 +152,8 @@
                                                                 %>
                                                                 <%
                                                                     String dName;
-                                                                    if (d.getDefectName().length() > 20) {
-                                                                        dName = d.getDefectName().substring(0, 20) + "...";
+                                                                    if (d.getDefectName().length() > 18) {
+                                                                        dName = d.getDefectName().substring(0, 18) + "...";
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }%>
@@ -162,7 +162,7 @@
                                                                     out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");
                                                                     //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
                                                                     %>
-                                                                    <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                    <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
                                                                     <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
 
                                                                     <%out.println("</table>");

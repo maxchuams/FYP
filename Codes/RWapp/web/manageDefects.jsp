@@ -223,15 +223,15 @@
                                                                 <% }
                                                                 %>
                                                                 <%String dName;
-                                                                    if (d.getDefectName().length() > 20) {
-                                                                        dName = d.getDefectName().substring(0, 20) + "...";
+                                                                    if (d.getDefectName().length() > 18) {
+                                                                        dName = d.getDefectName().substring(0, 18) + "...";
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }
                                                                         out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
                                                                         out.println("<tr><td><b>Severity: </b></td><td id='"+severity+"'> " + severity + "</td></tr>");%>
-                                                                        <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
-                                                                        <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                        <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY"></span></tr>
+                                                                        <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
                                                                         <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
                                                                         <tr><td><b>Assigned to:</b></td><td><%=d.getAssignto()%></td></tr>
                                                                                 

@@ -26,14 +26,7 @@
         <link href="js/skins/square/green.css" rel="stylesheet">
         <link href="js/skins/flat/green.css" rel="stylesheet">
         <script src="js/icheck.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_flat',
-                    radioClass: 'iradio_flat'
-                });
-            });
-        </script>
+        
         <script>
             <%
                 ProjectDAO pp = new ProjectDAO();
@@ -231,7 +224,7 @@
                                                 ArrayList<Project> pList = ProjectDAO.retrieveAll();
 
 
-                                            %><option selected="selected"><%                                                    for (Project p : pList) {
+                                            %><option selected="selected"><%           for (Project p : pList) {
                                                     if (name != null && name.equalsIgnoreCase(p.getName())) {%>
                                             <option value='<%=p.getName()%>'><%=p.getName()%></option>
                                             <%} else {
@@ -244,12 +237,14 @@
                                         </select>
                                     </div>
                                     <p></p><br/><br/>
+                                    
                                     <div id='test'>
                                         <label id="xxxx" for="xx" class="col-lg-3 control-label">Developer's fault </label>
                                         <div class="col-lg-9" id="test1">
                                         </div>   
                                     </div>
                                     <br/><br/>
+                                    
                                     <label for="inputType" class="col-lg-3 control-label">Use pre-assigned developer? </label>
                                     <div class="col-lg-9">
                                         <select name="filter" id="role" class="form-control m-bot15">
@@ -334,7 +329,7 @@
                     </div>
                 </div>
             </section>
-        </section>
+        </section>                           
         <script>
             $(document).ready(function () {
                 $('input').iCheck({
