@@ -80,6 +80,15 @@
                         //alert(jsArray);
                         var putput = toPut.split(",");
                         //alert(putput);
+                        
+                        if(putput.length !=0){
+                            
+                            var divdivy = document.getElementById('test');
+                            var ccb = document.createElement('label');
+                            ccb.className = "col-lg-3 control-label";
+                            ccb.appendChild(document.createTextNode("Developer(s) Fault: "));
+                            divdivy.insertBefore(ccb,divdivy.firstChild);
+                        
                         for (var j = 0; j < putput.length; j++) {
                             // alert(putput[j]);
                             var divdiv = document.getElementById('test1');
@@ -102,7 +111,7 @@
                             //}
 //                var labelvar = document.getElementById('yesnos');
 //                labelvar.innerHTML = putput[j];
-                        }
+                        }}
 //                var opt= document.getElementById('test1').options[1];
 //                opt.value = 'sex';
 //                opt.text = 'sex';
@@ -236,10 +245,10 @@
                                             %>
                                         </select>
                                     </div>
-                                    <p></p><br/><br/>
+                                    <p></p>
                                     
                                     <div id='test'>
-                                        <label id="xxxx" for="xx" class="col-lg-3 control-label">Developer's fault </label>
+                                        
                                         <div class="col-lg-9" id="test1">
                                         </div>   
                                     </div>
