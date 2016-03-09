@@ -70,7 +70,7 @@
                             myNode.removeChild(myNode.firstChild);
                         }
                         var nodenode = document.getElementById("test");
-                        if(myNode.firstChild!=myNode){
+                        if(nodenode.firstChild!=myNode){
                             nodenode.removeChild(nodenode.firstChild);
                         }
                         for (var i = 0; i < jsArray.length; i++) {
