@@ -19,15 +19,14 @@
         <link href="js/skins/square/green.css" rel="stylesheet">
         <link href="js/skins/flat/green.css" rel="stylesheet">
         <script src="js/icheck.js"></script>
-        <script>
+<!--        <script>
             $(document).ready(function () {
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_flat',
                     radioClass: 'iradio_flat'
                 });
             });
-        </script>
-
+        </script>-->
         <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
 
