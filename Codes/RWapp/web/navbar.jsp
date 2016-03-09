@@ -91,15 +91,18 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                                 <i class="fa fa-bell-o"></i>
-                                <span class="badge bg-warning"> <div id="reload"></div></span>
+                                <span class="badge bg-warning"><div id="reload"></div></span>
                             </a>
                             <ul class="dropdown-menu extended notification">
-
+                            <li>
+                                <p>Notifications</p>
+                            </li>
                                 
-                                <div id="reload2"></div>   
+                                <div id="reload2"></div>
                             
                                 <li>
-                                    <h1><center><a href = "notifications.jsp">View All Notifications</a></center></h1>
+                                <center><button type="button" class="btn btn-primary btn-xs" onClick="window.location.href='notifications.jsp'">View All</button></center>
+                                    <br/>
                                 </li>
                             </ul>
                         </li>

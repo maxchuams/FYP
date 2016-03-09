@@ -35,7 +35,7 @@
         
         <!--Copy Paste Part 2: Any part you want to show time. Inside <body>-->
         <script>
-            var m = moment("<%=CronDAO.retrieveTime()%>");
+            var m = moment('<%=CronDAO.retrieveTime()%>');
             document.write('Last Sync: '+m.fromNow());
         </script>
         <!--End of Copy Paste Part 2-->
