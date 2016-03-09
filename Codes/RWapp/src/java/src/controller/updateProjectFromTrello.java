@@ -15,6 +15,7 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -411,7 +412,7 @@ public class updateProjectFromTrello extends HttpServlet {
             hs.addAll(errList);
             errList.clear();
             errList.addAll(hs);
-            errList.sort(null);
+            Collections.sort(errList);
             request.setAttribute("errList", errList);
             rd.forward(request, response);
             return;
