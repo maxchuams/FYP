@@ -80,6 +80,8 @@
                             <div class="panel-body">
                                 <div class="panel-body profile-information">
                                     <div class="col-md-3">
+                                        <center>
+                                        <h3 class="prf-border-head"><%=p.getName()%></h3>
                                         <div class="profile-pic">
                                             <% if(ProjectDAO.retrieveTrelloPhoto(p.getName())==null){
                                                             %><img src="bootstrap/html/images/tempProj.png" alt=""/>
@@ -97,6 +99,7 @@
                                                         <%}}%>
 
                                         </div>
+                                        </center>
                                     </div>
                                 <div class="col-md-9">
                                 <table class="table table-hover general-table">

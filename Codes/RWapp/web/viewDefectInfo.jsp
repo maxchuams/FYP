@@ -148,6 +148,7 @@ thisPage = "manageDefects";
                                                                 <td>Reported by</td>
                                                                 <td><%=d.getReportedBy()%></td>
                                                             </tr>
+                                                            <% if(pm!=null){ %>
                                                             <tr>
                                                                 <td>Caused by</td>
                                                                 <td>
@@ -161,6 +162,7 @@ thisPage = "manageDefects";
                                                                 %>
                                                                 </td>
                                                             </tr>
+                                                            <% } %>
                                                             <tr>
                                                                 <td>Project done by</td>
                                                                 <td><%

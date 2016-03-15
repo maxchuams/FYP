@@ -26,7 +26,7 @@
         <link href="js/skins/square/green.css" rel="stylesheet">
         <link href="js/skins/flat/green.css" rel="stylesheet">
         <script src="js/icheck.js"></script>
-        
+
         <script>
             <%
                 ProjectDAO pp = new ProjectDAO();
@@ -70,7 +70,7 @@
                             myNode.removeChild(myNode.firstChild);
                         }
                         var nodenode = document.getElementById("test");
-                        if(myNode.firstChild!=myNode){
+                        if (myNode.firstChild != myNode) {
                             nodenode.removeChild(nodenode.firstChild);
                         }
                         for (var i = 0; i < jsArray.length; i++) {
@@ -84,38 +84,39 @@
                         //alert(jsArray);
                         var putput = toPut.split(",");
                         //alert(putput);
-                        
-                        if(putput.length !=0){
-                            
+
+                        if (putput.length != 0) {
+
                             var divdivy = document.getElementById('test');
                             var ccb = document.createElement('label');
                             ccb.className = "col-lg-3 control-label";
                             ccb.appendChild(document.createTextNode("Developer(s) Fault: "));
-                            divdivy.insertBefore(ccb,divdivy.firstChild);
-                        
-                        for (var j = 0; j < putput.length; j++) {
-                            // alert(putput[j]);
-                            var divdiv = document.getElementById('test1');
-                            var cb = document.createElement('input');
-                            cb.type = 'checkbox';
-                            divdiv.appendChild(cb);
-                            cb.name = "blame";
-                            cb.value = putput[j];
-                            cb.id = 'x';
-                            var label = document.createElement('label')
-                            label.htmlFor = "blame";
-                            label.id = 'y'
-                            label.appendChild(document.createTextNode(putput[j]));
-                            divdiv.appendChild(label);
-                            var foo = document.createTextNode("\u00A0");
-                            divdiv.appendChild(foo);
-                            //cb.appendChild(document.createTextNode(putput[j]));
-                            //opt.value = putput[j];
+                            divdivy.insertBefore(ccb, divdivy.firstChild);
+
+                            for (var j = 0; j < putput.length; j++) {
+                                // alert(putput[j]);
+                                var divdiv = document.getElementById('test1');
+                                var cb = document.createElement('input');
+                                cb.type = 'checkbox';
+                                divdiv.appendChild(cb);
+                                cb.name = "blame";
+                                cb.value = putput[j];
+                                cb.id = 'x';
+                                var label = document.createElement('label')
+                                label.htmlFor = "blame";
+                                label.id = 'y'
+                                label.appendChild(document.createTextNode(putput[j]));
+                                divdiv.appendChild(label);
+                                var foo = document.createTextNode("\u00A0");
+                                divdiv.appendChild(foo);
+                                //cb.appendChild(document.createTextNode(putput[j]));
+                                //opt.value = putput[j];
 //                opt.innerHTML = "aaa";
-                            //}
+                                //}
 //                var labelvar = document.getElementById('yesnos');
 //                labelvar.innerHTML = putput[j];
-                        }}
+                            }
+                        }
 //                var opt= document.getElementById('test1').options[1];
 //                opt.value = 'sex';
 //                opt.text = 'sex';
@@ -166,6 +167,12 @@
             String errorMsg = (String) request.getAttribute("err");
             String sucess = (String) request.getAttribute("sucess");
             ArrayList<String> errorArr = (ArrayList<String>) request.getAttribute("err1");
+            Person per = null;
+            if (session.getAttribute("loggedInPm") != null) {
+                per = (Person) session.getAttribute("loggedInPm");
+            } else {
+                per = (Person) session.getAttribute("loggedInTester");
+            }
         %>
         <section id="main-content">
             <section class="wrapper">
@@ -227,18 +234,12 @@
                                     <div class="col-lg-9">
                                         <select name="projectname" id='projectname' class="projectSelect2 form-control m-bot15" onchange="jsFunction()">
                                             <%
-                                                Person per = null;
-                                                if (session.getAttribute("loggedInPm") != null) {
-                                                    per = (Person) session.getAttribute("loggedInPm");
-                                                } else {
-                                                    per = (Person) session.getAttribute("loggedInTester");
-                                                }
                                                 //ArrayList<String> pList = ProjectAllocationDAO.retrieveInProgress();
                                                 ArrayList<Project> pList = ProjectDAO.retrieveAll();
 
-
-                                            %><option selected="selected"><%           for (Project p : pList) {
-                                                    if (name != null && name.equalsIgnoreCase(p.getName())) {%>
+                                            %><option selected="selected">
+                                                <%           for (Project p : pList) {
+                                                        if (name != null && name.equalsIgnoreCase(p.getName())) {%>
                                             <option value='<%=p.getName()%>'><%=p.getName()%></option>
                                             <%} else {
                                             %>
@@ -250,15 +251,14 @@
                                         </select>
                                     </div>
                                     <p></p>
-                                    
+
                                     <div id='test'>
-                                        
                                         <div class="col-lg-9" id="test1">
                                         </div>   
                                     </div>
                                     <br/><br/>
-                                    
-                                    <label for="inputType" class="col-lg-3 control-label">Use pre-assigned developer? </label>
+
+                                    <label for="inputType" class="col-lg-3 control-label">Let pre-assigned developer fix? </label>
                                     <div class="col-lg-9">
                                         <select name="filter" id="role" class="form-control m-bot15">
                                             <option selected>Select one..</option>
@@ -270,7 +270,7 @@
 
                                     <div id="showdev">
                                         <br/><br/>
-                                        <label for="inputEmail1" class="col-lg-3 control-label">Developer</label>
+                                        <label for="inputEmail1" class="col-lg-3 control-label">Select new developer to fix</label>
                                         <div class="col-lg-9">
                                             <select name="devname" class="devSelect2 form-control m-bot15">
                                                 <%

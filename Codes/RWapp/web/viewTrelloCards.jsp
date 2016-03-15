@@ -87,26 +87,26 @@
                                 <button data-dismiss="alert" class="close close-sm" type="button">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <%for(int i=0; i < errorList.size(); i++){
-                                    out.println((i+1) + ". " + errorList.get(i) + "<br/>");
-                                }%>
+                                <%for (int i = 0; i < errorList.size(); i++) {
+                                        out.println((i + 1) + ". " + errorList.get(i) + "<br/>");
+                                    }%>
                             </div>
                         </section>
                     </div>
                 </div>
                 <%}%>
                 <!--End of error/success display-->
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
                                 <label class='pull-left top-menu'>Viewing my projects</br>
                                     <script>
-            var m = moment("<%=CronDAO.retrieveTime()%>");
-            document.write('Last Sync: '+m.fromNow());
-        </script></label>
-<!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
+                                        var m = moment("<%=CronDAO.retrieveTime()%>");
+                                        document.write('Last Sync: ' + m.fromNow());
+                                    </script></label>
+                                <!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
                                 <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewTrelloCards"/>
                                     <button type="submit" class="btn btn-info pull-right top-menu" onClick="updateProjectFromTrello">
@@ -130,10 +130,10 @@
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
                                 <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");
-                                String pName;
-                                    if(t.getName().length()>27){
-                                        pName=t.getName().substring(0,27)+"...";
-                                    }else{
+                                    String pName;
+                                    if (t.getName().length() > 27) {
+                                        pName = t.getName().substring(0, 27) + "...";
+                                    } else {
                                         pName = t.getName();
                                     }
                                 %>
@@ -148,20 +148,21 @@
                                             <ul class="nav nav-pills nav-stacked">
                                                 <div class="col-md-2 col-xs-2">
                                                     <div class="tm-avatar">
-                                                        <% if(ProjectDAO.retrieveTrelloPhoto(t.getName())==null){
-                                                            %><img src="bootstrap/html/images/tempProj.png" alt=""/>
+                                                        <% if (ProjectDAO.retrieveTrelloPhoto(t.getName()) == null) {
+                                                        %><img src="bootstrap/html/images/tempProj.png" alt=""/>
                                                         <%
-                                                        }else{
+                                                        } else {
                                                             String photo = ProjectDAO.retrieveTrelloPhoto(t.getName());
                                                             String photoExt = "";
-                                                            if(photo.length()>=3){
+                                                            if (photo.length() >= 3) {
                                                                 photoExt = photo.substring(photo.length() - 3);
                                                             }
-                                                            if(photoExt.equals("jpg") || photoExt.equals("png")){%>
-                                                                <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
-                                                            <%} else{  %>
-                                                            <img src="bootstrap/html/images/tempProj.png" alt=""/>
-                                                        <%}}%>
+                                                            if (photoExt!=null || photoExt.equals("jpg") || photoExt.equals("png")) {%>
+                                                        <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
+                                                        <%} else {  %>
+                                                        <img src="bootstrap/html/images/tempProj.png" alt=""/>
+                                                        <%}
+                                                            }%>
                                                     </div>
                                                 </div>
 
@@ -185,6 +186,15 @@
 
                                                         %>
                                                     </li>
+                                                    <li> <b>Priority:</b> 
+                                                        <%
+                                                int pInt = t.getPriortiy();
+                                                if(pInt==1){
+                                                    out.println("High");
+                                                }else{
+                                                    out.println("Standard");
+                                                }
+                                                %> </li>
                                                 </span>
 
                                             </ul>

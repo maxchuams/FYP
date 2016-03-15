@@ -184,6 +184,15 @@
                                                             }
                                                         %>
                                                     </li>
+                                                    <li> <b>Priority:</b> 
+                                                        <%
+                                                int pInt = t.getPriortiy();
+                                                if(pInt==1){
+                                                    out.println("High");
+                                                }else{
+                                                    out.println("Standard");
+                                                }
+                                                %> </li>
                                                 </span>
                                             </ul>
                                         </div>

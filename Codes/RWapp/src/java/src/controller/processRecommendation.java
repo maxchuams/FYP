@@ -253,7 +253,7 @@ public class processRecommendation extends HttpServlet {
             //
             RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
             RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim())-1);
-            request.setAttribute("sucess", "Project sucessfully assigned!");
+            request.setAttribute("sucess", "Developer(s) successfully assigned to project " + projName);
             rd.forward(request, response);
             return;
 

@@ -147,7 +147,8 @@ public class updateDefect extends HttpServlet {
                     NotificationDAO notifDAO = new NotificationDAO();
                     notifDAO.addNotification(DefectDAO.retrieveDefect(id).getAssignto(),"rejectedDefect" + id,DefectDAO.retrieveDefect(id).getProjectName());
                 }
-                RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("viewDefectInfo.jsp?defectId="+id);
+                //RequestDispatcher rd = request.getRequestDispatcher("manageDefects.jsp");
                 request.setAttribute("sucess", "Details successfully changed!");
                 rd.forward(request, response);
                 return;
