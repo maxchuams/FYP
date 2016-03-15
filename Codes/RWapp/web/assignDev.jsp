@@ -95,10 +95,10 @@
                                                                     </div>
                                                                     <div align="center" class="col-md-12 col-sm-12 inv-label">Dev overall score: <%=r.getZainessscore()%></div><br/>
                                                                     <ul class="list-unstyled">
-                                                                        <li><i class="fa fa-hand-o-right"></i> <%=r.getCurrentprojectcount()%> current projects</li>
-                                                                        <li><i class="fa fa-hand-o-right"></i> Earliest start date <%=r.getEarlieststart()%></li>
-                                                                        <li><i class="fa fa-hand-o-right"></i> <%=r.getEstimateworkingday()%> days to complete project</li>
-                                                                        <li><i class="fa fa-hand-o-right"></i> Avg <%=r.getAvgdefectperproject()%> defects per project</li>
+                                                                        <li><i class="fa fa-briefcase"></i> <%=r.getCurrentprojectcount()%> current projects</li>
+                                                                        <li><i class="fa fa-clock-o"></i> Earliest start date <%=r.getEarlieststart()%></li>
+                                                                        <li><i class="fa fa-calendar"></i> <%=r.getEstimateworkingday()%> days to complete project</li>
+                                                                        <li><i class="fa fa-bug"></i> Avg <%=r.getAvgdefectperproject()%> defects per project</li>
                                                                         <li><i class="fa fa-hand-o-right"></i> Completed <%=r.getProjectexperiencecount()%> similar projs</li>
 
                                                                     </ul>
@@ -135,7 +135,7 @@
                                                     <div class="col-md-12">
                                                         <section class="panel">
                                                             <div class="panel-body">
-                                                                <button type="submit" class="btn btn-primary btn-block">Choose Developer(s)</button>
+                                                                <button type="submit" class="btn btn-info btn-block">Choose Developer(s) For Project</button>
                                                             </div>
                                                         </section>
                                                     </div>

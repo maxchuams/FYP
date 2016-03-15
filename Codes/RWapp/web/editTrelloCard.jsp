@@ -120,9 +120,9 @@
                                         <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Start Date</label>
                                         <div class="col-lg-10">
                                             <%if (sDate != null) {%>
-                                            <input type="date" class="form-control m-bot12" name="sDate"  value="<%=sDate%>" required/>
+                                            <input type="date" class="form-control m-bot12" name="sDate"  min="2000-01-01" max="2100-12-31" value="<%=sDate%>" required/>
                                             <%} else {%>
-                                            <input type="date" class="form-control m-bot12" name="sDate"  required/>
+                                            <input type="date" class="form-control m-bot12" name="sDate"  min="2000-01-01" max="2100-12-31" required/>
                                             <%}%>
                                         </div>
 

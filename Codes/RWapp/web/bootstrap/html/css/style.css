@@ -22,6 +22,7 @@ ul, .list-unstyled {
 }
 ul li {
     /*list-style:none;*/
+    
 }
 
 a,a:hover,a:focus {
@@ -2341,12 +2342,12 @@ ul.inbox-pagination li {
 }
 /*profile*/
 .profile-information .profile-pic img {
-    width:160px;
-    height:160px;
+    width:100px;
+    height:100px;
     border-radius:50%;
     -webkit-border-radius:50%;
     border:10px solid #f1f2f7;
-    margin-top:20px;
+    margin-top:0px;
 }
 .profile-information .profile-desk {
     border-right:0px solid #ddd;
@@ -2656,6 +2657,8 @@ ul.inbox-pagination li {
 }
 .inv-label {
     color:#1fb5ad;
+    font-weight:bold;
+    padding-bottom:5px;
 }
 .itatic {
     font-style:italic;
@@ -4360,7 +4363,7 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
 }
 /*pricing table*/
 .price-head {
-    padding:10px 0 50px;
+    padding:10px 0 10px;
 }
 .price-head h1 {
     font-size:32px;
@@ -4377,6 +4380,8 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
 }
 .pricing-table.most-popular {
     position:relative;
+    height: 300px;
+    padding: 0px;
 }
 .most-popular {
     background:#f1f2f7;
@@ -4387,7 +4392,7 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
     border-radius:5px 5px 0 0;
     -webkit-border-radius:5px 5px 0 0;
     position:relative;
-    height:50px;
+    height:30px;
 }
 .most-popular .pricing-quote,.most-popular ul li i {
     color:#1fb5ad;
@@ -4418,9 +4423,9 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
     height:50px;
 }
 .pricing-head h1 {
-    font-size:18px;
-    font-weight:300;
-    padding-top:15px;
+    font-size:13px;
+    font-weight:bold;
+    padding-top:8px;
     color:#fff;
     text-transform:uppercase;
 }
@@ -4457,9 +4462,10 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
 }
 .pricing-table ul li {
     margin:0 2em;
-    padding:0.5em 0;
+    padding:0.1em 0;
     text-align:left;
     font-weight:300;
+    color:black;
 }
 .pricing-table ul li i {
     margin-right:10px;

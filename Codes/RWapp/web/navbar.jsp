@@ -255,17 +255,17 @@ $('#reload2').load('jquery.jsp' + ' #part2').fadeIn("slow");
                                                 </a>
                                                 <ul class="sub">
                                                     <% if (thisPage.equals("viewTrelloCards")) { %>
-                                                    <li class="active"><a href="viewTrelloCards.jsp">View All My Projects</a></li> <% } else { %>
-                                                    <li><a href="viewTrelloCards.jsp">View All My Projects</a></li><% } %>
+                                                    <li class="active"><a href="viewTrelloCards.jsp">View My On-going Projects</a></li> <% } else { %>
+                                                    <li><a href="viewTrelloCards.jsp">View My On-going Projects</a></li><% } %>
                                                         <%if (pm != null) {%>
 
                                                     <% if (thisPage.equals("viewAllTrelloCards")) { %>
-                                                    <li class="active"><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } else { %>
-                                                    <li><a href="viewAllTrelloCards.jsp">View All Projects</a></li><% } %>
+                                                    <li class="active"><a href="viewAllTrelloCards.jsp">View All On-going Projects</a></li><% } else { %>
+                                                    <li><a href="viewAllTrelloCards.jsp">View All On-going Projects</a></li><% } %>
 
                                                     <% if (thisPage.equals("viewCompletedProjects")) { %>
-                                                    <li class="active"><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } else { %>
-                                                    <li><a href="viewCompletedProjects.jsp">View Completed Projects</a></li><% } %>
+                                                    <li class="active"><a href="viewCompletedProjects.jsp">View My Completed Projects</a></li><% } else { %>
+                                                    <li><a href="viewCompletedProjects.jsp">View My Completed Projects</a></li><% } %>
 
                                                     <% if (thisPage.equals("viewUnassignedCards")) { %>
                                                     <li class="active"><a href="assignProject">View Unassigned Projects</a></li><% } else { %>
@@ -288,7 +288,7 @@ $('#reload2').load('jquery.jsp' + ' #part2').fadeIn("slow");
                                             <a href="javascript:;" class="active"> <% } else { %>
                                                 <a href="javascript:;"> <% } %>
                                                     <i class="fa fa-users"></i>
-                                                    <span>Manage Team</span>
+                                                    <span>Manage Team Members</span>
                                                 </a>
 
                                                 <ul class="sub">
@@ -317,12 +317,12 @@ $('#reload2').load('jquery.jsp' + ' #part2').fadeIn("slow");
                                             <a href="javascript:;" class="active"> <% } else { %>
                                                 <a href="javascript:;"> <% } %>
                                                     <i class="fa fa-users"></i>
-                                                    <span>Manage Team</span>
+                                                    <span>View Team</span>
                                                 </a>
                                                 <ul class="sub">
                                                     <% if (thisPage.equals("manageUser") || thisPage.equals("manageDevProfile")) {%>
-                                                    <li class="active"><a class="active" href="manageUser.jsp">Manage Developers</a></li> <% } else { %>
-                                                    <li><a href="manageUser.jsp">Manage Developers</a></li><% }%>
+                                                    <li class="active"><a class="active" href="manageUser.jsp">View All Developers</a></li> <% } else { %>
+                                                    <li><a href="manageUser.jsp">View All Developers</a></li><% }%>
                                                 </ul>
                                         </li>
                                         <% }%>
