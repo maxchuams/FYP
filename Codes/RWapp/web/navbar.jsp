@@ -35,7 +35,7 @@
                 window.location = "search.jsp";
             }
         </script>   
-        <script type="text/javascript" src="JQueryAPI/jquery-1.4.2.min.js"></script>
+<!--        <script type="text/javascript" src="JQueryAPI/jquery-1.4.2.min.js"></script>-->
         <script type="text/javascript">
 
 var auto = setInterval(function ()
