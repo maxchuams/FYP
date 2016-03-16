@@ -5777,3 +5777,8 @@ right: -1px;
 .no-padding {
     padding: 0;
 }
+
+.panel-body.kaiwen{
+    border-style: solid;
+    border-color: white;
+}
