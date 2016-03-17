@@ -304,7 +304,7 @@ public class ProjectDAO {
         ArrayList<String> toReturn = new ArrayList<String>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select projectname from project");
+            pstmt = conn.prepareStatement("select distinct projectname from project");
 
             rs = pstmt.executeQuery();
 
