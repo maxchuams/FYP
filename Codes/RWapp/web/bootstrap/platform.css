@@ -25,8 +25,8 @@
   -------------------------------------------------------
   */
 BODY, TBODY {
-  font-family: arial;
-  font-size: 14px;
+  font-family: 'Open Sans',sans-serif;
+  font-size: 13.5px;
   margin: 0;
   color: #000000;
   text-decoration: none;
