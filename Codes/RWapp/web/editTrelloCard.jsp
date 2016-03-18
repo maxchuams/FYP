@@ -225,7 +225,7 @@
                                                 <label  class="btn btn-primary <%if (factor == null || factor.equals("bal")) {
                                                                    out.println("active");}
                                                            %>" >
-                                                    <input type="radio" name="factor" value="bal" 
+                                                    <input type="radio" name="factor" value="bal" checked 
                                                            > Balanced</label>
                                                 <label class="btn btn-primary <%if (factor != null && factor.equals("exp")) {
                                                                    out.println("active");}
