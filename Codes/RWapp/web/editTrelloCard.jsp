@@ -222,7 +222,7 @@
                                         <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label"> Method </label>
                                         <div class="col-lg-10">
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label  class="btn btn-primary <%if (factor != null && factor.equals("bal")) {
+                                                <label  class="btn btn-primary <%if (factor == null || factor.equals("bal")) {
                                                                    out.println("active");}
                                                            %>" >
                                                     <input type="radio" name="factor" value="bal" 
