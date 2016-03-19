@@ -27,7 +27,7 @@ public class DefectDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         Date duedateDate = null;
-        
+
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
@@ -85,7 +85,7 @@ public class DefectDAO {
             pstmt.setInt(3, isComplete);
             pstmt.setInt(4, sev);
             pstmt.setDate(5, new java.sql.Date(duedateDate.getTime()));
-            
+
             pstmt.setString(6, assignto);
             pstmt.setInt(7, id);
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
@@ -176,7 +176,33 @@ public class DefectDAO {
 
         return toReturn;
     }
-    
+
+    public static ArrayList<Defect> retrieveAllIncompleteByMonth(int month) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Defect> toReturn = new ArrayList<Defect>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto from defect "
+                    + "where updatetime >= date_sub(now(), interval ? month) and iscomplete='0';");
+
+            pstmt.setInt(1, month);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
+
     public static ArrayList<Defect> retrieveAllByProject(String projectname) {
 
         Connection conn = null;
@@ -247,7 +273,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9),rs.getString(10)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -258,8 +284,8 @@ public class DefectDAO {
         return toReturn;
 
     }
-    
-     public static ArrayList<Defect> retrieveAllocatedDev(String username) {
+
+    public static ArrayList<Defect> retrieveAllocatedDev(String username) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -276,7 +302,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9),rs.getString(10)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -309,7 +335,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9),rs.getString(10)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -320,7 +346,7 @@ public class DefectDAO {
         return toReturn;
 
     }
-    
+
     public static ArrayList<Defect> retrieveTester() {
 
         Connection conn = null;
@@ -336,12 +362,11 @@ public class DefectDAO {
                     + "assignby , projectname) as p "
                     + "where d.projectname = p.projectname;");
 
-            
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9),rs.getString(10)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -352,7 +377,7 @@ public class DefectDAO {
         return toReturn;
 
     }
-    
+
     public static Defect retrieveDefect(int id) {
 
         Connection conn = null;
@@ -367,7 +392,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn = new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8),rs.getDate(9), rs.getString(10));
+                toReturn = new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -378,7 +403,7 @@ public class DefectDAO {
         return toReturn;
 
     }
-    
+
     public static Defect retrieveDefectByName(String defectname, String projectname) {
 
         Connection conn = null;
@@ -394,7 +419,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn = new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8),rs.getDate(9), rs.getString(10));
+                toReturn = new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -405,8 +430,6 @@ public class DefectDAO {
         return toReturn;
 
     }
-    
-    
 
     public static ArrayList<Defect> filterSortDefectsPm(String filterby, String filterText, String sortby, String username) {
         Connection conn = null;
@@ -510,7 +533,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(12),rs.getString(13)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(12), rs.getString(13)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -521,7 +544,7 @@ public class DefectDAO {
         return toReturn;
 
     }
-    
+
     public static ArrayList<String> retrieveDistinctCompletedProject() {
 
         Connection conn = null;
@@ -545,7 +568,7 @@ public class DefectDAO {
 
         return toReturn;
     }
-    
+
     public static ArrayList<String> retrieveDistinctCompletedProjectByDev(String devUsername) {
 
         Connection conn = null;
@@ -569,7 +592,7 @@ public class DefectDAO {
 
         return toReturn;
     }
-    
+
     public static ArrayList<Defect> retrieveAllocatedDevIsComplete(String username) {
 
         Connection conn = null;
@@ -587,7 +610,7 @@ public class DefectDAO {
 
             while (rs.next()) {
 
-                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9),rs.getString(10)));
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -598,7 +621,7 @@ public class DefectDAO {
         return toReturn;
 
     }
-    
+
     public static ArrayList<String> retrieveDevDistinctProject(String devUsername) {
 
         Connection conn = null;
@@ -622,7 +645,7 @@ public class DefectDAO {
 
         return toReturn;
     }
-    
+
     public static ArrayList<String> retrieveDistinctProject() {
 
         Connection conn = null;
@@ -632,7 +655,7 @@ public class DefectDAO {
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select distinct projectname from defect where (isComplete=1 or isComplete=0)");
-            
+
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
