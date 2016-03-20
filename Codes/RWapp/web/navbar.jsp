@@ -264,8 +264,8 @@ $('#reload2').load('jquery.jsp' + ' #part2').fadeIn("slow");
                                                     <li><a href="viewAllTrelloCards.jsp">View All On-going Projects</a></li><% } %>
 
                                                     <% if (thisPage.equals("viewCompletedProjects")) { %>
-                                                    <li class="active"><a href="viewCompletedProjects.jsp">View My Completed Projects</a></li><% } else { %>
-                                                    <li><a href="viewCompletedProjects.jsp">View My Completed Projects</a></li><% } %>
+                                                    <li class="active"><a href="viewCompletedProjects.jsp">View All Completed Projects</a></li><% } else { %>
+                                                    <li><a href="viewCompletedProjects.jsp">View All Completed Projects</a></li><% } %>
 
                                                     <% if (thisPage.equals("viewUnassignedCards")) { %>
                                                     <li class="active"><a href="assignProject">View Unassigned Projects</a></li><% } else { %>

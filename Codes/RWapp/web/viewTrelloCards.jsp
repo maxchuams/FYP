@@ -101,10 +101,10 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <label class='pull-left top-menu'>Viewing my projects</br>
+                                <label class='pull-left top-menu' style='color: #009E94'>Viewing my <%=tList.size()%> projects</br>
                                     <script>
                                         var m = moment("<%=CronDAO.retrieveTime()%>");
-                                        document.write('Last Sync: ' + m.fromNow());
+                                        document.write('Last Sync ' + m.fromNow());
                                     </script></label>
                                 <!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
                                 <form action="updateProjectFromTrello">

@@ -34,7 +34,7 @@
                 userid = pm.getUsername();
                 role = "pm";
             }
-            ArrayList<Project> tList = ProjectDAO.retrieveByUser(role, userid);
+            ArrayList<Project> tList = ProjectDAO.retrieveAllCompletedProj();
 
         %>
         <section id="main-content">
@@ -135,7 +135,7 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <label class='pull-left top-menu'>Viewing all my completed projects</label>
+                                <label class='pull-left top-menu' style='color: #009E94'>Viewing all <%=tList.size()%> completed projects</label>
 <!--                                <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewCompletedProjects"/>
                                     <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
