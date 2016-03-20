@@ -160,7 +160,21 @@
 
                                                 </form>
 
+                                                <form action="assignDevCustom.jsp">
+                                                Cant find the developer you want? Click here to key in manually!
+                                                 <input type='hidden' name='projName' value='<%=toAssign.getName()%>'/>
 
+                                                <input type='hidden' name='type' value='<%=toAssign.getType()%>'/>
+                                                <input type='hidden' name='priority' value='<%=toAssign.getPriority()%>'/>
+                                                <input type='hidden' name='due' value='<%=toAssign.getDue()%>'/>
+                                                <input type='hidden' name='desc' value='<%=toAssign.getDesc()%>'/>
+                                                <input type='hidden' name='id' value='<%=toAssign.getId()%>'/>
+                                                <input type="hidden" name="pmname" value='<%=pm.getUsername()%>'/>
+                                                <input type="hidden" name="psize" value='<%=days%>'/>
+                                                <input type="submit" value="submit"/>
+                                                    
+                                                </form>
+                                                
                                                 <!--kw code-->
 
                                             </section>
