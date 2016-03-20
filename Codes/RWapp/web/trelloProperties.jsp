@@ -80,7 +80,7 @@
                                     TrelloProperties tb = TrelloConfigDAO.retrieveConfig();
                                 %>
                                 <h3 class="prf-border-head">Current Trello Details</h3>
-                                
+
                                 <div class="alert alert-info clearfix ">
                                     <span class="alert-icon"><i class="fa fa-trello"></i></span>
                                     <div class="notification-info">
@@ -89,13 +89,13 @@
                                         </ul>
                                         <p style="color: black">
                                             <b>Trello board:</b> <%=tb.getMainboard()%><br/>
-                                <b>Trello admin username:</b> <%=tb.getAdmin()%><br/>
-                                <b>Trello development list name:</b> <%=tb.getDevelopmentList()%><br/>
-                                <b>Trello post development list name:</b> <%=tb.getPostdevlist()%><br/>
+                                            <b>Trello admin username:</b> <%=tb.getAdmin()%><br/>
+                                            <b>Trello development list name:</b> <%=tb.getDevelopmentList()%><br/>
+                                            <b>Trello post development list name:</b> <%=tb.getPostdevlist()%><br/>
                                         </p>
                                     </div>
                                 </div>
-                                
+
                                 <hr/>
                                 <h3 class="prf-border-head">Edit Trello Details</h3>
                                 <form action="modifyTrelloProperties" method="POST" class="form-horizontal" role="form">
