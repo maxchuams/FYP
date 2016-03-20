@@ -22,9 +22,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Defects</title>
         <script src="js/moment.js"></script>
-        <script>
-            moment().format();
-        </script>
+        <script> moment().format(); </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#pname').hide(); //hide field on start

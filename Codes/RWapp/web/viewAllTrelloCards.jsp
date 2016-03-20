@@ -4,6 +4,9 @@
     Author     : Kaiwen
 --%>
 
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="src.model.CronDAO"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.ProjectDAO"%>
@@ -87,9 +90,9 @@
                                 <button data-dismiss="alert" class="close close-sm" type="button">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <%for(int i=0; i < errorList.size(); i++){
-                                    out.println((i+1) + ". " + errorList.get(i) + "<br/>");
-                                }%>
+                                <%for (int i = 0; i < errorList.size(); i++) {
+                                        out.println((i + 1) + ". " + errorList.get(i) + "<br/>");
+                                    }%>
                             </div>
                         </section>
                     </div>
@@ -103,10 +106,10 @@
                             <div class="panel-body">
                                 <label class='pull-left top-menu' style='color: #009E94'>Viewing all <%=tList.size()%> projects</br>
                                     <script>
-                            var m = moment("<%=CronDAO.retrieveTime()%>");
-                            document.write('Last Sync '+m.fromNow());
-                        </script></label>
-                <!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
+                                        var m = moment("<%=CronDAO.retrieveTime()%>");
+                                        document.write('Last Sync ' + m.fromNow());
+                                    </script></label>
+                                <!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
                                 <form action="updateProjectFromTrello">
                                     <input type="hidden" name="page" value="viewAllTrelloCards"/>
                                     <button type="submit" class="btn btn-info pull-right top-menu" onClick="updateProjectFromTrello">
@@ -126,17 +129,17 @@
 
                                 <%
                                     for (Project t : tList) {
-                                        if(t.getIsComplete()==0){
+                                        if (t.getIsComplete() == 0) {
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
                                 <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");
                                     String pName;
-                                    if(t.getName().length()>27){
-                                        pName=t.getName().substring(0,27)+"...";
-                                    }else{
+                                    if (t.getName().length() > 27) {
+                                        pName = t.getName().substring(0, 27) + "...";
+                                    } else {
                                         pName = t.getName();
                                     }
-                                
+
                                 %>
                                 <div class="col-md-4">
                                     <div class="panel panel-primary">
@@ -149,26 +152,36 @@
                                             <ul class="nav nav-pills nav-stacked">
                                                 <div class="col-md-2 col-xs-2">
                                                     <div class="tm-avatar">
-                                                        <% if(ProjectDAO.retrieveTrelloPhoto(t.getName())==null){
-                                                            %><img src="bootstrap/html/images/tempProj.png" alt=""/>
+                                                        <% if (ProjectDAO.retrieveTrelloPhoto(t.getName()) == null) {
+                                                        %><img src="bootstrap/html/images/tempProj.png" alt=""/>
                                                         <%
-                                                        }else{
+                                                        } else {
                                                             String photo = ProjectDAO.retrieveTrelloPhoto(t.getName());
                                                             String photoExt = "";
-                                                            if(photo.length()>=3){
+                                                            if (photo.length() >= 3) {
                                                                 photoExt = photo.substring(photo.length() - 3);
                                                             }
-                                                            if(photoExt.equals("jpg") || photoExt.equals("png")){%>
-                                                                <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
-                                                            <%} else{  %>
-                                                            <img src="bootstrap/html/images/tempProj.png" alt=""/>
-                                                        <%}}%>
+                                                            if (photoExt.equals("jpg") || photoExt.equals("png")) {%>
+                                                        <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
+                                                        <%} else {  %>
+                                                        <img src="bootstrap/html/images/tempProj.png" alt=""/>
+                                                        <%}
+                                                            }%>
                                                     </div>
                                                 </div>
-
+                                                <%
+                                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                                    Date todayDate = new Date();
+                                                    String projDateString = t.getDuedate();
+                                                    Date projDate = dateFormat.parse(projDateString);
+                                                %>
                                                 <span class="pull-right">
-                                                    <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li><br/><br/>
-                                                    <li> <b>Type:</b> <%=t.getType()%> </li>
+                                                    <%if (todayDate.after(projDate)) {%>
+
+                                                    <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-exclamation-circle"></i>  <span class="time" data-datetime="<%=t.getDuedate()%>" data-format="Do MMM YYYY"></span></span></li><br/><br/>
+                                                            <%} else {%>
+                                                    <li><span class="badge label-warning pull-left r-activity"><i class="fa fa-bell-o"></i>  <span class="time" data-datetime="<%=t.getDuedate()%>" data-format="Do MMM YYYY"></span></span></li><br/><br/>
+                                                    <%}%>                                                    <li> <b>Type:</b> <%=t.getType()%> </li>
                                                     <li> <b>PM:</b> <%=t.getAssignedBy()%></li>
                                                     <li> <b>Dev:</b>
                                                         <%
@@ -186,13 +199,13 @@
                                                     </li>
                                                     <li> <b>Priority:</b> 
                                                         <%
-                                                int pInt = t.getPriortiy();
-                                                if(pInt==1){
-                                                    out.println("High");
-                                                }else{
-                                                    out.println("Standard");
-                                                }
-                                                %> </li>
+                                                            int pInt = t.getPriortiy();
+                                                            if (pInt == 1) {
+                                                                out.println("High");
+                                                            } else {
+                                                                out.println("Standard");
+                                                            }
+                                                        %> </li>
                                                 </span>
                                             </ul>
                                         </div>
@@ -200,7 +213,8 @@
                                 </div>
                                 </a>
                                 <!-- END Portlet PORTLET-->
-                                <% }}%>
+                                <% }
+                                    }%>
                             </div>
                         </div>
                     </div>
@@ -210,3 +224,15 @@
         </section>
     </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $('.time').each(function () {
+            var $this = $(this),
+                    dt = moment($this.data('datetime')),
+                    format = $this.data('format'),
+                    formatted = dt.format(format);
+
+            $this.html('<span class="time">' + formatted + '</span>');
+        });
+    });
+</script>
