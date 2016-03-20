@@ -76,6 +76,14 @@ public class processRecommendation extends HttpServlet {
         }
         ArrayList<String> errList = new ArrayList<String>();
         String devList = request.getParameter("dev");
+        boolean manual = false;
+        if(devList == null){
+            manual = true;
+            String devname = request.getParameter("devM");
+            String earlieststart = request.getParameter("earliestStart");
+            String completion = request.getParameter("completion");
+            devList = 1 + "," +devname + "," +earlieststart + "," +completion;
+        }
 
         ArrayList<ArrayList<Recommendation>> rlist = (ArrayList<ArrayList<Recommendation>>) sess.getAttribute("rList");
         sess.removeAttribute("rList");
@@ -252,7 +260,9 @@ public class processRecommendation extends HttpServlet {
             }
             //
             RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
-            RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim())-1);
+            if(!manual && rlist != null){
+              RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim())-1);
+            }
             request.setAttribute("sucess", "Developer(s) successfully assigned to project " + projName);
             rd.forward(request, response);
             return;
