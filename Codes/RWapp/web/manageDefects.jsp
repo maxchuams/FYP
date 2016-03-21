@@ -25,6 +25,7 @@
         <script>
             moment().format();
         </script>
+        <script src="./bootstrap/jquery.easyPaginate.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#pname').hide(); //hide field on start
@@ -154,6 +155,37 @@
         }
         </script>
         
+        <script>
+            function name0(){
+                var toSort = [];
+            var obj = document.getElementsByClassName("divClass");
+            for (var j = 0; j < obj.length; j++) {
+                var allDivTd = obj[j].getElementsByTagName("TD");
+                toSort.push(allDivTd[2].id);
+                
+            }
+            var final2 = toSort.sort();
+            var myNode = document.getElementById('mainmain');
+            for(var i = 0; i < final2.length; i++){
+                var xx = document.getElementById(final2[i]);
+                myNode.appendChild(xx);
+            }
+        }
+        </script>
+        <style>
+            #easyPaginate {width:300px;}
+            #easyPaginate img {display:block;margin-bottom:10px;}
+            .easyPaginateNav a {padding:5px;}
+            .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
+        </style>
+        <script>
+            $('#mainmain').easyPaginate({
+            paginateElement: 'div',
+            elementsPerPage: 10,
+            effect: 'slide'
+            });
+        </script>
+        
     </head>
     <body>
 
@@ -231,8 +263,10 @@
                             }
                         %><span class="pull-right top-menu">
                             Defect severity:
-                        <button onclick="fuck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-asc"></i> Sort Ascending</button> &nbsp;
-                        <button onclick="suck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending</button>
+                        <button onclick="fuck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-asc"></i> Sort Ascending by severity</button> &nbsp;
+                        <button onclick="suck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending by severity</button> &nbsp;
+                        <button onclick="name0()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-asc"></i> Sort Ascending by name</button> &nbsp;
+                        <button onclick="name1()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending by name</button> 
                         </span>
                             </div>
                         </section>
@@ -282,7 +316,7 @@
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }
-                                                                        out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
+                                                                        out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td id='"+dName+"'> " + dName + "</td></tr>");
                                                                         out.println("<tr><td><b>Severity: </b></td><td id='"+severity+"'> " + severity + "</td></tr>");%>
                                                                         <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY"></span></tr>
                                                                         <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
