@@ -270,11 +270,25 @@
 
                                         %>
                                     </div>
+                                    <%} else if(name != null) {%>
+                                    <label for="inputType" class="col-lg-3 control-label">Developer(s) Fault: </label>
+                                    <div class="col-lg-9">
+                                        <%
+                                            ArrayList<String> devListForProj = ProjectAllocationDAO.retrieveDev(name);
+                                            for (String d : devListForProj) {
+                                        %>
+                                        <input type='checkbox' name='blame' class="form-control m-bot15" value='<%=d%>'/><%=d%> </br>
+                                        <%
+                                            }
+
+                                        %>
+                                    </div>
                                     <%} else {%>
                                     <div id='test'>
                                         <div class="col-lg-9" id="test1">
                                         </div>   
                                     </div>
+                                    
                                     <%}%>
                                     <br/><br/>
 
