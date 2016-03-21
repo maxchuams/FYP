@@ -4,6 +4,9 @@
     Author     : admin
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.ProjectDAO"%>
 <%@page import="src.model.Project"%>
@@ -34,7 +37,7 @@
                 userid = pm.getUsername();
                 role = "pm";
             }
-            ArrayList<Project> tList = ProjectDAO.retrieveByUser(role, userid);
+            ArrayList<Project> tList = ProjectDAO.retrieveAllCompletedProj();
 
         %>
         <section id="main-content">
@@ -128,20 +131,20 @@
                         </section>
                     </div>
                 </div>
-                <% } %>      
+                <% }%>      
                 <!-- if no projects end !-->
 
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <label class='pull-left top-menu'>Viewing all my completed projects</label>
-<!--                                <form action="updateProjectFromTrello">
-                                    <input type="hidden" name="page" value="viewCompletedProjects"/>
-                                    <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
-                                        Pull Assigned Projects From Trello
-                                    </button>
-                                </form>-->
+                                <label class='pull-left top-menu' style='color: #009E94'>Viewing all <%=tList.size()%> completed projects</label>
+                                <!--                                <form action="updateProjectFromTrello">
+                                                                    <input type="hidden" name="page" value="viewCompletedProjects"/>
+                                                                    <button type="submit" class="btn btn-primary pull-right top-menu" onClick="updateProjectFromTrello">
+                                                                        Pull Assigned Projects From Trello
+                                                                    </button>
+                                                                </form>-->
                             </div>
                         </section>
                     </div>
@@ -177,7 +180,7 @@
                                                             if (photo.length() >= 3) {
                                                                 photoExt = photo.substring(photo.length() - 3);
                                                             }
-                                                            if (photoExt!=null || photoExt.equals("jpg") || photoExt.equals("png")) {%>
+                                                            if (photoExt != null || photoExt.equals("jpg") || photoExt.equals("png")) {%>
                                                         <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
                                                         <%} else {  %>
                                                         <img src="bootstrap/html/images/tempProj.png" alt=""/>
@@ -185,10 +188,19 @@
                                                             }%>
                                                     </div>
                                                 </div>
-
+                                                <%
+                                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                                    Date todayDate = new Date();
+                                                    String projDateString = t.getDuedate();
+                                                    Date projDate = dateFormat.parse(projDateString);
+                                                %>
                                                 <span class="pull-right">
-                                                    <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li><br/><br/>
-                                                    <li> <b>Type:</b> <%=t.getType()%> </li>
+                                                    <%if (todayDate.after(projDate)) {%>
+
+                                                    <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-exclamation-circle"></i>  <span class="time" data-datetime="<%=t.getDuedate()%>" data-format="Do MMM YYYY"></span></span></li><br/><br/>
+                                                            <%} else {%>
+                                                    <li><span class="badge label-warning pull-left r-activity"><i class="fa fa-bell-o"></i>  <span class="time" data-datetime="<%=t.getDuedate()%>" data-format="Do MMM YYYY"></span></span></li><br/><br/>
+                                                    <%}%>                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
                                                         <% if (dev != null && pm == null) {%>
                                                     <li> <b>Assigned by:</b> <%=t.getAssignedBy()%> <%}%></li>
                                                     <li> <b>Developer:</b>
@@ -205,14 +217,13 @@
                                                         %>
                                                     </li>
                                                     <li> <b>Priority:</b> 
-                                                        <%
-                                                int pInt = t.getPriortiy();
-                                                if(pInt==1){
-                                                    out.println("High");
-                                                }else{
-                                                    out.println("Standard");
-                                                }
-                                                %> </li>
+                                                        <%                                                            int pInt = t.getPriortiy();
+                                                            if (pInt == 1) {
+                                                                out.println("High");
+                                                            } else {
+                                                                out.println("Standard");
+                                                            }
+                                                        %> </li>
                                                 </span>
                                             </ul>
                                         </div>
@@ -221,7 +232,7 @@
                                 </a>
                                 <!-- END Portlet PORTLET-->
                                 <%    }
-                                        }%>
+                                    }%>
                             </div>
                         </div>
                     </div>
@@ -231,3 +242,15 @@
         </section>
     </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $('.time').each(function () {
+            var $this = $(this),
+                    dt = moment($this.data('datetime')),
+                    format = $this.data('format'),
+                    formatted = dt.format(format);
+
+            $this.html('<span class="time">' + formatted + '</span>');
+        });
+    });
+</script>

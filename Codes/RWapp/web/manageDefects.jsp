@@ -22,10 +22,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Defects</title>
         <script src="js/moment.js"></script>
+<<<<<<< HEAD
         <script>
             moment().format();
         </script>
         <script src="./bootstrap/jquery.easyPaginate.js"></script>
+=======
+        <script> moment().format(); </script>
+>>>>>>> befbf8762e11d5939904b26bafba477fd0ab2843
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#pname').hide(); //hide field on start

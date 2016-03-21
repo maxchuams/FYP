@@ -4,6 +4,9 @@
     Author     : admin
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="src.model.CronDAO"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.ProjectDAO"%>
@@ -23,9 +26,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Recco</title>
         <script src="js/moment.js"></script>
-        <script>
-            moment().format();
-        </script>
+        <script> moment().format();</script>
     </head>
     <body>
         <%
@@ -101,10 +102,10 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <div class="panel-body">
-                                <label class='pull-left top-menu'>Viewing my projects</br>
+                                <label class='pull-left top-menu' style='color: #009E94'>Viewing my <%=tList.size()%> projects</br>
                                     <script>
                                         var m = moment("<%=CronDAO.retrieveTime()%>");
-                                        document.write('Last Sync: ' + m.fromNow());
+                                        document.write('Last Sync ' + m.fromNow());
                                     </script></label>
                                 <!--                                    Last update time: <%=CronDAO.retrieveTime()%>-->
                                 <form action="updateProjectFromTrello">
@@ -157,7 +158,7 @@
                                                             if (photo.length() >= 3) {
                                                                 photoExt = photo.substring(photo.length() - 3);
                                                             }
-                                                            if (photoExt!=null || photoExt.equals("jpg") || photoExt.equals("png")) {%>
+                                                            if (photoExt != null || photoExt.equals("jpg") || photoExt.equals("png")) {%>
                                                         <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
                                                         <%} else {  %>
                                                         <img src="bootstrap/html/images/tempProj.png" alt=""/>
@@ -165,9 +166,18 @@
                                                             }%>
                                                     </div>
                                                 </div>
-
+                                                <%
+                                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                                    Date todayDate = new Date();
+                                                    String projDateString = t.getDuedate();
+                                                    Date projDate = dateFormat.parse(projDateString);
+                                                %>
                                                 <span class="pull-right">
-                                                    <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-bell-o"></i>  <%=t.getDuedate()%></span></li><br/><br/>
+                                                    <%if (todayDate.after(projDate)) {%>
+                                                    <li><span class="badge label-danger pull-left r-activity"><i class="fa fa-exclamation-circle"></i>  <span class="time" data-datetime="<%=t.getDuedate()%>" data-format="Do MMM YYYY"></span></span></li><br/><br/>
+                                                            <%} else {%>
+                                                    <li><span class="badge label-warning pull-left r-activity"><i class="fa fa-bell-o"></i>  <span class="time" data-datetime="<%=t.getDuedate()%>" data-format="Do MMM YYYY"></span></span></li><br/><br/>
+                                                            <%}%>
                                                     <li> <b>Type:</b> <%=t.getType()%> </li>
                                                         <% if (dev != null && pm == null) {%>
                                                     <li> <b>Assignee:</b> <%=t.getAssignedBy()%> <%}%></li>
@@ -187,14 +197,13 @@
                                                         %>
                                                     </li>
                                                     <li> <b>Priority:</b> 
-                                                        <%
-                                                int pInt = t.getPriortiy();
-                                                if(pInt==1){
-                                                    out.println("High");
-                                                }else{
-                                                    out.println("Standard");
-                                                }
-                                                %> </li>
+                                                        <%                                                            int pInt = t.getPriortiy();
+                                                            if (pInt == 1) {
+                                                                out.println("High");
+                                                            } else {
+                                                                out.println("Standard");
+                                                            }
+                                                        %> </li>
                                                 </span>
 
                                             </ul>
@@ -214,3 +223,15 @@
         </section>
     </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $('.time').each(function () {
+            var $this = $(this),
+                    dt = moment($this.data('datetime')),
+                    format = $this.data('format'),
+                    formatted = dt.format(format);
+
+            $this.html('<span class="time">' + formatted + '</span>');
+        });
+    });
+</script>
