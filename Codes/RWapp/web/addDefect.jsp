@@ -3,6 +3,7 @@
     Created on : Dec 10, 2015, 8:54:13 PM
     Author     : maxchua
 --%>
+<%@page import="java.util.HashMap"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="src.model.DeveloperDAO"%>
 <%@page import="src.model.Developer"%>
@@ -173,6 +174,8 @@
             } else {
                 per = (Person) session.getAttribute("loggedInTester");
             }
+            HashMap<String, String> form = (HashMap<String, String>) request.getAttribute("formdetails");
+
         %>
         <section id="main-content">
             <section class="wrapper">
@@ -236,11 +239,13 @@
                                             <%
                                                 //ArrayList<String> pList = ProjectAllocationDAO.retrieveInProgress();
                                                 ArrayList<Project> pList = ProjectDAO.retrieveAll();
-
+                                                if (form != null) {
+                                                    name = form.get("projectname");
+                                                }
                                             %><option selected="selected">
                                                 <%           for (Project p : pList) {
                                                         if (name != null && name.equalsIgnoreCase(p.getName())) {%>
-                                            <option value='<%=p.getName()%>'><%=p.getName()%></option>
+                                            <option value='<%=p.getName()%>' selected="selected"><%=p.getName()%></option>
                                             <%} else {
                                             %>
                                             <option value='<%=p.getName()%>'><%=p.getName()%></option>
@@ -252,10 +257,25 @@
                                     </div>
                                     <p></p>
 
+                                    <% if (form != null) {%>
+                                    <label for="inputType" class="col-lg-3 control-label">Developer(s) Fault: </label>
+                                    <div class="col-lg-9">
+                                        <%
+                                            ArrayList<String> devListForProj = ProjectAllocationDAO.retrieveDev(form.get("projectname"));
+                                            for (String d : devListForProj) {
+                                        %>
+                                        <input type='checkbox' name='blame' class="form-control m-bot15" value='<%=d%>'/><%=d%> </br>
+                                        <%
+                                            }
+
+                                        %>
+                                    </div>
+                                    <%} else {%>
                                     <div id='test'>
                                         <div class="col-lg-9" id="test1">
                                         </div>   
                                     </div>
+                                    <%}%>
                                     <br/><br/>
 
                                     <label for="inputType" class="col-lg-3 control-label">Let pre-assigned developer fix? </label>
@@ -293,7 +313,16 @@
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-3 control-label">Defect Name</label>
                                         <div class="col-lg-9">
+                                            <%
+                                                if (form != null) {
+                                                    String defectname = form.get("defname");
+                                            %>
+                                            <input type="text" name="defname" required class="form-control" id="defname" value='<%=defectname%>'placeholder="" required>
+                                            <%
+                                            } else {
+                                            %>
                                             <input type="text" name="defname" required class="form-control" id="defname" placeholder="" required>
+                                            <%}%>
                                             <p></p>
                                         </div>
                                     </div>
@@ -301,7 +330,16 @@
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-3 col-sm-2 control-label">Due Date</label>
                                         <div class="col-lg-9">
+                                            <%
+                                                if (form != null) {
+                                                    String duedate = form.get("duedate");
+                                            %>
+                                            <input type="date" class="form-control m-bot12" value='<%=duedate%>' name="duedate" required/>
+                                            <%
+                                            } else {
+                                            %>
                                             <input type="date" class="form-control m-bot12" name="duedate" required/>
+                                            <%}%>
                                             <p></p>
                                         </div>
                                     </div>   
@@ -310,13 +348,60 @@
                                     <div class="form-group">
                                         <label for="inputEmail1" class="col-lg-3 control-label">Description</label>
                                         <div class="col-lg-9">
+                                            <%
+                                                if (form != null) {
+                                                    String desc1 = form.get("desc");
+                                            %>
+                                            <textarea class="form-control" rows="4" id="desc"  name="desc" required><%=desc1%></textarea>
+                                            <%
+                                            } else {
+                                            %>
                                             <textarea class="form-control" rows="4" id="desc" name="desc" required></textarea>
+                                            <%}%>
                                             <p></p>
                                         </div>
                                     </div>
 
 
                                     <label for="inputType" class="col-lg-3 control-label">Severity</label>
+                                    <%
+                                        if (form != null) {
+                                            String severity = form.get("severity");
+                                            if (("1").equals(severity)) {
+                                    %>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity' checked="checked" value='1'/> Low <br/> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity' value='2'/> Med <br/> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity' value='3'/> High <br/> 
+                                    </div>
+                                    <%} else if (("2").equals(severity)) {
+                                    %>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity'  value='1'/> Low <br/> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity' checked="checked" value='2'/> Med <br/> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity' value='3'/> High <br/> 
+                                    </div>
+                                    <%} else if (("3").equals(severity)) {
+                                    %>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity'  value='1'/> Low <br/> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity'  value='2'/> Med <br/> 
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type='radio' name='severity' checked="checked" value='3'/> High <br/> 
+                                    </div>
+                                    <%}%>
+                                    <%} else {%>
                                     <div class="col-lg-1">
                                         <input type='radio' name='severity' value='1'/> Low <br/> 
                                     </div>
@@ -326,7 +411,7 @@
                                     <div class="col-lg-1">
                                         <input type='radio' name='severity' value='3'/> High <br/> 
                                     </div>
-
+                                    <%}%>
                                     <input type='hidden' name='pmName' value='<%=per.getUsername()%>'/>
 
                                     <div class="form-group">
