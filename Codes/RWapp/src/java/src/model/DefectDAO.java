@@ -202,6 +202,33 @@ public class DefectDAO {
 
         return toReturn;
     }
+    
+        public static ArrayList<Defect> retrieveAllIncompleteByMonth(int month, String dev) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Defect> toReturn = new ArrayList<Defect>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto from defect "
+                    + "where updatetime >= date_sub(now(), interval ? month) and iscomplete='0'and assignto=?;");
+
+            pstmt.setInt(1, month);
+            pstmt.setString(2, dev);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+    }
 
     public static ArrayList<Defect> retrieveAllByProject(String projectname) {
 
