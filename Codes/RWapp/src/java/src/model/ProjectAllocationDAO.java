@@ -178,6 +178,44 @@ public class ProjectAllocationDAO {
 
         return toReturn;
     }
+    
+    
+       public static ArrayList<String> retrieveByAllocattionByYear(int year, String dev) {
+        ArrayList<String> toReturn = new ArrayList<String>();
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ProjectAllocation pA = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select projectname as name from projectallocation where developerusername=? and year(dateallocated) =? group by developerusername, projectname having max(dateallocated);");
+            
+            
+            pstmt.setString(1, dev);
+            pstmt.setInt(2, year);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(rs.getString("name"));
+            }
+
+            //return true;
+        } catch (SQLException ex) {
+            //Logger.getLogger(SkillDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //return false;
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+
+        }
+
+        return toReturn;
+    }
+    
+    
+    
+    
 
     public static boolean delete(String username, String projname) {
         Connection conn = null;
