@@ -260,15 +260,13 @@
                                     //ArrayList<Project> pList = ProjectDAO.retrieveAll();
                                     ArrayList<String> pListString = DefectDAO.retrieveDistinctProject();
                                     ArrayList<Defect> dList = null;
-                                    if (pm != null) {
+                                    if (pm != null || tester != null) {
                                         //dList = DefectDAO.retrievePm(pm.getUsername());
                                         if (sort == null) {
                                             dList = DefectDAO.retrieveAllIncompleteByMonth(3);
                                         } else {
                                             dList = DefectDAO.retrieveAllIncompleteByMonth(Integer.parseInt(sort));
                                         }
-                                    } else {
-                                        dList = DefectDAO.retrieveTester();
                                     }
                                 %><span class="pull-right top-menu">
 
