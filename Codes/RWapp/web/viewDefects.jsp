@@ -46,24 +46,24 @@
                 });
             });
         </script>
-        
+
         <script>
-            function fuck(){
+            function fuck() {
                 var lowlow = [];
                 var medmed = [];
                 var highhigh = [];
-            var obj = document.getElementsByClassName("divClass");
-            for (var j = 0; j < obj.length; j++) {
-                var allDivTd = obj[j].getElementsByTagName("TD");
-                if(allDivTd[3].id == 'Low'){
-                    
-                    lowlow.push(obj[j].id);
-                }else if(allDivTd[3].id == 'Medium'){
-                    medmed.push(obj[j].id);
-                }else{
-                    //alert(allDivTd[3].id)
-                    highhigh.push(obj[j].id);
-                }
+                var obj = document.getElementsByClassName("divClass");
+                for (var j = 0; j < obj.length; j++) {
+                    var allDivTd = obj[j].getElementsByTagName("TD");
+                    if (allDivTd[3].id == 'Low') {
+
+                        lowlow.push(obj[j].id);
+                    } else if (allDivTd[3].id == 'Medium') {
+                        medmed.push(obj[j].id);
+                    } else {
+                        //alert(allDivTd[3].id)
+                        highhigh.push(obj[j].id);
+                    }
 //                for(var i = 0; i < allDivTd.length; i++){
 //                var td = allDivTd[i].id;
 //                if(td == 'Low'){
@@ -71,45 +71,45 @@
 //                }
 //                }
 //                alert('next');
-            }
-            //alert(lowlow);
+                }
+                //alert(lowlow);
 //            alert(medmed);
 //            alert(highhigh);
-            var final1 = medmed.concat(highhigh);
-            var final2 = lowlow.concat(final1);
+                var final1 = medmed.concat(highhigh);
+                var final2 = lowlow.concat(final1);
 //            alert(final2);
-            
-            var myNode = document.getElementById('mainmain');
+
+                var myNode = document.getElementById('mainmain');
 //            while (myNode.firstChild) {
 //                myNode.removeChild(myNode.firstChild);
 //                }
-            
-            for(var i = 0; i < final2.length; i++){
-                var xx = document.getElementById(final2[i]);
-                myNode.appendChild(xx);
-                
+
+                for (var i = 0; i < final2.length; i++) {
+                    var xx = document.getElementById(final2[i]);
+                    myNode.appendChild(xx);
+
+                }
+
             }
-            
-        }
         </script>
-        
+
         <script>
-            function suck(){
+            function suck() {
                 var lowlow = [];
                 var medmed = [];
                 var highhigh = [];
-            var obj = document.getElementsByClassName("divClass");
-            for (var j = 0; j < obj.length; j++) {
-                var allDivTd = obj[j].getElementsByTagName("TD");
-                if(allDivTd[3].id == 'Low'){
-                    
-                    lowlow.push(obj[j].id);
-                }else if(allDivTd[3].id == 'Medium'){
-                    medmed.push(obj[j].id);
-                }else{
-                    //alert(allDivTd[3].id)
-                    highhigh.push(obj[j].id);
-                }
+                var obj = document.getElementsByClassName("divClass");
+                for (var j = 0; j < obj.length; j++) {
+                    var allDivTd = obj[j].getElementsByTagName("TD");
+                    if (allDivTd[3].id == 'Low') {
+
+                        lowlow.push(obj[j].id);
+                    } else if (allDivTd[3].id == 'Medium') {
+                        medmed.push(obj[j].id);
+                    } else {
+                        //alert(allDivTd[3].id)
+                        highhigh.push(obj[j].id);
+                    }
 //                for(var i = 0; i < allDivTd.length; i++){
 //                var td = allDivTd[i].id;
 //                if(td == 'Low'){
@@ -117,39 +117,38 @@
 //                }
 //                }
 //                alert('next');
-            }
-            //alert(lowlow);
+                }
+                //alert(lowlow);
 //            alert(medmed);
 //            alert(highhigh);
-            var final1 = medmed.concat(lowlow);
-            var final2 = highhigh.concat(final1);
+                var final1 = medmed.concat(lowlow);
+                var final2 = highhigh.concat(final1);
 //            alert(final2);
-            
-            var myNode = document.getElementById('mainmain');
+
+                var myNode = document.getElementById('mainmain');
 //            while (myNode.firstChild) {
 //                myNode.removeChild(myNode.firstChild);
 //                }
-            
-            for(var i = 0; i < final2.length; i++){
-                var xx = document.getElementById(final2[i]);
-                myNode.appendChild(xx);
-                
+
+                for (var i = 0; i < final2.length; i++) {
+                    var xx = document.getElementById(final2[i]);
+                    myNode.appendChild(xx);
+
+                }
+
             }
-            
-        }
         </script>
-        
+
     </head>
     <body>
         <section id="main-content">
             <section class="wrapper">
                 <!--Error/success display-->
-                <%  
+                <%
                     ArrayList<String> pListString = DefectDAO.retrieveDevDistinctProject(dev.getUsername());
                     String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
                     ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
-                    
                 %>
                 <%if (errorMsg != null) {%>
                 <div class="row">
@@ -180,7 +179,7 @@
                 </div>
                 <%
                     }
-                    if (errorList != null && !errorList.isEmpty()) { %>
+                    if (errorList != null && !errorList.isEmpty()) {%>
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel">
@@ -195,20 +194,54 @@
                 </div>
                 <% }
                 %>
-
                 <!--End of error/success display-->
+
+                <%
+                    String sort = request.getParameter("sort");
+                    ArrayList<Defect> dList = null;
+                    //ArrayList<Defect> dList = DefectDAO.retrieveAllocatedDev(dev.getUsername());
+                    if (sort == null) {
+                        dList = DefectDAO.retrieveAllIncompleteByMonth(3, dev.getUsername());
+                    } else {
+                        dList = DefectDAO.retrieveAllIncompleteByMonth(Integer.parseInt(sort), dev.getUsername());
+                    }
+                %>
 
                 <div class="row">
                     <div class="col-lg-12" id="mainmain"> 
+                        <section class="panel">
+                            <div class="panel-body">
                         <span class="pull-right top-menu">
-                            Defect severity:
-                        <button onclick="fuck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-asc"></i> Sort Ascending</button> &nbsp;
-                        <button onclick="suck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending</button>
-                        </span>
-                        <%
-                            ArrayList<Defect> dList = DefectDAO.retrieveAllocatedDev(dev.getUsername());
+                            <form class="form-inline" role="form" action="viewDefects.jsp">
+                                        <div class="form-group">View:
+                                            <select name="sort" class="form-control" onchange="this.form.submit()">
+                                                <%if (sort == null) {%>
+                                                <option value="3" selected>Last 3 months</option>
+                                                <option value="6">Last 6 months</option>
+                                                <option value="9">Last 9 months</option>
+                                                <option value="12">Last 12 months</option>
+                                                <%} else {
+                                                    for (int i = 3; i <= 12; i += 3) {
+                                                        if (Integer.parseInt(sort) == i) {%>
+                                                <option value="<%=i%>" selected="selected">Last <%=i%> months</option>
+                                                <%} else {%>
+                                                <option value="<%=i%>" >Last <%=i%> months</option>
+                                                <%
+                                                            }
+                                                        }
+                                                    }%>
+                                            </select>
+                                        </div>
+                                    </form>
                             
-                        %>
+                            
+<!--                            Defect severity:
+                            <button onclick="fuck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-asc"></i> Sort Ascending</button> &nbsp;
+                            <button onclick="suck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending</button>
+                        -->
+                        </span></div></section>
+                        
+                        
                         <%for (String p : pListString) {
                                 if (DefectDAO.retrieveAllByProject(p).size() != 0) {
                         %>
@@ -234,7 +267,7 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (p.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete()==1 || d.getIsComplete()==0)) {
+                                                if (p.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 1 || d.getIsComplete() == 0)) {
 
                                                     out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
                                                     if (d.getIsComplete() == 2) { %>
@@ -256,15 +289,15 @@
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }%>
-                                                                    
-                                                                    <%out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
-                                                                    out.println("<tr><td><b>Severity: </b></td><td id='"+severity+"'> " + severity + "</td></tr>");
-                                                                    //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
-                                                                    %>
-                                                                    <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
-                                                                    <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
 
-                                                                    <%out.println("</table>");
+                                                                <%out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
+                                                                    out.println("<tr><td><b>Severity: </b></td><td id='" + severity + "'> " + severity + "</td></tr>");
+                                                                //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
+%>
+                                                                <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
+                                                                <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
+
+                                                                <%out.println("</table>");
 
                                                                 %> 
                                                             </div>
@@ -298,14 +331,14 @@
                                 </body>
                                 </html>
                                 <script>
-$(document).ready(function() {
-    $('.time').each(function() {
-        var $this = $(this),
-            dt = moment($this.data('datetime')),
-            format = $this.data('format'),
-            formatted = dt.format(format);
-            
-            $this.html('<span class="time">' + formatted + '</span>');
-    });
-});
-</script>
+                                    $(document).ready(function () {
+                                        $('.time').each(function () {
+                                            var $this = $(this),
+                                                    dt = moment($this.data('datetime')),
+                                                    format = $this.data('format'),
+                                                    formatted = dt.format(format);
+
+                                            $this.html('<span class="time">' + formatted + '</span>');
+                                        });
+                                    });
+                                </script>
