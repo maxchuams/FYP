@@ -52,6 +52,15 @@
         %>
         <section id="main-content">
             <section class="wrapper">
+                <div class="col-md-12">
+                    <div class="row">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <h3 class="prf-border-head">Please choose your preferred developer(s): </h3> 
+                            </div>
+                        </section>
+                    </div>
+                </div>
                 <!--kw code-->
 
                 <form id="myform" action="processRecommendation" method="GET" class="form-horizontal" role="form">

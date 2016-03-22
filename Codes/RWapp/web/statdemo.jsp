@@ -1,3 +1,6 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.google.gson.GsonBuilder"%>
@@ -15,7 +18,8 @@
 <html>
     <head>
         <title>View Developer Statistic Page</title>
-
+        <script src="js/moment.js"></script>
+        <script> moment().format();</script>
         <meta charset="utf-8" />
         <script src="res/chart/Chart.js"></script>
         <script src="res/chart/legend.js"></script>
@@ -130,6 +134,14 @@
                                <h1><%=devusername%></h1>
                                <span class="text-muted">Developer</span><br/>
                                <p>
+                                   <%
+                                   DateFormat dateFormat = new SimpleDateFormat("yyyy");
+                                   Date todayDate = new Date();
+                                   SimpleDateFormat toPrint = new SimpleDateFormat("yyyy");
+
+                                   ArrayList<String> devProjThisYear = ProjectAllocationDAO.retrieveByAllocattionByYear(Integer.parseInt(toPrint.format(todayDate)),devusername);%>
+                                   
+                                   Worked on <%=devProjThisYear.size()%> project(s) this year<br/>
                                    Currently working on <%=getNumberAllocated.size()%> project(s)
                                </p>
                            </div>
