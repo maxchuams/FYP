@@ -78,13 +78,13 @@ public class Notification {
     public String toString(){
         String toReturn = null;
         if(notificationType.equals("assignedProject")){
-            toReturn = "You have been assigned to project " + projectname + " at " + datetime;
+            toReturn = "You have been assigned to project " + projectname;
         } else if(notificationType.indexOf("assignedDefect")!=-1){
-            toReturn = "Your have been assigned a defect under project " + projectname + " at " + datetime;
+            toReturn = "Your have been assigned a defect under project " + projectname;
         } else if(notificationType.indexOf("rejectedDefect")!=-1){
-            toReturn = "Your defect completion under project " + projectname + "has been rejected at " + datetime;
+            toReturn = "Your defect completion under project " + projectname + "has been rejected";
         } else if(notificationType.indexOf("markCompletedDefect")!=-1){
-            toReturn = "A defect has been mark completed under project " + projectname + " at " + datetime;
+            toReturn = "A defect has been mark completed under project " + projectname;
         }
         
         return toReturn;

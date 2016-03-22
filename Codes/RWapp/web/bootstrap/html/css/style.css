@@ -427,7 +427,7 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 .noti-info {
     padding-left:10px;
     padding-top:6px;
-    color:#414147;
+    color:lightgray;
 }
 .dropdown-menu.extended .alert {
     margin-bottom:10px;

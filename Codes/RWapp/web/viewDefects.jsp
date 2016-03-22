@@ -149,7 +149,7 @@
                     String errorMsg = (String) request.getAttribute("err");
                     String sucess = (String) request.getAttribute("sucess");
                     ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
-
+                    
                 %>
                 <%if (errorMsg != null) {%>
                 <div class="row">
@@ -207,6 +207,7 @@
                         </span>
                         <%
                             ArrayList<Defect> dList = DefectDAO.retrieveAllocatedDev(dev.getUsername());
+                            
                         %>
                         <%for (String p : pListString) {
                                 if (DefectDAO.retrieveAllByProject(p).size() != 0) {

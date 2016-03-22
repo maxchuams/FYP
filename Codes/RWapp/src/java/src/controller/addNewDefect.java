@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import src.model.NotificationDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -66,12 +67,20 @@ public class addNewDefect extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
+        
+        HashMap<String,String> toReturn = new HashMap<String,String>();
         String projname = request.getParameter("projectname").trim();
+        toReturn.put("projectname", projname);
         String defname = request.getParameter("defname").trim();
+        toReturn.put("defname", defname);
         String desc = request.getParameter("desc").trim();
+        toReturn.put("desc", desc);
         String sev = request.getParameter("severity");
+        toReturn.put("severity", sev);
         String pmname = request.getParameter("pmName");
+        
         String duedateStr = request.getParameter("duedate");
+        toReturn.put("duedate", duedateStr);
         String filter = request.getParameter("filter");
         Date duedate = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -117,6 +126,7 @@ public class addNewDefect extends HttpServlet {
                 //return error
                 RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
                 request.setAttribute("err", "Project selected contains more than 1 developer. Please select no and select a developer as well.");
+                request.setAttribute("formdetails", toReturn);
                 rd.forward(request, response);
                 return;
                 
@@ -168,6 +178,7 @@ public class addNewDefect extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
                 request.setAttribute("err1", errList);
                 request.setAttribute("err", "Database Error: Defect could not be added into the system");
+                request.setAttribute("formdetails", toReturn);
                 rd.forward(request, response);
                 return;
             }
@@ -175,6 +186,7 @@ public class addNewDefect extends HttpServlet {
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("addDefect.jsp");
             request.setAttribute("err1", errList);
+            request.setAttribute("formdetails", toReturn);
             rd.forward(request, response);
             return;
         }

@@ -14,11 +14,12 @@
 <%@page import="src.model.DefectDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@include file="protectPMandDev.jsp" %>
-<% String thisPage = ""; 
-if(pm!=null){ 
-thisPage = "manageDefects";
-}else{%>
-<%thisPage = "viewDefects"; } //This is to change the highlight in Navigation Bar %>
+<% String thisPage = "";
+    if (pm != null) {
+        thisPage = "manageDefects";
+    } else {%>
+<%thisPage = "viewDefects";
+    } //This is to change the highlight in Navigation Bar %>
 <%String selected = null;%>
 <%@include file="navbar.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -29,12 +30,12 @@ thisPage = "manageDefects";
         <!-- gx i removed this line below to make the nav bar work properly, please check if its messing up anything-->
         <!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
         <link href="./css/lightbox.css" rel="stylesheet"></link>
-       
+
         <title>View Defect Info</title>
     </head>
     <body>
 
-        
+
         <%
             String defectId = request.getParameter("defectId");
             Defect d = DefectDAO.retrieveDefect(Integer.parseInt(defectId));
@@ -97,7 +98,7 @@ thisPage = "manageDefects";
                             <header class="panel-heading">
                                 Viewing Defect: <%=d.getDefectName()%> 
                                 <span class="tools pull-right">
-                                    <% if(pm!=null){ %>
+                                    <% if (pm != null) {%>
                                     <a href="defectscreenshot.jsp?id=<%=d.getId()%>">
                                         <i class="fa fa-picture-o"></i>
                                         <span>Add Screenshot</span>
@@ -106,37 +107,41 @@ thisPage = "manageDefects";
                                         <i class="fa fa-pencil-square-o"></i>
                                         <span>Edit</span>
                                     </a>
-                                        
-                                    
+
+
                                     <a href="removeDefect?id=<%=d.getId()%>" onclick="return confirm('Confirm delete?')"><i class="fa fa-minus-circle"></i><span> Delete</span></a>
-                                    <% } %>
-                                    
+                                            <% } %>
+
                                     <a href="javascript:;" class="fa fa-chevron-down"></a>
                                 </span>
                             </header>
                             <div class="panel-body">
                                 <table class="table  table-hover general-table">
-                                    <thead><tr><td>Defect status</td><td><%if (d.getIsComplete() == 0) {
-
-                                            if (pm == null) {%><a href='defectComplete?id=<%=d.getId()%>&case=2'><%out.println("<span class='label label-danger label-mini'>Defect incomplete, click to mark as complete</span></a>");
-                                                } else {
-                                                    out.println("<span class='label label-danger label-mini'>Defect incomplete by developer</span></a>");
-                                                }
-                                            } else if (d.getIsComplete() == 1 && pm != null) {
-                                                    %><a href='defectComplete?id=<%=d.getId()%>&case=1'><%out.println("<span class='label label-warning label-mini'>Defect is done, please check and then mark complete</span></a>");
-                                            } else if (d.getIsComplete() == 1 && dev != null) {
-                                                out.println("<span class='label label-warning label-mini'>Defect is done, please wait for PM to check</span>");
-                                            } else if (d.getIsComplete() == 2) {
-                                                out.println("<span class='label label-success label-mini'>Defect has been fixed</span>");
-                                            } %></td></tr>
-                                                        <tr><td>Defect severity</td><td><% int sevInt = d.getSeverity();
-                                                            if (sevInt == 1) {
-                                                                out.println("Low");
-                                                            } else if (sevInt == 2) {
-                                                                out.println("Medium");
-                                                            } else if (sevInt == 3) {
-                                                                out.println("High");
-                                                            }%></td></tr><thead>
+                                    <thead><tr><td>Defect status</td><td>
+                                                <%if (d.getIsComplete() == 0) { //defect not completed
+                                                        if (pm == null) {%>
+                                                <a href='defectComplete?id=<%=d.getId()%>&case=2'>
+                                                    <%out.println("<span class='label label-danger label-mini' title='Defect has been fixed&#13;Mark defect as complete'>MARK AS FIXED</span></a>");
+                                                        } else {
+                                                            out.println("<span class='label label-danger label-mini' title='Defect not yet fixed&#13;Awaiting updates from Developer'>DEFECT IN PROGRESS</span></a>");
+                                                        }
+                                                    } else if (d.getIsComplete() == 1 && pm != null) { //defect marked as complete by dev
+%><a href='defectComplete?id=<%=d.getId()%>&case=1'>
+                                                        <%out.println("<span class='label label-warning label-mini' title='Defect fixed by developer&#13;Please check and mark complete'>MARK AS FIXED</span></a>");
+                                                            } else if (d.getIsComplete() == 1 && dev != null) {
+                                                                out.println("<span class='label label-warning label-mini' title='Defect fixed&#13;Awaiting checks from PM'>CHECKING IN PROGRESS</span>");
+                                                            } else if (d.getIsComplete() == 2) { //defect marked complete by both PM and dev
+                                                                out.println("<span class='label label-success label-mini' title='Defect fixed by Dev&#13; and checked by PM'>DEFECT FIXED</span>");
+                                                            } %></td></tr>
+                                                        <tr><td>Defect severity</td><td>
+                                                                <% int sevInt = d.getSeverity();
+                                                                    if (sevInt == 1) {
+                                                                        out.println("Low");
+                                                                    } else if (sevInt == 2) {
+                                                                        out.println("Medium");
+                                                                    } else if (sevInt == 3) {
+                                                                        out.println("High");
+                                                                    }%></td></tr><thead>
                                                             <tr><td>Defect description</td><td><%
                                                                 if (d.getDesc().length() == 0) {
                                                                     out.println("No description");
@@ -148,18 +153,18 @@ thisPage = "manageDefects";
                                                                 <td>Reported by</td>
                                                                 <td><%=d.getReportedBy()%></td>
                                                             </tr>
-                                                            <% if(pm!=null){ %>
+                                                            <% if (pm != null) { %>
                                                             <tr>
                                                                 <td>Caused by</td>
                                                                 <td>
-                                                                <%
-                                                                   ArrayList<DefectCommitBy> defCList = DefectCommitByDAO.retrieveBlameForDefect(d.getId());
-                                                                   for(DefectCommitBy dcb : defCList){
-                                                                %>
-                                                                <%=dcb.getUsername()%> 
-                                                                <%
-                                                                   }
-                                                                %>
+                                                                    <%
+                                                                        ArrayList<DefectCommitBy> defCList = DefectCommitByDAO.retrieveBlameForDefect(d.getId());
+                                                                        for (DefectCommitBy dcb : defCList) {
+                                                                    %>
+                                                                    <%=dcb.getUsername()%> 
+                                                                    <%
+                                                                        }
+                                                                    %>
                                                                 </td>
                                                             </tr>
                                                             <% } %>
@@ -193,20 +198,20 @@ thisPage = "manageDefects";
                                                                         <%  ArrayList<String> screenshotTime = DefectScreenshotDAO.getScreenshotTimestamp("" + d.getId());
                                                                             for (String time : screenshotTime) {
                                                                         %>
-                                                                        
+
                                                                         <a class="example-image-link" href="DefectScreenshotServlet?defectid=<%=d.getId()%>&updatetime=<%=time%>" data-lightbox="example-set" data-title="Click anywhere outside the image or the X to the right to close."><img style="height:75px;width:75px" class="example-image" src="DefectScreenshotServlet?defectid=<%=d.getId()%>&updatetime=<%=time%>" alt="" /></a>
-                                                                        <%
-                                                                            }
-                                                                        %>
-                                                        <script src="./js/lightbox.js"></script>
-                                                                        <%}%></td>
-                                        </tr>
-                                </table>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </section>
-        </section>
-    </body>
-</html>
+                                                                            <%
+                                                                                }
+                                                                            %>
+                                                                        <script src="./js/lightbox.js"></script>
+                                                                    <%}%></td>
+                                                            </tr>
+                                                            </table>
+                                                            </div>
+                                                            </section>
+                                                            </div>
+                                                            </div>
+                                                            </section>
+                                                            </section>
+                                                            </body>
+                                                            </html>
