@@ -21,13 +21,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Defects</title>
+        <script src="./bootstrap/paging.js"></script>
         <script src="js/moment.js"></script>
-
-        <script>
-            moment().format();
-        </script>
-        <script src="./bootstrap/jquery.easyPaginate.js"></script>
-
         <script> moment().format();</script>
 
         <script type="text/javascript">
@@ -176,19 +171,26 @@
                 }
             }
         </script>
-        <style>
-            #easyPaginate {width:300px;}
-            #easyPaginate img {display:block;margin-bottom:10px;}
-            .easyPaginateNav a {padding:5px;}
-            .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
-        </style>
+        
         <script>
-            $('#mainmain').easyPaginate({
-                paginateElement: 'div',
-                elementsPerPage: 10,
-                effect: 'slide'
-            });
+            
+            var mykey = 'AIzaSyBIWGq96Auj266WW_CmGhh_IYPaZ3bOcAQ'; // typically like Gtg-rtZdsreUr_fLfhgPfgff
+var calendarid = 'guoxi.lau.2013@smu.edu.sg'; // will look somewhat like 3ruy234vodf6hf4sdf5sd84f@group.calendar.google.com
+
+$.ajax({
+    type: 'GET',
+    url: encodeURI('https://www.googleapis.com/calendar/v3/calendars/' + calendarid+ '/events?key=' + mykey),
+    dataType: 'json',
+    success: function (response) {
+        alert('yay');
+    },
+    error: function (response) {
+        alert('nay');
+    }
+});
+            
         </script>
+        
 
     </head>
     <body>
@@ -291,7 +293,7 @@
                                             </select>
                                         </div>
                                     </form>
-
+                                                
 
 
 
@@ -314,9 +316,10 @@
                                                                             <button onclick="name1()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending by name</button> 
                                     -->
                                 </span>
+                                            <span style="text-align:left;"><p>Page <a href="javascript:P.turnPage(1)">1</a> <a href="javascript:P.turnPage(2)">2</a> <a href="javascript:P.turnPage(3)">3</a></p></span>
                             </div>
                         </section>
-
+                                            <div class="items">
                         <%for (String s : pListString) {%>
                         <div class="row divClass" id="<%=s%>">
                             <div class="col-sm-12">
@@ -375,7 +378,7 @@
                                                                 %> 
                                                             </div>
                                                         </div>
-                                                        </a>
+                                                        
                                                         <%
                                                                     count++;
                                                                 }
@@ -392,17 +395,13 @@
                                                 </div>
                                             </div>
                                             <% }%>
-
+                                        </div>
                                             <!--end of kw codes-->
 
                                             </section>
                                         </div>
-                                    </div>
+                                   
                                 </section>
-                                </section>
-                                </table>
-                                </body>
-                                </html>
                                 <script>
                                     $(document).ready(function () {
                                         $('.time').each(function () {
@@ -415,3 +414,21 @@
                                         });
                                     });
                                 </script>
+                                <script>
+                                    
+        function Paginate(itemsPerPage) {
+        var items = document.querySelectorAll(".items div"),
+            iL = items.length || 0;
+
+        this.turnPage = function(pageNum) {
+            var startItem = (pageNum*itemsPerPage) - itemsPerPage;
+            for (var i = 0; i < iL; i++) {
+                items[i].style.display = (startItem <= i && i < (startItem + itemsPerPage)) ? "block" : "none";
+            }
+        }
+    }
+var P = new Paginate(3);//10 items per page
+                                    
+                                </script>
+                                </body>
+                                </html>
