@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import src.model.Notification;
 import src.model.NotificationDAO;
 
 /**
@@ -36,12 +37,22 @@ public class processReadNotif extends HttpServlet {
         NotificationDAO notificationDAO = new NotificationDAO();
         String markas = request.getParameter("markas");
         if(markas.equals("read")){
-            notificationDAO.checkAsRead(Integer.parseInt(request.getParameter("defectid")));
-        } else if (markas.equals("unread")){
-            notificationDAO.checkAsUnread(Integer.parseInt(request.getParameter("defectid")));     
-        }
-        RequestDispatcher rd = request.getRequestDispatcher("notifications.jsp");
+            notificationDAO.checkAsRead(Integer.parseInt(request.getParameter("notifid")));
+                    RequestDispatcher rd = request.getRequestDispatcher("notifications.jsp");
         rd.forward(request,response);
+        } else if (markas.equals("unread")){
+            notificationDAO.checkAsUnread(Integer.parseInt(request.getParameter("notifid")));  
+                    RequestDispatcher rd = request.getRequestDispatcher("notifications.jsp");
+        rd.forward(request,response);
+        } else if (markas.equals("readandshowit")){
+            int id = Integer.parseInt(request.getParameter("notifid"));
+            notificationDAO.checkAsRead(id);
+            Notification notifi = notificationDAO.retrieveNotification(id);
+            String link = notifi.toLink();
+            System.out.println(link);
+            RequestDispatcher rd = request.getRequestDispatcher(link);
+            rd.forward(request,response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -88,9 +88,10 @@
     for (int i = 0; i < notifs.size(); i++) {
         Notification notification = notifs.get(i);
         String status = notification.getStatus();
-        if (i < 3) {
+        if (i < 3) {     
+            //onClick="window.location.href = 'notifications.jsp'"
             out.println("<li>");
-            out.println("<a style='color:#000000' href='" + notification.toLink() + "'>");
+            out.println("<a style='color:#000000' href=' processReadNotif?notifid=" + notification.getId() +"&markas=readandshowit'>");
             if (status.equals("F")) {
                 out.println("<div class=\"alert alert-danger clearfix\" style = \"width:280px ; background:#1fb5ad ; color: #000000 ; height:80px\">");
                 out.println("<div class=\"noti-info\" style='color:#fcfcfc'>");

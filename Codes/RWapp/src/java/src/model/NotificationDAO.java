@@ -70,7 +70,9 @@ public class NotificationDAO {
         }
         return true;
 
-    }  
+    }    
+    
+    
     public boolean checkAsUnread(int id) {
   
         Connection conn = null;
@@ -100,7 +102,7 @@ public class NotificationDAO {
         
         try {
             conn = ConnectionManager.getConnection();
-            ps = conn.prepareStatement("select * from notifications where username = '" +username + "' order by dateandtime desc");
+            ps = conn.prepareStatement("select * from notifications where username = '" +username + "' order by dateandtime desc limit 3");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -115,6 +117,28 @@ public class NotificationDAO {
 
     }
     
+    public Notification retrieveNotification(int id){
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Notification notif = null;
+        
+        try {
+            conn = ConnectionManager.getConnection();
+            ps = conn.prepareStatement("select * from notifications where notificationid =" + id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                System.out.println("hi");
+                notif =new Notification(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+            }
+        } catch (SQLException ex) {
+        } finally {
+            ConnectionManager.close(conn, ps, rs);
+        }
+        System.out.println(notif);
+        return notif;
+    }
     
 
 }

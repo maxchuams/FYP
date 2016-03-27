@@ -58,12 +58,12 @@
                                         out.println("<td>");
                                         if (noti.getStatus().equals("T")) {
                                             out.println("<form action=\"processReadNotif\" method=\"get\">");
-                                            out.println("<input type=\"hidden\" name=\"defectid\" value=\"" + noti.getId() + "\">");
+                                            out.println("<input type=\"hidden\" name=\"notifid\" value=\"" + noti.getId() + "\">");
                                             out.println("<button class='btn btn-round btn-default btn-sm' type=\"submit\" name=\"markas\" value=\"unread\">Mark As Unread</button>");
                                             out.println("</form>");
                                         } else {
                                             out.println("<form action=\"processReadNotif\" method=\"get\">");
-                                            out.println("<input type=\"hidden\" name=\"defectid\" value=\"" + noti.getId() + "\">");
+                                            out.println("<input type=\"hidden\" name=\"notifid\" value=\"" + noti.getId() + "\">");
 
                                             out.println("<button class='btn btn-round btn-primary btn-sm' type=\"submit\" name=\"markas\" value=\"read\">Mark As Read</button>");
 
