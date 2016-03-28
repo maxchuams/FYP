@@ -41,7 +41,7 @@
             }
 
             NotificationDAO notifDAO = new NotificationDAO();
-            notifs = notifDAO.retrieveAllFromUser(username);
+            notifs = notifDAO.retrieveAllFromUser(username, "Yes", "");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

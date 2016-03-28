@@ -16,14 +16,16 @@ public class Notification {
     private String projectname;
     private String status;
     private String datetime;
+    String archived;
 
-    public Notification(int id, String username, String notificationType, String projectname, String status, String datetime) {
+    public Notification(int id, String username, String notificationType, String projectname, String status, String datetime, String archived) {
         this.id = id;
         this.username = username;
         this.notificationType = notificationType;
         this.projectname = projectname;
         this.status = status;
         this.datetime = datetime;
+        this.archived = archived;
     }
 
     public int getId() {
@@ -88,6 +90,14 @@ public class Notification {
         }
         
         return toReturn;
+    }
+
+    public String getArchived() {
+        return archived;
+    }
+
+    public void setArchived(String archived) {
+        this.archived = archived;
     }
     
     public String toLink(){
