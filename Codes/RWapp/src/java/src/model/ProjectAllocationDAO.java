@@ -180,7 +180,7 @@ public class ProjectAllocationDAO {
     }
     
     
-       public static ArrayList<String> retrieveByAllocattionByYear(int year, String dev) {
+    public static ArrayList<String> retrieveByAllocattionByYear(int year, String dev) {
         ArrayList<String> toReturn = new ArrayList<String>();
 
         Connection conn = null;
