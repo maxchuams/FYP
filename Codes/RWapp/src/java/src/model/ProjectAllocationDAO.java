@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -246,16 +248,16 @@ public class ProjectAllocationDAO {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Date actualEndDate = new Date();
         try {
             conn = ConnectionManager.getConnection();
 
-            String sql = "UPDATE projectallocation set iscomplete=? where projectname=? and developerusername=?";
-
+            String sql = "UPDATE projectallocation set iscomplete=?, actualend=? where projectname=? and developerusername=?";
             pstmt = conn.prepareStatement(sql);
-
             pstmt.setInt(1, isComplete);
-            pstmt.setString(2, projectname);
-            pstmt.setString(3, username);
+            pstmt.setDate(2, new java.sql.Date(actualEndDate.getTime()));
+            pstmt.setString(3, projectname);
+            pstmt.setString(4, username);
 
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
             pstmt.executeUpdate();

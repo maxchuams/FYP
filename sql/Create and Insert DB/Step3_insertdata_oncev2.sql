@@ -213,6 +213,34 @@ INSERT INTO `defect` (`defectid`, `projectname`, `defectname`, `description`, `r
 (24, '1036liveseafood.com [Design only]', 'Wordpress theme needs update', 'Please update wordpress plugins and themes for client as the old theme has errors in the UI', 'markconderw', '2016-02-22 21:07:18', 0, 3, '2016-03-26', 'zripplewerkz'),
 (25, '(2) Association of Funeral Directors (AFDS)', 'Image Transparency', 'Support for transparent image for project view', 'markconderw', '2016-02-22 21:09:02', 0, 1, '2016-03-16', 'debe2');
 
+INSERT INTO `defectcommitby` (`defectid`,`committedby`) VALUES 
+(1,'alexadayandayan'),
+(3,'alexadayandayan'),
+(5,'bahri_ripplewerkz'),
+(11,'benjo12'),
+(8,'chaisiri1'),
+(2,'debe2'),
+(6,'debe2'),
+(7,'debe2'),
+(10,'debe2'),
+(12,'debe2'),
+(17,'debe2'),
+(20,'debe2'),
+(21,'debe2'),
+(25,'debe2'),
+(4,'marsd'),
+(14,'marsd'),
+(23,'marsd'),
+(15,'pukpik'),
+(18,'pukpik'),
+(22,'pukpik'),
+(19,'roy1'),
+(9,'zripplewerkz'),
+(13,'zripplewerkz'),
+(16,'zripplewerkz'),
+(24,'zripplewerkz');
+(24,'debe2');
+
 INSERT INTO trelloconfig (`mainboard`, `developmentlist`,`postdevlist`,`admin`,`cronpause`, `crondetails`) 
 VALUES ('Recco Master Board', 'Development', 'UAT', 'teampjsudo',0,'Cron job is scheduled at 8am every week day.');
 
