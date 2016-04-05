@@ -139,7 +139,9 @@
                                 dList = DefectDAO.retrieveAllocatedDevIsComplete(dev.getUsername());
                             }
                         %>
-
+                        <%if(pListString.size()<=0){%>
+                        <b>no project</b>
+                      <%  }%>
                         <%for (String s : pListString) {%>
                         <div class="row">
                             <div class="col-sm-12">

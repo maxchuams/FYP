@@ -320,6 +320,9 @@ $.ajax({
                             </div>
                         </section>
                                             <div class="items">
+                        <%if(pListString.size()<=0){%>
+                        <b>no project</b>
+                      <%  }%>
                         <%for (String s : pListString) {%>
                         <div class="row divClass" id="<%=s%>">
                             <div class="col-sm-12">
