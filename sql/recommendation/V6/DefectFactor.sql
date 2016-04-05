@@ -28,7 +28,10 @@ select developerusername, ifnull(format(1-pavgdpoint,4),1) as defectlessfactor, 
 					select pd.developerusername as developerusername, pd.projectname as projectname, ifnull(sum(severity),0) as totaldefectpoints, count(severity) as totaldefects
 					from
 					(#Who did what project for past 3 month
-					select developerusername, projectname from projectallocation where actualstart >= now()-interval 3 month group by projectname, developerusername) as pd 
+					select developerusername, p.projectname from projectallocation pa, project p
+					where p.projectname = pa.projectname and p.type='wordpress'
+					and actualstart >= now()-interval 3 month group by projectname, developerusername
+                    ) as pd 
 					left outer join
 					(#List of defects for past 3 month by developer and project
 					select projectname, committedby as developerusername,severity from defectcommitby dc left outer join defect d on dc.defectid = d.defectid where updatetime >= now()-interval 3 month) as dc
@@ -51,7 +54,10 @@ select developerusername, ifnull(format(1-pavgdpoint,4),1) as defectlessfactor, 
 				select pd.developerusername as developerusername, pd.projectname as projectname, ifnull(sum(severity),0) as totaldefectpoints, count(severity) as totaldefects
 				from
 				(#Who did what project for past 3 month
-				select developerusername, projectname from projectallocation where actualstart >= now()-interval 3 month group by projectname, developerusername) as pd 
+				select developerusername, p.projectname from projectallocation pa, project p
+				where p.projectname = pa.projectname and p.type='wordpress'
+				 and actualstart >= now()-interval 3 month group by projectname, developerusername
+                ) as pd 
 				left outer join
 				(#List of defects for past 3 month by developer and project
 				select projectname, committedby as developerusername,severity from defectcommitby dc left outer join defect d on dc.defectid = d.defectid where updatetime >= now()-interval 3 month) as dc

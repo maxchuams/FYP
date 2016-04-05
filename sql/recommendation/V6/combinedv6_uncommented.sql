@@ -121,7 +121,11 @@ avg(totaldefectpoints) as avgdefectpointperproject, avg(totaldefects) as avgdefe
 from	
 	(select pd.developerusername as developerusername, pd.projectname as projectname, ifnull(sum(severity),0) as totaldefectpoints, count(severity) as totaldefects
 	from
-	(select developerusername, projectname from projectallocation where actualstart >= now()-interval 3 month group by projectname, developerusername) as pd 
+	(
+	select developerusername, p.projectname from projectallocation pa, project p
+	where p.projectname = pa.projectname and p.type=?
+	and actualstart >= now()-interval 3 month group by projectname, developerusername
+    ) as pd 
 	left outer join
 	(select projectname, committedby as developerusername,severity from defectcommitby dc left outer join defect d on dc.defectid = d.defectid where updatetime >= now()-interval 3 month) as dc
 	on pd.developerusername = dc.developerusername and pd.projectname = dc.projectname
@@ -139,7 +143,11 @@ select developerusername, avg(totaldefectpoints) as avgdefectpoint, avg(totaldef
 from	
 (select pd.developerusername as developerusername, pd.projectname as projectname, ifnull(sum(severity),0) as totaldefectpoints, count(severity) as totaldefects
 from
-(select developerusername, projectname from projectallocation where actualstart >= now()-interval 3 month group by projectname, developerusername) as pd 
+(
+select developerusername, p.projectname from projectallocation pa, project p
+where p.projectname = pa.projectname and p.type=?
+and actualstart >= now()-interval 3 month group by projectname, developerusername
+) as pd 
 left outer join
 (select projectname, committedby as developerusername,severity from defectcommitby dc left outer join defect d on dc.defectid = d.defectid where updatetime >= now()-interval 3 month) as dc
 on pd.developerusername = dc.developerusername and pd.projectname = dc.projectname

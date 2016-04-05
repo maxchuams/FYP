@@ -204,7 +204,11 @@ public class RecommedationDAO {
                 + "from	 "
                 + "	(select pd.developerusername as developerusername, pd.projectname as projectname, ifnull(sum(severity),0) as totaldefectpoints, count(severity) as totaldefects "
                 + "	from "
-                + "	(select developerusername, projectname from projectallocation where actualstart >= now()-interval 3 month group by projectname, developerusername) as pd  "
+                + "	( "
+                + "	select developerusername, p.projectname from projectallocation pa, project p "
+                + "	where p.projectname = pa.projectname and p.type=? "
+                + "	and actualstart >= now()-interval 3 month group by projectname, developerusername "
+                + "    ) as pd  "
                 + "	left outer join "
                 + "	(select projectname, committedby as developerusername,severity from defectcommitby dc left outer join defect d on dc.defectid = d.defectid where updatetime >= now()-interval 3 month) as dc "
                 + "	on pd.developerusername = dc.developerusername and pd.projectname = dc.projectname "
@@ -222,7 +226,11 @@ public class RecommedationDAO {
                 + "from	 "
                 + "(select pd.developerusername as developerusername, pd.projectname as projectname, ifnull(sum(severity),0) as totaldefectpoints, count(severity) as totaldefects "
                 + "from "
-                + "(select developerusername, projectname from projectallocation where actualstart >= now()-interval 3 month group by projectname, developerusername) as pd  "
+                + "( "
+                + "select developerusername, p.projectname from projectallocation pa, project p "
+                + "where p.projectname = pa.projectname and p.type=? "
+                + "and actualstart >= now()-interval 3 month group by projectname, developerusername "
+                + ") as pd  "
                 + "left outer join "
                 + "(select projectname, committedby as developerusername,severity from defectcommitby dc left outer join defect d on dc.defectid = d.defectid where updatetime >= now()-interval 3 month) as dc "
                 + "on pd.developerusername = dc.developerusername and pd.projectname = dc.projectname "
@@ -285,7 +293,7 @@ public class RecommedationDAO {
             pstmt.setInt(8, days);
             pstmt.setString(9, projectType);
             pstmt.setString(10, projectType);
-             pstmt.setString(11, projectType);
+            pstmt.setString(11, projectType);
             pstmt.setDate(12, new java.sql.Date(sDate.getTime()));
             pstmt.setDate(13, new java.sql.Date(sDate.getTime()));
             pstmt.setInt(14, days);
@@ -296,6 +304,8 @@ public class RecommedationDAO {
             pstmt.setString(19, projectType);
             pstmt.setString(20, projectType);
             pstmt.setString(21, projectType);
+            pstmt.setString(22, projectType);
+            pstmt.setString(23, projectType);
 
             rs = pstmt.executeQuery();
 

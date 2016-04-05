@@ -10,8 +10,3 @@ select developerusername,format(experiencefactor,4) as experiencefactor, project
 			and type='wordpress'
 		group by developerusername)
 as experiencetable) as finaltable;
-                
-                
-			
-            
-            
