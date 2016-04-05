@@ -23,7 +23,11 @@ public class DisplayPictureDAO {
 
     static ArrayList<Person> plist;
 
-
+    /**
+     *Get the Image
+     * @param imageName the name of the image
+     * @return Image
+     */
     public static ImageDTOBean getImageData(String imageName) {
 
         ImageDTOBean idto = null;
@@ -63,7 +67,7 @@ public class DisplayPictureDAO {
 
         } catch (Exception exp) {
 
-         //LoggingUtils.logException(exp,"Expection in getImageData("+ imageName+")");
+            //LoggingUtils.logException(exp,"Expection in getImageData("+ imageName+")");
         } finally {
 
             try {
@@ -93,5 +97,5 @@ public class DisplayPictureDAO {
 
         return idto;
     }
-   
+
 }

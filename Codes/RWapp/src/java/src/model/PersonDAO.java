@@ -22,6 +22,11 @@ public class PersonDAO {
 
     static ArrayList<Person> plist;
 
+    /**
+     *Gets the attributes of a particular user
+     * @param username username of the person to retrieve
+     * @return a person object
+     */
     public static Person retrieveUser(String username) {
 
         Connection conn = null;
@@ -48,6 +53,11 @@ public class PersonDAO {
 
     }
 
+    /**
+     *Gets the trello id of the particular user
+     * @param username username of the user
+     * @return the trello id of the user
+     */
     public static String retrieveMemberId(String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -72,6 +82,10 @@ public class PersonDAO {
         return toReturn;
     }
 
+    /**
+     *Gets all the user from the database
+     * @return ArrayList of person objects
+     */
     public static ArrayList<Person> retrieveUsers() {
         ArrayList<Person> users = new ArrayList<Person>();
         Connection conn = null;
@@ -95,6 +109,11 @@ public class PersonDAO {
         return users;
     }
 
+    /**
+     *Update the details of a particular user
+     * @param toUpdate the person object with the updated details
+     * @return true or false depending if the method was successful
+     */
     public static boolean updateUser(Person toUpdate) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -124,6 +143,12 @@ public class PersonDAO {
         return true;
     }
 
+    /**
+     *Update the trello id of a user into the databse
+     * @param username the username of the user
+     * @param id the new trello id of the user
+     * @return true or false depending if the method was successful
+     */
     public static boolean updateMemberID(String username, String id) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -151,6 +176,11 @@ public class PersonDAO {
         return true;
     }
 
+    /**
+     *Add a new user into the database
+     * @param p the new Person object to add
+     * @return true or false depending if the method was successful
+     */
     public static boolean addPerson(Person p) {
 
         Connection conn = null;
@@ -180,6 +210,10 @@ public class PersonDAO {
 
     }
 
+    /**
+     *Gets all users who are developers
+     * @return ArrayList of Person objects who are developers
+     */
     public static ArrayList<Person> retrievAllDev() {
         ArrayList<Person> users = new ArrayList<Person>();
         Connection conn = null;
@@ -204,6 +238,11 @@ public class PersonDAO {
         return users;
     }
 
+    /**
+     *Delete a particular user from the database
+     * @param username the username of the user
+     * @return true or false depending if the method was successful
+     */
     public static boolean delete(String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -227,6 +266,10 @@ public class PersonDAO {
         }
     }
 
+    /**
+     *Gets all users in the database who are Project Managers
+     * @return ArrayList of Person objects who are Project Managers
+     */
     public static ArrayList<Person> retrievAllPM() {
         ArrayList<Person> users = new ArrayList<Person>();
         Connection conn = null;
@@ -251,6 +294,11 @@ public class PersonDAO {
         return users;
     }
 
+    /**
+     *Gets a person object using the trello id
+     * @param id the trello id of the user
+     * @return the person object
+     */
     public static Person retrieveUserById(String id) {
 
         Connection conn = null;
