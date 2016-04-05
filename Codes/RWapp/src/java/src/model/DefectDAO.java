@@ -21,6 +21,17 @@ import java.util.logging.Logger;
  */
 public class DefectDAO {
 
+    /**
+     *Adds a new Defect into the Database
+     * @param pname project name
+     * @param dname defect name
+     * @param desc description
+     * @param reportby person who reported the defect
+     * @param severity severity of the defect
+     * @param duedate the dude date of the defect
+     * @param devname the developer who committed the defect
+     * @return true or false if the defect has been successfully added
+     */
     public static boolean addDefect(String pname, String dname, String desc, String reportby, int severity, String duedate, String devname) {
 
         Connection conn = null;
@@ -60,6 +71,18 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Update the defect into the database
+     * @param id id of the defect
+     * @param dname name of the defect
+     * @param desc description of the defect
+     * @param pm person in charge of the defect
+     * @param isComplete the completion status of the defect
+     * @param sev the severity of the defect
+     * @param duedate the due date of the defect
+     * @param assignto the person in charge of solving the defect
+     * @return true or false depending if the method was successful
+     */
     public static boolean updateDefect(int id, String dname, String desc, String pm, int isComplete, int sev, String duedate, String assignto) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -101,6 +124,11 @@ public class DefectDAO {
         return true;
     }
 
+    /**
+     *Registers the defect to be approved and completed by the Project Manager
+     * @param id the id of the defect
+     * @return true or false depending if the method was successful
+     */
     public static boolean markComplete(int id) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -127,6 +155,11 @@ public class DefectDAO {
         return true;
     }
 
+    /**
+     *Marks the defect as complete after the developer assigned has successfully solved the defect
+     * @param id the id of the defect
+     * @return true or false depending if the method was successful
+     */
     public static boolean devMarkComplete(int id) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -153,6 +186,10 @@ public class DefectDAO {
         return true;
     }
 
+    /**
+     *Returns all defects
+     * @return an ArrayList of all Defect Objects in the database
+     */
     public static ArrayList<Defect> retrieveAll() {
 
         Connection conn = null;
@@ -177,6 +214,11 @@ public class DefectDAO {
         return toReturn;
     }
 
+    /**
+     *Gets all the defects that is supposed to be completed in the month indicated by the user
+     * @param month the integer representation of the month 
+     * @return true or false depending if the method was successful
+     */
     public static ArrayList<Defect> retrieveAllIncompleteByMonth(int month) {
 
         Connection conn = null;
@@ -202,8 +244,14 @@ public class DefectDAO {
 
         return toReturn;
     }
-    
-        public static ArrayList<Defect> retrieveAllIncompleteByMonth(int month, String dev) {
+
+    /**
+     *Retrieve all incomplete defects that is assigned to a particular developer in the month
+     * @param month integer representation of the month in the year
+     * @param dev the username of the developer
+     * @return an ArrayList of Defect objects
+     */
+    public static ArrayList<Defect> retrieveAllIncompleteByMonth(int month, String dev) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -230,6 +278,11 @@ public class DefectDAO {
         return toReturn;
     }
 
+    /**
+     *Returns all the defects that belong to a particular project
+     * @param projectname the name of the project
+     * @return an ArrayList of defect objects
+     */
     public static ArrayList<Defect> retrieveAllByProject(String projectname) {
 
         Connection conn = null;
@@ -255,6 +308,11 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Deletes a defect
+     * @param id the id of the defect
+     * @return true or false depending if the method was successful
+     */
     public static boolean deleteDefect(int id) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -279,7 +337,13 @@ public class DefectDAO {
     }
 
     //select * from defect d, projectallocation a where d.projectname = a.projectname and developerusername='kianlam999';
-    public static ArrayList<Defect> retrieveDev(String username) {
+
+    /**
+     *Retrieves all defects that belongs to a developer
+     * @param username the username of the developer
+     * @return an ArrayList of Defects that belong to the developer
+     */
+        public static ArrayList<Defect> retrieveDev(String username) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -312,6 +376,11 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Retrieve all defects that is allocated to a developer
+     * @param username the username of the developer
+     * @return an ArrayList of defects that is allocated to a developer
+     */
     public static ArrayList<Defect> retrieveAllocatedDev(String username) {
 
         Connection conn = null;
@@ -341,6 +410,11 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Retrieves all defects that belong to a Project Manager
+     * @param username the username of the Project Manager
+     * @return an ArrayList of Defects that belong to a Project Manager
+     */
     public static ArrayList<Defect> retrievePm(String username) {
 
         Connection conn = null;
@@ -374,6 +448,10 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Retrieves all defects for the tester
+     * @return an ArrayList of Defects for the tester
+     */
     public static ArrayList<Defect> retrieveTester() {
 
         Connection conn = null;
@@ -405,6 +483,11 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Retrieves an individual defect
+     * @param id the id of the defect
+     * @return the defect object
+     */
     public static Defect retrieveDefect(int id) {
 
         Connection conn = null;
@@ -431,6 +514,12 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Retrieve a defect from its name
+     * @param defectname the name of the defect
+     * @param projectname the name of the project
+     * @return the defect object
+     */
     public static Defect retrieveDefectByName(String defectname, String projectname) {
 
         Connection conn = null;
@@ -458,6 +547,7 @@ public class DefectDAO {
 
     }
 
+   
     public static ArrayList<Defect> filterSortDefectsPm(String filterby, String filterText, String sortby, String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -515,6 +605,7 @@ public class DefectDAO {
 
     }
 
+   
     public static ArrayList<Defect> filterSortDefectsDev(String filterby, String filterText, String sortby, String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -572,6 +663,10 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Gets projects that are completed
+     * @return ArrayList of project names that have been completed
+     */
     public static ArrayList<String> retrieveDistinctCompletedProject() {
 
         Connection conn = null;
@@ -596,6 +691,11 @@ public class DefectDAO {
         return toReturn;
     }
 
+    /**
+     *Gets projects with defects that have been completed by the developer
+     * @param devUsername the username of the developer
+     * @return ArrayList of Project names
+     */
     public static ArrayList<String> retrieveDistinctCompletedProjectByDev(String devUsername) {
 
         Connection conn = null;
@@ -620,6 +720,11 @@ public class DefectDAO {
         return toReturn;
     }
 
+    /**
+     *Retrieve defects that have been completed by the developer and approved by the Project Manager or Tester
+     * @param username the username of the developer
+     * @return an ArrayLif of defects
+     */
     public static ArrayList<Defect> retrieveAllocatedDevIsComplete(String username) {
 
         Connection conn = null;
@@ -649,6 +754,11 @@ public class DefectDAO {
 
     }
 
+    /**
+     *Retrieve projects allocated to the developer which have not been approved by the Project Manager/ Tester
+     * @param devUsername the username of the developer
+     * @return Arraylist of project name
+     */
     public static ArrayList<String> retrieveDevDistinctProject(String devUsername) {
 
         Connection conn = null;
@@ -673,6 +783,10 @@ public class DefectDAO {
         return toReturn;
     }
 
+    /**
+     *Returns all project names that have defects not approved by the project manager or tester
+     * @return Arraylist of string of project names
+     */
     public static ArrayList<String> retrieveDistinctProject() {
 
         Connection conn = null;
