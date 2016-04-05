@@ -19,17 +19,23 @@ import java.util.logging.Logger;
  * @author maxchua
  */
 public class CronDAO {
+
+    /**
+     *Returns a true of false value of whether the time added is fully processed
+     * @param num 
+     * @return the sucess or failure of the method
+     */
     public static boolean addTime(int num) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-       
+
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("insert into cron (state) values (?);");
             pstmt.setInt(1, num);
-           
+
             pstmt.executeUpdate();
 
             return true;
@@ -42,12 +48,16 @@ public class CronDAO {
         }
 
     }
-    
-    public static String retrieveTime(){
-         Connection conn = null;
+
+    /**
+     *Retrieves latest update time
+     * @return the latest time that the Cron Job ran sucessfully
+     */
+    public static String retrieveTime() {
+        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        String toReturn= "";
+        String toReturn = "";
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select max(updatetime) as 'last' from cron");
@@ -55,7 +65,7 @@ public class CronDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                toReturn= rs.getString(1);
+                toReturn = rs.getString(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,6 +76,5 @@ public class CronDAO {
         return toReturn;
 
     }
-    
-    
+
 }
