@@ -1,3 +1,4 @@
+<%@page import="org.joda.time.DateTime"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -55,15 +56,15 @@
             }
 
             .legend {
-                width: 10em;
-                border: 1px solid black;
+                width: 16em;
+                
             }
 
             .legend .title {
                 display: block;
                 margin-bottom: 0.5em;
                 line-height: 1.2em;
-                padding: 0 0.3em;
+                padding: 0 1em;
             }
 
             .legend .color-sample {
@@ -82,6 +83,15 @@
         String err = (String) request.getAttribute("err");
         String sucess = (String) request.getAttribute("sucess");
         String devusername = request.getParameter("devusername");
+        String yearstr = request.getParameter("year");
+        int year = 0;
+
+        if (yearstr != null) {
+            year = Integer.parseInt(yearstr);
+        } else {
+            year = new DateTime().getYear();
+        }
+
         ArrayList<String> errorList = (ArrayList<String>) request.getAttribute("errList");
         ArrayList<String> getNumberAllocated = ProjectAllocationDAO.retrieveDevInProgress(devusername);
     %>
@@ -122,29 +132,46 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <div class="panel-body profile-information">
-                            
+
                             <div class="col-md-3">
                                 <div class="profile-pic">
                                     <img src="ImageServlet?imageid=<%=devusername%>" alt="" align="center"/>
                                 </div>
                             </div>
+                          
                             <div class="col-md-9">
-                                <span class="pull-right"><button type="button" class="btn btn-info" onClick="window.print()"><i class="fa fa-print"></i> Print</button></span>
-                                <div class="profile-desk">
-                               <h1><%=devusername%></h1>
-                               <span class="text-muted">Developer</span><br/>
-                               <p>
-                                   <%
-                                   DateFormat dateFormat = new SimpleDateFormat("yyyy");
-                                   Date todayDate = new Date();
-                                   SimpleDateFormat toPrint = new SimpleDateFormat("yyyy");
-
-                                   ArrayList<String> devProjThisYear = ProjectAllocationDAO.retrieveByAllocattionByYear(Integer.parseInt(toPrint.format(todayDate)),devusername);%>
                                    
-                                   Worked on <%=devProjThisYear.size()%> project(s) this year<br/>
-                                   Currently working on <%=getNumberAllocated.size()%> project(s)
-                               </p>
-                           </div>
+                                <span class="pull-right"><button type="button" class="btn btn-info" onClick="window.print()"><i class="fa fa-print"></i> Print</button></span>
+
+                                <div class="profile-desk">
+                                    <h1><%=devusername%></h1>
+                                    <span class="text-muted">Developer</span><br/>
+                                    <p>
+                                        <%
+                                            DateFormat dateFormat = new SimpleDateFormat("yyyy");
+                                            Date todayDate = new Date();
+                                            SimpleDateFormat toPrint = new SimpleDateFormat("yyyy");
+
+                                            ArrayList<String> devProjThisYear = ProjectAllocationDAO.retrieveByAllocattionByYear(Integer.parseInt(toPrint.format(todayDate)), devusername);%>
+
+                                        Worked on <b><%=devProjThisYear.size()%></b> project(s) this year<br/>
+                                        Currently working on <b><%=getNumberAllocated.size()%> </b>project(s)
+                                    </p>
+                                </div>
+                                     Displaying results for year <b><%=year%></b>
+                                <div class="dropup">
+                                    <button class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown">Year
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu pull-right">
+                                        
+                                        <% int thisyear = new DateTime().getYear(); %>
+                                        
+                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear%>"><%=thisyear%></a></li>
+                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear-1%>"><%=thisyear-1%></a></li>
+                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear-2%>"><%=thisyear-2%></a></li>
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
                     </section>
@@ -152,65 +179,65 @@
             </div>
 
             <div class="row">
-                    <div class="col-md-6">
-                        <section class="panel">
-                            <header class="panel-heading">
-                                Developer Statistic
-                                <span class="tools pull-right">
-                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                    <a href="javascript:;" class="fa fa-cog"></a>
-                                    <a href="javascript:;" class="fa fa-times"></a>
-                                </span>
-                            </header>
-                            <div class="panel-body">
+                <div class="col-md-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Developer Statistic
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                <a href="javascript:;" class="fa fa-cog"></a>
+                                <a href="javascript:;" class="fa fa-times"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
 
 
-                                <div class="chartJS" style="height:420;">
+                            <div class="chartJS" style="height:420;">
 
-                                    <canvas id="radarChart" width="400" height="430"></canvas>
-
-                                </div>
-                                <!--Lam ge can you place your legend into this code:-->
-                                <ul class="clearfix location-earning-stats">
-                                    <li class="stat-divider">
-                                        <span class="first-city">$734503</span>
-                                        Rocky Mt,NC </li>
-                                    <li class="stat-divider">
-                                        <span class="second-city">$734503</span>
-                                        Dallas/FW,TX </li>
-                                    <li>
-                                        <span class="third-city">$734503</span>
-                                        Millville,NJ </li>
-                                </ul>
-                                <!--kw legend code end-->
-                                <div id="radarLegend"></div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="col-md-6">
-                        <section class="panel">
-                            <header class="panel-heading">
-                                Experience by Project Type
-                                <span class="tools pull-right">
-                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                    <a href="javascript:;" class="fa fa-cog"></a>
-                                    <a href="javascript:;" class="fa fa-times"></a>
-                                </span>
-                            </header>
-                            <div class="panel-body">
-
-
-                                <div class="chartJS" style="height: 410;">
-
-
-                                    <canvas id="exppie" width="400" height="400"></canvas>
-
-                                </div>
-                                <div id="exppieLegend"></div>
+                                <canvas id="radarChart" width="400" height="430"></canvas>
 
                             </div>
-                        </section>
-                    </div>
+                            <!--Lam ge can you place your legend into this code:-->
+                            <ul class="clearfix location-earning-stats">
+                                <li class="stat-divider">
+                                    <span class="first-city">$734503</span>
+                                    Rocky Mt,NC </li>
+                                <li class="stat-divider">
+                                    <span class="second-city">$734503</span>
+                                    Dallas/FW,TX </li>
+                                <li>
+                                    <span class="third-city">$734503</span>
+                                    Millville,NJ </li>
+                            </ul>
+                            <!--kw legend code end-->
+                            <div id="radarLegend"></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-6">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Experience by Project Type
+                            <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                <a href="javascript:;" class="fa fa-cog"></a>
+                                <a href="javascript:;" class="fa fa-times"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+
+
+                            <div class="chartJS" style="height: 410;">
+
+
+                                <canvas id="exppie" width="400" height="400"></canvas>
+
+                            </div>
+                            <div id="exppieLegend"></div>
+
+                        </div>
+                    </section>
+                </div>
 
 
             </div>
@@ -285,8 +312,8 @@
         ArrayList<Double> devTimeList = new ArrayList<Double>();
         ArrayList<Double> rwTimeList = new ArrayList<Double>();
 
-        HashMap<String, Double> devmap = ChartJSDAO.getTimelinessDev(devusername);
-        HashMap<String, Double> rwmap = ChartJSDAO.getTimelinessRW();
+        HashMap<String, Double> devmap = ChartJSDAO.getTimelinessDev(devusername, year);
+        HashMap<String, Double> rwmap = ChartJSDAO.getTimelinessRW(year);
 
         for (String i : monthList) {
             Double timelinessdev = devmap.get(i);
@@ -450,8 +477,8 @@
         ArrayList<Double> devloadList = new ArrayList<Double>();
         ArrayList<Double> rwloadList = new ArrayList<Double>();
 
-        HashMap<String, Double> devloadmap = ChartJSDAO.getLoadDev(devusername);
-        HashMap<String, Double> rwloadmap = ChartJSDAO.getLoadRW();
+        HashMap<String, Double> devloadmap = ChartJSDAO.getLoadDev(devusername, year);
+        HashMap<String, Double> rwloadmap = ChartJSDAO.getLoadRW(year);
 
         for (String i : monthList) {
             Double loaddev = devloadmap.get(i);
@@ -519,8 +546,8 @@
 
     <%
 
-        String radarDev = gson.toJson(ChartJSDAO.getDevStats(devusername));
-        String radarRw = gson.toJson(ChartJSDAO.getRWstats());
+        String radarDev = gson.toJson(ChartJSDAO.getDevStats(devusername, year));
+        String radarRw = gson.toJson(ChartJSDAO.getRWstats(year));
 
 
     %>

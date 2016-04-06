@@ -154,21 +154,6 @@ select format(avg(ifnull(1-pavgdpoint,1)),2) as defectlessfactor
             ) as e
 				) as finaltable;
 
-
-            
-            
-    
-    
-   
-
-
-
-
-
-
-
-
-
 #public static double getTimelinessScore(String devusername, int year)
 select schedulefactor from(
 select developerusername,
