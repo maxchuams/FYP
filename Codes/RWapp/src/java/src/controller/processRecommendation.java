@@ -79,10 +79,12 @@ public class processRecommendation extends HttpServlet {
         boolean manual = false;
         if(devList == null){
             manual = true;
-            String devname = request.getParameter("devM");
-            String earlieststart = request.getParameter("earliestStart");
-            String completion = request.getParameter("completion");
-            devList = 1 + "," +devname + "," +earlieststart + "," +completion;
+            String[] devnames = request.getParameterValues("devM");
+            devList = 1 + "";
+            for(String devs: devnames){
+                devList+= "," + devs;
+            }
+            
         }
 
         ArrayList<ArrayList<Recommendation>> rlist = (ArrayList<ArrayList<Recommendation>>) sess.getAttribute("rList");

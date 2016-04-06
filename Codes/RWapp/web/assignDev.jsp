@@ -124,6 +124,7 @@
                                                                             <li><i class="fa fa-briefcase"></i> <%=r.getCurrentprojectcount()%> current projects</li>
                                                                             <li><i class="fa fa-clock-o"></i> Earliest start date <%=r.getEarlieststart()%></li>
                                                                             <li><i class="fa fa-calendar"></i> <%=r.getEstimateworkingday()%> days to complete project</li>
+                                                                            <li><i class="fa fa-calendar"></i> Est Completion <%= r.getEstimatecompletion()%></li>
                                                                             <li><i class="fa fa-bug"></i> Avg <%=r.getAvgdefectperproject()%> defects per project</li>
                                                                             <li><i class="fa fa-hand-o-right"></i> Completed <%=r.getProjectexperiencecount()%> similar projs</li>
 

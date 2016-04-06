@@ -61,6 +61,7 @@ public class Recommendation {
             Date estimatecompletion, Date idealcompletion, double defectlessfactor,
             double schedulefactor, double avgdefectperproject, double experiencefactor,
             int projectexperiencecount, double zainessscore, int sorting) {
+        
         this.username = username;
         this.nationality = nationality;
         this.currentprojectcount = currentprojectcount;
@@ -77,6 +78,27 @@ public class Recommendation {
         this.projectexperiencecount = projectexperiencecount;
         this.zainessscore = zainessscore;
         this.sorting = sorting;
+    }
+    
+    public Recommendation(String username, String nationality, int currentprojectcount,
+            Date earlieststart, int estimateworkingday, int estimateday, double scheduleperformance,
+            Date estimatecompletion, Date idealcompletion){
+                this.username = username;
+        this.nationality = nationality;
+        this.currentprojectcount = currentprojectcount;
+        this.earlieststart = earlieststart;
+        this.estimateworkingday = estimateworkingday;
+        this.estimateday = estimateday;
+        this.scheduleperformance = scheduleperformance;
+        this.estimatecompletion = estimatecompletion;
+        this.idealcompletion = idealcompletion;
+        this.defectlessfactor = -1;
+        this.schedulefactor = -1;
+        this.avgdefectperproject = -1;
+        this.experiencefactor = -1;
+        this.projectexperiencecount = -1;
+        this.zainessscore = -1;
+        this.sorting = -1;
     }
 
     /**

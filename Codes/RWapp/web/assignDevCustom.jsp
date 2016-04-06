@@ -4,6 +4,9 @@
     Author     : maxchua
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="src.model.Recommendation"%>
+<%@page import="src.model.RecommedationDAO"%>
 <%@page import="src.model.Person"%>
 <%@page import="src.model.PersonDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,9 +23,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Assign Developer Manually</title>
         <script src="js/moment.js"></script>
+        <script src="res/select2/js/select2.js"></script>
+        <link rel="stylesheet" type="text/css" href="res/select2/css/select2.css">
         <script>
             moment().format();
         </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#e1").select2();
+            });
+        </script>
+
     </head>
     <body>
         <section id="main-content">
@@ -71,53 +82,35 @@
 
 
 
-                                <form action ="processRecommendation" class="form-horizontal">
+                                <form action ="processRecommendation" method="GET" class="form-horizontal">
 
                                     <%
-                                        ArrayList<String> devForProj = ProjectAllocationDAO.retrieveDev(projName);
-                                        ArrayList<Person> devList = PersonDAO.retrievAllDev();
+                                        // ArrayList<String> devForProj = ProjectAllocationDAO.retrieveDev(projName);
+                                        //ArrayList<Person> devList = PersonDAO.retrievAllDev();
+                                        ArrayList<Recommendation> recommendations = RecommedationDAO.getEstimateCompleteRecommendation(type, Integer.parseInt(psize));
                                     %>
+
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Select developer</label>
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Select Developer(s)</label>
+
                                         <div class="col-lg-10">
-                                            <select name="devM" class="form-control m-bot12">
-                                                <%                    for (Person deve : devList) {
-                                                        if (devForProj == null || devForProj.size() == 0) {
-                                                %>
-                                                <option value="<%=deve.getUsername()%>"/><%=deve.getUsername()%>
+                                            <select multiple="multiple" name="devM" id="e1" style="width:300px" class="populate select2-offscreen" tabindex="-1">
+                                                <optgroup label="Developer Name, Earliest Completion"> 
                                                 <%
-
-                                                } else {
-                                                    if (!devForProj.contains(deve.getUsername())) {
+                                                    for (Recommendation r : recommendations) {
+                                                        String rName = r.getUsername();
+                                                        Date rStart = r.getEarlieststart();
+                                                        Date rCompletion = r.getEstimatecompletion();
                                                 %>
-
-                                                <option value="<%=deve.getUsername()%>"/><%=deve.getUsername()%>
+                                                <option value="<%=rName%>,<%=rStart%>,<%=rCompletion%>"><%=r.getUsername()%> , <% if(rCompletion!=null){out.println(rCompletion);}else{out.println("Not Skilled");}; %></option>
                                                 <%
-                                                            }
-                                                        }
                                                     }
-
                                                 %>
+                                                </optgroup>
                                             </select>
                                         </div>
                                     </div>
-                                     
-                                    <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Start date</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control m-bot12" type="date" name="earliestStart" required/>
-                                        </div>
-                                    </div>
-                                            
-                                    <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">End date</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control m-bot12" type="date" name="completion" required/>
-                                        </div>
-                                    </div>
 
-                                    <%
-                                    %>
 
                                     <input type='hidden' name='projName' value='<%=projName%>'/>
                                     <input type='hidden' name='type' value='<%=type%>'/>
