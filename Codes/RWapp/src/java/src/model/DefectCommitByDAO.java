@@ -18,6 +18,12 @@ import java.util.logging.Logger;
  * @author maxchua
  */
 public class DefectCommitByDAO {
+
+    /**
+     *
+     * @param id the id of the defect
+     * @return an Arraylist of DefectCommitBy objects
+     */
     public static ArrayList<DefectCommitBy> retrieveBlameForDefect(int id) {
 
         Connection conn = null;
@@ -43,7 +49,12 @@ public class DefectCommitByDAO {
         return toReturn;
 
     }
-    
+
+    /**
+     *
+     * @param id of the defect
+     * @return an ArrayList of strings of the developers that committed the defect
+     */
     public static ArrayList<String> retrieveBlamedDevForDefect(int id) {
 
         Connection conn = null;
@@ -70,6 +81,11 @@ public class DefectCommitByDAO {
 
     }
 
+    /**
+     *
+     * @param d the DefectCommitBy object
+     * @return true or false if the method is successful
+     */
     public static boolean addBlame(DefectCommitBy d) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -81,7 +97,6 @@ public class DefectCommitByDAO {
 
             pstmt.setInt(1, d.getId());
             pstmt.setString(2, d.getUsername());
-           
 
             pstmt.executeUpdate();
 
@@ -96,7 +111,12 @@ public class DefectCommitByDAO {
         }
 
     }
-    
+
+    /**
+     *
+     * @param id the id of the defect
+     * @return true or false if the method is successful
+     */
     public static boolean delete(int id) {
         Connection conn = null;
         PreparedStatement pstmt = null;

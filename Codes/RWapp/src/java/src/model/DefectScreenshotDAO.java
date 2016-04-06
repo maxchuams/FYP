@@ -19,6 +19,13 @@ import java.util.Date;
  * @author KIANLAM
  */
 public class DefectScreenshotDAO {
+
+    /**
+     *Gets the screenshot
+     * @param defectid id of the defect 
+     * @param updatetime time at which screenshot was added
+     * @return Image
+     */
     public static ImageDTOBean getScreenshot(String defectid, String updatetime) {
 
         Connection conn = null;
@@ -44,7 +51,7 @@ public class DefectScreenshotDAO {
             while (rs.next()) {
 
                 screenshot = new ImageDTOBean();
-                screenshot .setImageName("Defectid_"+rs.getString("defectid") + "_" + rs.getString("updatetime"));
+                screenshot.setImageName("Defectid_" + rs.getString("defectid") + "_" + rs.getString("updatetime"));
                 screenshot.setImageContentType("image/jpeg");
                 imageBuffer = rs.getBytes("photo");
 
@@ -78,7 +85,12 @@ public class DefectScreenshotDAO {
 
         return screenshot;
     }
-    
+
+    /**
+     *Get time at which screenshot was added
+     * @param defectid ths id of the defect
+     * @return the ArrayList of String that screenshot was updated at
+     */
     public static ArrayList<String> getScreenshotTimestamp(String defectid) {
 
         Connection conn = null;
@@ -87,7 +99,7 @@ public class DefectScreenshotDAO {
         String queryStr = null;
         String utime = null;
         ArrayList<String> timestamps = new ArrayList<String>();
-        
+
         try {
 
             conn = ConnectionManager.getConnection();
@@ -102,7 +114,7 @@ public class DefectScreenshotDAO {
             }
 
         } catch (Exception exp) {
-                //blah
+            //blah
         } finally {
 
             try {
