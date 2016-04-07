@@ -238,7 +238,7 @@ INSERT INTO `defectcommitby` (`defectid`,`committedby`) VALUES
 (9,'zripplewerkz'),
 (13,'zripplewerkz'),
 (16,'zripplewerkz'),
-(24,'zripplewerkz');
+(24,'zripplewerkz'),
 (24,'debe2');
 
 INSERT INTO trelloconfig (`mainboard`, `developmentlist`,`postdevlist`,`admin`,`cronpause`, `crondetails`) 
