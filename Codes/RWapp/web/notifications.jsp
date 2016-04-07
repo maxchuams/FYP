@@ -44,9 +44,10 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <div class="panel-body">
-                            <h3 class="prf-border-head">Viewing All Your Notifications</h3>
-                            <h2><a href = "archived.jsp">Go To Archive</a></h2>
-                            <h3>Last 24 hours</h3>
+                            <h3 class="prf-border-head">Viewing All Your Notifications     <span class="tools pull-right"><a href = "archived.jsp"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-archive"></i> View Archive</button></a></span></h3>
+                            
+                            
+                            <b><p>Last 24 hours</p></b>
 
                             <%NotificationDAO notifDAO = new NotificationDAO();
                                 ArrayList<Notification> notiList = notifDAO.retrieveAllFromUser(username, "No", "today");
@@ -76,7 +77,7 @@
                                         out.println("<td>");
                                         out.println("<form action=\"processArchiveNotif\" method=\"get\">");
                                         out.println("<input type=\"hidden\" name=\"notifid\" value=\"" + noti.getId() + "\">");
-                                        out.println("<button class='btn btn-round btn-default btn-sm' type=\"submit\" name=\"markas\" value=\"archive\">Archive Notification</button>");
+                                        out.println("<button class='btn btn-round btn-info btn-sm' type=\"submit\" name=\"markas\" value=\"archive\">Archive Notification</button>");
                                         out.println("</form>");
 
                                         out.println("</td>");
@@ -86,10 +87,10 @@
 
                                     out.println("</table>");
                                 } else {
-                                    out.println("You have no notifications");
+                                    out.println("You have no notifications</br><p></p><p></p>");
                                 }
                             %>
-                            <h3>Yesterday</h3>
+                            <b><p>Yesterday</p></b>
                             <%
                                 ArrayList<Notification> notiListTwo = notifDAO.retrieveAllFromUser(username, "No", "yesterday");
                                 if (notiListTwo.size() != 0) {
@@ -118,7 +119,7 @@
                                         out.println("<td>");
                                         out.println("<form action=\"processArchiveNotif\" method=\"get\">");
                                         out.println("<input type=\"hidden\" name=\"notifid\" value=\"" + noti.getId() + "\">");
-                                        out.println("<button class='btn btn-round btn-default btn-sm' type=\"submit\" name=\"markas\" value=\"archive\">Archive Notification</button>");
+                                        out.println("<button class='btn btn-round btn-info btn-sm' type=\"submit\" name=\"markas\" value=\"archive\">Archive Notification</button>");
                                         out.println("</form>");
 
                                         out.println("</td>");
@@ -128,10 +129,10 @@
 
                                     out.println("</table>");
                                 } else {
-                                    out.println("You have no notifications");
+                                    out.println("You have no notifications</br><p></p><p></p>");
                                 }
                             %>
-                                <h3>A week ago...</h3>
+                              <b><p>A week ago</p></b>
                             <%
                                 ArrayList<Notification> notiListThree = notifDAO.retrieveAllFromUser(username, "No", "lastweek");
                                 if (notiListThree.size() != 0) {
@@ -160,7 +161,7 @@
                                         out.println("<td>");
                                         out.println("<form action=\"processArchiveNotif\" method=\"get\">");
                                         out.println("<input type=\"hidden\" name=\"notifid\" value=\"" + noti.getId() + "\">");
-                                        out.println("<button class='btn btn-round btn-default btn-sm' type=\"submit\" name=\"markas\" value=\"archive\">Archive Notification</button>");
+                                        out.println("<button class='btn btn-round btn-info btn-sm' type=\"submit\" name=\"markas\" value=\"archive\">Archive Notification</button>");
                                         out.println("</form>");
 
                                         out.println("</td>");
@@ -170,10 +171,10 @@
 
                                     out.println("</table>");
                                 } else {
-                                    out.println("You have no notifications");
+                                    out.println("You have no notifications</br><p></p><p></p>");
                                 }
                             %>
-                                                            <h3>A long time ago...</h3>
+                            <b><p>More than a week ago</p></b>
                             <%
                                 ArrayList<Notification> notiListFour = notifDAO.retrieveAllFromUser(username, "No", "alongtimeago");
                                 if (notiListFour.size() != 0) {
@@ -202,7 +203,7 @@
                                         out.println("<td>");
                                         out.println("<form action=\"processArchiveNotif\" method=\"get\">");
                                         out.println("<input type=\"hidden\" name=\"notifid\" value=\"" + noti.getId() + "\">");
-                                        out.println("<button class='btn btn-round btn-default btn-sm' type=\"submit\" name=\"markas\" value=\"archive\">Archive Notification</button>");
+                                        out.println("<button class='btn btn-round btn-info btn-sm' type=\"submit\" name=\"markas\" value=\"archive\">Archive Notification</button>");
                                         out.println("</form>");
 
                                         out.println("</td>");
@@ -212,7 +213,7 @@
 
                                     out.println("</table>");
                                 } else {
-                                    out.println("You have no notifications");
+                                    out.println("You have no notifications</br><p></p><p></p>");
                                 }
                             %>
                         </div>

@@ -44,8 +44,7 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <div class="panel-body">
-                            <h3 class="prf-border-head">Archived Notifications</h3>
-                            <h2><a href = "notifications.jsp">Go To Notifications</a></h2>
+                            <h3 class="prf-border-head">Archived Notifications <span class="tools pull-right"><a href = "notifications.jsp"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-archive"></i> View Notifications</button></a></span></h3>
 
                             <%NotificationDAO notifDAO = new NotificationDAO();
                                 ArrayList<Notification> notiList = notifDAO.retrieveAllArchivedFromUser(username);

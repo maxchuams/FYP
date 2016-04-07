@@ -139,9 +139,20 @@
                                 dList = DefectDAO.retrieveAllocatedDevIsComplete(dev.getUsername());
                             }
                         %>
-                        <%if(pListString.size()<=0){%>
-                        <b>no project</b>
-                      <%  }%>
+                        <%if (pListString.size() <= 0) {%>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <section class="panel">
+                                    <div class="alert alert-block alert-danger fade in">
+                                        <button data-dismiss="alert" class="close close-sm" type="button">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        No defects found
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <%  }else { %>
                         <%for (String s : pListString) {%>
                         <div class="row">
                             <div class="col-sm-12">
@@ -166,11 +177,11 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                
+
                                                 if (s.equalsIgnoreCase(d.getProjectName()) && d.getIsComplete() == 2) {
-                                                    
-                                                        out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
-                                                        if (d.getIsComplete() == 2) { %>
+
+                                                    out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
+                                                    if (d.getIsComplete() == 2) { %>
                                         <div class='col-lg-4 col-sm-4'> 
                                             <div class="alert alert-success fade in"> 
                                                 <% } else if (d.getIsComplete() == 1) {
@@ -190,20 +201,19 @@
                                                                     }
                                                                     out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
                                                                     out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");%>
-                                                                    <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
-                                                                    <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
-                                                                    <%if (pm!=null || tester!=null) {%>
-                                                                    <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
-                                                                    <tr><td><b>Assigned to:</b></td><td><%=d.getAssignto()%></td></tr>
-                                                                    <% } %>
-                                                                        <%out.println("</table>");
-                                                                            
-                                                                        %> 
+                                                                <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                    <%if (pm != null || tester != null) {%>
+                                                                <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
+                                                                <tr><td><b>Assigned to:</b></td><td><%=d.getAssignto()%></td></tr>
+                                                                <% } %>
+                                                                <%out.println("</table>");
+
+                                                                %> 
                                                             </div>
                                                         </div>
                                                         </a>
-                                                        <%
-                                                                    count++;
+                                                        <%                                                                    count++;
                                                                 }
                                                             }
                                                             if (count == 0) {
@@ -216,7 +226,8 @@
                                                     </section>
                                                 </div>
                                             </div>
-                                            <% }%>
+                                            <% } 
+                        }%>
 
                                             <!--end of kw codes-->
 
