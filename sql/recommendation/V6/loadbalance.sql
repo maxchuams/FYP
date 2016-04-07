@@ -25,11 +25,11 @@ select username as developerusername,
 			(
 			#developers performace measure in term of schedule and for the type of project
 			select developerusername, 
-			#best case
+			#Best case
 			min(datediff(actualend,actualstart)/datediff(planend,planstart)) as bestscheduleperformance,
-			#likely case
+			#Likely case
 			avg(datediff(actualend,actualstart)/datediff(planend,planstart)) as likelyscheduleperformance,
-			#
+			#Worst Case
 			max(datediff(actualend,actualstart)/datediff(planend,planstart)) as worstscheduleperformance,
 			#using PERT (Optimistic+4likely+Persimistic)/6
 			(min(datediff(actualend,actualstart)/datediff(planend,planstart))

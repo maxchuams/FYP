@@ -180,18 +180,18 @@ on final.developerusername=final3.developerusername
 on zainess.developerusername=loadbalance.developerusername
 ORDER BY 
 CASE sorting
-WHEN 1 THEN zainessscore 
-ELSE '' END
+        WHEN 1 THEN zainessscore 
+        ELSE '' END
 DESC,
 CASE sorting
-WHEN 0 THEN estimatecompletion
-ELSE  '' END
+        WHEN 1 THEN estimatecompletion
+        ELSE '' END
 ASC,
 CASE sorting
-WHEN 1 THEN estimatecompletion
-ELSE '' END
-DESC,
+        WHEN 0 THEN estimatecompletion
+        ELSE  '' END
+ASC,
 CASE sorting
-WHEN 0 THEN zainessscore 
-ELSE  '' END
-ASC;
+        WHEN 0 THEN zainessscore 
+        ELSE  '' END
+DESC;

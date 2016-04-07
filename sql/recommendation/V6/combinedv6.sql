@@ -13,7 +13,7 @@ avgdefectperproject,
 experiencefactor,
 projectcount,
 zainessscore,
-@sorting:=0 as sorting
+@sorting:= 0 as sorting
 from
 	#loadbalance
 	(
@@ -234,14 +234,14 @@ CASE sorting
         ELSE '' END
 DESC,
 CASE sorting
+        WHEN 1 THEN estimatecompletion
+        ELSE '' END
+ASC,
+CASE sorting
         WHEN 0 THEN estimatecompletion
         ELSE  '' END
 ASC,
 CASE sorting
-        WHEN 1 THEN estimatecompletion
-        ELSE '' END
-DESC,
-CASE sorting
         WHEN 0 THEN zainessscore 
         ELSE  '' END
-ASC;
+DESC;
