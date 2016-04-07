@@ -114,7 +114,7 @@ create table notifications(
     notificationtype varchar(200),
     projectname varchar(200),
     status char(1),
-    archive char(1),
+    archived char(1),
     dateandtime datetime,
   constraint notifications_fk foreign key (username) references user (username),
   constraint notifications_fk2 foreign key (projectname) references project (projectname)
