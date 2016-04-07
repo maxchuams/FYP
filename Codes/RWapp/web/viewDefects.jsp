@@ -206,13 +206,31 @@
                         dList = DefectDAO.retrieveAllIncompleteByMonth(Integer.parseInt(sort), dev.getUsername());
                     }
                 %>
+                <%if (pListString.size() <= 0) {%>
+                <div class="row">
+                    <div class="col-lg-12" id="mainmain"> 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <section class="panel">
+                                    <div class="alert alert-block alert-danger fade in">
+                                        <button data-dismiss="alert" class="close close-sm" type="button">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        No defects found
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%  } else {%>
 
                 <div class="row">
                     <div class="col-lg-12" id="mainmain"> 
                         <section class="panel">
                             <div class="panel-body">
-                        <span class="pull-right top-menu">
-                            <form class="form-inline" role="form" action="viewDefects.jsp">
+                                <span class="pull-right top-menu">
+                                    <form class="form-inline" role="form" action="viewDefects.jsp">
                                         <div class="form-group">View:
                                             <select name="sort" class="form-control" onchange="this.form.submit()">
                                                 <%if (sort == null) {%>
@@ -233,15 +251,15 @@
                                             </select>
                                         </div>
                                     </form>
-                            
-                            
-<!--                            Defect severity:
-                            <button onclick="fuck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-asc"></i> Sort Ascending</button> &nbsp;
-                            <button onclick="suck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending</button>
-                        -->
-                        </span></div></section>
-                        
-                        
+
+
+                                    <!--                            Defect severity:
+                                                                <button onclick="fuck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-asc"></i> Sort Ascending</button> &nbsp;
+                                                                <button onclick="suck()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending</button>
+                                    -->
+                                </span></div></section>
+
+
                         <%for (String p : pListString) {
                                 if (DefectDAO.retrieveAllByProject(p).size() != 0) {
                         %>
@@ -292,8 +310,8 @@
 
                                                                 <%out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
                                                                     out.println("<tr><td><b>Severity: </b></td><td id='" + severity + "'> " + severity + "</td></tr>");
-                                                                //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
-%>
+                                                                    //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
+                                                                %>
                                                                 <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
                                                                 <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
 
@@ -319,6 +337,7 @@
                                             </div>
                                             <% }
                                                 }
+                }
                                             %>
 
                                             <!--end of kw codes-->
