@@ -96,13 +96,13 @@
                 out.println("<div class=\"alert alert-danger clearfix\" style = \"width:280px ; background:#1fb5ad ; color: #000000 ; height:80px\">");
                 out.println("<div class=\"noti-info\" style='color:#fcfcfc'>");
                 out.println(notification.toString());
-                out.println(toPrint.format(dateFormat.parse(notification.getDatetime())));
+                //out.println(toPrint.format(dateFormat.parse(notification.getDatetime())));
                 out.println("</div");
             } else {
                 out.println("<div class=\"alert alert-success clearfix\" style = \"width:280px ; background:#EDF5ED ; height:80px\">");
                 out.println("<div class=\"noti-info\">");
                 out.println(notification.toString());
-                out.println(dateFormat.parse(notification.getDatetime()));
+                //out.println(dateFormat.parse(notification.getDatetime()));
                 out.println("</div");
             }
             out.println("</div>");
