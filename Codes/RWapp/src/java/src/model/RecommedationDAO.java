@@ -260,23 +260,23 @@ public class RecommedationDAO {
                 + "on final.developerusername=final3.developerusername "
                 + ") as zainess "
                 + "on zainess.developerusername=loadbalance.developerusername "
-                + "ORDER BY  "
+                + "ORDER BY "
                 + "CASE sorting "
-                + "WHEN 1 THEN zainessscore  "
-                + "ELSE '' END "
+                + "        WHEN 1 THEN zainessscore "
+                + "        ELSE '' END "
                 + "DESC, "
                 + "CASE sorting "
-                + "WHEN 0 THEN estimatecompletion "
-                + "ELSE  '' END "
+                + "        WHEN 1 THEN estimatecompletion "
+                + "        ELSE '' END "
                 + "ASC, "
                 + "CASE sorting "
-                + "WHEN 1 THEN estimatecompletion "
-                + "ELSE '' END "
-                + "DESC, "
+                + "        WHEN 0 THEN estimatecompletion "
+                + "        ELSE  '' END "
+                + "ASC, "
                 + "CASE sorting "
-                + "WHEN 0 THEN zainessscore  "
-                + "ELSE  '' END "
-                + "ASC;";
+                + "        WHEN 0 THEN zainessscore "
+                + "        ELSE  '' END "
+                + "DESC;";
 
         try {
             conn = ConnectionManager.getConnection();
@@ -549,8 +549,7 @@ public class RecommedationDAO {
                 + "right outer join "
                 + "(select username from developer) as developer on developer.username=loadbalancing.developerusername "
                 + "order by -estimatecompletion desc,-earlieststart desc;";
-        
-        
+
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement(queryStr);
@@ -563,7 +562,7 @@ public class RecommedationDAO {
             pstmt.setString(6, projectType);
             pstmt.setString(7, projectType);
             pstmt.setInt(8, days);
-        
+
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
