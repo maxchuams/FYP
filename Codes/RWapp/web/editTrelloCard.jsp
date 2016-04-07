@@ -131,7 +131,7 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Project days</label>
+                                        <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Man days</label>
                                         <div class="col-lg-10">
                                             <%if (daysstr != null) {%>
                                             <input class="form-control m-bot12" type="number" name="days" min=1 value='<%=daysstr%>' required/>
