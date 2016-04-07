@@ -19,6 +19,10 @@ import java.util.logging.Logger;
  */
 public class ProjectDAO {
 
+    /**
+     *Gets all project in the database
+     * @return an ArrayList of Project objects
+     */
     public static ArrayList<Project> retrieveAll() {
 
         Connection conn = null;
@@ -45,6 +49,10 @@ public class ProjectDAO {
 
     }
     
+    /**
+     *Gets all projects that have been marked as complete
+     * @return an ArrayList of Project objects
+     */
     public static ArrayList<Project> retrieveAllCompletedProj() {
 
         Connection conn = null;
@@ -71,6 +79,10 @@ public class ProjectDAO {
 
     }
 
+    /**
+     *Get all projects that have yet to be complete
+     * @return ArrayList of Project objects
+     */
     public static ArrayList<Project> retrieveInProgress() {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -95,9 +107,12 @@ public class ProjectDAO {
         return toReturn;
     }
 
-    
-    
-       public static ArrayList<Project> retrieveInProgressByPM(String username) {
+    /**
+     *Get all projects belonging to a particular project manager that is currently in progress
+     * @param username the username of the Project Manager
+     * @return ArrayList of Project objects
+     */
+    public static ArrayList<Project> retrieveInProgressByPM(String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -120,6 +135,11 @@ public class ProjectDAO {
 
         return toReturn;
     }
+
+    /**
+     *Retrieve all project types
+     * @return ArrayList of string for project type
+     */
     public static ArrayList<String> retrieveAllTypes() {
 
         Connection conn = null;
@@ -146,8 +166,11 @@ public class ProjectDAO {
 
     }
 
-    
-        public static ArrayList<String> retrieveAllSkillTypes() {
+    /**
+     *Get unique skills for all developers
+     * @return ArrayList of String of skill types
+     */
+    public static ArrayList<String> retrieveAllSkillTypes() {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -173,9 +196,11 @@ public class ProjectDAO {
 
     }
     
-    
-    
-    
+    /**
+     *Add a new project to the database
+     * @param p the project to add
+     * @return true or false depending if the method was successful
+     */
     public static boolean add(Project p) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -207,6 +232,14 @@ public class ProjectDAO {
         }
     }
 
+    /**
+     *Retrieve all projects related to the user based on role.
+     * If user is a PM then the query will search through the assignedBy column.
+     * If user is a Dev then the query will search through the assignedTo column.
+     * @param role pm or dev depending on the input
+     * @param username username of the user
+     * @return an ArrayList of Project objects
+     */
     public static ArrayList<Project> retrieveByUser(String role, String username) {
 
         Connection conn = null;
@@ -247,6 +280,11 @@ public class ProjectDAO {
 
     }
 
+    /**
+     *Retrieves a Project object with the specified Trello id
+     * @param id trello id of the project
+     * @return Project Object
+     */
     public static Project retrieveProjectById(String id) {
         Project toReturn = null;
         Connection conn = null;
@@ -272,6 +310,11 @@ public class ProjectDAO {
         return toReturn;
     }
 
+    /**
+     *Get the Project object from the the project name
+     * @param name name of the project
+     * @return Project Object
+     */
     public static Project retrieveProjectByProjectName(String name) {
         Project toReturn = null;
         Connection conn = null;
@@ -298,7 +341,14 @@ public class ProjectDAO {
     }
 
     //replaceType
-    public static boolean replaceType(String toChange, String replaceWith) {
+
+    /**
+     *Replaces the current type of the project to a new type
+     * @param toChange the original type of the project
+     * @param replaceWith the new type of the project
+     * @return true or false depending if the method was successful
+     */
+        public static boolean replaceType(String toChange, String replaceWith) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -323,6 +373,10 @@ public class ProjectDAO {
 
     }
 
+    /**
+     *Get all Project names in string form
+     * @return ArrayList of String
+     */
     public static ArrayList<String> retrieveAllProjectNames() {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -347,6 +401,18 @@ public class ProjectDAO {
         return toReturn;
     }
 
+    /**
+     *Adds a Project Object directly from Trello
+     * @param name name of the project
+     * @param assignby username of the person who assigned the project
+     * @param cardId the trello id of the project
+     * @param desc the description of the project
+     * @param due the due date of the project
+     * @param priority the priority of the project 
+     * @param type the type of the project
+     * @param days the number of days it takes to complete the project
+     * @return true or false depending if the method was successful
+     */
     public static boolean addCardFromTrello(String name, String assignby, String cardId, String desc, String due, int priority, String type, int days) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -378,6 +444,17 @@ public class ProjectDAO {
 
     }
 
+    /**
+     *Updates a project into the database
+     * @param assignby the username of the person who assigned the project
+     * @param due the due date of the project
+     * @param priority the priority of the project
+     * @param complete completion status of the project
+     * @param days number of days it takes to complete the project
+     * @param type type of the project
+     * @param pname project name
+     * @return true or false depending if the method was successful
+     */
     public static boolean updateProject(String assignby, String due, int priority, int complete, int days, String type, String pname) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -408,6 +485,12 @@ public class ProjectDAO {
         }
     }
 
+    /**
+     *Adds a trello photo image url into the database
+     * @param projname the name of the project
+     * @param url url of the trello photo
+     * @return true or false depending if the method was successful
+     */
     public static boolean addURL(String projname, String url) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -433,6 +516,11 @@ public class ProjectDAO {
 
     }
 
+    /**
+     *Retrieves the image url from database
+     * @param pname the name of the project
+     * @return the project name
+     */
     public static String retrieveTrelloPhoto(String pname) {
         String toReturn = null;
         Connection conn = null;
@@ -459,7 +547,13 @@ public class ProjectDAO {
     }
     
     //Warning: If project name is invalid, this method will return null
-    public static ArrayList<String> retrievePlanActualEnd(String pname) {
+
+    /**
+     *Retrieve Plan start and plan end for a particular project
+     * @param pname the project name
+     * @return null if project name is invalid, else return ArrayList of String of plan start and plan end
+     */
+        public static ArrayList<String> retrievePlanActualEnd(String pname) {
         ArrayList<String> toReturn = new ArrayList<String>();
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -485,6 +579,7 @@ public class ProjectDAO {
         return null;
     }
     
+  
     public static boolean updateCardFromTrello(String name, String assignby, String cardId, String desc, String due, int priority, String type, int days, String url) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -519,7 +614,13 @@ public class ProjectDAO {
 
     }
     
-     public static boolean setIsComplete(String projectname, int isComplete) {
+    /**
+     *Sets the project completion status
+     * @param projectname name of the project
+     * @param isComplete completion status
+     * @return true or false depending if the method was successful
+     */
+    public static boolean setIsComplete(String projectname, int isComplete) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -536,7 +637,7 @@ public class ProjectDAO {
 
             //System.out.println("SKILLS SENT TO DB : " + toUpdate.getSkills());
             pstmt.executeUpdate();
-
+            return true;
         } catch (SQLException e) {
 
             e.printStackTrace();
@@ -544,7 +645,7 @@ public class ProjectDAO {
         } finally {
             ConnectionManager.close(conn, pstmt);
         }
-        return true;
+        
     }
 
 }

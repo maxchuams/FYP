@@ -136,7 +136,7 @@ public class DefectDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            String sql = "UPDATE defect set iscomplete = 2 where defectid = ?";
+            String sql = "UPDATE defect set iscomplete = 1 where defectid = ?";
 
             pstmt = conn.prepareStatement(sql);
 
@@ -167,7 +167,7 @@ public class DefectDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            String sql = "UPDATE defect set iscomplete = 1 where defectid = ?";
+            String sql = "UPDATE defect set iscomplete = 2 where defectid = ?";
 
             pstmt = conn.prepareStatement(sql);
 

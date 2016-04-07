@@ -19,6 +19,11 @@ import java.util.logging.Logger;
  */
 public class SkillDAO {
     
+    /**
+     *Gets a list of developer's skills
+     * @param username the developers username
+     * @return ArrayList of String
+     */
     public static ArrayList<String> retrieveDevSkillString(String username) {
 
         Connection conn = null;
@@ -46,6 +51,11 @@ public class SkillDAO {
 
     }
     
+    /**
+     *Gets a list of skill objects
+     * @param username developer's username
+     * @return ArrayList of skill objects
+     */
     public static ArrayList<Skill> retrieveDevSkill(String username) {
 
         Connection conn = null;
@@ -74,6 +84,10 @@ public class SkillDAO {
 
     }
     
+    /**
+     *
+     * @return
+     */
     public static ArrayList<String> retrieveAllSkill() {
 
         Connection conn = null;
@@ -99,7 +113,13 @@ public class SkillDAO {
 
     }
     
-     public static boolean addDevSkill(String username, String skill) {
+    /**
+     *
+     * @param username
+     * @param skill
+     * @return
+     */
+    public static boolean addDevSkill(String username, String skill) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -127,7 +147,14 @@ public class SkillDAO {
         
 
     }
-     public static boolean deleteSkill(String username, String skill){
+
+    /**
+     *
+     * @param username
+     * @param skill
+     * @return
+     */
+    public static boolean deleteSkill(String username, String skill){
          Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;

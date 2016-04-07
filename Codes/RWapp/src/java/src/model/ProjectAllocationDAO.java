@@ -21,6 +21,15 @@ import java.util.logging.Logger;
  */
 public class ProjectAllocationDAO {
 
+    /**
+     *All a new allocation into the database
+     * @param projName the name of the project
+     * @param dev the name of the developer
+     * @param planStart the start date of the developer
+     * @param planEnd the plan end of the developer 
+     * @param actualStart the day the developer actually starts
+     * @return
+     */
     public static boolean addAllocation(String projName, String dev, String planStart, String planEnd, String actualStart) {
 
         Connection conn = null;
@@ -49,6 +58,10 @@ public class ProjectAllocationDAO {
         }
     }
 
+    /**
+     *Gets all project allocation objects
+     * @return an ArrayList of Project Allocation objects
+     */
     public static ArrayList<ProjectAllocation> returnProject() {
 
         ArrayList<ProjectAllocation> pAllocate = new ArrayList<ProjectAllocation>();
@@ -84,7 +97,13 @@ public class ProjectAllocationDAO {
     }
 
     //SELECT distinct developerusername FROM projectallocation WHERE projectname = "candy"
-    public static ArrayList<String> retrieveDev(String projectname) {
+
+    /**
+     *Get the developers that are assigned to the project
+     * @param projectname the name of the project
+     * @return the developers that are assigned to the project
+     */ 
+        public static ArrayList<String> retrieveDev(String projectname) {
         ArrayList<String> toReturn = new ArrayList<String>();
 
         Connection conn = null;
@@ -120,6 +139,10 @@ public class ProjectAllocationDAO {
         return toReturn;
     }
 
+    /**
+     *Get all project names that are still in progress
+     * @return arraylist of project names that are still in progress
+     */
     public static ArrayList<String> retrieveInProgress() {
         ArrayList<String> toReturn = new ArrayList<String>();
 
@@ -151,6 +174,11 @@ public class ProjectAllocationDAO {
         return toReturn;
     }
 
+    /**
+     *Retrieve project names that are still in progress for a particular developer
+     * @param dev the developer's username
+     * @return arraylist of project names
+     */
     public static ArrayList<String> retrieveDevInProgress(String dev) {
         ArrayList<String> toReturn = new ArrayList<String>();
 
@@ -181,7 +209,12 @@ public class ProjectAllocationDAO {
         return toReturn;
     }
     
-    
+    /**
+     *Get project allocations for a particular user in a particular year
+     * @param year the numerical year 
+     * @param dev the username of the developer
+     * @return the arraylist of project names
+     */
     public static ArrayList<String> retrieveByAllocattionByYear(int year, String dev) {
         ArrayList<String> toReturn = new ArrayList<String>();
 
@@ -215,10 +248,12 @@ public class ProjectAllocationDAO {
         return toReturn;
     }
     
-    
-    
-    
-
+    /**
+     *Remove a project allocation from the data base
+     * @param username username of the developer
+     * @param projname name of the project
+     * @return true or false depending if the method was successful
+     */
     public static boolean delete(String username, String projname) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -244,7 +279,15 @@ public class ProjectAllocationDAO {
     }
 
     //setIsComplete
-    public static boolean setIsComplete(String projectname, String username, int isComplete) {
+
+    /**
+     *Set the completion status
+     * @param projectname the name of the project
+     * @param username the name of the developer
+     * @param isComplete the completion status
+     * @return true or false depending if the method was successful
+     */
+        public static boolean setIsComplete(String projectname, String username, int isComplete) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -272,6 +315,12 @@ public class ProjectAllocationDAO {
         return true;
     }
 
+    /**
+     *Add a new allocation to the database without start and end date
+     * @param projName the name of the project
+     * @param dev the username of the developer
+     * @return true or false depending if the method was successful
+     */
     public static boolean addBasicAllocation(String projName, String dev) {
 
         Connection conn = null;
@@ -297,6 +346,11 @@ public class ProjectAllocationDAO {
         }
     }
 
+    /**
+     *Checks if the project has already been allocated
+     * @param projName the name of the project
+     * @return true if exist or false if it doesn't
+     */
     public static boolean checkIfExist(String projName) {
 
         Connection conn = null;
