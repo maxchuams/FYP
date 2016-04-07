@@ -261,7 +261,7 @@
 
 
                         <%for (String p : pListString) {
-                                if (DefectDAO.retrieveAllByProject(p).size() != 0) {
+                                if (DefectDAO.retrieveAllByProjectOne(p,dev.getUsername()).size() != 0) {
                         %>
                         <div class="row divClass" id="<%=p%>">
                             <div class="col-sm-12">
@@ -285,14 +285,14 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (p.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 1 || d.getIsComplete() == 0)) {
+                                                
+                                                if (p.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {
 
                                                     out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
-                                                    if (d.getIsComplete() == 2) { %>
+                                                    if (d.getIsComplete() == 1) { %>
                                         <div class='col-lg-4 col-sm-4'> 
                                             <div class="alert alert-success fade in"> 
-                                                <% } else if (d.getIsComplete() == 1) {
-                                                %> 
+                                                    <% } else if (d.getIsComplete() == 2) { %> 
                                                 <div class='col-lg-4 col-sm-4'> 
                                                     <div class="alert alert-warning fade in"> 
                                                         <% } else if (d.getIsComplete() == 0) { %>
@@ -307,13 +307,13 @@
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }%>
-
-                                                                <%out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
-                                                                    out.println("<tr><td><b>Severity: </b></td><td id='" + severity + "'> " + severity + "</td></tr>");
+                                                                    
+                                                                <%out.println("<table border='0' width='100%'><tr><td style='text-align:left'><b>Defect Name: </b></td><td style='text-align:left'> " + dName + "</td></tr>");
+                                                                    out.println("<tr><td style='text-align:left'><b>Severity: </b></td><td style='text-align:left' id='" + severity + "'> " + severity + "</td></tr>");
                                                                     //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
                                                                 %>
-                                                                <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
-                                                                <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
+                                                                <tr><td style='text-align:left'><b>Duedate: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
+                                                                <tr><td style='text-align:left'><b>PM:</b></td><td style='text-align:left'><%=d.getReportedBy()%></td></tr>
 
                                                                 <%out.println("</table>");
 

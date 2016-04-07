@@ -199,13 +199,13 @@
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }
-                                                                    out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + dName + "</td></tr>");
-                                                                    out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");%>
-                                                                <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
-                                                                <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                    out.println("<table border='0' width='100%'><tr><td style='text-align:left'><b>Defect Name: </b></td><td style='text-align:left'> " + dName + "</td></tr>");
+                                                                    out.println("<tr><td style='text-align:left'><b>Severity: </b></td><td style='text-align:left'> " + severity + "</td></tr>");%>
+                                                                <tr><td style='text-align:left'><b>Created: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
+                                                                <tr><td style='text-align:left'><b>Duedate: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY, h:mma"></span></tr>
                                                                     <%if (pm != null || tester != null) {%>
-                                                                <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
-                                                                <tr><td><b>Assigned to:</b></td><td><%=d.getAssignto()%></td></tr>
+                                                                <tr><td style='text-align:left'><b>PM:</b></td><td style='text-align:left'><%=d.getReportedBy()%></td></tr>
+                                                                <tr><td style='text-align:left'><b>Assigned to:</b></td><td style='text-align:left'><%=d.getAssignto()%></td></tr>
                                                                 <% } %>
                                                                 <%out.println("</table>");
 

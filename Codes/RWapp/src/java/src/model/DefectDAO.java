@@ -22,7 +22,8 @@ import java.util.logging.Logger;
 public class DefectDAO {
 
     /**
-     *Adds a new Defect into the Database
+     * Adds a new Defect into the Database
+     *
      * @param pname project name
      * @param dname defect name
      * @param desc description
@@ -72,7 +73,8 @@ public class DefectDAO {
     }
 
     /**
-     *Update the defect into the database
+     * Update the defect into the database
+     *
      * @param id id of the defect
      * @param dname name of the defect
      * @param desc description of the defect
@@ -125,7 +127,8 @@ public class DefectDAO {
     }
 
     /**
-     *Registers the defect to be approved and completed by the Project Manager
+     * Registers the defect to be approved and completed by the Project Manager
+     *
      * @param id the id of the defect
      * @return true or false depending if the method was successful
      */
@@ -156,7 +159,9 @@ public class DefectDAO {
     }
 
     /**
-     *Marks the defect as complete after the developer assigned has successfully solved the defect
+     * Marks the defect as complete after the developer assigned has
+     * successfully solved the defect
+     *
      * @param id the id of the defect
      * @return true or false depending if the method was successful
      */
@@ -187,7 +192,8 @@ public class DefectDAO {
     }
 
     /**
-     *Returns all defects
+     * Returns all defects
+     *
      * @return an ArrayList of all Defect Objects in the database
      */
     public static ArrayList<Defect> retrieveAll() {
@@ -215,8 +221,10 @@ public class DefectDAO {
     }
 
     /**
-     *Gets all the defects that is supposed to be completed in the month indicated by the user
-     * @param month the integer representation of the month 
+     * Gets all the defects that is supposed to be completed in the month
+     * indicated by the user
+     *
+     * @param month the integer representation of the month
      * @return true or false depending if the method was successful
      */
     public static ArrayList<Defect> retrieveAllIncompleteByMonth(int month) {
@@ -246,7 +254,9 @@ public class DefectDAO {
     }
 
     /**
-     *Retrieve all incomplete defects that is assigned to a particular developer in the month
+     * Retrieve all incomplete defects that is assigned to a particular
+     * developer in the month
+     *
      * @param month integer representation of the month in the year
      * @param dev the username of the developer
      * @return an ArrayList of Defect objects
@@ -260,7 +270,7 @@ public class DefectDAO {
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto from defect "
-                    + "where updatetime >= date_sub(now(), interval ? month) and iscomplete='0'and assignto=?;");
+                    + "where updatetime >= date_sub(now(), interval ? month) and assignto=?;");
 
             pstmt.setInt(1, month);
             pstmt.setString(2, dev);
@@ -279,7 +289,8 @@ public class DefectDAO {
     }
 
     /**
-     *Returns all the defects that belong to a particular project
+     * Returns all the defects that belong to a particular project
+     *
      * @param projectname the name of the project
      * @return an ArrayList of defect objects
      */
@@ -309,7 +320,41 @@ public class DefectDAO {
     }
 
     /**
-     *Deletes a defect
+     * Returns all the defects that belong to a particular project
+     *
+     * @param projectname the name of the project
+     * @return an ArrayList of defect objects
+     */
+    public static ArrayList<Defect> retrieveAllByProjectOne(String projectname, String devname) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<Defect> toReturn = new ArrayList<Defect>();
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto from defect where projectname = ? and iscomplete <> 1 and assignto=?;");
+            
+            pstmt.setString(1, projectname);
+            pstmt.setString(2, devname);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                toReturn.add(new Defect(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8), rs.getDate(9), rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionManager.close(conn, pstmt, rs);
+        }
+
+        return toReturn;
+
+    }
+
+    /**
+     * Deletes a defect
+     *
      * @param id the id of the defect
      * @return true or false depending if the method was successful
      */
@@ -337,13 +382,13 @@ public class DefectDAO {
     }
 
     //select * from defect d, projectallocation a where d.projectname = a.projectname and developerusername='kianlam999';
-
     /**
-     *Retrieves all defects that belongs to a developer
+     * Retrieves all defects that belongs to a developer
+     *
      * @param username the username of the developer
      * @return an ArrayList of Defects that belong to the developer
      */
-        public static ArrayList<Defect> retrieveDev(String username) {
+    public static ArrayList<Defect> retrieveDev(String username) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -377,7 +422,8 @@ public class DefectDAO {
     }
 
     /**
-     *Retrieve all defects that is allocated to a developer
+     * Retrieve all defects that is allocated to a developer
+     *
      * @param username the username of the developer
      * @return an ArrayList of defects that is allocated to a developer
      */
@@ -411,7 +457,8 @@ public class DefectDAO {
     }
 
     /**
-     *Retrieves all defects that belong to a Project Manager
+     * Retrieves all defects that belong to a Project Manager
+     *
      * @param username the username of the Project Manager
      * @return an ArrayList of Defects that belong to a Project Manager
      */
@@ -449,7 +496,8 @@ public class DefectDAO {
     }
 
     /**
-     *Retrieves all defects for the tester
+     * Retrieves all defects for the tester
+     *
      * @return an ArrayList of Defects for the tester
      */
     public static ArrayList<Defect> retrieveTester() {
@@ -484,7 +532,8 @@ public class DefectDAO {
     }
 
     /**
-     *Retrieves an individual defect
+     * Retrieves an individual defect
+     *
      * @param id the id of the defect
      * @return the defect object
      */
@@ -515,7 +564,8 @@ public class DefectDAO {
     }
 
     /**
-     *Retrieve a defect from its name
+     * Retrieve a defect from its name
+     *
      * @param defectname the name of the defect
      * @param projectname the name of the project
      * @return the defect object
@@ -547,7 +597,6 @@ public class DefectDAO {
 
     }
 
-   
     public static ArrayList<Defect> filterSortDefectsPm(String filterby, String filterText, String sortby, String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -605,7 +654,6 @@ public class DefectDAO {
 
     }
 
-   
     public static ArrayList<Defect> filterSortDefectsDev(String filterby, String filterText, String sortby, String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -664,7 +712,8 @@ public class DefectDAO {
     }
 
     /**
-     *Gets projects that are completed
+     * Gets projects that are completed
+     *
      * @return ArrayList of project names that have been completed
      */
     public static ArrayList<String> retrieveDistinctCompletedProject() {
@@ -692,7 +741,8 @@ public class DefectDAO {
     }
 
     /**
-     *Gets projects with defects that have been completed by the developer
+     * Gets projects with defects that have been completed by the developer
+     *
      * @param devUsername the username of the developer
      * @return ArrayList of Project names
      */
@@ -721,7 +771,9 @@ public class DefectDAO {
     }
 
     /**
-     *Retrieve defects that have been completed by the developer and approved by the Project Manager or Tester
+     * Retrieve defects that have been completed by the developer and approved
+     * by the Project Manager or Tester
+     *
      * @param username the username of the developer
      * @return an ArrayLif of defects
      */
@@ -755,7 +807,9 @@ public class DefectDAO {
     }
 
     /**
-     *Retrieve projects allocated to the developer which have not been approved by the Project Manager/ Tester
+     * Retrieve projects allocated to the developer which have not been approved
+     * by the Project Manager/ Tester
+     *
      * @param devUsername the username of the developer
      * @return Arraylist of project name
      */
@@ -784,7 +838,9 @@ public class DefectDAO {
     }
 
     /**
-     *Returns all project names that have defects not approved by the project manager or tester
+     * Returns all project names that have defects not approved by the project
+     * manager or tester
+     *
      * @return Arraylist of string of project names
      */
     public static ArrayList<String> retrieveDistinctProject() {
