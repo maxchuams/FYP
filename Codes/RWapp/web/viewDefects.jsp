@@ -206,24 +206,7 @@
                         dList = DefectDAO.retrieveAllIncompleteByMonth(Integer.parseInt(sort), dev.getUsername());
                     }
                 %>
-                <%if (pListString.size() <= 0) {%>
-                <div class="row">
-                    <div class="col-lg-12" id="mainmain"> 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <section class="panel">
-                                    <div class="alert alert-block alert-danger fade in">
-                                        <button data-dismiss="alert" class="close close-sm" type="button">
-                                            <i class="fa fa-times"></i>
-                                        </button>
-                                        No defects found
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%  } else {%>
+                
 
                 <div class="row">
                     <div class="col-lg-12" id="mainmain"> 
@@ -260,8 +243,11 @@
                                 </span></div></section>
 
 
-                        <%for (String p : pListString) {
+                        <%
+                                int counter = 0;                
+                                for (String p : pListString) {
                                 if (DefectDAO.retrieveAllByProjectOne(p,dev.getUsername()).size() != 0) {
+                                    counter++;
                         %>
                         <div class="row divClass" id="<%=p%>">
                             <div class="col-sm-12">
@@ -336,8 +322,28 @@
                                                 </div>
                                             </div>
                                             <% }
-                                                }
+                                                
                 }
+                                if(counter<=0){%>
+                                    
+                <div class="row">
+                    <div class="col-lg-12" id="mainmain"> 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <section class="panel">
+                                    <div class="alert alert-block alert-danger fade in">
+                                        <button data-dismiss="alert" class="close close-sm" type="button">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        No defects found
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                               <% }
                                             %>
 
                                             <!--end of kw codes-->

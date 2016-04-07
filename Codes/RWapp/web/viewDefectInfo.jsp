@@ -126,7 +126,7 @@
                                                             out.println("<span class='label label-danger label-mini' title='Defect not yet fixed&#13;Awaiting updates from Developer'>DEFECT IN PROGRESS</span></a>");
                                                         }
                                                     } else if (d.getIsComplete() == 1 && pm != null) { //defect marked as complete by dev
-                                            %><a href='defectComplete?id=<%=d.getId()%>&case=1'>
+%><a href='defectComplete?id=<%=d.getId()%>&case=1'>
                                                         <%out.println("<span class='label label-warning label-mini' title='Defect fixed by developer&#13;Please check and mark complete'>MARK AS FIXED</span></a>");
                                                             } else if (d.getIsComplete() == 1 && dev != null) {
                                                                 out.println("<span class='label label-warning label-mini' title='Defect fixed&#13;Awaiting checks from PM'>CHECKING IN PROGRESS</span>");
@@ -211,7 +211,85 @@
                                                             </section>
                                                             </div>
                                                             </div>
-                                                            </section>
-                                                            </section>
-                                                            </body>
-                                                            </html>
+
+                                                            <% if (pm != null) {
+                                                                String projName = d.getProjectName();
+                                                                ArrayList<Defect> dList = DefectDAO.retrievePm(pm.getUsername());
+                                                            %>
+                                                            <!--show project's defect-->
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <section class="panel">
+                                                                    <header class="panel-heading">
+                                                                        Defects under Project <%=projName%>
+                                                                        <span class="tools pull-right">
+                                                                            <a href="addDefect.jsp?name=<%=projName%>" class="fa fa-plus-circle"></a>
+                                                                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                                                        </span>
+                                                                    </header>
+                                                                    <div class="panel-body">
+                                                                        <%
+                                                                            int count = 0;
+                                                                            for (Defect def : dList) {
+                                                                                int sev = def.getSeverity();
+                                                                                String severity = "";
+                                                                                if (sev == 1) {
+                                                                                    severity = "Low";
+                                                                                } else if (sev == 2) {
+                                                                                    severity = "Medium";
+                                                                                } else if (sev == 3) {
+                                                                                    severity = "High";
+                                                                                }
+                                                                                if (projName.equalsIgnoreCase(def.getProjectName())) {
+                                                                                    if (pm != null) {
+                                                                                        out.println("<a href='viewDefectInfo.jsp?defectId=" + def.getId() + "'>");
+                                                                                        if (def.getIsComplete() == 2) { %>
+                                                                        <div class='col-lg-4 col-sm-4'> 
+                                                                            <div class="alert alert-success fade in"> 
+                                                                                <% } else if (def.getIsComplete() == 1) {
+                                                                                %> 
+                                                                                <div class='col-lg-4 col-sm-4'> 
+                                                                                    <div class="alert alert-warning fade in"> 
+                                                                                        <% } else if (def.getIsComplete() == 0) { %>
+                                                                                        <div class='col-lg-4 col-sm-4'> 
+                                                                                            <div class="alert alert-danger fade in"> 
+                                                                                                <% }
+                                                                                                %>
+                                                                                                <%
+                                                                                                        String dName;
+                                                                                                        if (def.getDefectName().length() > 20) {
+                                                                                                            dName = def.getDefectName().substring(0, 20) + "...";
+                                                                                                        } else {
+                                                                                                            dName = def.getDefectName();
+                                                                                                        }
+                                                                                                        out.println("<table border='0' width='100%'><tr><td style='text-align:left'><b>Defect Name: </b></td><td style='text-align:left'> " + dName + "</td></tr>");
+                                                                                                        out.println("<tr><td style='text-align:left'><b>Severity: </b></td><td style='text-align:left'> " + severity + "</td></tr>");
+                                                                                                        out.println("<tr><td style='text-align:left'><b>Date: </b></td><td style='text-align:left'> " + def.getUpdateTime().subSequence(0, 16) + "</td></tr>");
+                                                                                                        out.println("</table>");
+                                                                                                    }
+                                                                                                %> 
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        </a>
+                                                                                        <%
+                                                                                                    count++;
+                                                                                                }
+                                                                                            }
+                                                                                            if (count == 0) {
+                                                                                                out.println("<a href='addDefect.jsp?name=" + projName + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
+                                                                                            }
+
+                                                                                            count = 0;
+
+                                                                                        %>
+                                                                                    </div>
+                                                                                    </section>
+                                                                                </div>
+                                                                            </div>
+                                                                            <% }%>
+                                                                            <!--end of proj's defect-->
+
+                                                                            </section>
+                                                                            </section>
+                                                                            </body>
+                                                                            </html>

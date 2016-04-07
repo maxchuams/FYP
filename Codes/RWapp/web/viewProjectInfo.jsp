@@ -240,9 +240,15 @@
                                                         <% }
                                                         %>
                                                         <%
-                                                                out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td> " + d.getDefectName() + "</td></tr>");
-                                                                out.println("<tr><td><b>Severity: </b></td><td> " + severity + "</td></tr>");
-                                                                out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
+                                                String dName;
+                                    if (d.getDefectName().length() > 20) {
+                                        dName = d.getDefectName().substring(0, 20) + "...";
+                                    } else {
+                                        dName = d.getDefectName();
+                                    }
+                                                                out.println("<table border='0' width='100%'><tr><td style='text-align:left'><b>Defect Name: </b></td><td style='text-align:left'> " + dName + "</td></tr>");
+                                                                out.println("<tr><td style='text-align:left'><b>Severity: </b></td><td style='text-align:left'> " + severity + "</td></tr>");
+                                                                out.println("<tr><td style='text-align:left'><b>Date: </b></td><td style='text-align:left'> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
                                                                 out.println("</table>");
                                                             }
                                                         %> 
