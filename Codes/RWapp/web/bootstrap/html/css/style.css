@@ -2571,6 +2571,14 @@ ul.inbox-pagination li {
     margin-bottom:20px;
     text-transform:uppercase;
 }
+.prf-border-head1 {
+    color:#1fb5ad;
+    border-bottom:0px solid #f1f2f7;
+    font-size:16px;
+    font-weight:bold;
+    margin-bottom:20px;
+    text-transform:uppercase;
+}
 .wk-progress {
     border-bottom:1px solid #f1f2f7;
     margin-bottom:20px;
@@ -4380,7 +4388,7 @@ tr.odd.gradeX td.sorting_1,tr.even.gradeX td.sorting_1,table.display tr.even.gra
 }
 .pricing-table.most-popular {
     position:relative;
-    height: 300px;
+    height: 330px;
     padding: 0px;
 }
 .most-popular {

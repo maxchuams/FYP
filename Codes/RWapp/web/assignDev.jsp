@@ -56,7 +56,7 @@
                     <div class="row">
                         <section class="panel">
                             <div class="panel-body">
-                                <h3 class="prf-border-head">Please choose your preferred developer(s): </h3> 
+                                <h3 class="prf-border-head1">Please choose your preferred developer(s): </h3> 
                             </div>
                         </section>
                     </div>
@@ -78,7 +78,7 @@
                                 devDetails += rConcat.getUsername() + "," + rConcat.getEarlieststart() + "," + rConcat.getEstimatecompletion();
                             }
                     %>
-                    <% if (recommendations.size() == 3) { %>
+                    <% if (recommendations.size() >= 3) { %>
                     <div class="col-md-12">
                         <div class="row">
                             <% } %>
@@ -101,7 +101,7 @@
                                                         <% for (Recommendation r : recommendations) {%>
 
                                                         <!--kaiwen code-->
-                                                        <% if (recommendations.size() == 3) { %>
+                                                        <% if (recommendations.size() >= 3) { %>
                                                         <div class="col-lg-4 col-sm-4">
                                                             <% } %>
                                                             <% if (recommendations.size() == 2) { %>
@@ -122,8 +122,8 @@
                                                                         <div align="center" class="col-md-12 col-sm-12 inv-label">Dev overall score: <%=r.getZainessscore()%></div><br/>
                                                                         <ul class="list-unstyled">
                                                                             <li><i class="fa fa-briefcase"></i> <%=r.getCurrentprojectcount()%> current projects</li>
-                                                                            <li><i class="fa fa-clock-o"></i> Earliest start date <%=r.getEarlieststart()%></li>
-                                                                            <li><i class="fa fa-calendar"></i> <%=r.getEstimateworkingday()%> days to complete project</li>
+                                                                            <li><i class="fa fa-clock-o"></i> <%=r.getEstimateworkingday()%> days to complete project</li>
+                                                                            <li><i class="fa fa-calendar"></i> Earliest start date <%=r.getEarlieststart()%></li>
                                                                             <li><i class="fa fa-calendar"></i> Est Completion <%= r.getEstimatecompletion()%></li>
                                                                             <li><i class="fa fa-bug"></i> Avg <%=r.getAvgdefectperproject()%> defects per project</li>
                                                                             <li><i class="fa fa-hand-o-right"></i> Completed <%=r.getProjectexperiencecount()%> similar projs</li>
