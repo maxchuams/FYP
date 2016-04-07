@@ -93,13 +93,13 @@
             out.println("<li>");
             out.println("<a style='color:#000000' href=' processReadNotif?notifid=" + notification.getId() +"&markas=readandshowit'>");
             if (status.equals("F")) {
-                out.println("<div class=\"alert alert-danger clearfix\" style = \"width:280px ; background:#1fb5ad ; color: #000000 ; height:80px\">");
+                out.println("<div class=\"alert alert-danger clearfix\" style = \"width:280px ; background:#1fb5ad ; color: #000000 ; height:85px\">");
                 out.println("<div class=\"noti-info\" style='color:#fcfcfc'>");
                 out.println(notification.toString());
                 out.println(toPrint.format(dateFormat.parse(notification.getDatetime())));
                 out.println("</div");
             } else {
-                out.println("<div class=\"alert alert-success clearfix\" style = \"width:280px ; background:#EDF5ED ; height:80px\">");
+                out.println("<div class=\"alert alert-success clearfix\" style = \"width:280px ; background:#EDF5ED ; height:85px\">");
                 out.println("<div class=\"noti-info\">");
                 out.println(notification.toString());
                 out.println(dateFormat.parse(notification.getDatetime()));
