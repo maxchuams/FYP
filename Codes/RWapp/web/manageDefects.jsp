@@ -21,7 +21,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Defects</title>
-        <script src="./bootstrap/paging.js"></script>
+        <script src="./bootstrap/imtech.js"></script>
         <script src="js/moment.js"></script>
         <script> moment().format();</script>
 
@@ -63,49 +63,7 @@
         </script>
 
         <script>
-            function fuck() {
-                var lowlow = [];
-                var medmed = [];
-                var highhigh = [];
-                var obj = document.getElementsByClassName("divClass");
-                for (var j = 0; j < obj.length; j++) {
-                    var allDivTd = obj[j].getElementsByTagName("TD");
-                    if (allDivTd[3].id == 'Low') {
-
-                        lowlow.push(obj[j].id);
-                    } else if (allDivTd[3].id == 'Medium') {
-                        medmed.push(obj[j].id);
-                    } else {
-                        //alert(allDivTd[3].id)
-                        highhigh.push(obj[j].id);
-                    }
-//                for(var i = 0; i < allDivTd.length; i++){
-//                var td = allDivTd[i].id;
-//                if(td == 'Low'){
-//                            alert(obj[j].id +"" +td);
-//                }
-//                }
-//                alert('next');
-                }
-                //alert(lowlow);
-//            alert(medmed);
-//            alert(highhigh);
-                var final1 = medmed.concat(highhigh);
-                var final2 = lowlow.concat(final1);
-//            alert(final2);
-
-                var myNode = document.getElementById('mainmain');
-//            while (myNode.firstChild) {
-//                myNode.removeChild(myNode.firstChild);
-//                }
-
-                for (var i = 0; i < final2.length; i++) {
-                    var xx = document.getElementById(final2[i]);
-                    myNode.appendChild(xx);
-
-                }
-
-            }
+            
         </script>
 
         <script>
@@ -174,24 +132,46 @@
         
         <script>
             
-            var mykey = 'AIzaSyBIWGq96Auj266WW_CmGhh_IYPaZ3bOcAQ'; // typically like Gtg-rtZdsreUr_fLfhgPfgff
-var calendarid = 'guoxi.lau.2013@smu.edu.sg'; // will look somewhat like 3ruy234vodf6hf4sdf5sd84f@group.calendar.google.com
-
-$.ajax({
-    type: 'GET',
-    url: encodeURI('https://www.googleapis.com/calendar/v3/calendars/' + calendarid+ '/events?key=' + mykey),
-    dataType: 'json',
-    success: function (response) {
-        alert('yay');
-    },
-    error: function (response) {
-        alert('nay');
-    }
-});
+           function abcd() {
+               
+            var e = document.getElementById("sort");
+            var strUser = e.options[e.selectedIndex].value;
+            if (strUser==(1)){
+                fuck()
+            }else if(strUser==(2)){
+                suck()
+            }else{
+                alert("WIP");
+            }
+           }
             
-        </script>
+            function fuck() {
+                var lowlow = [];
+                var medmed = [];
+                var highhigh = [];
+                var obj = document.getElementsByClassName("divClass");
+                for (var j = 0; j < obj.length; j++) {
+                    var allDivTd = obj[j].getElementsByTagName("TD");
+                    if (allDivTd[3].id == 'Low') {
+                        lowlow.push(obj[j].id);
+                    } else if (allDivTd[3].id == 'Medium') {
+                        medmed.push(obj[j].id);
+                    } else {
+                        highhigh.push(obj[j].id);
+                    }
+                }
+                var final1 = medmed.concat(highhigh);
+                var final2 = lowlow.concat(final1);
+                var myNode = document.getElementById('mainmain');
+                for (var i = 0; i < final2.length; i++) {
+                    var xx = document.getElementById(final2[i]);
+                    myNode.appendChild(xx);
+                }
+                alert("done");
+            }
+            
+        </script>    
         
-
     </head>
     <body>
 
@@ -272,7 +252,7 @@ $.ajax({
                                     }
                                 %><span class="pull-right top-menu">
 
-                                    <form class="form-inline" role="form" action="manageDefects.jsp">
+                                    <form class="form-inline" role="form" action="viewDefects.jsp">
                                         <div class="form-group">View:
                                             <select name="sort" class="form-control" onchange="this.form.submit()">
                                                 <%if (sort == null) {%>
@@ -316,15 +296,15 @@ $.ajax({
                                                                             <button onclick="name1()" class="btn btn-round btn-primary btn-sm"><i class="fa fa-sort-amount-desc"></i> Sort Descending by name</button> 
                                     -->
                                 </span>
-                                            <span style="text-align:left;"><p>Page <a href="javascript:P.turnPage(1)">1</a> <a href="javascript:P.turnPage(2)">2</a> <a href="javascript:P.turnPage(3)">3</a></p></span>
                             </div>
                         </section>
-                                            <div class="items">
-                        <%if(pListString.size()<=0){%>
-                        <b>no project</b>
-                      <%  }%>
-                        <%for (String s : pListString) {%>
-                        <div class="row divClass" id="<%=s%>">
+                                            <div id="content">
+                                                <%
+                                    int counter = 0;
+                        for (String s : pListString) {
+                        if (DefectDAO.retrieveAllByProjectOne(s,dev.getUsername()).size() != 0) {
+                                    counter++; %>
+                        <div class="row divClass z" id="<%=s%>">
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
@@ -347,13 +327,13 @@ $.ajax({
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (s.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 1)) {
+                                                if (s.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {
                                                     if (pm != null) {
-                                                        out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
-                                                        if (d.getIsComplete() == 2) { %>
+                                                        out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'></a>");
+                                                        if (d.getIsComplete() == 1) { %>
                                         <div class='col-lg-4 col-sm-4'> 
                                             <div class="alert alert-success fade in"> 
-                                                <% } else if (d.getIsComplete() == 1) {
+                                                <% } else if (d.getIsComplete() == 2) {
                                                 %> 
                                                 <div class='col-lg-4 col-sm-4'> 
                                                     <div class="alert alert-warning fade in"> 
@@ -368,12 +348,12 @@ $.ajax({
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }
-                                                                    out.println("<table border='0' width='100%'><tr><td><b>Defect Name: </b></td><td id='" + dName + "'> " + dName + "</td></tr>");
-                                                                    out.println("<tr><td><b>Severity: </b></td><td id='" + severity + "'> " + severity + "</td></tr>");%>
-                                                                <tr><td><b>Created: </b></td><td><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY"></span></tr>
-                                                                <tr><td><b>Duedate: </b></td><td><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
-                                                                <tr><td><b>PM:</b></td><td><%=d.getReportedBy()%></td></tr>
-                                                                <tr><td><b>Assigned to:</b></td><td><%=d.getAssignto()%></td></tr>
+                                                                    out.println("<table border='0' width='100%'><tr><td style='text-align:left'><b>Defect Name: </b></td><td style='text-align:left' id='" + dName + "'> " + dName + "</td></tr>");
+                                                                    out.println("<tr><td><b>Severity: </b></td><td style='text-align:left' id='" + severity + "'> " + severity + "</td></tr>");%>
+                                                                <tr><td><b>Created: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY"></span></tr>
+                                                                <tr><td><b>Duedate: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
+                                                                <tr><td><b>PM:</b></td><td style='text-align:left'><%=d.getReportedBy()%></td></tr>
+                                                                <tr><td><b>Assigned to:</b></td><td style='text-align:left'><%=d.getAssignto()%></td></tr>
 
 
                                                                 <%out.println("</table>");
@@ -397,14 +377,41 @@ $.ajax({
                                                     </section>
                                                 </div>
                                             </div>
-                                            <% }%>
-                                        </div>
-                                            <!--end of kw codes-->
-
-                                            </section>
-                                        </div>
-                                   
+                                                    
+                                            <% 
+                                        }                        
+                                    }
+                if(counter<=0){%>
+                                    
+                <div class="row">
+                    <div class="col-lg-12" id="mainmain"> 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <section class="panel">
+                                    <div class="alert alert-block alert-danger fade in">
+                                        <button data-dismiss="alert" class="close close-sm" type="button">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        No defects found
+                                    </div>
                                 </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                               <% }
+                                            %>
+                                        
+                                            
+                                        </div>
+                                            <div id="pagingControls"></div>
+                                    </div>
+                            </div>
+                                            <!--end of kw codes-->
+                                    
+                                            </section>
+                                            </section>
                                 <script>
                                     $(document).ready(function () {
                                         $('.time').each(function () {
@@ -417,21 +424,24 @@ $.ajax({
                                         });
                                     });
                                 </script>
-                                <script>
-                                    
-        function Paginate(itemsPerPage) {
-        var items = document.querySelectorAll(".items div"),
-            iL = items.length || 0;
+                                <script type="text/javascript">
+var pager = new Imtech.Pager();
+$(document).ready(function() {
+    pager.paragraphsPerPage = 5; // set amount elements per page
+    pager.pagingContainer = $('#content'); // set of main container
+    pager.paragraphs = $('div.z', pager.pagingContainer); // set of required containers
+    pager.showPage(1);
+});
+</script>
+<style>
+    
+    body{background:#eee;font-family:Verdana, Helvetica, Arial, sans-serif;margin:0;padding:0}
+.example{background:#FFF;width:1000px;font-size:80%;border:1px #000 solid;margin:0.5em 10% 0.5em;padding:1em 2em 2em;-moz-border-radius:3px;-webkit-border-radius:3px}
 
-        this.turnPage = function(pageNum) {
-            var startItem = (pageNum*itemsPerPage) - itemsPerPage;
-            for (var i = 0; i < iL; i++) {
-                items[i].style.display = (startItem <= i && i < (startItem + itemsPerPage)) ? "block" : "none";
-            }
-        }
-    }
-var P = new Paginate(3);//10 items per page
-                                    
-                                </script>
+#content p{text-indent:20px;text-align:justify;}
+#pagingControls ul{display:inline;padding-left:0.5em}
+#pagingControls li{display:inline;padding:0 0.5em}
+    
+</style>
                                 </body>
                                 </html>
