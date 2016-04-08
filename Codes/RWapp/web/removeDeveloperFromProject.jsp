@@ -34,11 +34,7 @@
                         <section class="panel">
                             <header class="panel-heading">
                                 Editing: Project <%=currP.getName()%>
-                                <span class="tools pull-right">
-                                    <a href="editProject.jsp?pname=<%=currP.getName()%>">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                        <span>Edit</span>
-                                    </a>
+              
                                 </span>
                             </header>
                             <div class="panel-body">
@@ -70,7 +66,52 @@
                         </section>
                     </div>
                 </div>
+        
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                
+                            <div class="panel-body">
+                                <form action="completeDev">
+                                    <div class="form-group">
+                                        <label for="inputEmail1" class="col-lg-3 control-label">Developer(s) to mark complete:</label>
+                                        <div class="col-lg-9">
+                                            <%
+                                                for (String d : devList) {
+                                            %>
+                                            <input type='checkbox' name='dev' value='<%=d%>'/> <%=d%></br>
+                                            <%}%>
+                                            <p></p>
+                                        </div>
+                                    </div>
+
+                                    <input type='hidden' name='projectId' value='<%=id%>'/>
+                                    <input type="hidden" name="pmname" value="<%=pm.getUsername()%>"/>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-3 col-lg-9">
+                                            <p></p>
+                                            <button type="submit" class="btn btn-primary">Mark as Complete</button>
+                                        </div>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
             </section>
+ 
+                                    
+                                    
         </section>
     </body>
 </html>

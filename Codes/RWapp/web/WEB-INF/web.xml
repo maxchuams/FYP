@@ -132,6 +132,10 @@
         <servlet-name>updateCronActivity</servlet-name>
         <servlet-class>src.controller.updateCronActivity</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>completeDev</servlet-name>
+        <servlet-class>src.controller.completeDev</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateUser</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
@@ -263,6 +267,10 @@
     <servlet-mapping>
         <servlet-name>updateCronActivity</servlet-name>
         <url-pattern>/updateCronActivity</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>completeDev</servlet-name>
+        <url-pattern>/completeDev</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

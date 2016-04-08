@@ -85,8 +85,8 @@ public class SkillDAO {
     }
     
     /**
-     *
-     * @return
+     *Retrieve all unique skills from the database
+     * @return ArrayList of String
      */
     public static ArrayList<String> retrieveAllSkill() {
 
@@ -114,10 +114,10 @@ public class SkillDAO {
     }
     
     /**
-     *
-     * @param username
-     * @param skill
-     * @return
+     *Add a new skill to the developer in the database
+     * @param username developer's username
+     * @param skill skill name
+     * @return true or false depending if the method was successful
      */
     public static boolean addDevSkill(String username, String skill) {
 
@@ -149,10 +149,10 @@ public class SkillDAO {
     }
 
     /**
-     *
-     * @param username
-     * @param skill
-     * @return
+     *Delete a skill that a developer already has
+     * @param username developer's username
+     * @param skill skill to delete
+     * @return true or false depending if the method was successful
      */
     public static boolean deleteSkill(String username, String skill){
          Connection conn = null;
