@@ -28,9 +28,9 @@
     <body>
         <%
             String projectName = request.getParameter("projectName");
-            System.out.println(projectName + " DEBUGG");
+            
             Project p = ProjectDAO.retrieveProjectByProjectName(projectName);
-            System.out.println(p);
+           
             ArrayList<String> arr = ProjectDAO.retrievePlanActualEnd(projectName);
            
             ArrayList<Defect> dList = null;
