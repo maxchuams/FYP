@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.RequestDispatcher;
@@ -261,7 +262,7 @@ public class processRecommendation extends HttpServlet {
              notificationDAO.addNotification(dev[i], "assignedProject", projName);
             }
             //
-            RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + projName);
+            RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + URLEncoder.encode(projName, "UTF-8"));
             if(!manual && rlist != null){
               RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim())-1);
             }

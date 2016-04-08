@@ -4,6 +4,7 @@
     Author     : Kaiwen
 --%>
 
+<%@page import="java.net.URLEncoder"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -132,7 +133,7 @@
                                         if (t.getIsComplete() == 0) {
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
-                                <% out.println("<a href='viewProjectInfo.jsp?projectName=" + t.getName() + "'>");
+                                <% out.println("<a href='viewProjectInfo.jsp?projectName=" + URLEncoder.encode(t.getName(), "UTF-8") + "'>");
                                     String pName;
                                     if (t.getName().length() > 27) {
                                         pName = t.getName().substring(0, 27) + "...";
