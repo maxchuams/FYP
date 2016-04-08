@@ -302,7 +302,7 @@
                                                 <%
                                     int counter = 0;
                         for (String s : pListString) {
-                        if (DefectDAO.retrieveAllByProjectOne(s,dev.getUsername()).size() != 0) {
+                        if (DefectDAO.retrieveAllByProject(s).size() != 0) {
                                     counter++; %>
                         <div class="row divClass z" id="<%=s%>">
                             <div class="col-sm-12">
@@ -327,7 +327,7 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (s.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {
+                                                if (s.equalsIgnoreCase(d.getProjectName())) {
                                                     if (pm != null) {
                                                         out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'></a>");
                                                         if (d.getIsComplete() == 1) { %>
