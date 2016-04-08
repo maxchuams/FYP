@@ -18,6 +18,11 @@ import java.util.logging.Logger;
  */
 public class TrelloDetailsDAO {
     
+    /**
+     *Get the Trello Key of the person
+     * @param username username of the person
+     * @return String
+     */
     public static String retrieveTrelloKey(String username){
         
         Connection conn = null;
@@ -43,6 +48,12 @@ public class TrelloDetailsDAO {
         return toReturn;
      
     }
+
+    /**
+     *Get the trello token of the person
+     * @param username the username of the person
+     * @return String
+     */
     public static String retrieveTrelloToken(String username){
         
         Connection conn = null;

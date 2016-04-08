@@ -18,6 +18,10 @@ import java.util.logging.Logger;
  */
 public class TrelloConfigDAO {
 
+    /**
+     *Retrieves a TrelloProperties Object with the Trello board details
+     * @return TrelloProperties object
+     */
     public static TrelloProperties retrieveConfig() {
 
         Connection conn = null;
@@ -44,6 +48,11 @@ public class TrelloConfigDAO {
 
     }
 
+    /**
+     *Updates the datebase with a TrelloProperties object
+     * @param tp TrelloProperties Object
+     * @return true or false depending if the method was successful
+     */
     public static boolean updateConfig(TrelloProperties tp) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -72,6 +81,10 @@ public class TrelloConfigDAO {
 
     }
     
+    /**
+     *
+     * @return the value for pausing the cron job
+     */
     public static int retrieveCronPause() {
 
         Connection conn = null;
@@ -98,6 +111,11 @@ public class TrelloConfigDAO {
 
     }
 
+    /**
+     *
+     * @param update the value for the pausing of the cron job
+     * @return true or false depending if the method was successful
+     */
     public static boolean updateCronPause(int update) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -123,6 +141,11 @@ public class TrelloConfigDAO {
         }
 
     }
+
+    /**
+     *
+     * @return String of Cron job details
+     */
     public static String retrieveCronDetails() {
 
         Connection conn = null;
@@ -148,6 +171,12 @@ public class TrelloConfigDAO {
         return toReturn;
 
     }
+
+    /**
+     *
+     * @param update Cron Job Details
+     * @return  true or false depending if the method was successful
+     */
     public static boolean updateCronDetails(String update) {
         Connection conn = null;
         PreparedStatement pstmt = null;
