@@ -109,7 +109,7 @@ public class completeDev extends HttpServlet {
             return;
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("viewTrelloCards.jsp");
-            request.setAttribute("success", "Developer(s) successfully removed from project");
+            request.setAttribute("success", "Completion status for the developer(s) successfully updated");
             rd.forward(request, response);
             return;
         }

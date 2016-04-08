@@ -99,7 +99,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-offset-3 col-lg-9">
                                             <p></p>
-                                            <button type="submit" class="btn btn-primary">Remove</button>
+                                            <button type="submit" class="btn btn-primary">Mark as Complete</button>
                                         </div>
                                     </div>
                                     
