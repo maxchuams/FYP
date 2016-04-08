@@ -327,7 +327,7 @@
                                                 } else if (sev == 3) {
                                                     severity = "High";
                                                 }
-                                                if (s.equalsIgnoreCase(d.getProjectName())) {
+                                                if (s.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {
                                                     if (pm != null) {
                                                         out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'></a>");
                                                         if (d.getIsComplete() == 1) { %>
