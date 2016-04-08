@@ -116,9 +116,21 @@
                                                 Start and end date
                                             </td>
                                             <td>
-                                                SD: <%=arr.get(0)%><br/>
+                                                SD: <% if(arr!= null && ("null").equals(arr.get(0))){%>
+
+                                                      <%=arr.get(0)%>
+                                                    <%} else { 
+                                                        out.println("No dates given");
+                                                }%>
+                                                    
+        <br/>
                                             </td>
-                                            <td>ED: <%=arr.get(1)%></td>
+                                            <td>ED:  <% if(arr!= null && ("null").equals(arr.get(1))){%>
+
+                                                      <%=arr.get(0)%>
+                                                    <%} else { 
+                                                        out.println("No dates given");
+                                                }%></td>
                                         </tr>
                                         <% if (pm != null) {%>
                                         <tr>
@@ -154,7 +166,7 @@
                                             </td>
                                             <td>
                                                 <% if (pm!=null){ %>
-                                                <a href="removeDeveloperFromProject.jsp?id=<%=p.getTrelloKey()%>"><span class='label label-danger label-mini'>Remove developer</span></a>
+                                                <a href="removeDeveloperFromProject.jsp?id=<%=p.getTrelloKey()%>"><span class='label label-danger label-mini'>Edit developer</span></a>
                                                 <% } %>
                                             </td>
                                         </tr>
