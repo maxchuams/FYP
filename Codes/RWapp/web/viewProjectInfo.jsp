@@ -23,7 +23,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Project Information</title>
     </head>
     <body>
         <%
@@ -116,7 +116,7 @@
                                                 Start and end date
                                             </td>
                                             <td>
-                                                SD: <% if(arr!= null && ("null").equals(arr.get(0))){%>
+                                                SD: <% if(arr!= null && !("null").equals(arr.get(0))){%>
 
                                                       <%=arr.get(0)%>
                                                     <%} else { 
@@ -125,7 +125,7 @@
                                                     
         <br/>
                                             </td>
-                                            <td>ED:  <% if(arr!= null && ("null").equals(arr.get(1))){%>
+                                            <td>ED:  <% if(arr!= null && !("null").equals(arr.get(1))){%>
 
                                                       <%=arr.get(0)%>
                                                     <%} else { 

@@ -559,6 +559,7 @@ public class ProjectDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
+        
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select min(planstart) as planstart, max(planend) as planend from projectallocation  where projectname=? and iscomplete=0 group by projectname;");
