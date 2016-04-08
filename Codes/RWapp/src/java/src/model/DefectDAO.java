@@ -236,7 +236,7 @@ public class DefectDAO {
         try {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto from defect "
-                    + "where updatetime >= date_sub(now(), interval ? month) and iscomplete='0';");
+                    + "where updatetime >= date_sub(now(), interval ? month);");
 
             pstmt.setInt(1, month);
             rs = pstmt.executeQuery();
