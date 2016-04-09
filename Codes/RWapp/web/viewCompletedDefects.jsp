@@ -178,13 +178,13 @@
                                                     severity = "High";
                                                 }
 
-                                                if (s.equalsIgnoreCase(d.getProjectName()) && d.getIsComplete() == 2) {
+                                                if (s.equalsIgnoreCase(d.getProjectName()) && d.getIsComplete() == 1) {
 
                                                     out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
-                                                    if (d.getIsComplete() == 2) { %>
+                                                    if (d.getIsComplete() == 1) { %>
                                         <div class='col-lg-4 col-sm-4'> 
                                             <div class="alert alert-success fade in"> 
-                                                <% } else if (d.getIsComplete() == 1) {
+                                                <% } else if (d.getIsComplete() == 2) {
                                                 %> 
                                                 <div class='col-lg-4 col-sm-4'> 
                                                     <div class="alert alert-warning fade in"> 

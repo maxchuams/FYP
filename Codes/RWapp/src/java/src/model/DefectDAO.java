@@ -724,7 +724,7 @@ public class DefectDAO {
         ArrayList<String> toReturn = new ArrayList<String>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select distinct projectname from defect where isComplete=2");
+            pstmt = conn.prepareStatement("select distinct projectname from defect where isComplete=1");
 
             rs = pstmt.executeQuery();
 
@@ -754,7 +754,7 @@ public class DefectDAO {
         ArrayList<String> toReturn = new ArrayList<String>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select distinct projectname from defect where isComplete=2 and assignto=?");
+            pstmt = conn.prepareStatement("select distinct projectname from defect where isComplete=1 and assignto=?");
             pstmt.setString(1, devUsername);
             rs = pstmt.executeQuery();
 
@@ -787,7 +787,7 @@ public class DefectDAO {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("select defectid,d.projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto "
                     + "from defect d "
-                    + "where d.assignto = ? and isComplete=2;");
+                    + "where d.assignto = ? and isComplete=1;");
 
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();

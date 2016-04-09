@@ -329,7 +329,8 @@
                                                 }
                                                 if (s.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {
                                                     if (pm != null) {
-                                                        out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'></a>");
+                                                        out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
+                                                        
                                                         if (d.getIsComplete() == 1) { %>
                                         <div class='col-lg-4 col-sm-4'> 
                                             <div class="alert alert-success fade in"> 
@@ -361,7 +362,7 @@
                                                                 %> 
                                                             </div>
                                                         </div>
-                                                        
+                                                        </a>
                                                         <%
                                                                     count++;
                                                                 }

@@ -125,12 +125,12 @@
                                                         } else {
                                                             out.println("<span class='label label-danger label-mini' title='Defect not yet fixed&#13;Awaiting updates from Developer'>DEFECT IN PROGRESS</span></a>");
                                                         }
-                                                    } else if (d.getIsComplete() == 1 && pm != null) { //defect marked as complete by dev
+                                                    } else if (d.getIsComplete() == 2 && pm != null) { //defect marked as complete by dev
 %><a href='defectComplete?id=<%=d.getId()%>&case=1'>
                                                         <%out.println("<span class='label label-warning label-mini' title='Defect fixed by developer&#13;Please check and mark complete'>MARK AS FIXED</span></a>");
-                                                            } else if (d.getIsComplete() == 1 && dev != null) {
+                                                            } else if (d.getIsComplete() == 2 && dev != null) {
                                                                 out.println("<span class='label label-warning label-mini' title='Defect fixed&#13;Awaiting checks from PM'>CHECKING IN PROGRESS</span>");
-                                                            } else if (d.getIsComplete() == 2) { //defect marked complete by both PM and dev
+                                                            } else if (d.getIsComplete() == 1) { //defect marked complete by both PM and dev
                                                                 out.println("<span class='label label-success label-mini' title='Defect fixed by Dev&#13; and checked by PM'>DEFECT FIXED</span>");
                                                             } %></td></tr>
                                                         <tr><td>Defect severity</td><td>
