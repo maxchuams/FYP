@@ -164,7 +164,15 @@
                                 <div class="col-md-4">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <%=t.getName()%>
+                                            <%
+                                String pName;
+                                    if (t.getName().length() > 27) {
+                                        pName = t.getName().substring(0, 27) + "...";
+                                    } else {
+                                        pName = t.getName();
+                                    }
+                                            %>
+                                            <%=pName%>
                                             <span class="tools pull-right">
                                             </span>
                                         </div>
