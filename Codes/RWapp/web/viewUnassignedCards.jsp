@@ -79,10 +79,19 @@
                                     if (tb != null) {
                                         for (TrelloCard t : tb) {%>
                                 <!-- BEGIN Portlet PORTLET-->
+                                <%
+                                            String pName;
+                                            if (t.getName().length() > 27) {
+                                        pName = t.getName().substring(0, 27) + "...";
+                                    } else {
+                                        pName = t.getName();
+                                    }
+                                            
+                                %>
                                 <div class="col-md-4">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            <%=t.getName()%>
+                                            <%=pName%>
                                             <span class="tools pull-right">
                                             </span>
                                         </div>
