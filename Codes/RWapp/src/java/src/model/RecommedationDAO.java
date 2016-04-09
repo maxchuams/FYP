@@ -23,6 +23,30 @@ import java.util.logging.Logger;
  */
 public class RecommedationDAO {
 
+    /**
+     * Generate a 2D array of recommendations based on the project size,
+     * priority and various project factors
+     *
+     * @param developerCount the number of developers required for that project
+     * @param days Project Managers' estimation of the expected number of days
+     * that a project will take to completion based on functionalities.
+     * @param priority 1 high priority and 0 for standard project . Any other
+     * value will result in default/random sorting order. "High Priority"(1)
+     * projects will be sorted based on the "zainessscore" to get the best
+     * developer, which is based on the skillset, timeliness,low defects and
+     * experience score. "Standard"(0) projects will be sorted based on matching
+     * skillset developers who can complete the project on the earliest date to
+     * archieve overall load balancing e.g reduce slack time between projects.
+     * @param experienceFactor weightage for one of the three criteria for
+     * calculation of proficiency
+     * @param defectsFactor weightage for one of the three criteria for
+     * calculation of proficiency
+     * @param scheduleFactor weightage for one of the three criteria for
+     * calculation of proficiency
+     * @param k the top K th result for recommendation. Note: high K value might
+     * affect query performance
+     * @return A collection of a list of recommendation objects.
+     */
     public static ArrayList<ArrayList<Recommendation>> getRecommendation(String projectType,
             String projectStartDate, int days, int priority, int developerCount, double experienceFactor, double defectsFactor, double scheduleFactor, int k) {
         if (developerCount == 1) {
@@ -60,6 +84,12 @@ public class RecommedationDAO {
      * experience score. "Standard"(0) projects will be sorted based on matching
      * skillset developers who can complete the project on the earliest date to
      * archieve overall load balancing e.g reduce slack time between projects.
+     * @param experienceFactor weightage for one of the three criteria for
+     * calculation of proficiency
+     * @param defectsFactor weightage for one of the three criteria for
+     * calculation of proficiency
+     * @param scheduleFactorone weightage fo of the three criteria for
+     * calculation of proficiency
      * @return A collection of recommendation objects.
      */
     public static ArrayList<Recommendation> getSingleRecommendation(String projectType,
@@ -333,6 +363,35 @@ public class RecommedationDAO {
         }
     }
 
+    /**
+     * Returning an 2D arraylist of recommendation objects based on ProjectType,
+     * ProjectStartDate, Days and Priority and the number of developers required
+     * for that project
+     *
+     * @param projectType The project type "eCommence", "wordpress" or "custom"
+     * project. Any other value will result in empty resultset.
+     * @param projectStartDate Planned start date of the project. Must be in
+     * "yyyy-MM-dd" format. e.g "2016-03-04"
+     * @param developerCount the number of developers required for that project
+     * @param days Project Managers' estimation of the expected number of days
+     * that a project will take to completion based on functionalities.
+     * @param priority 1 high priority and 0 for standard project . Any other
+     * value will result in default/random sorting order. "High Priority"(1)
+     * projects will be sorted based on the "zainessscore" to get the best
+     * developer, which is based on the skillset, timeliness,low defects and
+     * experience score. "Standard"(0) projects will be sorted based on matching
+     * skillset developers who can complete the project on the earliest date to
+     * archieve overall load balancing e.g reduce slack time between projects.
+     * @param experienceFactor weightage for one of the three criteria for
+     * calculation of proficiency
+     * @param defectsFactor weightage for one of the three criteria for
+     * calculation of proficiency
+     * @param scheduleFactor weightage for one of the three criteria for
+     * calculation of proficiency
+     * @param k the top K th result for recommendation. Note: high K value might
+     * affect query performance
+     * @return A collection of a list of recommendation objects.
+     */
     public static ArrayList<ArrayList<Recommendation>> getMultiRecommendation(String projectType,
             String projectStartDate, int days, int priority, int developerCount, double experienceFactor, double defectsFactor, double scheduleFactor, int k) {
         //assume is size is for each developer e.g days=15 develperCount=2 means 2 developer each take 15days
@@ -355,6 +414,14 @@ public class RecommedationDAO {
     }
 
     //Adapted from http://www.programcreek.com/2014/03/leetcode-combinations-java/
+    /**
+     * Generating combination based to depth first search heuristic that will be
+     * applied to a ranked list of recommendation e.g 10 Choose 2
+     *
+     * @param n the number of integers to choose from
+     * @param k the size of the each combination
+     * @return
+     */
     public static ArrayList<ArrayList<Integer>> devCombinator(int n, int k) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
 
@@ -370,6 +437,18 @@ public class RecommedationDAO {
         return result;
     }
 
+    
+    
+       /**
+     * Practical DFS algorithm to recursively generate shuffle aan in array
+     *
+     * @param n the number of integers to choose from
+     * @param k the size of the each combination
+     * @param start starting index to shuffle array
+     * @param item integer array to pass in
+     * @param res list of integers
+     * @return
+     */
     private static void dfs(int n, int k, int start, ArrayList<Integer> item,
             ArrayList<ArrayList<Integer>> res) {
         if (item.size() == k) {
@@ -383,6 +462,14 @@ public class RecommedationDAO {
         }
     }
 
+    /**
+     *
+     * @param generatedArr JSON formatted string for generated recommendation choices
+     * @param selectedArr JSON formatted string for selected recommendation choice
+     * @param projectname Name of project
+     * @param choice the ranking of the choice to be logged
+     * @return true if success
+     */
     public static boolean logRecommendation(ArrayList<ArrayList<Recommendation>> generatedArr, ArrayList<Recommendation> selectedArr, String projectname, int choice) {
         //ArrayList<ArrayList<Recommendation>>
 
@@ -413,6 +500,11 @@ public class RecommedationDAO {
         }
     }
 
+    /**
+     *
+     * @return generate xfactors variable from database
+     *# of users, #  of project, total assignment, total recommendation first choice & percentage of first choice selection
+     */
     public static int[] retrievexfs() {
 
         Connection conn = null;
@@ -476,6 +568,13 @@ public class RecommedationDAO {
 
     }
 
+    /**
+     *Generate a list of developer name and estimated completion of a project based on project type and size
+     * 
+     * @param projectType project type e.g wordpress
+     * @param days size of the project
+     * @return
+     */
     public static ArrayList<Recommendation> getEstimateCompleteRecommendation(String projectType, int days) {
         ArrayList<Recommendation> recommendations = new ArrayList<Recommendation>();
 

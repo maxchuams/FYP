@@ -24,8 +24,11 @@ import org.joda.time.DateTime;
  */
 public class ChartJSDAO {
 
-    //get string of last 6 months
-    public static ArrayList<String> getSixMonth() {
+    /**
+     * Get string of last 6 months e.g Jan, Feb etc
+     * @return a list of string representation of last 6 months from today 
+     */
+        public static ArrayList<String> getSixMonth() {
         ArrayList<String> toReturn = new ArrayList<String>();
         for (int i = 5; i >= 0; i--) {
             String j = new DateTime().minusMonths(i).monthOfYear().getAsText();
@@ -34,6 +37,11 @@ public class ChartJSDAO {
         return toReturn;
     }
 
+    /**
+     * Color code for ChartJS validation
+     * @param id id for color code
+     * @return hex color code
+     */
     public static String getColor(int id) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -58,6 +66,12 @@ public class ChartJSDAO {
         return toReturn;
     }
 
+    /**
+     * Retrieve experience factor score based on developer name
+     * @param devusername developer's name
+     * @param year year to query
+     * @return experience score
+     */
     public static double getExperienceScore(String devusername, int year) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -93,6 +107,11 @@ public class ChartJSDAO {
         return toReturn;
     }
 
+    /**
+     * Retrieve mean experience factor score for Ripplewerkz
+     * @param year year to query
+     * @return experience score
+     */
     public static double getExperienceScoreRW(int year) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -125,6 +144,13 @@ public class ChartJSDAO {
 
         return toReturn;
     }
+
+    /**
+     * Retrieve defect factor score based on developer name
+     * @param devusername developer's name
+     * @param year year to query
+     * @return defect score
+     */
     public static double getDefectScore(String devusername, int year) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -206,6 +232,11 @@ public class ChartJSDAO {
         return toReturn;
     }
 
+    /**
+     * Retrieve mean defect factor score for Ripplewerkz
+     * @param year
+     * @return defect score 
+     */
     public static double getDefectScoreRW(int year) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -284,6 +315,12 @@ public class ChartJSDAO {
         return toReturn;
     }
 
+    /**
+     * Retrieve timeliness factor score based on developer name
+     * @param devusername developer's name
+     * @param year year to query
+     * @return
+     */
     public static double getTimelinessScore(String devusername, int year) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -331,6 +368,11 @@ public class ChartJSDAO {
         return toReturn;
     }
 
+    /**
+     * Retrieve mean factor score based for Ripplewerkz
+     * @param year year to query
+     * @return
+     */
     public static double getTimelinessScoreRW(int year) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -377,7 +419,13 @@ public class ChartJSDAO {
     
     
     // retrive loadfactor score for average accross ripplewerkz
-    public static HashMap<String, Double> getLoadRW(int year) {
+
+    /**
+     * Retrieve mean load factor score for Ripplewerkz
+     * @param year year to query
+     @return a map of load factor score for corresponding month
+     */
+        public static HashMap<String, Double> getLoadRW(int year) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -411,7 +459,14 @@ public class ChartJSDAO {
     }
 
     // retrive Load factor score based on developer name
-    public static HashMap<String, Double> getLoadDev(String devname, int year) {
+
+    /**
+     * Retrieve load factor score based on developer name
+     * @param devname developer's name
+     * @param year year to query
+     * @return a map of load factor score for corresponding month
+     */
+        public static HashMap<String, Double> getLoadDev(String devname, int year) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -446,7 +501,14 @@ public class ChartJSDAO {
 
    
     // retrive timeliness score based on developer name
-    public static HashMap<String, Double> getTimelinessDev(String devname, int year) {
+
+    /**
+     * Retrieve timeliness score based on developer name
+     * @param devname
+     * @param year
+     * @return a map of timeliness score for corresponding month
+     */
+        public static HashMap<String, Double> getTimelinessDev(String devname, int year) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -482,7 +544,13 @@ public class ChartJSDAO {
     }
 
     // retrive timeliness score for average accross ripplewerkz
-    public static HashMap<String, Double> getTimelinessRW(int year) {
+
+    /**
+     * Retrieve timeliness score for average across Ripplewerkz
+     * @param year year to query
+     * @return a map of timeliness score for corresponding month
+     */
+        public static HashMap<String, Double> getTimelinessRW(int year) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -516,7 +584,13 @@ public class ChartJSDAO {
     }    
     
     // retrive project experice and count by type based developer name
-    public static HashMap<String, Integer> getProjectExp(String username) {
+
+    /**
+     * The project experience for each type of project for a developer
+     * @param username developer's name
+     * @return a map of project type and corresponding experience score for a developer
+     */
+        public static HashMap<String, Integer> getProjectExp(String username) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -540,8 +614,10 @@ public class ChartJSDAO {
         return toReturn;
     }
 
-
-
+    /**
+     * The number of skills per developer
+     * @return average skills per developer
+     */
     public static double getAvgSkillPerDevRW() {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -568,12 +644,26 @@ public class ChartJSDAO {
     }
 
     //[ Timeliness, Experience, Skillset,Quality Score,]
-    public static Double[] getRWstats(int year) {
+
+    /**
+     *
+     * @param year year to query
+     * @return Ripplewerkz average timeliness score,  average experience score, average defects score and number of skills 
+     */
+        public static Double[] getRWstats(int year) {
         return new Double[]{getTimelinessScoreRW(year), getTimelinessScoreRW(year), getAvgSkillPerDevRW(), getDefectScoreRW(year)};
     }
 
     //[ Timeliness, Experience, Skillset,Defect Score(Quality)]
-    public static Double[] getDevStats(String devusername, int year) {
+
+    /**
+     *Get statistics of developer
+     * 
+     * @param devusername developer's name
+     * @param year year to query
+     * @return developer's timeliness score, experience score,defects score and number of skills 
+     */
+        public static Double[] getDevStats(String devusername, int year) {
         return new Double[]{getTimelinessScore(devusername, year), getExperienceScore(devusername, year), SkillDAO.retrieveDevSkillString(devusername).size() + 0.0, getDefectScore(devusername, year)};
     }
 

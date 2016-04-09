@@ -3,12 +3,30 @@ package src.model.identicon;
 import java.awt.image.WritableRaster;
 import java.awt.image.BufferedImage;
 
-
+/**
+ *
+ * @author KIANLAM
+ */
 public class IdenticonGenerator {
-	public static int height = 5;
-	public static int width = 5;
 
-	public static BufferedImage generate(String userName, HashGeneratorInterface hashGenerator) {
+    /**
+     *
+     */
+    public static int height = 5;
+
+    /**
+     *
+     */
+    public static int width = 5;
+
+    /**
+     *Generate Buffer Image identicon based on username
+     * 
+     * @param userName username to generate identicon
+     * @param hashGenerator Hash Generator object
+     * @return
+     */
+    public static BufferedImage generate(String userName, HashGeneratorInterface hashGenerator) {
 		byte[] hash = hashGenerator.generate(userName);
 
         	BufferedImage identicon = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
