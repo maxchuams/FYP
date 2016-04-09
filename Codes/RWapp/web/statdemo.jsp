@@ -141,7 +141,23 @@
                           
                             <div class="col-md-9">
                                    
-                                <span class="pull-right"><button type="button" class="btn btn-info" onClick="window.print()"><i class="fa fa-print"></i> Print</button></span>
+                                <span class="pull-right">
+                                    <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Year
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        
+                                        <% int thisyear = new DateTime().getYear(); %>
+                                        
+                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear%>"><%=thisyear%></a></li>
+                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear-1%>"><%=thisyear-1%></a></li>
+                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear-2%>"><%=thisyear-2%></a></li>
+                                    </ul>
+                                    <button type="button" class="btn btn-info" onClick="window.print()"><i class="fa fa-print"></i> Print</button>
+                                </div>
+                                    
+                                    
+                                </span>
 
                                 <div class="profile-desk">
                                     <h1><%=devusername%></h1>
@@ -159,18 +175,7 @@
                                     </p>
                                 </div>
                                      Displaying results for year <b><%=year%></b>
-                                <div class="dropup">
-                                    <button class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown">Year
-                                        <span class="caret"></span></button>
-                                    <ul class="dropdown-menu pull-right">
-                                        
-                                        <% int thisyear = new DateTime().getYear(); %>
-                                        
-                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear%>"><%=thisyear%></a></li>
-                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear-1%>"><%=thisyear-1%></a></li>
-                                        <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear-2%>"><%=thisyear-2%></a></li>
-                                    </ul>
-                                </div>
+                                
 
                             </div>
                         </div>
@@ -197,19 +202,7 @@
                                 <canvas id="radarChart" width="400" height="430"></canvas>
 
                             </div>
-                            <!--Lam ge can you place your legend into this code:-->
-                            <ul class="clearfix location-earning-stats">
-                                <li class="stat-divider">
-                                    <span class="first-city">$734503</span>
-                                    Rocky Mt,NC </li>
-                                <li class="stat-divider">
-                                    <span class="second-city">$734503</span>
-                                    Dallas/FW,TX </li>
-                                <li>
-                                    <span class="third-city">$734503</span>
-                                    Millville,NJ </li>
-                            </ul>
-                            <!--kw legend code end-->
+                            
                             <div id="radarLegend"></div>
                         </div>
                     </section>
