@@ -267,6 +267,9 @@ public class processRecommendation extends HttpServlet {
             if(!manual && rlist != null){
               RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim()));
             }
+            else if(manual){
+              RecommedationDAO.logRecommendation(new ArrayList<ArrayList<Recommendation>>(), new ArrayList<Recommendation>(), projName, -1);
+            }
             request.setAttribute("sucess", "Developer(s) successfully assigned to project " + projName);
             rd.forward(request, response);
             return;
