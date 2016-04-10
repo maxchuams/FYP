@@ -262,9 +262,10 @@ public class processRecommendation extends HttpServlet {
              notificationDAO.addNotification(dev[i], "assignedProject", projName);
             }
             //
+            
             RequestDispatcher rd = request.getRequestDispatcher("viewProjectInfo.jsp?projectName=" + URLEncoder.encode(projName, "UTF-8"));
             if(!manual && rlist != null){
-              RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim())-1);
+              RecommedationDAO.logRecommendation(rlist, rlist.get(Integer.parseInt(dev[0].trim())-1), projName, Integer.parseInt(dev[0].trim()));
             }
             request.setAttribute("sucess", "Developer(s) successfully assigned to project " + projName);
             rd.forward(request, response);
