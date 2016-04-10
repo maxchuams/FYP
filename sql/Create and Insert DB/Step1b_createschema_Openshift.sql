@@ -1,3 +1,3 @@
-drop schema if exists recco ;
-create schema recco;
-use recco;
+drop schema if exists rwrecco3 ;
+create schema rwrecco3;
+use rwrecco3;
