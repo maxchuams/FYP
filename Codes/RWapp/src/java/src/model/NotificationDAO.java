@@ -22,6 +22,14 @@ import java.util.logging.Logger;
  */
 public class NotificationDAO {
 
+    /**
+     *Add a new notification to database
+     * @param username the username of the person
+     * @param notificationtype the type of notification
+     * @param projectname project name related to this notification
+     * @return boolean of whether or not it was a successful addition
+     */
+
     public boolean addNotification(String username, String notificationtype, String projectname) {
 
         Connection conn = null;
@@ -52,6 +60,12 @@ public class NotificationDAO {
         }
 
     }
+    
+    /**
+     *Mark a notification as read
+     * @param id the unique identifier for the notification
+     * @return boolean of whether or not it was a successful operation
+     */
 
     public boolean checkAsRead(int id) {
 
@@ -74,6 +88,12 @@ public class NotificationDAO {
 
     }
 
+    /**
+     *Mark a notification as unread
+     * @param id the unique identifier for the notification
+     * @return boolean of whether or not it was a successful operation
+     */
+     
     public boolean checkAsUnread(int id) {
 
         Connection conn = null;
@@ -95,6 +115,13 @@ public class NotificationDAO {
 
     }
 
+    /**
+     * Retrieves a full list of notification for a specific user that are unread
+     * @param username the username of the person
+     * @param limit value Yes to limit the notifications shown on the bar
+     * @param period the period you want to retrieve the notifications from   
+     * @return list of notification for specific user  
+     */
     public ArrayList<Notification> retrieveAllFromUser(String username, String limit, String period) {
 
         Connection conn = null;
@@ -135,6 +162,12 @@ public class NotificationDAO {
         return allNotifs;
 
     }
+    
+    /**
+     * Retrieves a specific notification
+     * @param id the unique identifier for the notification
+     * @return Notification object with the id
+     */
 
     public Notification retrieveNotification(int id) {
         Connection conn = null;
@@ -158,7 +191,13 @@ public class NotificationDAO {
         System.out.println(notif);
         return notif;
     }
-
+    
+    /**
+     *Archive a notification so it will not show up in notifications anymore
+     * @param id the unique identifier for the notification
+     * @return boolean of whether or not it was a successful operation
+     */
+     
     public boolean archive(int id) {
 
         Connection conn = null;
@@ -178,7 +217,13 @@ public class NotificationDAO {
         }
         return true;
     }
-
+    
+    /**
+     *Unarchive a notification so it will show up in notifications 
+     * @param id the unique identifier for the notification
+     * @return boolean of whether or not it was a successful operation
+     */
+     
     public boolean unarchive(int id) {
 
         Connection conn = null;
@@ -198,7 +243,11 @@ public class NotificationDAO {
         }
         return true;
     }
-
+    /**
+     * Retrieves a full list of notification for a specific user, both read and unread
+     * @param username the username of the person   
+     * @return full list of notifications from user
+     */
     public ArrayList<Notification> retrieveAllArchivedFromUser(String username) {
 
         Connection conn = null;
