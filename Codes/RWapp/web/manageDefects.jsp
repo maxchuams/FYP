@@ -310,8 +310,8 @@
                                     <header class="panel-heading">
                                         <%=s%>
                                         <span class="tools pull-right">
-                                            <a href="addDefect.jsp?name=<%=s%>" class="fa fa-plus-circle"></a>
-                                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                            <a title="Add new defect" href="addDefect.jsp?name=<%=s%>" class="fa fa-plus-circle"></a>
+                                            <a title='Collapse this box' href="javascript:;" class="fa fa-chevron-down"></a>
                                         </span>
                                     </header>
                                     <div class="panel-body">
