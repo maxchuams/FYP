@@ -3,6 +3,8 @@
     Created on : Sep 7, 2015, 1:30:53 PM
     Author     : admin
 --%>
+<%@page import="org.joda.time.DateTime"%>
+<%@page import="org.joda.time.Days"%>
 <%@page import="src.model.RecommedationDAO"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.google.gson.JsonArray"%>
@@ -66,7 +68,12 @@
                         <div class="mini-stat clearfix">
                             <span class="mini-stat-icon orange"><i class="fa fa-gavel"></i></span>
                             <div class="mini-stat-info">
-                                <span>51</span>
+                                <span>
+                                <% 
+                                    int days = Days.daysBetween(new DateTime(2016,1,4,0,0), new DateTime()).getDays();
+                                    out.println(days);
+                                %> 
+                                </span>
                                 Days Deployed
                             </div>
                         </div>
