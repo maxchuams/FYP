@@ -562,7 +562,7 @@ public class ProjectDAO {
         
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select min(planstart) as planstart, max(planend) as planend from projectallocation  where projectname=? and iscomplete=0 group by projectname;");
+            pstmt = conn.prepareStatement("select min(planstart) as planstart, max(planend) as planend from projectallocation  where projectname=? group by projectname;");
             pstmt.setString(1, pname);
             rs = pstmt.executeQuery();
 
@@ -575,8 +575,7 @@ public class ProjectDAO {
         } finally {
             ConnectionManager.close(conn, pstmt, rs);
         }
-
-        if(toReturn.size()==2) return toReturn;
+        if(toReturn.size() == 2) return toReturn;
         return null;
     }
     

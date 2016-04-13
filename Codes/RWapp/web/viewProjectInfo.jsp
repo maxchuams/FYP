@@ -119,6 +119,7 @@
                                                 Start and end date
                                             </td>
                                             <td>
+                                                
                                                 SD: <% if(arr!= null && !("null").equals(arr.get(0))){%>
 
                                                       <%=arr.get(0)%>
