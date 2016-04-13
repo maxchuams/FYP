@@ -252,7 +252,7 @@
                                     }
                                 %><span class="pull-right top-menu">
 
-                                    <form class="form-inline" role="form" action="viewDefects.jsp">
+                                    <form class="form-inline" role="form" action="manageDefects.jsp">
                                         <div class="form-group">View:
                                             <select name="sort" class="form-control" onchange="this.form.submit()">
                                                 <%if (sort == null) {%>
