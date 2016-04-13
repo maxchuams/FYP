@@ -122,7 +122,6 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-
                         <div class="row-fluid" id="draggable_portlets">
                             <div class="row">
 
@@ -131,7 +130,7 @@
                                         if (t.getIsComplete() == 0) {
                                 %> 
                                 <!-- BEGIN Portlet PORTLET-->
-                                <% out.println("<a href='viewProjectInfo.jsp?projectName=" + URLEncoder.encode(t.getName(), "UTF-8") + "'>");
+                                <% out.println("<a title='" + t.getName()+ "' href='viewProjectInfo.jsp?projectName=" + URLEncoder.encode(t.getName(), "UTF-8") + "'>");
                                     String pName;
                                     if (t.getName().length() > 27) {
                                         pName = t.getName().substring(0, 27) + "...";

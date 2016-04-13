@@ -160,7 +160,7 @@
                                     for (Project t : tList) {
                                         if (t.getIsComplete() == 1) {%>
                                 <!-- BEGIN Portlet PORTLET-->
-                                <% out.println("<a href='viewProjectInfo.jsp?projectName=" + URLEncoder.encode(t.getName(), "UTF-8") + "'>");%>
+                                <% out.println("<a title='" + t.getName() + "' href='viewProjectInfo.jsp?projectName=" + URLEncoder.encode(t.getName(), "UTF-8") + "'>");%>
                                 <div class="col-md-4">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
