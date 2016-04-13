@@ -22,6 +22,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Defects</title>
         <script src="js/moment.js"></script>
+        <script src="./bootstrap/imtech.js"></script>
         <script>
             moment().format();
         </script>
@@ -139,6 +140,7 @@
                                 dList = DefectDAO.retrieveAllocatedDevIsComplete(dev.getUsername());
                             }
                         %>
+                        
                         <%if (pListString.size() <= 0) {%>
                         <div class="row">
                             <div class="col-md-12">
@@ -153,8 +155,9 @@
                             </div>
                         </div>
                         <%  }else { %>
+                        <div id="content">
                         <%for (String s : pListString) {%>
-                        <div class="row">
+                        <div class="row z">
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
@@ -226,9 +229,11 @@
                                                     </section>
                                                 </div>
                                             </div>
-                                            <% } 
-                        }%>
-
+                                            <% } %>
+                                            </div>
+                                        <div class="dataTables_paginate paging_bootstrap pagination" id="pagingControls"></div>
+                       <% }%>
+                                        
                                             <!--end of kw codes-->
 
                                             </section>
@@ -251,3 +256,22 @@
                                         });
                                     });
                                 </script>
+                                <script type="text/javascript">
+var pager = new Imtech.Pager();
+$(document).ready(function() {
+    pager.paragraphsPerPage = 5; // set amount elements per page
+    pager.pagingContainer = $('#content'); // set of main container
+    pager.paragraphs = $('div.z', pager.pagingContainer); // set of required containers
+    pager.showPage(1);
+});
+</script>
+<style>
+    
+ 
+.example{background:#FFF;width:1000px;font-size:80%;border:1px #000 solid;margin:0.5em 10% 0.5em;padding:1em 2em 2em;-moz-border-radius:3px;-webkit-border-radius:3px}
+
+#content p{text-indent:20px;text-align:justify;}
+#pagingControls ul{display:inline;padding-left:0.5em}
+#pagingControls li{display:inline;padding:0 0.5em}
+    
+</style>
