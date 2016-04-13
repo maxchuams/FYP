@@ -302,7 +302,7 @@ public class DefectDAO {
         ArrayList<Defect> toReturn = new ArrayList<Defect>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto from defect where projectname = ?");
+            pstmt = conn.prepareStatement("select defectid,projectname,defectname,description,reportby,updatetime,iscomplete,severity,duedate,assignto from defect where projectname = ? and isComplete <> 1");
             pstmt.setString(1, projectname);
             rs = pstmt.executeQuery();
 
