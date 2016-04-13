@@ -272,6 +272,10 @@
         <servlet-name>completeDev</servlet-name>
         <url-pattern>/completeDev</url-pattern>
     </servlet-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404.jsp</location>
+    </error-page>
     <session-config>
         <session-timeout>
             120
