@@ -118,6 +118,7 @@
                                                 Start and end date
                                             </td>
                                             <td>
+                                                
                                                 SD: <% if(arr!= null && !("null").equals(arr.get(0))){%>
 
                                                       <%=arr.get(0)%>
@@ -127,9 +128,10 @@
                                                     
         <br/>
                                             </td>
-                                            <td>ED:  <% if(arr!= null && !("null").equals(arr.get(1))){%>
+                                            <td>
+                                                ED:  <% if(arr!= null && !("null").equals(arr.get(1))){%>
 
-                                                      <%=arr.get(0)%>
+                                                      <%=arr.get(1)%>
                                                     <%} else { 
                                                         out.println("No dates given");
                                                 }%></td>
