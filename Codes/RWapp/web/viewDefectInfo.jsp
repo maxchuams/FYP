@@ -3,6 +3,7 @@
     Created on : Jan 15, 2016, 1:12:03 PM
     Author     : Kaiwen
 --%>
+<%@page import="java.net.URLEncoder"%>
 <%@page import="src.model.DefectCommitBy"%>
 <%@page import="src.model.DefectCommitByDAO"%>
 <%@page import="src.model.ProjectAllocationDAO"%>
@@ -215,6 +216,7 @@
                                                             <% if (pm != null) {
                                                                 String projName = d.getProjectName();
                                                                 ArrayList<Defect> dList = DefectDAO.retrievePm(pm.getUsername());
+                                                                String encoded =  URLEncoder.encode(projName);
                                                             %>
                                                             <!--show project's defect-->
                                                         <div class="row">
@@ -223,7 +225,7 @@
                                                                     <header class="panel-heading">
                                                                         Defects under Project <%=projName%>
                                                                         <span class="tools pull-right">
-                                                                            <a href="addDefect.jsp?name=<%=projName%>" class="fa fa-plus-circle"></a>
+                                                                            <a href="addDefect.jsp?name=<%=encoded%>" title="Add new Defect" class="fa fa-plus-circle"></a>
                                                                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                                                                         </span>
                                                                     </header>
@@ -246,7 +248,7 @@
                                                                                         if (def.getIsComplete() == 2) { %>
                                                                         <div class='col-lg-4 col-sm-4'> 
                                                                             <div class="alert alert-success fade in"> 
-                                                                                <% } else if (def.getIsComplete() == 1) {
+                                                                                    <% } else if (def.getIsComplete() == 1) {
                                                                                 %> 
                                                                                 <div class='col-lg-4 col-sm-4'> 
                                                                                     <div class="alert alert-warning fade in"> 
@@ -276,7 +278,8 @@
                                                                                                 }
                                                                                             }
                                                                                             if (count == 0) {
-                                                                                                out.println("<a href='addDefect.jsp?name=" + projName + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
+                                                                                                String encoded1 =  URLEncoder.encode(projName);
+                                                                                                out.println("<a href='addDefect.jsp?name=" + encoded1 + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
                                                                                             }
 
                                                                                             count = 0;

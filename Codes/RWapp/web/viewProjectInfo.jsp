@@ -1,4 +1,5 @@
-    <%-- 
+    <%@page import="java.net.URLEncoder"%>
+<%-- 
     Document   : viewProjectInfo
     Created on : Jan 21, 2016, 4:29:41 PM
     Author     : Kaiwen
@@ -127,9 +128,10 @@
                                                     
         <br/>
                                             </td>
-                                            <td>ED:  <% if(arr!= null && !("null").equals(arr.get(1))){%>
+                                            <td>
+                                                ED:  <% if(arr!= null && !("null").equals(arr.get(1))){%>
 
-                                                      <%=arr.get(0)%>
+                                                      <%=arr.get(1)%>
                                                     <%} else { 
                                                         out.println("No dates given");
                                                 }%></td>
@@ -221,7 +223,8 @@
                             <header class="panel-heading">
                                 Defects under Project <%=p.getName()%>
                                 <span class="tools pull-right">
-                                    <a href="addDefect.jsp?name=<%=p.getName()%>" class="fa fa-plus-circle"></a>
+                                    <% String encoded =  URLEncoder.encode(p.getName());%>
+                                    <a href="addDefect.jsp?name=<%=encoded%>" class="fa fa-plus-circle"></a>
                                     <a href="javascript:;" class="fa fa-chevron-down"></a>
                                 </span>
                             </header>
@@ -274,7 +277,8 @@
                                                         }
                                                     }
                                                     if (count == 0) {
-                                                        out.println("<a href='addDefect.jsp?name=" + p.getName() + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
+                                                        String encoded1 =  URLEncoder.encode(p.getName());
+                                                        out.println("<a href='addDefect.jsp?name=" + encoded1 + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
                                                     }
 
                                                     count = 0;
