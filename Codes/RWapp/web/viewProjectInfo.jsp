@@ -225,7 +225,7 @@
                                 Defects under Project <%=p.getName()%>
                                 <span class="tools pull-right">
                                     <% String encoded =  URLEncoder.encode(p.getName());%>
-                                    <a href="addDefect.jsp?name=<%=encoded%>" class="fa fa-plus-circle"></a>
+                                    <a href="addDefect.jsp?name=<%=encoded%>" title='Add new Defect' class="fa fa-plus-circle"></a>
                                     <a href="javascript:;" class="fa fa-chevron-down"></a>
                                 </span>
                             </header>

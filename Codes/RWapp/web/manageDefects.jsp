@@ -328,8 +328,10 @@
                                                     severity = "High";
                                                 }
                                                 if (s.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {
-                                                    if (pm != null) {
-                                                        out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
+                                                    if (pm != null) {%>
+                                                     <a href='viewDefectInfo.jsp?defectId=<%=d.getId()%>' title='<%=d.getDefectName()%>'>
+                                                    <%
+//                                                        out.println("<a title='" + d.getDefectName() + "' href='viewDefectInfo.jsp?defectId=" + d.getId() + ">");
                                                         
                                                         if (d.getIsComplete() == 1) { %>
                                         <div class='col-lg-4 col-sm-4'> 
