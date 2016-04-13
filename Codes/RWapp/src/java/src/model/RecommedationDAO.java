@@ -525,7 +525,7 @@ public class RecommedationDAO {
             conn = ConnectionManager.getConnection();
 
             pstmt1 = conn.prepareStatement("select count(*) as count from user;");
-            pstmt2 = conn.prepareStatement("select count(*) as count from  project;");
+            pstmt2 = conn.prepareStatement("select count(*) as count from  project where iscomplete='0';");
             pstmt3 = conn.prepareStatement("select count(*) as count from recommendationlog where choice in (1,2,3,4,5);");
             pstmt4 = conn.prepareStatement("select count(*) as count from recommendationlog where choice=1;");
             pstmt5 = conn.prepareStatement("select round((count2 /count1)*100,0) as percent from "
