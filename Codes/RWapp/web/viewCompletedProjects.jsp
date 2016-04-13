@@ -180,21 +180,20 @@
                                             <ul class="nav nav-pills nav-stacked">
                                                 <div class="col-md-2 col-xs-2">
                                                     <div class="tm-avatar">
-                                                        <% if (ProjectDAO.retrieveTrelloPhoto(t.getName()) == null) {
-                                                        %><img src="bootstrap/html/images/tempProj.png" alt=""/>
-                                                        <%
-                                                        } else {
+                                                                                  <%
                                                             String photo = ProjectDAO.retrieveTrelloPhoto(t.getName());
-                                                            String photoExt = "";
-                                                            if (photo.length() >= 3) {
-                                                                photoExt = photo.substring(photo.length() - 3);
+                                                            if (photo != null) {
+                                                                String photoExt = photo.substring(photo.lastIndexOf("."),photo.length());
+                                                                if (photoExt.equals(".jpg") || photoExt.equals(".png")) {
+                                                                      %><img src='<%=photo%>' alt=''/><%
+                                                                }else {
+                                                                    %><img src='bootstrap/html/images/tempProj.png' alt=''/><%
                                                             }
-                                                            if (photoExt != null || photoExt.equals("jpg") || photoExt.equals("png")) {%>
-                                                        <img src="<%=ProjectDAO.retrieveTrelloPhoto(t.getName())%>" alt=""/>
-                                                        <%} else {  %>
-                                                        <img src="bootstrap/html/images/tempProj.png" alt=""/>
-                                                        <%}
-                                                            }%>
+                                                            } else {
+                                                                    %><img src='bootstrap/html/images/tempProj.png' alt=''/><%
+                                                            }
+                                                        %>
+                                         
                                                     </div>
                                                 </div>
                                                 <%
