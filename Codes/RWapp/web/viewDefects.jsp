@@ -255,7 +255,7 @@
                                     <header class="panel-heading">
                                         <%=p%> 
                                         <span class="tools pull-right">
-                                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                            <a title='Collapse this box' href="javascript:;" class="fa fa-chevron-down"></a>
                                         </span>
                                     </header>
                                     <div class="panel-body">
