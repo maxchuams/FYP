@@ -145,9 +145,17 @@ public class assignRecommendation extends HttpServlet {
                 //request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-
+            int days= 0;
             int priority = Integer.parseInt(intensity);
-            int days = Integer.parseInt(daysstr);
+            try{
+                days = Integer.parseInt(daysstr);
+            } catch(Exception e){
+                String err = "Please input an integer";
+                RequestDispatcher view = request.getRequestDispatcher("editTrelloCard.jsp?name=" + nameForRequestObj + "&id=" + projName);
+                request.setAttribute("err", err);
+                view.forward(request, response);
+                return;
+            }
             int devCount = Integer.parseInt(devCountStr);
             int k = Integer.parseInt(kStr);
 
