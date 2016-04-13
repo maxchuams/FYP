@@ -156,7 +156,7 @@ public class Recommendation {
      *
      * The working days(including weekend) a developer need to complete a
      * project of a fixed size based on his timeliness score working on projects
-     * of the similar type. We use Estimated working day &divide (5/7).
+     * of the similar type. We use Estimated working day and divide (5/7).
      * Therefore, this estimation is up to the accuracy of ~1-2 days.
      *
      * @return
@@ -169,7 +169,7 @@ public class Recommendation {
      *
      * The schedule performance score is the ratio to gauge the timeliness past
      * project assignment for the developer for a specific type of project. e.g
-     * Days taken (Actual end - Actual start) &divide Allocated Days (Plan end -
+     * Days taken (Actual end - Actual start) and divide Allocated Days (Plan end -
      * Plan start). 1 is always on time, 2 is always take 2x the allocated time.
      *
      * @return

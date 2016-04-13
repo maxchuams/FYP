@@ -88,7 +88,7 @@ public class RecommedationDAO {
      * calculation of proficiency
      * @param defectsFactor weightage for one of the three criteria for
      * calculation of proficiency
-     * @param scheduleFactorone weightage fo of the three criteria for
+     * @param scheduleFactor one weightage of the three criteria for
      * calculation of proficiency
      * @return A collection of recommendation objects.
      */
@@ -502,8 +502,7 @@ public class RecommedationDAO {
 
     /**
      *
-     * @return generate xfactors variable from database
-     *# of users, #  of project, total assignment, total recommendation first choice & percentage of first choice selection
+     * @return generate xfactors variable from database number of users, number  of project, total assignment, total recommendation first choice and percentage of first choice selection
      */
     public static int[] retrievexfs() {
 
