@@ -294,12 +294,12 @@
                                                                         dName = d.getDefectName();
                                                                     }%>
                                                                     
-                                                                <%out.println("<table border='0' width='100%'><tr><td style='text-align:left'><b>Defect Name: </b></td><td style='text-align:left'> " + dName + "</td></tr>");
-                                                                    out.println("<tr><td style='text-align:left'><b>Severity: </b></td><td style='text-align:left' id='" + severity + "'> " + severity + "</td></tr>");
+                                                                <%out.println("<table border='0' width='100%'><tr><td style='text-align:right; padding-right: 5px;'><b>Defect Name: </b></td><td style='text-align:left'> " + dName + "</td></tr>");
+                                                                    out.println("<tr><td style='text-align:right; padding-right: 5px;'><b>Severity: </b></td><td style='text-align:left' id='" + severity + "'> " + severity + "</td></tr>");
                                                                     //out.println("<tr><td><b>Date: </b></td><td> " + d.getUpdateTime().subSequence(0, 16) + "</td></tr>");
                                                                 %>
-                                                                <tr><td style='text-align:left'><b>Duedate: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
-                                                                <tr><td style='text-align:left'><b>PM:</b></td><td style='text-align:left'><%=d.getReportedBy()%></td></tr>
+                                                                <tr><td style='text-align:right; padding-right: 5px;'><b>Duedate: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
+                                                                <tr><td style='text-align:right; padding-right: 5px;'><b>PM:</b></td><td style='text-align:left'><%=d.getReportedBy()%></td></tr>
 
                                                                 <%out.println("</table>");
 

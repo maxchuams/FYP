@@ -167,7 +167,7 @@
                     var xx = document.getElementById(final2[i]);
                     myNode.appendChild(xx);
                 }
-                alert("done");
+                
             }
             
         </script>    
@@ -349,12 +349,12 @@
                                                                     } else {
                                                                         dName = d.getDefectName();
                                                                     }
-                                                                    out.println("<table border='0' width='100%'><tr><td style='text-align:left'><b>Defect Name: </b></td><td style='text-align:left' id='" + dName + "'> " + dName + "</td></tr>");
-                                                                    out.println("<tr><td><b>Severity: </b></td><td style='text-align:left' id='" + severity + "'> " + severity + "</td></tr>");%>
-                                                                <tr><td><b>Created: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY"></span></tr>
-                                                                <tr><td><b>Duedate: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
-                                                                <tr><td><b>PM:</b></td><td style='text-align:left'><%=d.getReportedBy()%></td></tr>
-                                                                <tr><td><b>Assigned to:</b></td><td style='text-align:left'><%=d.getAssignto()%></td></tr>
+                                                                    out.println("<table border='0' width='100%'><tr><td style='text-align:right; padding-right: 5px;'><b>Defect Name: </b></td><td style='text-align:left' id='" + dName + "'> " + dName + "</td></tr>");
+                                                                    out.println("<tr><td style='text-align:right; padding-right: 5px;'><b>Severity: </b></td><td style='text-align:left' id='" + severity + "'> " + severity + "</td></tr>");%>
+                                                                <tr><td style='text-align:right; padding-right: 5px;'><b>Created: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getUpdateTime()%>" data-format="Do MMM YYYY"></span></tr>
+                                                                <tr><td style='text-align:right; padding-right: 5px;'><b>Duedate: </b></td><td style='text-align:left'><span class="time" data-datetime="<%=d.getDuedate()%>" data-format="Do MMM YYYY"></span></tr>
+                                                                <tr><td style='text-align:right; padding-right: 5px;'><b>PM:</b></td><td style='text-align:left'><%=d.getReportedBy()%></td></tr>
+                                                                <tr><td style='text-align:right; padding-right: 5px;'><b>Assigned to:</b></td><td style='text-align:left'><%=d.getAssignto()%></td></tr>
 
 
                                                                 <%out.println("</table>");
@@ -406,7 +406,7 @@
                                         
                                             
                                         </div>
-                                            <div id="pagingControls"></div>
+                                            <div class="dataTables_paginate paging_bootstrap pagination" id="pagingControls"></div>
                                     </div>
                             </div>
                                             <!--end of kw codes-->
@@ -436,7 +436,7 @@ $(document).ready(function() {
 </script>
 <style>
     
-    body{background:#eee;font-family:Verdana, Helvetica, Arial, sans-serif;margin:0;padding:0}
+ 
 .example{background:#FFF;width:1000px;font-size:80%;border:1px #000 solid;margin:0.5em 10% 0.5em;padding:1em 2em 2em;-moz-border-radius:3px;-webkit-border-radius:3px}
 
 #content p{text-indent:20px;text-align:justify;}
