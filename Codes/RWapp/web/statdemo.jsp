@@ -140,14 +140,14 @@
                             </div>
                           
                             <div class="col-md-9">
-                                   
+                                   <% int thisyear = new DateTime().getYear(); %>
                                 <span class="pull-right">
                                     <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Year
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><%=year%>
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         
-                                        <% int thisyear = new DateTime().getYear(); %>
+                                        
                                         
                                         <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear%>"><%=thisyear%></a></li>
                                         <li><a href="statdemo.jsp?devusername=<%=devusername%>&year=<%=thisyear-1%>"><%=thisyear-1%></a></li>
@@ -167,14 +167,13 @@
                                             DateFormat dateFormat = new SimpleDateFormat("yyyy");
                                             Date todayDate = new Date();
                                             SimpleDateFormat toPrint = new SimpleDateFormat("yyyy");
-
-                                            ArrayList<String> devProjThisYear = ProjectAllocationDAO.retrieveByAllocattionByYear(Integer.parseInt(toPrint.format(todayDate)), devusername);%>
-
-                                        Worked on <b><%=devProjThisYear.size()%></b> project(s) this year<br/>
+                                            
+                                            ArrayList<String> devProjThisYear = ProjectAllocationDAO.retrieveByAllocattionByYear(year, devusername);%>
+                                            
+                                            Allocated to <b><%=devProjThisYear.size()%></b> project(s) in year <b><%=year%></b><br/>
                                         Currently working on <b><%=getNumberAllocated.size()%> </b>project(s)
                                     </p>
                                 </div>
-                                     Displaying results for year <b><%=year%></b>
                                 
 
                             </div>

@@ -251,6 +251,7 @@ public class ProjectDAO {
             pstmt = conn.prepareStatement("select @sortingtype:= ? as sortingtype, @sortingname:= ? as sortingname,developerusername, p.projectname, trellokey, description, assignby, duedate, priority, p.iscomplete, type, psize "
                     + "from project p, projectallocation pa "
                     + "where p.projectname=pa.projectname "
+                    + "and p.iscomplete='0' "
                     + "group by p.projectname , "
                     + "CASE sortingtype "
                     + "        WHEN 'dev' THEN developerusername "

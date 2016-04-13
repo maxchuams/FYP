@@ -123,16 +123,16 @@
                                         </a>
                                     </li>
                                     <% }%>
-                                    <li>
-                                        <a data-toggle="tab" href="#"><!--href="#job-history">-->
+<!--                                    <li>
+                                        <a data-toggle="tab" href="#">href="#job-history">
                                             WIP
                                         </a>
                                     </li>
                                     <li>
-                                        <a data-toggle="tab" href="#"><!--href="#settings">-->
+                                        <a data-toggle="tab" href="#">href="#settings">
                                             WIP
                                         </a>
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </header>
 

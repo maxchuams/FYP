@@ -54,7 +54,7 @@ public class GanttDAO {
         ArrayList<Gnatt> toReturn = new ArrayList<Gnatt>();
         try {
             conn = ConnectionManager.getConnection();
-            pstmt = conn.prepareStatement("SELECT projectname,developerusername,planstart,planend FROM projectallocation where developerusername =?");
+            pstmt = conn.prepareStatement("SELECT p.projectname,developerusername,planstart,planend FROM projectallocation pa,project p where p.projectname=pa.projectname and developerusername =? and p.isComplete = 0");
             pstmt.setString(1, name);
             rs = pstmt.executeQuery();
 
