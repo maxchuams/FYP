@@ -273,9 +273,11 @@
                                                     severity = "High";
                                                 }
                                                 
-                                                if (p.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {
-
-                                                    out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
+                                                if (p.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {%>
+                                                <a href='viewDefectInfo.jsp?defectId=<%=d.getId()%>' title='<%=d.getDefectName()%>'>
+                                        <%
+//                                                out.println("<a title='" + d.getDefectName() + "' href='viewDefectInfo.jsp?defectId=" + d.getId() + ">");
+//                                                  out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
                                                     if (d.getIsComplete() == 1) { %>
                                         <div class='col-lg-4 col-sm-4'> 
                                             <div class="alert alert-success fade in"> 

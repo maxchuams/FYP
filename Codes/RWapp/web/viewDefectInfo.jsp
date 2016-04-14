@@ -231,8 +231,14 @@
                                                                     </header>
                                                                     <div class="panel-body">
                                                                         <%
+                                                                                            ArrayList<Defect> defList = DefectDAO.retrieveAllByProject(projName);
+                                                                                            if (defList.size() == 0) {
+                                                                                                String encoded1 =  URLEncoder.encode(projName);
+                                                                                                out.println("<a href='addDefect.jsp?name=" + encoded1 + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
+                                                                                            } else {
+                                                                                                
                                                                             int count = 0;
-                                                                            for (Defect def : dList) {
+                                                                            for (Defect def : defList) {
                                                                                 int sev = def.getSeverity();
                                                                                 String severity = "";
                                                                                 if (sev == 1) {
@@ -242,8 +248,11 @@
                                                                                 } else if (sev == 3) {
                                                                                     severity = "High";
                                                                                 }
+                                                                                
                                                                                 if (projName.equalsIgnoreCase(def.getProjectName())) {
+                                                                                    
                                                                                     if (pm != null) {
+                                                                                        
                                                                                         out.println("<a href='viewDefectInfo.jsp?defectId=" + def.getId() + "'>");
                                                                                         if (def.getIsComplete() == 2) { %>
                                                                         <div class='col-lg-4 col-sm-4'> 
@@ -274,15 +283,12 @@
                                                                                         </div>
                                                                                         </a>
                                                                                         <%
-                                                                                                    count++;
+                                                                                                    
                                                                                                 }
                                                                                             }
-                                                                                            if (count == 0) {
-                                                                                                String encoded1 =  URLEncoder.encode(projName);
-                                                                                                out.println("<a href='addDefect.jsp?name=" + encoded1 + "'>No defects found <i>yet</i>. <br/><br/><button type='button' class='btn btn-round btn-primary'>Add a defect</button></a>");
                                                                                             }
 
-                                                                                            count = 0;
+                                                                                            
 
                                                                                         %>
                                                                                     </div>

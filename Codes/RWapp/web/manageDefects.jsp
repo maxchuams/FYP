@@ -252,7 +252,7 @@
                                     }
                                 %><span class="pull-right top-menu">
 
-                                    <form class="form-inline" role="form" action="viewDefects.jsp">
+                                    <form class="form-inline" role="form" action="manageDefects.jsp">
                                         <div class="form-group">View:
                                             <select name="sort" class="form-control" onchange="this.form.submit()">
                                                 <%if (sort == null) {%>
@@ -328,8 +328,10 @@
                                                     severity = "High";
                                                 }
                                                 if (s.equalsIgnoreCase(d.getProjectName()) && (d.getIsComplete() == 0 || d.getIsComplete() == 2)) {
-                                                    if (pm != null) {
-                                                        out.println("<a href='viewDefectInfo.jsp?defectId=" + d.getId() + "'>");
+                                                    if (pm != null) {%>
+                                                     <a href='viewDefectInfo.jsp?defectId=<%=d.getId()%>' title='<%=d.getDefectName()%>'>
+                                                    <%
+//                                                        out.println("<a title='" + d.getDefectName() + "' href='viewDefectInfo.jsp?defectId=" + d.getId() + ">");
                                                         
                                                         if (d.getIsComplete() == 1) { %>
                                         <div class='col-lg-4 col-sm-4'> 
