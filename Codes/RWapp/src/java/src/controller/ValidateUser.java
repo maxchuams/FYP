@@ -82,7 +82,7 @@ public class ValidateUser extends HttpServlet {
                         response.sendRedirect("index.jsp");
                     } else if (person.getType().equals("s")) {
                         session.setAttribute("loggedInSudo", person);
-                        response.sendRedirect("sudo.jsp");
+                        response.sendRedirect("index.jsp");
                     } else if (person.getType().equals("t")) {
                         session.setAttribute("loggedInTester", person);
                         response.sendRedirect("index.jsp");

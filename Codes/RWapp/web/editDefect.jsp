@@ -217,8 +217,8 @@
                                     <div class="col-lg-9">
                                         <select name="complete" class="form-control m-bot15" id="complete">
                                             <option value='0'>Developer has not fixed the bug</option>
-                                            <option value='1'>Developer has fixed the bug</option>
-                                            <option value='2'>Defect has been solved</option>
+                                            <option value='2'>Developer has fixed the bug</option>
+                                            <option value='1'>Defect has been solved</option>
                                         </select>
                                     </div>
                                     <input type='hidden' name='pmname' value='<%=pm.getUsername()%>'/>

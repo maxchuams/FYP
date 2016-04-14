@@ -328,12 +328,15 @@
                                         
                                             <% }
                                                 
-                }
+                }%>
                                 
-                                if(counter<=0){%>
+                                
+                                            </div>
+                                                    <div class="dataTables_paginate paging_bootstrap pagination" id="pagingControls"></div>
+                                       <%     if(counter<=0){%>
                                     
                 <div class="row">
-                    <div class="col-lg-12" id="mainmain"> 
+                    <div class="col-lg-12"> 
                         <div class="row">
                             <div class="col-md-12">
                                 <section class="panel">
@@ -351,9 +354,6 @@
                
                                <% }
                                             %>
-                                            </div>
-                                                    <div class="dataTables_paginate paging_bootstrap pagination" id="pagingControls"></div>
-                                            
                                             <!--end of kw codes-->
                                             </section>
                                         </div>

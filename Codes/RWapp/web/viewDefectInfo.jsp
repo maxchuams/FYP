@@ -254,10 +254,10 @@
                                                                                     if (pm != null) {
                                                                                         
                                                                                         out.println("<a href='viewDefectInfo.jsp?defectId=" + def.getId() + "'>");
-                                                                                        if (def.getIsComplete() == 2) { %>
+                                                                                        if (def.getIsComplete() == 1) { %>
                                                                         <div class='col-lg-4 col-sm-4'> 
                                                                             <div class="alert alert-success fade in"> 
-                                                                                    <% } else if (def.getIsComplete() == 1) {
+                                                                                    <% } else if (def.getIsComplete() == 2) {
                                                                                 %> 
                                                                                 <div class='col-lg-4 col-sm-4'> 
                                                                                     <div class="alert alert-warning fade in"> 

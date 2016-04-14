@@ -114,7 +114,7 @@ public class ProjectAllocationDAO {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement("Select developerusername "
                     + "from projectallocation "
-                    + "where iscomplete=0 and projectname=? "
+                    + "where projectname=? "
                     + "group by projectname, developerusername "
                     + "having max(dateallocated);");
             pstmt.setString(1, projectname);
